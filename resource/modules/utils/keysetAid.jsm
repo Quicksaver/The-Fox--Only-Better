@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.2.0';
 moduleAid.LAZY = true;
 
 // keysetAid - handles editable keysets for the add-on
@@ -353,8 +353,8 @@ this.keysetAid = {
 		}
 			
 		var keyset = aWindow.document.getElementById(objName+'-keyset');
-		if(keyset && keyset.parentNode) {
-			keyset.parentNode.removeChild(keyset);
+		if(keyset) {
+			keyset.remove();
 		}
 		
 		if(UNLOADED) { return; }

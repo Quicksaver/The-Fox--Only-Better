@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.2.0';
 moduleAid.LAZY = true;
 
 // keydownPanel - 	Panel elements don't support keyboard navigation by default; this object fixes that.
@@ -184,9 +184,7 @@ this.keydownPanel = {
 	},
 	
 	closeSubView: function() {
-		if(Australis) {
-			window.PanelUI.multiView.showMainView();
-		}
+		window.PanelUI.multiView.showMainView();
 	},
 	
 	menuItemAccesskeyCode: function(str, e) {
