@@ -3,3 +3,6 @@ content   navigatorsupercharger                    chrome/content/
 locale    navigatorsupercharger-en   en-US         chrome/locale/en-US/
 
 skin      navigatorsupercharger      classic/1.0   chrome/skin/common/
+skin      navigatorsupercharger-os   classic/1.0   chrome/skin/linux/
+skin      navigatorsupercharger-os   classic/1.0   chrome/skin/win/     os=WINNT
+skin      navigatorsupercharger-os   classic/1.0   chrome/skin/mac/     os=Darwin

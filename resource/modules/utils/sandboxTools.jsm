@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.2.0';
+moduleAid.VERSION = '2.3.0';
 moduleAid.LAZY = true;
 
 // xmlHttpRequest(url, callback, method, async) - aid for quickly using the nsIXMLHttpRequest interface
@@ -54,6 +54,21 @@ this.dispatch = function(obj, properties) {
 	var event = (obj.ownerDocument) ? obj.ownerDocument.createEvent('CustomEvent') : obj.document.createEvent('CustomEvent');
 	event.initCustomEvent(properties.type, bubbles, cancelable, detail);
 	return obj.dispatchEvent(event);
+};
+
+// askForOwner(aNode) - dispatches an event to node, where anyone can set event.detail to any value
+// for example, to get the id of the trigger node that opened a popup or panel programmatically
+//	aNode - (xul element) the object node to ask about
+this.askForOwner = function(aNode) {
+	if(!aNode || (!aNode.ownerDocument && !aNode.document) || !aNode.dispatchEvent) { return null; }
+	
+	var owner = null;
+	var event = (aNode.ownerDocument) ? aNode.ownerDocument.createEvent('CustomEvent') : aNode.document.createEvent('CustomEvent');
+	event.__defineGetter__('detail', function() { return owner; });
+	event.__defineSetter__('detail', function(v) { return owner = v; });
+	event.initCustomEvent('AskingForNodeOwner', true, false, owner);
+	aNode.dispatchEvent(event);
+	return owner;
 };
 
 // compareFunction(a, b, strict) - returns (bool) if a === b

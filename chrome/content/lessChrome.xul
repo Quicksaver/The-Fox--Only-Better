@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://navigatorsupercharger/skin/lessChrome.css" type="text/css"?>
+<?xml-stylesheet href="chrome://navigatorsupercharger-os/skin/lessChrome.css" type="text/css"?>
+<overlay id="lessChrome-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	<toolbox id="navigator-toolbox">
+		<box id="objName-lessChrome-slimmer" insertafter="TabsToolbar"/>
+		<hbox id="objName-lessChrome-container" insertafter="objName-lessChrome-slimmer">
+			<vbox id="objName-lessChrome-toolbars" flex="1"/>
+		</hbox>
+	</toolbox>
+	
+</overlay>

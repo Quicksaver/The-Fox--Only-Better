@@ -1,0 +1,35 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@-moz-document url("chrome://browser/content/browser.xul") {
+	
+	#navigatorSupercharger-lessChrome-container {
+		position: fixed;
+		border-radius: 20px 20px 200px 200px;
+		overflow: hidden;
+	}
+	
+	#navigatorSupercharger-lessChrome-container:not([hover]) {
+		height: 0px;
+	}
+	
+	#navigatorSupercharger-lessChrome-container > * {
+		width: 100%;
+	}
+	
+	#navigatorSupercharger-lessChrome-slimmer {
+		height: 5px;
+	}
+	
+	#navigatorSupercharger-lessChrome-toolbars > #nav-bar {
+		padding-left: 13px;
+		padding-right: 13px;
+	}
+	#navigatorSupercharger-lessChrome-toolbars > #PersonalToolbar {
+		padding-left: 53px;
+		padding-right: 53px;
+	}
+	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(#nav-bar):not(#PersonalToolbar) {
+		padding-left: 53px;
+		padding-right: 53px;
+	}
+
+}

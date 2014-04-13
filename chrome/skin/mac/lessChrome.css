@@ -1,0 +1,37 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@-moz-document url("chrome://browser/content/browser.xul") {
+	
+	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
+		-moz-appearance: none;
+		background: url(chrome://browser/skin/Toolbar-background-noise.png) hsl(0,0%,83%);
+	}
+	
+	#navigatorSupercharger-lessChrome-slimmer {
+		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
+		background-clip: border-box;
+		background-origin: border-box !important;
+		background-repeat: repeat-x, no-repeat;
+		background-position: 0 1px, 0 0;
+		box-shadow: inset 0 1px 0 hsla(0,0%,100%,.4);
+		margin-top: -1px;
+		position: relative;
+		z-index: 1;
+	}
+	
+	#navigatorSupercharger-lessChrome-toolbars #nav-bar {
+		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,90%), hsl(0,0%,83%));
+		box-shadow: inset 0 1px 0 hsla(0,0%,100%,.35);
+		margin-top: 0;
+	}
+	
+	#navigatorSupercharger-lessChrome-slimmer:not(:-moz-lwtheme):-moz-window-inactive {
+		background-color: -moz-mac-chrome-inactive;
+	}
+	
+	@media (min-resolution: 2dppx) {
+		#navigatorSupercharger-lessChrome-slimmer {
+			background-size: 100px 100px, auto;
+		}
+	}
+
+}
