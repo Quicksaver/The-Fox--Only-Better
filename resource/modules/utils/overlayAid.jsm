@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.9.0';
+moduleAid.VERSION = '2.9.1';
 moduleAid.LAZY = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -483,7 +483,11 @@ this.overlayAid = {
 		}
 		
 		var overlayList = [];
-		var allAttr = this.getAllInAttr(aWindow);
+		// Right now I don't have any overlays that conflict between add-ons. I need to change this routine, to make it so it
+		// unloads only the conflicting overlays. But it's not an immediate need, so I'm restricting it only to the current
+		// add-on overlays for now (it will make it faster and less prone to errors when entering customize mode).
+		//var allAttr = this.getAllInAttr(aWindow);
+		var allAttr = [objName];
 		for(var y=0; y<allAttr.length; y++) {
 			var x = '_OVERLAYS_'+allAttr[y];
 			if(!aWindow[x]) { continue; }

@@ -1,9 +1,8 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
 this.__defineGetter__('lessChromeToolbars', function() { return $(objName+'-lessChrome-toolbars'); });
 
-this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
