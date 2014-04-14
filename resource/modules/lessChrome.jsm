@@ -1,5 +1,6 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 
+this.__defineGetter__('lessChromeSlimmer', function() { return $(objName+'-lessChrome-slimmer'); });
 this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
 this.__defineGetter__('lessChromeToolbars', function() { return $(objName+'-lessChrome-toolbars'); });
 
@@ -84,6 +85,8 @@ this.moveLessChrome = function() {
 	sscode += '}';
 	
 	styleAid.load('lessChromeMove_'+_UUID, sscode, true);
+	
+	findPersonaPosition();
 };
 
 this.onMouseOver = function() {
@@ -243,6 +246,84 @@ this.holdPopupMenu = function(e) {
 	}
 };
 
+this.findPersonaPosition = function() {
+	if(!trueAttribute(document.documentElement, 'lwtheme')) {
+		prefAid.lwthemebgImage = '';
+		prefAid.lwthemebgWidth = 0;
+		prefAid.lwthemecolor = '';
+		prefAid.lwthemebgColor = '';
+		stylePersonaLessChrome();
+		return;
+	}
+	
+	var windowStyle = getComputedStyle(document.documentElement);
+	if(prefAid.lwthemebgImage != windowStyle.getPropertyValue('background-image') && windowStyle.getPropertyValue('background-image') != 'none') {
+		prefAid.lwthemebgImage = windowStyle.getPropertyValue('background-image');
+		prefAid.lwthemecolor = windowStyle.getPropertyValue('color');
+		prefAid.lwthemebgColor = windowStyle.getPropertyValue('background-color');
+		prefAid.lwthemebgWidth = 0;
+		
+		lwthemeImage = new window.Image();
+		lwthemeImage.onload = function() { findPersonaWidth(); };
+		lwthemeImage.src = prefAid.lwthemebgImage.substr(5, prefAid.lwthemebgImage.length - 8);
+		return;
+	}
+	
+	stylePersonaLessChrome();
+};
+
+this.findPersonaWidth = function() {
+	if(prefAid.lwthemebgWidth == 0 && lwthemeImage.naturalWidth != 0) {
+		prefAid.lwthemebgWidth = lwthemeImage.naturalWidth;
+	}
+	
+	if(prefAid.lwthemebgWidth != 0) {
+		stylePersonaLessChrome();
+	}
+};
+
+this.stylePersonaLessChrome = function() {
+	// Unload current stylesheet if it's been loaded
+	styleAid.unload('personaLessChrome_'+_UUID);
+	
+	if(prefAid.lwthemebgImage != '') {
+		var windowStyle = getComputedStyle(document.documentElement);
+		var containerBox = lessChromeContainer.getBoundingClientRect();
+		var containerStyle = getComputedStyle(lessChromeContainer);
+		
+		// Another personas in OSX tweak
+		var offsetWindowPadding = windowStyle.getPropertyValue('background-position');
+		var offsetPersonaY = -containerBox.top;
+		if(offsetWindowPadding.indexOf(' ') > -1 && offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1) > -1) {
+			var offset = parseInt(offsetWindowPadding.substr(offsetWindowPadding.indexOf(' ') +1, offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1)));
+			offsetPersonaY += offset;
+		}
+		
+		if(containerStyle.getPropertyValue('direction') == 'ltr') {
+			var borderStart = parseInt(containerStyle.getPropertyValue('border-left-width'));
+		} else {
+			var borderStart = parseInt(containerStyle.getPropertyValue('border-right-width'));
+		}
+		
+		var offsetPersonaX = -lastLessChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
+		
+		var sscode = '/*Navigator Supercharger CSS declarations of variable values*/\n';
+		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
+		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container {\n';
+		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
+		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
+		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
+		sscode += '	  background-position: left '+offsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
+		sscode += '	  background-repeat: repeat !important;\n';
+		sscode += '	  background-size: auto auto !important;\n';
+		sscode += '	}\n';
+		sscode += '}';
+		
+		styleAid.load('personaLessChrome_'+_UUID, sscode, true);
+	}
+};
+
 this.loadLessChrome = function() {
 	lessChromeContainer.hovers = 0;
 	lessChromeContainer.minis = 0;
@@ -286,6 +367,9 @@ this.loadLessChrome = function() {
 	listenerAid.add(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
 	
+	// support personas in hovering toolbox
+	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
+	
 	moveLessChrome();
 };
 
@@ -304,6 +388,7 @@ this.unloadLessChrome = function() {
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
+	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
 	
@@ -322,5 +407,6 @@ moduleAid.LOADMODULE = function() {
 };
 
 moduleAid.UNLOADMODULE = function() {
+	styleAid.unload('personaLessChrome_'+_UUID);
 	overlayAid.removeOverlayWindow(window, 'lessChrome');
 };

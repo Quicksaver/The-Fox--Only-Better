@@ -2,12 +2,14 @@
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
 	#navigatorSupercharger-lessChrome-slimmer {
-		background-color: -moz-dialog;
 		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.40));
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
 		margin-top: -1px;
 		position: relative;
 		z-index: 1;
+	}
+	#navigatorSupercharger-lessChrome-slimmer:not(:-moz-lwtheme) {
+		background-color: -moz-dialog;
 	}
 	
 	#navigatorSupercharger-lessChrome-container {

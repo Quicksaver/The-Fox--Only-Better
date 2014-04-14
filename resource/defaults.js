@@ -1,9 +1,14 @@
-var defaultsVersion = '1.1.1';
+var defaultsVersion = '1.1.2';
 var objName = 'navigatorSupercharger';
 var objPathString = 'navigatorsupercharger';
 var prefList = {
 	lessChrome: true,
-	miniOnAllInput: false
+	miniOnAllInput: false,
+	
+	lwthemebgImage: '',
+	lwthemebgWidth: 0,
+	lwthemecolor: '',
+	lwthemebgColor: ''
 };
 
 function startAddon(window) {

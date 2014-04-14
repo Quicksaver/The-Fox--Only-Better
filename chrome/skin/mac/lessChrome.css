@@ -7,7 +7,7 @@
 	}
 	
 	#navigatorSupercharger-lessChrome-slimmer {
-		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
+		background-image: linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 		background-clip: border-box;
 		background-origin: border-box !important;
 		background-repeat: repeat-x, no-repeat;
@@ -16,6 +16,9 @@
 		margin-top: -1px;
 		position: relative;
 		z-index: 1;
+	}
+	#navigatorSupercharger-lessChrome-slimmer:not(:-moz-lwtheme) {
+		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 	}
 	
 	#navigatorSupercharger-lessChrome-toolbars #nav-bar {
