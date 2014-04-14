@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
 this.__defineGetter__('lessChromeToolbars', function() { return $(objName+'-lessChrome-toolbars'); });
@@ -27,7 +27,6 @@ this.shouldReMoveLessChrome = function(newStyle) {
 	else if(newStyle.right != lastLessChromeStyle.right
 		|| newStyle.left != lastLessChromeStyle.left
 		|| newStyle.width != lastLessChromeStyle.width
-		|| newStyle.height != lastLessChromeStyle.height
 		|| newStyle.clientWidth != lastLessChromeStyle.clientWidth) {
 			return true;
 	}
@@ -39,7 +38,6 @@ this.shouldReMoveLessChrome = function(newStyle) {
 this.moveLessChrome = function() {
 	moveLessChromeStyle = {
 		width: -MIN_RIGHT -MIN_LEFT,
-		height: 0,
 		clientWidth: lessChromeContainer.clientWidth,
 		left: MIN_LEFT,
 		right: MIN_RIGHT
@@ -69,11 +67,6 @@ this.moveLessChrome = function() {
 		}
 	}
 	
-	var containerStyle = getComputedStyle(lessChromeContainer);
-	moveLessChromeStyle.height += containerStyle.getPropertyValue('border-top-width');
-	moveLessChromeStyle.height += containerStyle.getPropertyValue('border-bottom-width');
-	moveLessChromeStyle.height += lessChromeContainer.scrollHeight;
-	
 	if(!shouldReMoveLessChrome(moveLessChromeStyle)) { return; }
 	
 	lastLessChromeStyle = moveLessChromeStyle;
@@ -87,11 +80,7 @@ this.moveLessChrome = function() {
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container {\n';
 	sscode += '		width: ' + Math.max(moveLessChromeStyle.width, 100) + 'px !important;\n';
 	sscode += '		left: ' + moveLessChromeStyle.left + 'px !important;\n';
-	//sscode += '		right: ' + moveLessChromeStyle.right + 'px !important;\n';
 	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container[hover] {\n';
-	sscode += '		height: ' + moveLessChromeStyle.height + 'px !important;\n';
-  	sscode += '	}\n';
 	sscode += '}';
 	
 	styleAid.load('lessChromeMove_'+_UUID, sscode, true);

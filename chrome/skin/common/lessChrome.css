@@ -7,8 +7,15 @@
 		overflow: hidden;
 	}
 	
+	#navigatorSupercharger-lessChrome-container:not([hover]),
+	#navigatorSupercharger-lessChrome-container:not([hover]) * {
+		pointer-events: none !important;
+	}
 	#navigatorSupercharger-lessChrome-container:not([hover]) {
-		height: 0px;
+		opacity: 0;
+	}
+	#navigatorSupercharger-lessChrome-container[hover] {
+		opacity: 1;
 	}
 	
 	#navigatorSupercharger-lessChrome-container > * {
