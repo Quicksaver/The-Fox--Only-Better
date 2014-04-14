@@ -13,9 +13,11 @@
 	}
 	#navigatorSupercharger-lessChrome-container:not([hover]):not([mini]) {
 		opacity: 0;
+		margin-top: -5px;
 	}
 	#navigatorSupercharger-lessChrome-container:-moz-any([hover],[mini]) {
 		opacity: 1;
+		margin-top: 0;
 	}
 	
 	#navigatorSupercharger-lessChrome-container > * {
@@ -30,30 +32,29 @@
 		padding-left: 13px;
 		padding-right: 13px;
 	}
-	#navigatorSupercharger-lessChrome-toolbars > #PersonalToolbar {
-		padding-left: 53px;
-		padding-right: 53px;
-	}
-	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(#nav-bar):not(#PersonalToolbar) {
+	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(#nav-bar) {
 		padding-left: 53px;
 		padding-right: 53px;
 	}
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) > #navigatorSupercharger-lessChrome-toolbars > :not(#nav-bar),
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container),
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar > toolbarbutton,
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar > dropmarker,
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-icons {
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) > #navigatorSupercharger-lessChrome-toolbars > :not(#nav-bar),
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container),
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
+	#navigatorSupercharger-lessChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
 		visibility: collapse;
+	}
+	
+	#navigatorSupercharger-lessChrome-container:not([hover]) {
+		width: 550px;
 	}
 	
 	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) {
 		border-radius: 0 0 4px 4px;
-		width: 550px;
 	}
 	
 	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #nav-bar {
@@ -62,6 +63,24 @@
 	
 	#navigatorSupercharger-lessChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
 		transition: none;
+	}
+	
+	/* animations */
+	
+	#navigatorSupercharger-lessChrome-container[mini][hover] {
+		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
+	}
+
+	#navigatorSupercharger-lessChrome-container:not([mini])[hover] {
+		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
+	}
+
+	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) {
+		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
+	}
+	
+	#navigatorSupercharger-lessChrome-container:not([mini]):not([hover]) {
+		transition: opacity 0.30s ease-out 0s, margin-top 0.25s ease-out 0s, width 0.1s linear 0s;
 	}
 
 }

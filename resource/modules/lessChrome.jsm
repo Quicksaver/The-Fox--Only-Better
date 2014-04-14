@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.2';
+moduleAid.VERSION = '1.1.3';
 
 this.__defineGetter__('lessChromeSlimmer', function() { return $(objName+'-lessChrome-slimmer'); });
 this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
@@ -79,8 +79,10 @@ this.moveLessChrome = function() {
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container {\n';
-	sscode += '		width: ' + Math.max(moveLessChromeStyle.width, 100) + 'px;\n';
 	sscode += '		left: ' + moveLessChromeStyle.left + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container[hover] {\n';
+	sscode += '		width: ' + Math.max(moveLessChromeStyle.width, 100) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
 	
@@ -146,7 +148,9 @@ this.onDragExitAll = function() {
 this.setHover = function(hover, force) {
 	if(hover) {
 		lessChromeContainer.hovers++;
-		setAttribute(lessChromeContainer, 'hover', 'true');
+		timerAid.init('setHover', function() {
+			setAttribute(lessChromeContainer, 'hover', 'true');
+		}, 75);
 		if(force != undefined && typeof(force) == 'number') {
 			lessChromeContainer.hovers = force;
 		}
@@ -158,17 +162,24 @@ this.setHover = function(hover, force) {
 			lessChromeContainer.hovers--;
 		}
 		if(lessChromeContainer.hovers == 0) {
-			removeAttribute(lessChromeContainer, 'hover');
+			removeAttribute(lessChromeContainer, 'fullWidth');
+			timerAid.init('setHover', function() {
+				removeAttribute(lessChromeContainer, 'hover');
+			}, 250);
 		}
 	}
 };
 
 this.setMini = function(mini) {
 	if(mini) {
+		timerAid.cancel('onlyURLBar');
 		setAttribute(lessChromeContainer, 'mini', 'true');
-		timerAid.cancel('delayRemoveMini');
+		setAttribute(lessChromeContainer, 'onlyURLBar', 'true');
 	} else {
 		removeAttribute(lessChromeContainer, 'mini');
+		timerAid.init('onlyURLBar', function() {
+			removeAttribute(lessChromeContainer, 'onlyURLBar');
+		}, 300);
 	}
 };
 
@@ -183,6 +194,7 @@ this.focusPasswords = function(e) {
 };
 
 // Keep chrome visible when opening menus within it
+this.holdPopupNode = null;
 this.holdPopupMenu = function(e) {
 	var trigger = e.originalTarget.triggerNode;
 	var hold = false;
@@ -225,11 +237,18 @@ this.holdPopupMenu = function(e) {
 	}
 	
 	if(hold) {
+		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
+		holdPopupNode = e.target;
+		if(!trueAttribute(lessChromeContainer, 'hover')) {
+			e.target.collapsed = true;
+		}
+		
 		setHover(true);
 		var selfRemover = function(ee) {
 			if(ee.originalTarget != e.originalTarget) { return; } //submenus
 			if(typeof(setHover) != 'undefined') { setHover(false); }
 			listenerAid.remove(e.target, 'popuphidden', selfRemover);
+			holdPopupNode = null;
 		}
 		listenerAid.add(e.target, 'popuphidden', selfRemover);
 	}
@@ -313,6 +332,27 @@ this.stylePersonaLessChrome = function() {
 	}
 };
 
+this.lessChromeTransitioned = function(e) {
+	if(e.target != lessChromeContainer) { return; }
+	
+	if(e.propertyName == 'width') {
+		if(gNavBar.overflowable && lessChromeContainer.hovers > 0) {
+			// make sure it doesn't get stuck open
+			setHover(true, 1);
+			setAttribute(lessChromeContainer, 'fullWidth', 'true');
+			
+			gNavBar.overflowable._onResize();
+			gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
+				gNavBar.overflowable._lazyResizeHandler = null;
+				if(holdPopupNode) {
+					holdPopupNode.moveTo(-1,-1);
+					holdPopupNode.collapsed = false;
+				}
+			});	
+		}
+	}
+};
+
 this.loadLessChrome = function() {
 	lessChromeContainer.hovers = 0;
 	
@@ -355,6 +395,9 @@ this.loadLessChrome = function() {
 	listenerAid.add(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
 	
+	// re-do widgets positions after resizing
+	listenerAid.add(lessChromeContainer, 'transitionend', lessChromeTransitioned);
+	
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
 	
@@ -376,6 +419,7 @@ this.unloadLessChrome = function() {
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
+	listenerAid.remove(lessChromeContainer, 'transitionend', lessChromeTransitioned);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
