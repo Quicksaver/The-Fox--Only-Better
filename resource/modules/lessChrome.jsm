@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.1.2';
 
 this.__defineGetter__('lessChromeSlimmer', function() { return $(objName+'-lessChrome-slimmer'); });
 this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
@@ -163,23 +163,12 @@ this.setHover = function(hover, force) {
 	}
 };
 
-this.setMini = function(mini, force) {
+this.setMini = function(mini) {
 	if(mini) {
-		lessChromeContainer.minis++;
 		setAttribute(lessChromeContainer, 'mini', 'true');
-		if(force != undefined && typeof(force) == 'number') {
-			lessChromeContainer.minis = force;
-		}
-	}
-	else {
-		if(force != undefined && typeof(force) == 'number') {
-			lessChromeContainer.minis = force;
-		} else if(lessChromeContainer.minis > 0) {
-			lessChromeContainer.minis--;
-		}
-		if(lessChromeContainer.minis == 0) {
-			removeAttribute(lessChromeContainer, 'mini');
-		}
+		timerAid.cancel('delayRemoveMini');
+	} else {
+		removeAttribute(lessChromeContainer, 'mini');
 	}
 };
 
@@ -326,7 +315,6 @@ this.stylePersonaLessChrome = function() {
 
 this.loadLessChrome = function() {
 	lessChromeContainer.hovers = 0;
-	lessChromeContainer.minis = 0;
 	
 	lessChromeToolbars.appendChild(gNavBar);
 	
