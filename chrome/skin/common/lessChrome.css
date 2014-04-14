@@ -60,7 +60,7 @@
 		padding: 1px;
 	}
 	
-	#navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	#navigatorSupercharger-lessChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
 		transition: none;
 	}
 
