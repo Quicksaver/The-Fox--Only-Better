@@ -32,5 +32,21 @@
 		padding-top: 2px;
 		padding-bottom: 2px;
 	}
+	
+	/* mini chrome, the hover style always overrides all of this */
+	
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+		-moz-border-start: 1px solid ThreeDShadow;
+		margin-left: 3px;
+	}
+	
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+	}
 
 }

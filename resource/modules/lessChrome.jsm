@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.1.0';
 
 this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
 this.__defineGetter__('lessChromeToolbars', function() { return $(objName+'-lessChrome-toolbars'); });
@@ -78,8 +78,8 @@ this.moveLessChrome = function() {
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container {\n';
-	sscode += '		width: ' + Math.max(moveLessChromeStyle.width, 100) + 'px !important;\n';
-	sscode += '		left: ' + moveLessChromeStyle.left + 'px !important;\n';
+	sscode += '		width: ' + Math.max(moveLessChromeStyle.width, 100) + 'px;\n';
+	sscode += '		left: ' + moveLessChromeStyle.left + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
 	
@@ -160,6 +160,36 @@ this.setHover = function(hover, force) {
 	}
 };
 
+this.setMini = function(mini, force) {
+	if(mini) {
+		lessChromeContainer.minis++;
+		setAttribute(lessChromeContainer, 'mini', 'true');
+		if(force != undefined && typeof(force) == 'number') {
+			lessChromeContainer.minis = force;
+		}
+	}
+	else {
+		if(force != undefined && typeof(force) == 'number') {
+			lessChromeContainer.minis = force;
+		} else if(lessChromeContainer.minis > 0) {
+			lessChromeContainer.minis--;
+		}
+		if(lessChromeContainer.minis == 0) {
+			removeAttribute(lessChromeContainer, 'mini');
+		}
+	}
+};
+
+this.focusPasswords = function(e) {
+	if(e.target
+	&& e.target.nodeName
+	&& e.target.nodeName.toLowerCase() == 'input'
+	&& !e.target.disabled
+	&& (prefAid.miniOnAllInput || e.target.type == 'password')) {
+		setMini(e.type == 'focus');
+	}
+};
+
 // Keep chrome visible when opening menus within it
 this.holdPopupMenu = function(e) {
 	var trigger = e.originalTarget.triggerNode;
@@ -206,7 +236,7 @@ this.holdPopupMenu = function(e) {
 		setHover(true);
 		var selfRemover = function(ee) {
 			if(ee.originalTarget != e.originalTarget) { return; } //submenus
-			setHover(false);
+			if(typeof(setHover) != 'undefined') { setHover(false); }
 			listenerAid.remove(e.target, 'popuphidden', selfRemover);
 		}
 		listenerAid.add(e.target, 'popuphidden', selfRemover);
@@ -215,6 +245,7 @@ this.holdPopupMenu = function(e) {
 
 this.loadLessChrome = function() {
 	lessChromeContainer.hovers = 0;
+	lessChromeContainer.minis = 0;
 	
 	lessChromeToolbars.appendChild(gNavBar);
 	
@@ -251,6 +282,10 @@ this.loadLessChrome = function() {
 	listenerAid.add(gNavToolbox, 'focus', onMouseOver, true);
 	listenerAid.add(gNavToolbox, 'blur', onMouseOut, true);
 	
+	// show mini chrome when focusing password fields
+	listenerAid.add(gBrowser, 'focus', focusPasswords, true);
+	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
+	
 	moveLessChrome();
 };
 
@@ -267,6 +302,8 @@ this.unloadLessChrome = function() {
 	listenerAid.remove(window, 'popupshown', holdPopupMenu);
 	listenerAid.remove(gNavToolbox, 'focus', onMouseOver, true);
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
+	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
+	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
 	
