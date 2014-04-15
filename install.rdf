@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	<Description about="urn:mozilla:install-manifest">
-		<em:id>navigatorsupercharger@quicksaver</em:id>
+		<em:id>thefoxonlybetter@quicksaver</em:id>
 		<em:version>0</em:version>
 		<em:type>2</em:type>
 		<em:creator>Quicksaver</em:creator>
 		<em:iconURL></em:iconURL>
 		<em:optionsURL></em:optionsURL>
-		<em:name>Navigator Supercharger</em:name>
+		<em:name>The Fox, Only Better</em:name>
 		<em:bootstrap>true</em:bootstrap>
 		
 		<em:targetApplication>
@@ -21,7 +21,7 @@
 		<em:localized>
 			<Description>
 				<em:locale>en-US</em:locale>
-				<em:name>Navigator Supercharger</em:name>
+				<em:name>The Fox, Only Better</em:name>
 				<em:description></em:description>
 				<em:homepageURL></em:homepageURL>
 			</Description>

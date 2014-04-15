@@ -1,36 +1,36 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
-	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) {
+	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
 		margin-top: -5px;
 	}
-	#navigatorSupercharger-slimChrome-container:-moz-any([hover],[mini]) {
+	#theFoxOnlyBetter-slimChrome-container:-moz-any([hover],[mini]) {
 		margin-top: 0;
 	}
 	
-	#navigatorSupercharger-slimChrome-slimmer {
+	#theFoxOnlyBetter-slimChrome-slimmer {
 		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
 		margin-top: -1px;
 		position: relative;
 		z-index: 1;
 	}
-	#navigatorSupercharger-slimChrome-slimmer:not(:-moz-lwtheme) {
+	#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
 		background-color: -moz-dialog;
 	}
 	
-	#navigatorSupercharger-slimChrome-container {
+	#theFoxOnlyBetter-slimChrome-container {
 		border: 1px solid ThreeDShadow;
 		border-top: none;
 	}
 	
-	#navigatorSupercharger-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
+	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
 		-moz-appearance: none;
 		background-color: -moz-dialog;
 		border-style: none;
 	}
 	
-	#navigatorSupercharger-slimChrome-toolbars #nav-bar {
+	#theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 		margin-top: 0;
 		box-shadow: none;
 		background-image: linear-gradient(rgba(253,253,253,0.4), rgba(255,255,255,0));
@@ -40,47 +40,47 @@
 		@media	(-moz-os-version: windows-vista),
 			(-moz-os-version: windows-win7) {
 		
-			#navigatorSupercharger-slimChrome-container:not(:-moz-lwtheme) {
+			#theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
 				border-color: #aabccf;
 			}
 			
-			#navigatorSupercharger-slimChrome-slimmer:not(:-moz-lwtheme),
-			#navigatorSupercharger-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
+			#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme),
+			#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
 				background-color: hsl(210,75%,92%);
 			}
 		}
 	}
 	
 	@media (-moz-windows-compositor) {
-		#navigatorSupercharger-slimChrome-slimmer {
+		#theFoxOnlyBetter-slimChrome-slimmer {
   			border-top: 1px solid hsla(209,67%,12%,0.35);
   			background-clip: padding-box;
 		}
 		
-		#main-window[sizemode=normal] #navigatorSupercharger-slimChrome-container {
+		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-container {
 			background-clip: padding-box;
 		}
 		
-		#main-window[sizemode=normal] #navigatorSupercharger-slimChrome-slimmer {
+		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-slimmer {
   			border-top: 1px solid hsla(209,67%,12%,0.35);
 			border-left: 1px solid hsla(209,67%,12%,0.35);
 			border-right: 1px solid hsla(209,67%,12%,0.35);
 			background-clip: padding-box;
 		}
 		
-		#navigatorSupercharger-slimChrome-toolbars #nav-bar {
+		#theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 			border-top: none !important;
 		}
 		
 		@media	(-moz-os-version: windows-vista),
 			(-moz-os-version: windows-win7) {
 			
-			#main-window[sizemode=normal] #navigatorSupercharger-slimChrome-slimmer {
+			#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-slimmer {
 				border-top-left-radius: 2.5px;
 				border-top-right-radius: 2.5px;
 			}
 			
-			#main-window[sizemode=normal] #navigatorSupercharger-slimChrome-toolbars #nav-bar {
+			#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
 			}
@@ -89,7 +89,7 @@
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
 		-moz-border-start: 1px solid ThreeDShadow;
 		margin-left: 3px;
 	}
@@ -97,11 +97,11 @@
 	@media	(-moz-os-version: windows-vista),
 		(-moz-os-version: windows-win7) {
 		
-		window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+		window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
 			border-top-left-radius: 2px;
 			border-bottom-left-radius: 2px;
 		}
-		window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+		window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
 			border-top-right-radius: 2px;
 			border-bottom-right-radius: 2px;
 		}

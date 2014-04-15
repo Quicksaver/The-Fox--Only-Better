@@ -1,6 +1,6 @@
-var defaultsVersion = '1.1.3';
-var objName = 'navigatorSupercharger';
-var objPathString = 'navigatorsupercharger';
+var defaultsVersion = '1.1.4';
+var objName = 'theFoxOnlyBetter';
+var objPathString = 'thefoxonlybetter';
 var prefList = {
 	slimChrome: true,
 	miniOnAllInput: false,

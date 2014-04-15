@@ -1,88 +1,88 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
-	#navigatorSupercharger-slimChrome-container {
+	#theFoxOnlyBetter-slimChrome-container {
 		position: fixed;
 		border-radius: 20px 20px 200px 200px;
 		overflow: hidden;
 		z-index: 400;
 	}
 	
-	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini])[noPointerEvents],
-	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini])[noPointerEvents] * {
+	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini])[noPointerEvents],
+	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini])[noPointerEvents] * {
 		pointer-events: none !important;
 	}
 	
-	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) {
+	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
 		opacity: 0;
 	}
-	#navigatorSupercharger-slimChrome-container:-moz-any([hover],[mini]) {
+	#theFoxOnlyBetter-slimChrome-container:-moz-any([hover],[mini]) {
 		opacity: 1;
 	}
 	
-	#navigatorSupercharger-slimChrome-container > * {
+	#theFoxOnlyBetter-slimChrome-container > * {
 		width: 100%;
 	}
 	
-	#navigatorSupercharger-slimChrome-slimmer {
+	#theFoxOnlyBetter-slimChrome-slimmer {
 		height: 5px;
 	}
-	window[chromehidden~="menubar"] #navigatorSupercharger-slimChrome-slimmer {
+	window[chromehidden~="menubar"] #theFoxOnlyBetter-slimChrome-slimmer {
 		height: 9px;
 	}
 	
-	#navigatorSupercharger-slimChrome-toolbars > #nav-bar {
+	#theFoxOnlyBetter-slimChrome-toolbars > #nav-bar {
 		padding-left: 13px;
 		padding-right: 13px;
 	}
-	#navigatorSupercharger-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
 		padding-left: 53px;
 		padding-right: 53px;
 	}
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) > #navigatorSupercharger-slimChrome-toolbars > :not(#nav-bar),
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container),
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
-	#navigatorSupercharger-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
 		visibility: collapse;
 	}
 	
-	#navigatorSupercharger-slimChrome-container:not([hover]) {
+	#theFoxOnlyBetter-slimChrome-container:not([hover]) {
 		width: 550px;
 	}
 	
-	#navigatorSupercharger-slimChrome-container[mini]:not([hover]) {
+	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
 		border-radius: 0 0 4px 4px;
 	}
 	
-	#navigatorSupercharger-slimChrome-container[mini]:not([hover]) #nav-bar {
+	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #nav-bar {
 		padding: 1px;
 	}
 	
-	#navigatorSupercharger-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
+	#theFoxOnlyBetter-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
 		transition: none;
 	}
 	
 	/* animations */
 	
-	#navigatorSupercharger-slimChrome-container[mini][hover] {
+	#theFoxOnlyBetter-slimChrome-container[mini][hover] {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 
-	#navigatorSupercharger-slimChrome-container:not([mini])[hover] {
+	#theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 
-	#navigatorSupercharger-slimChrome-container[mini]:not([hover]) {
+	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 	
-	#navigatorSupercharger-slimChrome-container:not([mini]):not([hover]) {
+	#theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-out 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
 	}
 

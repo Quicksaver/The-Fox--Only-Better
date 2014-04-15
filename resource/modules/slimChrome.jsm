@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.3';
+moduleAid.VERSION = '1.2.4';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -75,13 +75,13 @@ this.moveSlimChrome = function() {
 	// Unload current stylesheet if it's been loaded
 	styleAid.unload('slimChromeMove_'+_UUID);
 	
-	var sscode = '/*Navigator Supercharger CSS declarations of variable values*/\n';
+	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-slimChrome-container {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container {\n';
 	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
 	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-slimChrome-container[hover] {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container[hover] {\n';
 	sscode += '		width: ' + Math.max(moveSlimChromeStyle.width, 100) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
@@ -375,10 +375,10 @@ this.stylePersonaSlimChrome = function() {
 		
 		var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
 		
-		var sscode = '/*Navigator Supercharger CSS declarations of variable values*/\n';
+		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-slimChrome-container {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container {\n';
 		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
 		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
 		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
