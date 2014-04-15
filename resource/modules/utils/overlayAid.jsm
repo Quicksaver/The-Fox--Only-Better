@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.9.1';
+moduleAid.VERSION = '2.9.2';
 moduleAid.LAZY = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -669,7 +669,32 @@ this.overlayAid = {
 								action.node.remove();
 							}
 							
-							aWindow.CustomizableUI.destroyWidget(action.node.id);
+							var widget = aWindow.CustomizableUI.getWidget(action.node.id);
+							if(widget && widget.provider == aWindow.CustomizableUI.PROVIDER_API) {
+								// see note below (on createWidget)
+								var placement = aWindow.CustomizableUI.getPlacementOfWidget(action.node.id, aWindow);
+								areaType = (placement) ? aWindow.CustomizableUI.getAreaType(placement.area) : null;
+								if(areaType == aWindow.CustomizableUI.TYPE_TOOLBAR) {
+									windowMediator.callOnAll(function(bWindow) {
+										var wToolbar = bWindow.document.getElementById(placement.area);
+										if(wToolbar && !wToolbar._init) {
+											overlayAid.tempAppendToolbar(bWindow, wToolbar);
+										}
+									}, aWindow.document.documentElement.getAttribute('windowtype'));
+								}
+								
+								try { aWindow.CustomizableUI.destroyWidget(action.node.id); }
+								catch(ex) { Cu.reportError(ex); }
+								
+								if(areaType == aWindow.CustomizableUI.TYPE_TOOLBAR) {
+									windowMediator.callOnAll(function(bWindow) {
+										var wToolbar = bWindow.document.getElementById(placement.area);
+										if(wToolbar) {
+											overlayAid.tempRestoreToolbar(wToolbar);
+										}
+									}, aWindow.document.documentElement.getAttribute('windowtype'));
+								}
+							}
 						}
 						break;
 					
@@ -731,7 +756,8 @@ this.overlayAid = {
 									}
 								}, aWindow.document.documentElement.getAttribute('windowtype'));
 								
-								aWindow.CustomizableUI.unregisterArea(action.node.id);
+								try { aWindow.CustomizableUI.unregisterArea(action.node.id); }
+								catch(ex) { Cu.reportError(ex); }
 								
 								windowMediator.callOnAll(function(bWindow) {
 									var wToolbar = bWindow.document.getElementById(action.node.id);
@@ -1133,10 +1159,12 @@ this.overlayAid = {
 	
 	registerAreas: function(aWindow, node) {
 		if(node.nodeName == 'toolbar' && node.id && !aWindow.CustomizableUI.getAreaType(node.id)) {
-			aWindow.CustomizableUI.registerArea(node.id, {
-				type: CustomizableUI.TYPE_TOOLBAR,
-				legacy: true
-			});
+			try {
+				aWindow.CustomizableUI.registerArea(node.id, {
+					type: CustomizableUI.TYPE_TOOLBAR,
+					legacy: true
+				});
+			} catch(ex) { Cu.reportError(ex); }
 		}
 		
 		for(var nc=0; nc<node.childNodes.length; nc++) {
@@ -1168,11 +1196,13 @@ this.overlayAid = {
 		setAttribute(node.tempAppend.container, 'style', 'position: fixed; top: 4000px; left: 4000px; opacity: 0.001;');
 		aWindow.document.documentElement.appendChild(node.tempAppend.container);
 		
-		node.tempAppend.container.appendChild(node);
+		try { node.tempAppend.container.appendChild(node); } catch(ex) { Cu.reportError(ex); }
 	},
 	tempRestoreToolbar: function(node) {
 		if(node.tempAppend) {
-			node.tempAppend.parent.insertBefore(node.tempAppend.container.firstChild, node.tempAppend.sibling);
+			try { node.tempAppend.parent.insertBefore(node.tempAppend.container.firstChild, node.tempAppend.sibling); }
+			catch(ex) { Cu.reportError(ex); }
+			
 			node.tempAppend.container.parentNode.removeChild(node.tempAppend.container);
 			delete node.tempAppend;
 		}
@@ -1489,7 +1519,8 @@ this.overlayAid = {
 		var originalParent = node.parentNode;
 		var browserList = this.swapBrowsers(aWindow, node);
 		
-		try { parent.appendChild(node); } catch(ex) { Cu.reportError(ex); }
+		try { parent.appendChild(node); }
+		catch(ex) { Cu.reportError(ex); }
 		
 		this.swapBrowsers(aWindow, node, browserList);
 		this.traceBack(aWindow, {
@@ -1512,7 +1543,8 @@ this.overlayAid = {
 		}
 		var browserList = this.swapBrowsers(aWindow, node);
 		
-		try { parent.insertBefore(node, sibling); } catch(ex) { Cu.reportError(ex); }
+		try { parent.insertBefore(node, sibling); }
+		catch(ex) { Cu.reportError(ex); }
 		
 		this.swapBrowsers(aWindow, node, browserList);
 		if(!originalParent) {
@@ -1745,7 +1777,8 @@ this.overlayAid = {
 			}
 		}
 		
-		try { node.remove(); } catch(ex) { Cu.reportError(ex); }
+		try { node.remove(); }
+		catch(ex) { Cu.reportError(ex); }
 		
 		this.traceBack(aWindow, {
 			action: 'removeChild',
@@ -1859,10 +1892,53 @@ this.overlayAid = {
 		
 		var widget = aWindow.CustomizableUI.getWidget(id);
 		if(!widget || widget.provider != aWindow.CustomizableUI.PROVIDER_API) {
-			aWindow.CustomizableUI.createWidget(this.getWidgetData(aWindow, node, palette));
+			// this needs the binding applied on the toolbar in order for the widget to be immediatelly placed there,
+			// and since its placements won't be restored until it's created, we have to search for it in all existing areas
+			var areaId = null;
+			var areas = CustomizableUI.areas;
+			for(var a=0; a<areas.length; a++) {
+				var inArea = aWindow.CustomizableUI.getWidgetIdsInArea(areas[a]);
+				if(inArea.indexOf(id) > -1) {
+					if(aWindow.CustomizableUI.getAreaType(areas[a]) != aWindow.CustomizableUI.TYPE_TOOLBAR) { break; }
+					
+					areaId = areas[a];
+					windowMediator.callOnAll(function(bWindow) {
+						var wToolbar = bWindow.document.getElementById(areaId);
+						if(wToolbar && wToolbar != palette && !wToolbar._init) {
+							overlayAid.tempAppendToolbar(bWindow, wToolbar);
+						}
+					}, aWindow.document.documentElement.getAttribute('windowtype'));
+					break;
+				}
+			}
+			
+			try { aWindow.CustomizableUI.createWidget(this.getWidgetData(aWindow, node, palette)); }
+			catch(ex) {Cu.reportError(ex); }
+			
+			if(areaId) {
+				windowMediator.callOnAll(function(bWindow) {
+					var wToolbar = bWindow.document.getElementById(areaId);
+					if(wToolbar && wToolbar != palette) {
+						overlayAid.tempRestoreToolbar(wToolbar);
+					}
+				}, aWindow.document.documentElement.getAttribute('windowtype'));
+			}
 		}
 		
-		aWindow.CustomizableUI.ensureWidgetPlacedInWindow(id, aWindow);
+		else {
+			var placement = aWindow.CustomizableUI.getPlacementOfWidget(id, aWindow);
+			var areaNode = (placement) ? aWindow.document.getElementById(placement.area) : null;
+			if(areaNode && areaNode.nodeName == 'toolbar' && !areaNode._init && areaNode != palette) {
+				this.tempAppendToolbar(aWindow, areaNode);
+			}
+			
+			try { aWindow.CustomizableUI.ensureWidgetPlacedInWindow(id, aWindow); }
+			catch(ex) { Cu.reportError(ex); }
+			
+			if(areaNode && areaNode != palette) {
+				this.tempRestoreToolbar(areaNode);
+			}
+		}
 		
 		// CUI always gets the widget from the Globals.widgets object in this case
 		if(palette.nodeName == 'toolbar') {
