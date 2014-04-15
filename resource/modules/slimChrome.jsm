@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.4';
+moduleAid.VERSION = '1.2.0';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -99,6 +99,10 @@ this.onMouseOut = function() {
 	setHover(false);
 };
 
+this.onFocus = function() {
+	setHover(true, true);
+};
+
 this.onMouseOutBrowser = function(e) {
 	// bascially this means that when the mouse left something, it entered "nothing", which is what we want to capture here
 	if(e.relatedTarget) { return; }
@@ -125,8 +129,24 @@ this.onMouseReEnterBrowser = function(e) {
 	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
 };
 
+this.onMouseOverToolbox = function(e) {
+	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
+		slimChromeContainer.hoversQueued++;
+		return;
+	}
+	onMouseOver();
+};
+
+this.onMouseOutToolbox = function(e) {
+	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
+		slimChromeContainer.hoversQueued--;
+		return;
+	}
+	onMouseOut();
+};
+
 this.onDragEnter = function() {
-	setHover(true, 1);
+	setHover(true, false, 1);
 	listenerAid.remove(slimChromeContainer, 'dragenter', onDragEnter);
 	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.add(window, "drop", onDragExitAll);
@@ -145,12 +165,19 @@ this.onDragExitAll = function() {
 	setHover(false);
 };
 
-this.setHover = function(hover, force) {
+this.setHover = function(hover, now, force) {
 	if(hover) {
 		slimChromeContainer.hovers++;
-		timerAid.init('setHover', function() {
+		
+		if(!now) {
+			timerAid.init('setHover', function() {
+				setAttribute(slimChromeContainer, 'hover', 'true');
+			}, 75);
+		} else {
+			timerAid.cancel('setHover');
 			setAttribute(slimChromeContainer, 'hover', 'true');
-		}, 75);
+		}
+		
 		if(force != undefined && typeof(force) == 'number') {
 			slimChromeContainer.hovers = force;
 		}
@@ -161,25 +188,37 @@ this.setHover = function(hover, force) {
 		} else if(slimChromeContainer.hovers > 0) {
 			slimChromeContainer.hovers--;
 		}
+		
 		if(slimChromeContainer.hovers == 0) {
 			removeAttribute(slimChromeContainer, 'fullWidth');
-			timerAid.init('setHover', function() {
+			
+			if(!now) {
+				timerAid.init('setHover', function() {
+					removeAttribute(slimChromeContainer, 'hover');
+				}, 250);
+			} else {
+				timerAid.cancel('setHover');
 				removeAttribute(slimChromeContainer, 'hover');
-			}, 250);
+			}
 		}
 	}
 };
 
 this.setMini = function(mini) {
 	if(mini) {
+		blockedPopup = false;
 		timerAid.cancel('onlyURLBar');
+		timerAid.cancel('setMini');
 		setAttribute(slimChromeContainer, 'mini', 'true');
 		setAttribute(slimChromeContainer, 'onlyURLBar', 'true');
 	} else {
-		removeAttribute(slimChromeContainer, 'mini');
-		timerAid.init('onlyURLBar', function() {
-			removeAttribute(slimChromeContainer, 'onlyURLBar');
-		}, 300);
+		// aSync so the toolbox focus handler knows what it's doing
+		timerAid.init('setMini', function() {
+			removeAttribute(slimChromeContainer, 'mini');
+			timerAid.init('onlyURLBar', function() {
+				removeAttribute(slimChromeContainer, 'onlyURLBar');
+			}, 300);
+		}, 50);
 	}
 };
 
@@ -194,6 +233,8 @@ this.focusPasswords = function(e) {
 };
 
 // Keep chrome visible when opening menus within it
+this.blockPopups = ['identity-popup', 'notification-popup'];
+this.blockedPopup = false;
 this.holdPopupNode = null;
 this.holdPopupMenu = function(e) {
 	var trigger = e.originalTarget.triggerNode;
@@ -239,16 +280,34 @@ this.holdPopupMenu = function(e) {
 	if(hold) {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
 		holdPopupNode = e.target;
-		if(!trueAttribute(slimChromeContainer, 'hover')) {
-			e.target.collapsed = true;
+		
+		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
+		if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
+			setMini(true);
+			blockedPopup = true;
+		} else {
+			if(!trueAttribute(slimChromeContainer, 'hover')) {
+				e.target.collapsed = true;
+			}
+			
+			setHover(true);
 		}
 		
-		setHover(true);
 		var selfRemover = function(ee) {
 			if(ee.originalTarget != e.originalTarget) { return; } //submenus
-			if(typeof(setHover) != 'undefined') { setHover(false); }
 			listenerAid.remove(e.target, 'popuphidden', selfRemover);
-			holdPopupNode = null;
+			
+			if(typeof(setHover) != 'undefined') {
+				if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
+					if(blockedPopup) {
+						setMini(false);
+						blockedPopup = false;
+					}
+				} else {
+					setHover(false);
+				}
+				holdPopupNode = null;
+			}
 		}
 		listenerAid.add(e.target, 'popuphidden', selfRemover);
 	}
@@ -338,7 +397,14 @@ this.slimChromeTransitioned = function(e) {
 	if(e.propertyName == 'width') {
 		if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
 			// make sure it doesn't get stuck open
-			setHover(true, 1);
+			setHover(true, false, 1);
+			
+			// account for queued hovers while in mini mode
+			if(slimChromeContainer.hoversQueued) {
+				slimChromeContainer.hovers += slimChromeContainer.hoversQueued;
+				slimChromeContainer.hoversQueued = 0;
+			}
+			
 			setAttribute(slimChromeContainer, 'fullWidth', 'true');
 			
 			gNavBar.overflowable._onResize();
@@ -348,13 +414,14 @@ this.slimChromeTransitioned = function(e) {
 					holdPopupNode.moveTo(-1,-1);
 					holdPopupNode.collapsed = false;
 				}
-			});	
+			});
 		}
 	}
 };
 
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
+	slimChromeContainer.hoversQueued = 0;
 	
 	slimChromeToolbars.appendChild(gNavBar);
 	
@@ -378,8 +445,8 @@ this.loadSlimChrome = function() {
 	
 	// keep the toolbox when hovering it
 	listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
-	listenerAid.add(gNavToolbox, 'mouseover', onMouseOver);
-	listenerAid.add(gNavToolbox, 'mouseout', onMouseOut);
+	listenerAid.add(gNavToolbox, 'mouseover', onMouseOverToolbox);
+	listenerAid.add(gNavToolbox, 'mouseout', onMouseOutToolbox);
 	
 	// the empty area of the tabs toolbar doesn't respond to mouse events, so we need to use mouseout from the browser-panel instead
 	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
@@ -388,7 +455,7 @@ this.loadSlimChrome = function() {
 	listenerAid.add(window, 'popupshown', holdPopupMenu);
 	
 	// also keep the toolbox visible if it has focus of course
-	listenerAid.add(gNavToolbox, 'focus', onMouseOver, true);
+	listenerAid.add(gNavToolbox, 'focus', onFocus, true);
 	listenerAid.add(gNavToolbox, 'blur', onMouseOut, true);
 	
 	// show mini chrome when focusing password fields
@@ -409,13 +476,13 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	listenerAid.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
 	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
-	listenerAid.remove(gNavToolbox, 'mouseover', onMouseOver);
-	listenerAid.remove(gNavToolbox, 'mouseout', onMouseOut);
+	listenerAid.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
+	listenerAid.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
 	listenerAid.remove(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.remove(window, "drop", onDragExitAll);
 	listenerAid.remove(window, "dragend", onDragExitAll);
 	listenerAid.remove(window, 'popupshown', holdPopupMenu);
-	listenerAid.remove(gNavToolbox, 'focus', onMouseOver, true);
+	listenerAid.remove(gNavToolbox, 'focus', onFocus, true);
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
