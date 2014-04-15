@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.0';
+moduleAid.VERSION = '1.2.1';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -91,8 +91,8 @@ this.moveSlimChrome = function() {
 	findPersonaPosition();
 };
 
-this.onMouseOver = function() {
-	setHover(true);
+this.onMouseOver = function(e) {
+	setHover(true, e && isAncestor(e.target, slimChromeContainer));
 };
 
 this.onMouseOut = function() {
@@ -134,7 +134,7 @@ this.onMouseOverToolbox = function(e) {
 		slimChromeContainer.hoversQueued++;
 		return;
 	}
-	onMouseOver();
+	onMouseOver(e);
 };
 
 this.onMouseOutToolbox = function(e) {
@@ -394,28 +394,36 @@ this.stylePersonaSlimChrome = function() {
 this.slimChromeTransitioned = function(e) {
 	if(e.target != slimChromeContainer) { return; }
 	
-	if(e.propertyName == 'width') {
-		if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
-			// make sure it doesn't get stuck open
-			setHover(true, false, 1);
-			
-			// account for queued hovers while in mini mode
-			if(slimChromeContainer.hoversQueued) {
-				slimChromeContainer.hovers += slimChromeContainer.hoversQueued;
-				slimChromeContainer.hoversQueued = 0;
-			}
-			
-			setAttribute(slimChromeContainer, 'fullWidth', 'true');
-			
-			gNavBar.overflowable._onResize();
-			gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
-				gNavBar.overflowable._lazyResizeHandler = null;
-				if(holdPopupNode) {
-					holdPopupNode.moveTo(-1,-1);
-					holdPopupNode.collapsed = false;
+	switch(e.propertyName) {
+		case 'width':
+			if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
+				// make sure it doesn't get stuck open
+				setHover(true, false, 1);
+				
+				// account for queued hovers while in mini mode
+				if(slimChromeContainer.hoversQueued) {
+					slimChromeContainer.hovers += slimChromeContainer.hoversQueued;
+					slimChromeContainer.hoversQueued = 0;
 				}
-			});
-		}
+				
+				setAttribute(slimChromeContainer, 'fullWidth', 'true');
+				
+				gNavBar.overflowable._onResize();
+				gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
+					gNavBar.overflowable._lazyResizeHandler = null;
+					if(holdPopupNode) {
+						holdPopupNode.moveTo(-1,-1);
+						holdPopupNode.collapsed = false;
+					}
+				});
+			}
+			break;
+		
+		case 'opacity':
+			toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover'));
+			break;
+		
+		default: break;
 	}
 };
 

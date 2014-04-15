@@ -8,8 +8,8 @@
 		z-index: 400;
 	}
 	
-	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]),
-	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) * {
+	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini])[noPointerEvents],
+	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini])[noPointerEvents] * {
 		pointer-events: none !important;
 	}
 	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) {
