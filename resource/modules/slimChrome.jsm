@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.1';
+moduleAid.VERSION = '1.2.2';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -427,6 +427,27 @@ this.slimChromeTransitioned = function(e) {
 	}
 };
 
+this.slimChromeProgressListener = {
+	last: null,
+	onLocationChange: function(aProgress, aRequest, aURI) {
+		try { var host = aURI.host; }
+		catch(ex) { var host = aURI.spec; }
+		
+		// no point in showing in certain cases
+		if(host == this.last || gBrowser.selectedTab.pinned || window.XULBrowserWindow.inContentWhitelist.indexOf(aURI.spec) > -1) { return; }
+		
+		this.last = host;
+		
+		// also no point in showing mini if it's already shown
+		if(trueAttribute(slimChromeContainer, 'hover')) {
+			setMini(false);
+		} else {
+			setMini(true);
+			timerAid.init('setMini', function() { setMini(false); }, 2000);
+		}
+	}
+};
+
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
@@ -470,8 +491,14 @@ this.loadSlimChrome = function() {
 	listenerAid.add(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
 	
+	// hide chrome when typing in content
+	listenerAid.add(gBrowser, 'keydown', onMouseOut, true);
+	
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
+	
+	// show mini when the current tab changes host; this will also capture when changing tabs
+	gBrowser.addProgressListener(slimChromeProgressListener);
 	
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
@@ -494,7 +521,9 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
+	listenerAid.remove(gBrowser, 'keydown', onMouseOut, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
+	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
