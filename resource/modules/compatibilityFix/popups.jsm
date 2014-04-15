@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -19,12 +19,12 @@ this.holdPopupAutoCompleteRichResult = function(e) {
 
 this.holdIdentityPopup = function(e) {
 	e.detail = 'identity-box';
-	e.stopPropagtion();
+	e.stopPropagation();
 };
 
 this.holdNotificationPopup = function(e) {
 	e.detail = 'notification-popup-box';
-	e.stopPropagtion();
+	e.stopPropagation();
 };
 
 this.setupHoldDownloadsPanel = function(e) {
