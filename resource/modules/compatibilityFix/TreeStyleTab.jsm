@@ -1,8 +1,8 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.listenForTreeStyleTab = function() {
-	if(prefAid.lessChrome && typeof(moveLessChrome) != 'undefined') {
-		moveLessChrome();
+	if(prefAid.slimChrome && typeof(moveSlimChrome) != 'undefined') {
+		moveSlimChrome();
 	}
 };
 

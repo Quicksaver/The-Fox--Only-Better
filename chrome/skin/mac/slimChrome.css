@@ -1,12 +1,12 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
-	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
+	#navigatorSupercharger-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
 		-moz-appearance: none;
 		background: url(chrome://browser/skin/Toolbar-background-noise.png) hsl(0,0%,83%);
 	}
 	
-	#navigatorSupercharger-lessChrome-slimmer {
+	#navigatorSupercharger-slimChrome-slimmer {
 		background-image: linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 		background-clip: border-box;
 		background-origin: border-box !important;
@@ -17,38 +17,38 @@
 		position: relative;
 		z-index: 1;
 	}
-	#navigatorSupercharger-lessChrome-slimmer:not(:-moz-lwtheme) {
+	#navigatorSupercharger-slimChrome-slimmer:not(:-moz-lwtheme) {
 		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 	}
 	
-	#navigatorSupercharger-lessChrome-toolbars #nav-bar {
+	#navigatorSupercharger-slimChrome-toolbars #nav-bar {
 		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,90%), hsl(0,0%,83%));
 		box-shadow: inset 0 1px 0 hsla(0,0%,100%,.35);
 		margin-top: 0;
 	}
 	
-	#navigatorSupercharger-lessChrome-slimmer:not(:-moz-lwtheme):-moz-window-inactive {
+	#navigatorSupercharger-slimChrome-slimmer:not(:-moz-lwtheme):-moz-window-inactive {
 		background-color: -moz-mac-chrome-inactive;
 	}
 	
 	@media (min-resolution: 2dppx) {
-		#navigatorSupercharger-lessChrome-slimmer {
+		#navigatorSupercharger-slimChrome-slimmer {
 			background-size: 100px 100px, auto;
 		}
 	}
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
 		-moz-border-start: 1px solid;
 		margin-left: 4px;
 	}
 	
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
 		border-top-left-radius: 3px;
 		border-bottom-left-radius: 3px;
 	}
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
 		border-top-right-radius: 3px;
 		border-bottom-right-radius: 3px;
 	}

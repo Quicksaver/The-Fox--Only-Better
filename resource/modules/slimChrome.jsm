@@ -1,8 +1,8 @@
-moduleAid.VERSION = '1.1.3';
+moduleAid.VERSION = '1.1.4';
 
-this.__defineGetter__('lessChromeSlimmer', function() { return $(objName+'-lessChrome-slimmer'); });
-this.__defineGetter__('lessChromeContainer', function() { return $(objName+'-lessChrome-container'); });
-this.__defineGetter__('lessChromeToolbars', function() { return $(objName+'-lessChrome-toolbars'); });
+this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
+this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
+this.__defineGetter__('slimChromeToolbars', function() { return $(objName+'-slimChrome-toolbars'); });
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
@@ -12,23 +12,23 @@ this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 this.__defineGetter__('MIN_LEFT', function() { return 22; });
 this.__defineGetter__('MIN_RIGHT', function() { return 22; });
 
-this.moveLessChromeStyle = {};
-this.lastLessChromeStyle = null;
+this.moveSlimChromeStyle = {};
+this.lastSlimChromeStyle = null;
 
-this.delayMoveLessChrome = function() {
-	timerAid.init('delayMoveLessChrome', moveLessChrome, 0);
+this.delayMoveSlimChrome = function() {
+	timerAid.init('delayMoveSlimChrome', moveSlimChrome, 0);
 };
 
-this.shouldReMoveLessChrome = function(newStyle) {
-	if(!lastLessChromeStyle) { return true; }
+this.shouldReMoveSlimChrome = function(newStyle) {
+	if(!lastSlimChromeStyle) { return true; }
 	
 	if(!newStyle) {
-		return (lessChromeContainer.clientWidth != lastLessChromeStyle.clientWidth);
+		return (slimChromeContainer.clientWidth != lastSlimChromeStyle.clientWidth);
 	}
-	else if(newStyle.right != lastLessChromeStyle.right
-		|| newStyle.left != lastLessChromeStyle.left
-		|| newStyle.width != lastLessChromeStyle.width
-		|| newStyle.clientWidth != lastLessChromeStyle.clientWidth) {
+	else if(newStyle.right != lastSlimChromeStyle.right
+		|| newStyle.left != lastSlimChromeStyle.left
+		|| newStyle.width != lastSlimChromeStyle.width
+		|| newStyle.clientWidth != lastSlimChromeStyle.clientWidth) {
 			return true;
 	}
 	
@@ -36,18 +36,18 @@ this.shouldReMoveLessChrome = function(newStyle) {
 };
 
 // Handles the position of the top chrome
-this.moveLessChrome = function() {
-	moveLessChromeStyle = {
+this.moveSlimChrome = function() {
+	moveSlimChromeStyle = {
 		width: -MIN_RIGHT -MIN_LEFT,
-		clientWidth: lessChromeContainer.clientWidth,
+		clientWidth: slimChromeContainer.clientWidth,
 		left: MIN_LEFT,
 		right: MIN_RIGHT
 	};
 	
 	var appContentPos = $('content').getBoundingClientRect();
-	moveLessChromeStyle.width += appContentPos.width;
-	moveLessChromeStyle.left += appContentPos.left;
-	moveLessChromeStyle.right += document.documentElement.clientWidth -appContentPos.right;
+	moveSlimChromeStyle.width += appContentPos.width;
+	moveSlimChromeStyle.left += appContentPos.left;
+	moveSlimChromeStyle.right += document.documentElement.clientWidth -appContentPos.right;
 	
 	// Compatibility with TreeStyleTab
 	if($('TabsToolbar') && !$('TabsToolbar').collapsed) {
@@ -55,38 +55,38 @@ this.moveLessChrome = function() {
 		if($('TabsToolbar').getAttribute('treestyletab-tabbar-position') == 'left' || $('TabsToolbar').getAttribute('treestyletab-tabbar-position') == 'right') {
 			var TabsToolbar = $('TabsToolbar');
 			var TabsSplitter = document.getAnonymousElementByAttribute($('content'), 'class', 'treestyletab-splitter');
-			moveLessChromeStyle.width -= TabsToolbar.clientWidth;
-			moveLessChromeStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
+			moveSlimChromeStyle.width -= TabsToolbar.clientWidth;
+			moveSlimChromeStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
 			if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left') {
-				moveLessChromeStyle.left += TabsToolbar.clientWidth;
-				moveLessChromeStyle.left += TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
+				moveSlimChromeStyle.left += TabsToolbar.clientWidth;
+				moveSlimChromeStyle.left += TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
 			}
 			if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
-				moveLessChromeStyle.right += TabsToolbar.clientWidth;
-				moveLessChromeStyle.right += TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
+				moveSlimChromeStyle.right += TabsToolbar.clientWidth;
+				moveSlimChromeStyle.right += TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
 			}
 		}
 	}
 	
-	if(!shouldReMoveLessChrome(moveLessChromeStyle)) { return; }
+	if(!shouldReMoveSlimChrome(moveSlimChromeStyle)) { return; }
 	
-	lastLessChromeStyle = moveLessChromeStyle;
+	lastSlimChromeStyle = moveSlimChromeStyle;
 	
 	// Unload current stylesheet if it's been loaded
-	styleAid.unload('lessChromeMove_'+_UUID);
+	styleAid.unload('slimChromeMove_'+_UUID);
 	
 	var sscode = '/*Navigator Supercharger CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container {\n';
-	sscode += '		left: ' + moveLessChromeStyle.left + 'px;\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-slimChrome-container {\n';
+	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
 	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container[hover] {\n';
-	sscode += '		width: ' + Math.max(moveLessChromeStyle.width, 100) + 'px;\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-slimChrome-container[hover] {\n';
+	sscode += '		width: ' + Math.max(moveSlimChromeStyle.width, 100) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
 	
-	styleAid.load('lessChromeMove_'+_UUID, sscode, true);
+	styleAid.load('slimChromeMove_'+_UUID, sscode, true);
 	
 	findPersonaPosition();
 };
@@ -127,7 +127,7 @@ this.onMouseReEnterBrowser = function(e) {
 
 this.onDragEnter = function() {
 	setHover(true, 1);
-	listenerAid.remove(lessChromeContainer, 'dragenter', onDragEnter);
+	listenerAid.remove(slimChromeContainer, 'dragenter', onDragEnter);
 	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.add(window, "drop", onDragExitAll);
 	listenerAid.add(window, "dragend", onDragExitAll);
@@ -147,24 +147,24 @@ this.onDragExitAll = function() {
 
 this.setHover = function(hover, force) {
 	if(hover) {
-		lessChromeContainer.hovers++;
+		slimChromeContainer.hovers++;
 		timerAid.init('setHover', function() {
-			setAttribute(lessChromeContainer, 'hover', 'true');
+			setAttribute(slimChromeContainer, 'hover', 'true');
 		}, 75);
 		if(force != undefined && typeof(force) == 'number') {
-			lessChromeContainer.hovers = force;
+			slimChromeContainer.hovers = force;
 		}
 	}
 	else {
 		if(force != undefined && typeof(force) == 'number') {
-			lessChromeContainer.hovers = force;
-		} else if(lessChromeContainer.hovers > 0) {
-			lessChromeContainer.hovers--;
+			slimChromeContainer.hovers = force;
+		} else if(slimChromeContainer.hovers > 0) {
+			slimChromeContainer.hovers--;
 		}
-		if(lessChromeContainer.hovers == 0) {
-			removeAttribute(lessChromeContainer, 'fullWidth');
+		if(slimChromeContainer.hovers == 0) {
+			removeAttribute(slimChromeContainer, 'fullWidth');
 			timerAid.init('setHover', function() {
-				removeAttribute(lessChromeContainer, 'hover');
+				removeAttribute(slimChromeContainer, 'hover');
 			}, 250);
 		}
 	}
@@ -173,12 +173,12 @@ this.setHover = function(hover, force) {
 this.setMini = function(mini) {
 	if(mini) {
 		timerAid.cancel('onlyURLBar');
-		setAttribute(lessChromeContainer, 'mini', 'true');
-		setAttribute(lessChromeContainer, 'onlyURLBar', 'true');
+		setAttribute(slimChromeContainer, 'mini', 'true');
+		setAttribute(slimChromeContainer, 'onlyURLBar', 'true');
 	} else {
-		removeAttribute(lessChromeContainer, 'mini');
+		removeAttribute(slimChromeContainer, 'mini');
 		timerAid.init('onlyURLBar', function() {
-			removeAttribute(lessChromeContainer, 'onlyURLBar');
+			removeAttribute(slimChromeContainer, 'onlyURLBar');
 		}, 300);
 	}
 };
@@ -201,16 +201,16 @@ this.holdPopupMenu = function(e) {
 	
 	// check if the trigger node is present in the addonBar
 	if(!hold) {
-		hold = isAncestor(trigger, lessChromeContainer);
+		hold = isAncestor(trigger, slimChromeContainer);
 	}
 	
 	if(!hold && !trigger) {
 		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
 		if(e.target.id == 'customizationui-widget-panel') {
-			hold_loop: for(var t=0; t<lessChromeToolbars.childNodes.length; t++) {
-				if(lessChromeToolbars.childNodes[t].localName != 'toolbar' || !CustomizableUI.getAreaType(lessChromeToolbars.childNodes[t].id)) { continue; }
+			hold_loop: for(var t=0; t<slimChromeToolbars.childNodes.length; t++) {
+				if(slimChromeToolbars.childNodes[t].localName != 'toolbar' || !CustomizableUI.getAreaType(slimChromeToolbars.childNodes[t].id)) { continue; }
 				
-				var widgets = CustomizableUI.getWidgetsInArea(lessChromeToolbars.childNodes[t].id);
+				var widgets = CustomizableUI.getWidgetsInArea(slimChromeToolbars.childNodes[t].id);
 				for(var w=0; w<widgets.length; w++) {
 					var widget = widgets[w].forWindow(window);
 					if(!widget || !widget.node || !widget.node.open) { continue; }
@@ -222,7 +222,7 @@ this.holdPopupMenu = function(e) {
 		}
 		
 		// let's just assume all panels that are children from these toolbars are opening from them
-		else if(isAncestor(e.target, lessChromeContainer)) {
+		else if(isAncestor(e.target, slimChromeContainer)) {
 			hold = true;
 		}
 	}
@@ -232,14 +232,14 @@ this.holdPopupMenu = function(e) {
 		trigger = askForOwner(e.target);
 		if(trigger && typeof(trigger) == 'string') {
 			trigger = $(trigger);
-			hold = isAncestor(trigger, lessChromeContainer);
+			hold = isAncestor(trigger, slimChromeContainer);
 		}
 	}
 	
 	if(hold) {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
 		holdPopupNode = e.target;
-		if(!trueAttribute(lessChromeContainer, 'hover')) {
+		if(!trueAttribute(slimChromeContainer, 'hover')) {
 			e.target.collapsed = true;
 		}
 		
@@ -260,7 +260,7 @@ this.findPersonaPosition = function() {
 		prefAid.lwthemebgWidth = 0;
 		prefAid.lwthemecolor = '';
 		prefAid.lwthemebgColor = '';
-		stylePersonaLessChrome();
+		stylePersonaSlimChrome();
 		return;
 	}
 	
@@ -277,7 +277,7 @@ this.findPersonaPosition = function() {
 		return;
 	}
 	
-	stylePersonaLessChrome();
+	stylePersonaSlimChrome();
 };
 
 this.findPersonaWidth = function() {
@@ -286,18 +286,18 @@ this.findPersonaWidth = function() {
 	}
 	
 	if(prefAid.lwthemebgWidth != 0) {
-		stylePersonaLessChrome();
+		stylePersonaSlimChrome();
 	}
 };
 
-this.stylePersonaLessChrome = function() {
+this.stylePersonaSlimChrome = function() {
 	// Unload current stylesheet if it's been loaded
-	styleAid.unload('personaLessChrome_'+_UUID);
+	styleAid.unload('personaSlimChrome_'+_UUID);
 	
 	if(prefAid.lwthemebgImage != '') {
 		var windowStyle = getComputedStyle(document.documentElement);
-		var containerBox = lessChromeContainer.getBoundingClientRect();
-		var containerStyle = getComputedStyle(lessChromeContainer);
+		var containerBox = slimChromeContainer.getBoundingClientRect();
+		var containerStyle = getComputedStyle(slimChromeContainer);
 		
 		// Another personas in OSX tweak
 		var offsetWindowPadding = windowStyle.getPropertyValue('background-position');
@@ -313,12 +313,12 @@ this.stylePersonaLessChrome = function() {
 			var borderStart = parseInt(containerStyle.getPropertyValue('border-right-width'));
 		}
 		
-		var offsetPersonaX = -lastLessChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
+		var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
 		
 		var sscode = '/*Navigator Supercharger CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-lessChrome-container {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigatorSupercharger-slimChrome-container {\n';
 		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
 		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
 		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
@@ -328,18 +328,18 @@ this.stylePersonaLessChrome = function() {
 		sscode += '	}\n';
 		sscode += '}';
 		
-		styleAid.load('personaLessChrome_'+_UUID, sscode, true);
+		styleAid.load('personaSlimChrome_'+_UUID, sscode, true);
 	}
 };
 
-this.lessChromeTransitioned = function(e) {
-	if(e.target != lessChromeContainer) { return; }
+this.slimChromeTransitioned = function(e) {
+	if(e.target != slimChromeContainer) { return; }
 	
 	if(e.propertyName == 'width') {
-		if(gNavBar.overflowable && lessChromeContainer.hovers > 0) {
+		if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
 			// make sure it doesn't get stuck open
 			setHover(true, 1);
-			setAttribute(lessChromeContainer, 'fullWidth', 'true');
+			setAttribute(slimChromeContainer, 'fullWidth', 'true');
 			
 			gNavBar.overflowable._onResize();
 			gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
@@ -353,10 +353,10 @@ this.lessChromeTransitioned = function(e) {
 	}
 };
 
-this.loadLessChrome = function() {
-	lessChromeContainer.hovers = 0;
+this.loadSlimChrome = function() {
+	slimChromeContainer.hovers = 0;
 	
-	lessChromeToolbars.appendChild(gNavBar);
+	slimChromeToolbars.appendChild(gNavBar);
 	
 	// also append all other custom toolbars
 	var toolbar = customToolbars;
@@ -366,7 +366,7 @@ this.loadLessChrome = function() {
 		
 		var toMove = toolbar;
 		toolbar = toolbar.previousSibling;
-		lessChromeToolbars.appendChild(toMove);
+		slimChromeToolbars.appendChild(toMove);
 		
 		if(gNavToolbox.externalToolbars.indexOf(toMove) == -1) {
 			gNavToolbox.externalToolbars.push(toMove);
@@ -374,7 +374,7 @@ this.loadLessChrome = function() {
 	}
 	
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
-	listenerAid.add(browserPanel, 'resize', delayMoveLessChrome);
+	listenerAid.add(browserPanel, 'resize', delayMoveSlimChrome);
 	
 	// keep the toolbox when hovering it
 	listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
@@ -396,16 +396,16 @@ this.loadLessChrome = function() {
 	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
 	
 	// re-do widgets positions after resizing
-	listenerAid.add(lessChromeContainer, 'transitionend', lessChromeTransitioned);
+	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
 	
-	moveLessChrome();
+	moveSlimChrome();
 };
 
-this.unloadLessChrome = function() {
-	listenerAid.remove(browserPanel, 'resize', delayMoveLessChrome);
+this.unloadSlimChrome = function() {
+	listenerAid.remove(browserPanel, 'resize', delayMoveSlimChrome);
 	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	listenerAid.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
 	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
@@ -419,26 +419,26 @@ this.unloadLessChrome = function() {
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
-	listenerAid.remove(lessChromeContainer, 'transitionend', lessChromeTransitioned);
+	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
 	
-	while(lessChromeToolbars.firstChild) {
-		var e = gNavToolbox.externalToolbars.indexOf(lessChromeToolbars.firstChild);
+	while(slimChromeToolbars.firstChild) {
+		var e = gNavToolbox.externalToolbars.indexOf(slimChromeToolbars.firstChild);
 		if(e != -1) {
 			gNavToolbox.externalToolbars.splice(e, 1);
 		}
 		
-		gNavToolbox.appendChild(lessChromeToolbars.firstChild);
+		gNavToolbox.appendChild(slimChromeToolbars.firstChild);
 	}
 };
 	
 moduleAid.LOADMODULE = function() {
-	overlayAid.overlayWindow(window, 'lessChrome', null, loadLessChrome, unloadLessChrome);
+	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 };
 
 moduleAid.UNLOADMODULE = function() {
-	styleAid.unload('personaLessChrome_'+_UUID);
-	overlayAid.removeOverlayWindow(window, 'lessChrome');
+	styleAid.unload('personaSlimChrome_'+_UUID);
+	overlayAid.removeOverlayWindow(window, 'slimChrome');
 };

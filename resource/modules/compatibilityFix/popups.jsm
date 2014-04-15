@@ -1,6 +1,6 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
-// this module catches the popup event and tells which nodes (triggers) the lessChrome script should check for
+// this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
 this.holdPanelUI = function(e) {
 	e.detail = 'PanelUI-button';

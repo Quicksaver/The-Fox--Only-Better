@@ -1,8 +1,8 @@
-var defaultsVersion = '1.1.2';
+var defaultsVersion = '1.1.3';
 var objName = 'navigatorSupercharger';
 var objPathString = 'navigatorsupercharger';
 var prefList = {
-	lessChrome: true,
+	slimChrome: true,
 	miniOnAllInput: false,
 	
 	lwthemebgImage: '',

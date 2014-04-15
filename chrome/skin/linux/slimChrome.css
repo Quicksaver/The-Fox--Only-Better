@@ -1,12 +1,12 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
-	#navigatorSupercharger-lessChrome-container:not(:-moz-lwtheme) {
+	#navigatorSupercharger-slimChrome-container:not(:-moz-lwtheme) {
 		border: 1px solid ThreeDShadow;
 		border-top: none;
 	}
 	
-	#navigatorSupercharger-lessChrome-slimmer {
+	#navigatorSupercharger-slimChrome-slimmer {
 		background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.25));
 		box-shadow: 0 1px 0 rgba(255,255,255,.3) inset;
 		margin-top: -1px;
@@ -14,18 +14,18 @@
 		z-index: 1;
 	}
 	
-	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(:-moz-lwtheme) {
+	#navigatorSupercharger-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
 		-moz-appearance: none;
 		border-style: none;
 		background-color: -moz-dialog;
 	}
 	
-	#navigatorSupercharger-lessChrome-toolbars > toolbar:not(#nav-bar) {
+	#navigatorSupercharger-slimChrome-toolbars > toolbar:not(#nav-bar) {
 		padding-top: 1px;
 		padding-bottom: 1px;
 	}
 	
-	#navigatorSupercharger-lessChrome-toolbars > #nav-bar {
+	#navigatorSupercharger-slimChrome-toolbars > #nav-bar {
 		background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
 		box-shadow: 0 1px 0 rgba(255,255,255,.25) inset;
 		margin-top: 0;
@@ -35,16 +35,16 @@
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
 		-moz-border-start: 1px solid ThreeDShadow;
 		margin-left: 3px;
 	}
 	
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
 		border-top-left-radius: 2px;
 		border-bottom-left-radius: 2px;
 	}
-	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-lessChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+	window:not([chromehidden~="toolbar"]) #navigatorSupercharger-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
 		border-top-right-radius: 2px;
 		border-bottom-right-radius: 2px;
 	}

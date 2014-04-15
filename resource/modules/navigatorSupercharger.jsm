@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -20,30 +20,30 @@ this.__defineGetter__('customizing', function() {
 
 this.fullScreenListener = function() {
 	// We get the fullscreen event _before_ the window transitions into or out of FS mode.
-	toggleLessChrome(!fullScreen);
+	toggleSlimChrome(!fullScreen);
 };
 
 this.customizeListener = function(e) {
-	toggleLessChrome(e.type == 'beforecustomization');
+	toggleSlimChrome(e.type == 'beforecustomization');
 };
 
-this.toggleLessChrome = function(noLoad) {
+this.toggleSlimChrome = function(noLoad) {
 	if(noLoad === undefined) {
 		noLoad = fullScreen || customizing;
 	}
-	moduleAid.loadIf('lessChrome', prefAid.lessChrome && !noLoad);
+	moduleAid.loadIf('slimChrome', prefAid.slimChrome && !noLoad);
 };
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/windowFixes');
 	
-	prefAid.listen('lessChrome', toggleLessChrome);
+	prefAid.listen('slimChrome', toggleSlimChrome);
 	
 	listenerAid.add(window, 'fullscreen', fullScreenListener);
 	listenerAid.add(window, 'beforecustomization', customizeListener, true);
 	listenerAid.add(window, 'aftercustomization', customizeListener, true);
 	
-	toggleLessChrome();
+	toggleSlimChrome();
 };
 
 moduleAid.UNLOADMODULE = function() {
@@ -51,9 +51,9 @@ moduleAid.UNLOADMODULE = function() {
 	listenerAid.remove(window, 'beforecustomization', customizeListener, true);
 	listenerAid.remove(window, 'aftercustomization', customizeListener, true);
 	
-	prefAid.unlisten('lessChrome', toggleLessChrome);
+	prefAid.unlisten('slimChrome', toggleSlimChrome);
 	
-	moduleAid.unload('lessChrome');
+	moduleAid.unload('slimChrome');
 	
 	moduleAid.unload('compatibilityFix/windowFixes');
 };
