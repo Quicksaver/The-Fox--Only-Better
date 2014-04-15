@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.2';
+moduleAid.VERSION = '1.2.3';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -361,6 +361,7 @@ this.stylePersonaSlimChrome = function() {
 		// Another personas in OSX tweak
 		var offsetWindowPadding = windowStyle.getPropertyValue('background-position');
 		var offsetPersonaY = -containerBox.top;
+		offsetPersonaY += parseInt(containerStyle.getPropertyValue('margin-top'));
 		if(offsetWindowPadding.indexOf(' ') > -1 && offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1) > -1) {
 			var offset = parseInt(offsetWindowPadding.substr(offsetWindowPadding.indexOf(' ') +1, offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1)));
 			offsetPersonaY += offset;

@@ -1,8 +1,15 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
+	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) {
+		margin-top: -5px;
+	}
+	#navigatorSupercharger-slimChrome-container:-moz-any([hover],[mini]) {
+		margin-top: 0;
+	}
+	
 	#navigatorSupercharger-slimChrome-slimmer {
-		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.40));
+		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
 		margin-top: -1px;
 		position: relative;
@@ -26,11 +33,16 @@
 	#navigatorSupercharger-slimChrome-toolbars #nav-bar {
 		margin-top: 0;
 		box-shadow: none;
+		background-image: linear-gradient(rgba(253,253,253,0.4), rgba(255,255,255,0));
 	}
 	
 	@media (-moz-windows-default-theme) {
 		@media	(-moz-os-version: windows-vista),
 			(-moz-os-version: windows-win7) {
+		
+			#navigatorSupercharger-slimChrome-container:not(:-moz-lwtheme) {
+				border-color: #aabccf;
+			}
 			
 			#navigatorSupercharger-slimChrome-slimmer:not(:-moz-lwtheme),
 			#navigatorSupercharger-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
@@ -46,7 +58,6 @@
 		}
 		
 		#main-window[sizemode=normal] #navigatorSupercharger-slimChrome-container {
-			border-color: #aabccf;
 			background-clip: padding-box;
 		}
 		
@@ -58,7 +69,6 @@
 		}
 		
 		#navigatorSupercharger-slimChrome-toolbars #nav-bar {
-			background-image: linear-gradient(rgba(253,253,253,0.40), rgba(255,255,255,0));
 			border-top: none !important;
 		}
 		

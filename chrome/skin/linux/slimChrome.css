@@ -1,7 +1,14 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
-	#navigatorSupercharger-slimChrome-container:not(:-moz-lwtheme) {
+	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) {
+		margin-top: -5px;
+	}
+	#navigatorSupercharger-slimChrome-container:-moz-any([hover],[mini]) {
+		margin-top: 0;
+	}
+	
+	#navigatorSupercharger-slimChrome-container {
 		border: 1px solid ThreeDShadow;
 		border-top: none;
 	}
@@ -27,7 +34,7 @@
 	
 	#navigatorSupercharger-slimChrome-toolbars > #nav-bar {
 		background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
-		box-shadow: 0 1px 0 rgba(255,255,255,.25) inset;
+		box-shadow: none;
 		margin-top: 0;
 		padding-top: 2px;
 		padding-bottom: 2px;

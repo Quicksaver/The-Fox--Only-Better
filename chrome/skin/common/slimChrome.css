@@ -12,13 +12,12 @@
 	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini])[noPointerEvents] * {
 		pointer-events: none !important;
 	}
+	
 	#navigatorSupercharger-slimChrome-container:not([hover]):not([mini]) {
 		opacity: 0;
-		margin-top: -5px;
 	}
 	#navigatorSupercharger-slimChrome-container:-moz-any([hover],[mini]) {
 		opacity: 1;
-		margin-top: 0;
 	}
 	
 	#navigatorSupercharger-slimChrome-container > * {
@@ -27,6 +26,9 @@
 	
 	#navigatorSupercharger-slimChrome-slimmer {
 		height: 5px;
+	}
+	window[chromehidden~="menubar"] #navigatorSupercharger-slimChrome-slimmer {
+		height: 9px;
 	}
 	
 	#navigatorSupercharger-slimChrome-toolbars > #nav-bar {
