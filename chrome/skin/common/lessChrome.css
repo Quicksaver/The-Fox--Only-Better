@@ -5,6 +5,7 @@
 		position: fixed;
 		border-radius: 20px 20px 200px 200px;
 		overflow: hidden;
+		z-index: 400;
 	}
 	
 	#navigatorSupercharger-lessChrome-container:not([hover]):not([mini]),
