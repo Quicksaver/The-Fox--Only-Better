@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.3';
+moduleAid.VERSION = '1.0.4';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -8,8 +8,10 @@ this.holdPanelUI = function(e) {
 };
 
 this.holdPopupAutoComplete = function(e) {
-	e.detail = 'searchbar';
-	e.stopPropagation();
+	if(isAncestor(document.commandDispatcher.focusedElement, $('searchbar'))) {
+		e.detail = 'searchbar';
+		e.stopPropagation();
+	}
 };
 
 this.holdPopupAutoCompleteRichResult = function(e) {
