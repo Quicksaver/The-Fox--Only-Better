@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.9.2';
+moduleAid.VERSION = '2.9.3';
 moduleAid.LAZY = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -675,24 +675,14 @@ this.overlayAid = {
 								var placement = aWindow.CustomizableUI.getPlacementOfWidget(action.node.id, aWindow);
 								areaType = (placement) ? aWindow.CustomizableUI.getAreaType(placement.area) : null;
 								if(areaType == aWindow.CustomizableUI.TYPE_TOOLBAR) {
-									windowMediator.callOnAll(function(bWindow) {
-										var wToolbar = bWindow.document.getElementById(placement.area);
-										if(wToolbar && !wToolbar._init) {
-											overlayAid.tempAppendToolbar(bWindow, wToolbar);
-										}
-									}, aWindow.document.documentElement.getAttribute('windowtype'));
+									this.tempAppendAllToolbars(aWindow, placement.area);
 								}
 								
 								try { aWindow.CustomizableUI.destroyWidget(action.node.id); }
 								catch(ex) { Cu.reportError(ex); }
 								
 								if(areaType == aWindow.CustomizableUI.TYPE_TOOLBAR) {
-									windowMediator.callOnAll(function(bWindow) {
-										var wToolbar = bWindow.document.getElementById(placement.area);
-										if(wToolbar) {
-											overlayAid.tempRestoreToolbar(wToolbar);
-										}
-									}, aWindow.document.documentElement.getAttribute('windowtype'));
+									this.tempRestoreAllToolbars(aWindow, placement.area);
 								}
 							}
 						}
@@ -749,22 +739,12 @@ this.overlayAid = {
 							
 							if(aWindow.CustomizableUI.getAreaType(action.node.id)) {
 								// see note in runRegisterToolbar(), we need this in all toolbars as well
-								windowMediator.callOnAll(function(bWindow) {
-									var wToolbar = bWindow.document.getElementById(action.node.id);
-									if(wToolbar && !wToolbar._init) {
-										overlayAid.tempAppendToolbar(bWindow, wToolbar);
-									}
-								}, aWindow.document.documentElement.getAttribute('windowtype'));
+								this.tempAppendAllToolbars(aWindow, action.node.id);
 								
 								try { aWindow.CustomizableUI.unregisterArea(action.node.id); }
 								catch(ex) { Cu.reportError(ex); }
 								
-								windowMediator.callOnAll(function(bWindow) {
-									var wToolbar = bWindow.document.getElementById(action.node.id);
-									if(wToolbar) {
-										overlayAid.tempRestoreToolbar(wToolbar);
-									}
-								}, aWindow.document.documentElement.getAttribute('windowtype'));
+								this.tempRestoreAllToolbars(aWindow, action.node.id);
 							}
 						}
 						break;
@@ -1206,6 +1186,23 @@ this.overlayAid = {
 			node.tempAppend.container.parentNode.removeChild(node.tempAppend.container);
 			delete node.tempAppend;
 		}
+	},
+	
+	tempAppendAllToolbars: function(aWindow, aToolbarId, except) {
+		windowMediator.callOnAll(function(bWindow) {
+			var wToolbar = bWindow.document.getElementById(aToolbarId);
+			if(wToolbar && !wToolbar._init && (!except || wToolbar != except)) {
+				overlayAid.tempAppendToolbar(bWindow, wToolbar);
+			}
+		}, aWindow.document.documentElement.getAttribute('windowtype'));
+	},
+	tempRestoreAllToolbars: function(aWindow, aToolbarId, except) {
+		windowMediator.callOnAll(function(bWindow) {
+			var wToolbar = bWindow.document.getElementById(aToolbarId);
+			if(wToolbar && (!except || wToolbar != except)) {
+				overlayAid.tempRestoreToolbar(wToolbar);
+			}
+		}, aWindow.document.documentElement.getAttribute('windowtype'));
 	},
 	
 	addToolbars: function(aWindow, node) {
@@ -1902,12 +1899,7 @@ this.overlayAid = {
 					if(aWindow.CustomizableUI.getAreaType(areas[a]) != aWindow.CustomizableUI.TYPE_TOOLBAR) { break; }
 					
 					areaId = areas[a];
-					windowMediator.callOnAll(function(bWindow) {
-						var wToolbar = bWindow.document.getElementById(areaId);
-						if(wToolbar && wToolbar != palette && !wToolbar._init) {
-							overlayAid.tempAppendToolbar(bWindow, wToolbar);
-						}
-					}, aWindow.document.documentElement.getAttribute('windowtype'));
+					this.tempAppendAllToolbars(aWindow, areaId, palette);
 					break;
 				}
 			}
@@ -1916,12 +1908,7 @@ this.overlayAid = {
 			catch(ex) {Cu.reportError(ex); }
 			
 			if(areaId) {
-				windowMediator.callOnAll(function(bWindow) {
-					var wToolbar = bWindow.document.getElementById(areaId);
-					if(wToolbar && wToolbar != palette) {
-						overlayAid.tempRestoreToolbar(wToolbar);
-					}
-				}, aWindow.document.documentElement.getAttribute('windowtype'));
+				this.tempRestoreAllToolbars(aWindow, areaId, palette);
 			}
 		}
 		
