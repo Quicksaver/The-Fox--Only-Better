@@ -13,7 +13,7 @@
 		<em:targetApplication>
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-				<em:minVersion>8.0</em:minVersion>
+				<em:minVersion>29.0a1</em:minVersion>
 				<em:maxVersion>31.0a1</em:maxVersion>
 			</Description>
 		</em:targetApplication>
@@ -22,8 +22,8 @@
 			<Description>
 				<em:locale>en-US</em:locale>
 				<em:name>The Fox, Only Better</em:name>
-				<em:description></em:description>
-				<em:homepageURL></em:homepageURL>
+				<em:description>Australis, the new Firefox theme, made a great browser look awesome. And now it will also feel awesome using it!</em:description>
+				<em:homepageURL>https://addons.mozilla.org/firefox/addon/the-fox-only-better/</em:homepageURL>
 			</Description>
 		</em:localized>
 		
