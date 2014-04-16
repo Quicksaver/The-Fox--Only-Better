@@ -52,6 +52,11 @@
 		visibility: collapse;
 	}
 	
+	/* this needs the important tag */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #omnibar-in-urlbar {
+		visibility: collapse !important;
+	}
+	
 	#theFoxOnlyBetter-slimChrome-container:not([hover]) {
 		width: 550px;
 	}
