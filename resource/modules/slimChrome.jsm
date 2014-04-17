@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.7';
+moduleAid.VERSION = '1.2.8';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -238,12 +238,10 @@ this.blockedPopup = false;
 this.holdPopupNode = null;
 this.holdPopupMenu = function(e) {
 	var trigger = e.originalTarget.triggerNode;
-	var hold = false;
 	
-	// check if the trigger node is present in the addonBar
-	if(!hold) {
-		hold = isAncestor(trigger, slimChromeContainer);
-	}
+	// check if the trigger node is present in our toolbars;
+	// there's no need to check the overflow panel here, as it will likely be open already in these cases
+	var hold = isAncestor(trigger, slimChromeContainer);
 	
 	if(!hold && !trigger) {
 		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
@@ -273,7 +271,8 @@ this.holdPopupMenu = function(e) {
 		trigger = askForOwner(e.target);
 		if(trigger && typeof(trigger) == 'string') {
 			trigger = $(trigger);
-			hold = isAncestor(trigger, slimChromeContainer);
+			// trigger could be either in the toolbars themselves or in the overflow panel
+			hold = isAncestor(trigger, slimChromeContainer) || isAncestor(trigger, $('widget-overflow-list'));
 		}
 	}
 	
