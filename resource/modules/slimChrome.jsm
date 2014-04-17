@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.6';
+moduleAid.VERSION = '1.2.7';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -452,6 +452,11 @@ this.slimChromeProgressListener = {
 	}
 };
 
+this.slimChromeKeydown = function(e) {
+	if(e.ctrlKey || e.altKey || e.metaKey) { return; }
+	onMouseOut();
+};
+
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
@@ -513,7 +518,7 @@ this.loadSlimChrome = function() {
 	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
 	
 	// hide chrome when typing in content
-	listenerAid.add(gBrowser, 'keydown', onMouseOut, true);
+	listenerAid.add(gBrowser, 'keydown', slimChromeKeydown, true);
 	
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
@@ -542,7 +547,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
-	listenerAid.remove(gBrowser, 'keydown', onMouseOut, true);
+	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
