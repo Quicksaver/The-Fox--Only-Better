@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.8';
+moduleAid.VERSION = '1.2.9';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -83,6 +83,9 @@ this.moveSlimChrome = function() {
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container[hover] {\n';
 	sscode += '		width: ' + Math.max(moveSlimChromeStyle.width, 100) + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container:not([hover]) {\n';
+	sscode += '		width: ' + Math.min(Math.max(moveSlimChromeStyle.width, 100), 550) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
 	

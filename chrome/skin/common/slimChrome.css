@@ -57,10 +57,6 @@
 		visibility: collapse !important;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container:not([hover]) {
-		width: 550px;
-	}
-	
 	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
 		border-radius: 0 0 4px 4px;
 	}
