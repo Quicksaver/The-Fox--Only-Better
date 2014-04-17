@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.4';
+moduleAid.VERSION = '1.2.5';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -455,6 +455,23 @@ this.loadSlimChrome = function() {
 	
 	slimChromeToolbars.appendChild(gNavBar);
 	
+	// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
+	gNavBar.overflowable.__onLazyResize = gNavBar.overflowable._onLazyResize;
+	gNavBar.overflowable._onLazyResize = function() {
+		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+		this.__onLazyResize();
+	};
+	gNavBar.overflowable._onOverflow = gNavBar.overflowable.onOverflow;
+	gNavBar.overflowable.onOverflow = function(e) {
+		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+		this._onOverflow(e);
+	};
+	gNavBar.overflowable.__moveItemsBackToTheirOrigin = gNavBar.overflowable._moveItemsBackToTheirOrigin;
+	gNavBar.overflowable._moveItemsBackToTheirOrigin = function(shouldMoveAllItems) {
+		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+		this.__moveItemsBackToTheirOrigin(shouldMoveAllItems);
+	};
+	
 	// also append all other custom toolbars
 	var toolbar = customToolbars;
 	while(toolbar.nextSibling) {
@@ -526,6 +543,13 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
+	
+	gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
+	gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
+	gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+	delete gNavBar.overflowable.__onLazyResize;
+	delete gNavBar.overflowable._onOverflow;
+	delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
 	
