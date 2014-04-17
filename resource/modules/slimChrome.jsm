@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.5';
+moduleAid.VERSION = '1.2.6';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -431,6 +431,9 @@ this.slimChromeTransitioned = function(e) {
 this.slimChromeProgressListener = {
 	last: null,
 	onLocationChange: function(aProgress, aRequest, aURI) {
+		// happens when exiting customize mode, although I have no clue why...
+		if(typeof(slimChromeContainer) == 'undefined') { return; }
+		
 		try { var host = aURI.host; }
 		catch(ex) { var host = aURI.spec; }
 		
