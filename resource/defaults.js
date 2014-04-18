@@ -1,4 +1,4 @@
-var defaultsVersion = '1.1.5';
+var defaultsVersion = '1.1.6';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
@@ -23,6 +23,7 @@ function startConditions(aReason) {
 function startPreferences(window) {
 	replaceObjStrings(window.document);
 	preparePreferences(window);
+	fillVersion(window.document.getElementById('addonVersion'));
 }
 
 function onStartup(aReason) {
