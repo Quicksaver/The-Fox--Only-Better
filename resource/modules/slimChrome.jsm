@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.10';
+moduleAid.VERSION = '1.2.11';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -471,6 +471,41 @@ this.slimChromeKeydown = function(e) {
 	onMouseOut();
 };
 
+this.initialShowings = [];
+this.initialShowChrome = function() {
+	setHover(true);
+	
+	// Taking this from TPP, making the same assumptions.
+	// don't use timerAid, because if we use multiple initialShowChrome()'s it could get stuck open
+	// we keep a reference to the timer, because otherwise sometimes it would not trigger (go figure...), hopefully this helps with that
+	var thisShowing = aSync(function() {
+		if(typeof(setHover) != 'undefined') {
+			setHover(false);
+			for(var i=0; i<initialShowings.length; i++) {
+				if(initialShowings[i] == thisShowing) {
+					initialShowings.splice(i, 1);
+					break;
+				}
+			}
+		}
+	}, 2000);
+	initialShowings.push(thisShowing);
+};
+
+var slimChromeCUIListener = {
+	onWidgetAfterDOMChange: function(aNode, aNextNode, aContainer, aWasRemoval) {
+		if(isAncestor(aContainer, slimChromeToolbars) && !trueAttribute(slimChromeContainer, 'hover')) {
+			var toolbar = aContainer;
+			while(toolbar.nodeName != 'toolbar' && toolbar.parentNode) {
+				toolbar = toolbar.parentNode;
+			}
+			if(!toolbar.collapsed) {
+				initialShowChrome();
+			}
+		}
+	}
+};
+
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
@@ -543,6 +578,9 @@ this.loadSlimChrome = function() {
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
 	
+	// follow changes to chrome toolbars, in case they're in our box and it should be shown
+	CustomizableUI.addListener(slimChromeCUIListener);
+	
 	moveSlimChrome();
 };
 
@@ -565,6 +603,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
+	CustomizableUI.removeListener(slimChromeCUIListener);
 	
 	gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
 	gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
