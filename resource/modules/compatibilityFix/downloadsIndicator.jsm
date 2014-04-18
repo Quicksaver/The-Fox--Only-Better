@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('DownloadsIndicatorView', function() { return window.DownloadsIndicatorView; });
 this.__defineGetter__('DownloadsCommon', function() { return window.DownloadsCommon; });
@@ -15,6 +15,12 @@ this.downloadsFinishedWidth = function() {
 moduleAid.LOADMODULE = function() {
 	DownloadsIndicatorView._showEventNotification = DownloadsIndicatorView.showEventNotification;
 	DownloadsIndicatorView.showEventNotification = function(aType) {
+		// we're already opening to animate, so don't animate again, just replace the previous animation type
+		if(reDoDownloadsNotifications) {
+			reDoDownloadsNotifications = aType;
+			return;
+		}
+		
 		// only pause animation if the button is in the slimChromeContainer
 		if(typeof(slimChromeContainer) != 'undefined'
 		&& this._initialized && DownloadsCommon.animateNotifications
