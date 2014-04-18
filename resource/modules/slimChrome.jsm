@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.5';
+moduleAid.VERSION = '1.3.6';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -497,6 +497,10 @@ this.loadSlimChrome = function() {
 		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
 		this.__moveItemsBackToTheirOrigin(shouldMoveAllItems);
 	};
+	if(gNavBar.overflowable._lazyResizeHandler) {
+		gNavBar.overflowable._lazyResizeHandler.disarm();
+		gNavBar.overflowable._lazyResizeHandler = null;
+	}
 	
 	// also append all other custom toolbars
 	var toolbar = customToolbars;
@@ -598,6 +602,10 @@ this.unloadSlimChrome = function() {
 		delete gNavBar.overflowable.__onLazyResize;
 		delete gNavBar.overflowable._onOverflow;
 		delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+		if(gNavBar.overflowable._lazyResizeHandler) {
+			gNavBar.overflowable._lazyResizeHandler.disarm();
+			gNavBar.overflowable._lazyResizeHandler = null;
+		}
 	}
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
