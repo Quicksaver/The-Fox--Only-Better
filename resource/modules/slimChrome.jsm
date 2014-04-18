@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.0';
+moduleAid.VERSION = '1.3.1';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -406,7 +406,7 @@ this.initialShowChrome = function() {
 				}
 			}
 		}
-	}, 2000);
+	}, 3000);
 	initialShowings.push(thisShowing);
 };
 
