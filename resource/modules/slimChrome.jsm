@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.4';
+moduleAid.VERSION = '1.3.5';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -233,6 +233,16 @@ this.setMini = function(mini) {
 		// aSync so the toolbox focus handler knows what it's doing
 		timerAid.init('setMini', function() {
 			removeAttribute(slimChromeContainer, 'mini');
+			
+			if(!trueAttribute(slimChromeContainer, 'hover')) {
+				// don't hover the chrome if the mini bar is hiding and the mouse happens to be hovering it
+				setAttribute(slimChromeContainer, 'noPointerEvents', 'true');
+				
+				// reset this counter, so the chrome doesn't get stuck the next time it opens
+				slimChromeContainer.hoversQueued = 0;
+			}
+			
+			// let chrome hide completely before showing the rest of the UI
 			timerAid.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
 			}, 300);
@@ -385,9 +395,19 @@ this.slimChromeProgressListener = {
 			setMini(false);
 		} else {
 			setMini(true);
-			timerAid.init('setMini', function() { setMini(false); }, 2000);
+			timerAid.init('setMini', hideMiniInABit, 2000);
 		}
 	}
+};
+
+this.hideMiniInABit = function() {
+	// don't hide mini if we're hovering it
+	if(slimChromeContainer.hoversQueued > 0 && !trueAttribute(slimChromeContainer, 'hover')) {
+		timerAid.init('setMini', hideMiniInABit, 1000);
+		return;
+	};
+	
+	setMini(false);
 };
 
 this.slimChromeKeydown = function(e) {

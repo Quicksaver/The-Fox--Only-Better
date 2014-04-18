@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.2';
+moduleAid.VERSION = '2.0.3';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -128,7 +128,7 @@ this.holdPopupMenu = function(e) {
 			if(typeof(setHover) != 'undefined') {
 				if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
 					if(blockedPopup) {
-						setMini(false);
+						hideMiniInABit();
 						blockedPopup = false;
 					}
 				} else {
