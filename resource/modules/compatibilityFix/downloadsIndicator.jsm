@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('DownloadsIndicatorView', function() { return window.DownloadsIndicatorView; });
 this.__defineGetter__('DownloadsCommon', function() { return window.DownloadsCommon; });
@@ -15,11 +15,21 @@ this.downloadsFinishedWidth = function() {
 moduleAid.LOADMODULE = function() {
 	DownloadsIndicatorView._showEventNotification = DownloadsIndicatorView.showEventNotification;
 	DownloadsIndicatorView.showEventNotification = function(aType) {
-		if(this._initialized && DownloadsCommon.animateNotifications && typeof(slimChromeContainer) != 'undefined' && slimChromeContainer.hovers == 0) {
-			reDoDownloadsNotifications = aType;
-			initialShowChrome();
-			return;
+		// only pause animation if the button is in the slimChromeContainer
+		if(typeof(slimChromeContainer) != 'undefined'
+		&& this._initialized && DownloadsCommon.animateNotifications
+		&& (isAncestor($('downloads-button'), slimChromeContainer) || isAncestor($('downloads-button'), overflowList))) {
+			// if container is hidden, pause until it is shown
+			if(!trueAttribute(slimChromeContainer, 'hover')) {
+				reDoDownloadsNotifications = aType;
+				initialShowChrome();
+				return;
+			}
+			
+			// container is not hidden, so keep showing it until animation is done at least
+			initialShowChrome(1500);
 		}
+		
 		this._showEventNotification(aType);
 	};
 	

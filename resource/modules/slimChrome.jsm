@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.3';
+moduleAid.VERSION = '1.3.4';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -399,7 +399,7 @@ this.slimChromeKeydown = function(e) {
 };
 
 this.initialShowings = [];
-this.initialShowChrome = function() {
+this.initialShowChrome = function(delay) {
 	setHover(true);
 	
 	// Taking this from TPP, making the same assumptions.
@@ -415,7 +415,7 @@ this.initialShowChrome = function() {
 				}
 			}
 		}
-	}, 3000);
+	}, delay || 3000);
 	initialShowings.push(thisShowing);
 };
 

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.0';
+moduleAid.VERSION = '2.0.1';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -98,7 +98,7 @@ this.holdPopupMenu = function(e) {
 		if(trigger && typeof(trigger) == 'string') {
 			trigger = $(trigger);
 			// trigger could be either in the toolbars themselves or in the overflow panel
-			hold = isAncestor(trigger, slimChromeContainer) || isAncestor(trigger, $('widget-overflow-list'));
+			hold = isAncestor(trigger, slimChromeContainer) || isAncestor(trigger, overflowList);
 		}
 	}
 	

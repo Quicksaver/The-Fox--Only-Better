@@ -1,7 +1,8 @@
-moduleAid.VERSION = '1.0.3';
+moduleAid.VERSION = '1.0.4';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
+this.__defineGetter__('overflowList', function() { return $('widget-overflow-list'); });
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('CustomizableUI', function() { return window.CustomizableUI; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
