@@ -2,6 +2,8 @@ content   thefoxonlybetter                    chrome/content/
 
 locale    thefoxonlybetter-en   en-US         chrome/locale/en-US/
 locale    thefoxonlybetter      en-US         chrome/locale/en-US/
+locale    thefoxonlybetter      nl            chrome/locale/nl/
+locale    thefoxonlybetter      pt-PT         chrome/locale/pt-PT/
 
 skin      thefoxonlybetter      classic/1.0   chrome/skin/common/
 skin      thefoxonlybetter-os   classic/1.0   chrome/skin/linux/

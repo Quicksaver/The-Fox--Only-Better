@@ -9,7 +9,9 @@ textbox[type="number"] .numberbox-input {
 
 #logo {
 	list-style-image: url("chrome://thefoxonlybetter/skin/icon.png");
-	margin-top: 20px;
+	/* small fix until more panes are added 
+	margin-top: 20px; */
+	margin-top: 0px;
 	margin-bottom: 20px;
 }
 

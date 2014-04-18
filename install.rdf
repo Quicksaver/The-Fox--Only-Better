@@ -23,7 +23,25 @@
 				<em:locale>en-US</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>Australis, the new Firefox theme, made a great browser look awesome. And now it will also feel awesome using it!</em:description>
-				<em:homepageURL>https://addons.mozilla.org/firefox/addon/the-fox-only-better/</em:homepageURL>
+				<em:homepageURL>https://addons.mozilla.org/en-US/firefox/addon/the-fox-only-better/</em:homepageURL>
+			</Description>
+		</em:localized>
+		<em:localized>
+			<Description>
+				<em:locale>nl</em:locale>
+				<em:name>The Fox, Only Better</em:name>
+				<em:description>Australis, het nieuwe Firefox-thema, laat een prima browser er geweldig uitzien. En nu voelt het gebruik ook geweldig!</em:description>
+				<em:homepageURL>https://addons.mozilla.org/nl/firefox/addon/the-fox-only-better/</em:homepageURL>
+				<em:translator>markh van BabelZilla.org</em:translator>
+			</Description>
+		</em:localized>
+		<em:localized>
+			<Description>
+				<em:locale>pt-PT</em:locale>
+				<em:name>O Fox, Só Que Melhor</em:name>
+				<em:description>O Australis, o novo tema do Firefox, deu uma aparência espectacular ao navegador. E agora também se vai sentir espectacular ao utiliza-lo!</em:description>
+				<em:homepageURL>https://addons.mozilla.org/pt-PT/firefox/addon/the-fox-only-better/</em:homepageURL>
+				<em:translator>Quicksaver</em:translator>
 			</Description>
 		</em:localized>
 		

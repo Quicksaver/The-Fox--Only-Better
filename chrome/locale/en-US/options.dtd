@@ -1,4 +1,4 @@
-<!ENTITY Optwindow.style "width: 41em;">
+<!ENTITY Optwindow.style "width: 40em; height: 37em;">
 <!ENTITY options.title "The Fox, Only Better">
 
 <!ENTITY optabout.label "About">
