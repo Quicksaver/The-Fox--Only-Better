@@ -86,5 +86,13 @@
 	#theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-out 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
 	}
+	
+	/* some widget animations fixes */
+	
+	/* this needs to be on top of our chrome, not below it */
+	#downloads-animation-container,
+	#bookmarked-notification-container {
+		z-index: 500;
+	}
 
 }
