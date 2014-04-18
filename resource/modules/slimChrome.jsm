@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.2';
+moduleAid.VERSION = '1.3.3';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -392,7 +392,10 @@ this.slimChromeProgressListener = {
 
 this.slimChromeKeydown = function(e) {
 	if(e.ctrlKey || e.altKey || e.metaKey) { return; }
-	onMouseOut();
+	setHover(false, true);
+	
+	// don't let it keep re-showing if the mouse is over it
+	toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0);
 };
 
 this.initialShowings = [];
