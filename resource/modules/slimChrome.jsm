@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.1';
+moduleAid.VERSION = '1.3.2';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -6,6 +6,7 @@ this.__defineGetter__('slimChromeToolbars', function() { return $(objName+'-slim
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
+this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
 this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 
 // until I find a better way of finding out on which side of the browser is the scrollbar, I'm setting equal margins
@@ -152,6 +153,8 @@ this.onMouseOutToolbox = function(e) {
 };
 
 this.onDragEnter = function() {
+	if(blockAllHovers) { return; }
+	
 	setHover(true, false, 1);
 	listenerAid.remove(slimChromeContainer, 'dragenter', onDragEnter);
 	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
@@ -171,8 +174,11 @@ this.onDragExitAll = function() {
 	setHover(false);
 };
 
+this.blockAllHovers = false;
 this.setHover = function(hover, now, force) {
 	if(hover) {
+		if(blockAllHovers) { return; }
+		
 		slimChromeContainer.hovers++;
 		
 		if(!now) {
@@ -410,9 +416,10 @@ this.initialShowChrome = function() {
 	initialShowings.push(thisShowing);
 };
 
-var slimChromeCUIListener = {
+this.initialLoading = true;
+this.slimChromeCUIListener = {
 	onWidgetAfterDOMChange: function(aNode, aNextNode, aContainer, aWasRemoval) {
-		if(isAncestor(aContainer, slimChromeToolbars) && !trueAttribute(slimChromeContainer, 'hover')) {
+		if(!initialLoading && isAncestor(aContainer, slimChromeToolbars) && !trueAttribute(slimChromeContainer, 'hover')) {
 			var toolbar = aContainer;
 			while(toolbar.nodeName != 'toolbar' && toolbar.parentNode) {
 				toolbar = toolbar.parentNode;
@@ -422,6 +429,27 @@ var slimChromeCUIListener = {
 			}
 		}
 	}
+};
+
+this.dragStartTabs = function() {
+	observerAid.notify('TheFOBDraggingTabsStart');
+};
+
+this.dragEndTabs = function() {
+	observerAid.notify('TheFOBDraggingTabsEnd');
+};
+
+this.dragTabsStartObserver = function() {
+	setHover(false, false, 0);
+	blockAllHovers = true;
+	listenerAid.add(window, 'dragend', dragEndTabs, true);
+	listenerAid.add(window, 'drop', dragEndTabs, true);
+};
+
+this.dragTabsEndObserver = function() {
+	listenerAid.remove(window, 'dragend', dragEndTabs, true);
+	listenerAid.remove(window, 'drop', dragEndTabs, true);
+	aSync(function() { blockAllHovers = false; });
 };
 
 this.loadSlimChrome = function() {
@@ -487,6 +515,11 @@ this.loadSlimChrome = function() {
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	
+	// the chrome isn't needed when dragging tabs
+	listenerAid.add(TabsToolbar, 'dragstart', dragStartTabs, true);
+	observerAid.add(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
+	observerAid.add(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
+	
 	// show mini when the current tab changes host; this will also capture when changing tabs
 	gBrowser.addProgressListener(slimChromeProgressListener);
 	
@@ -495,6 +528,12 @@ this.loadSlimChrome = function() {
 	
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
 	CustomizableUI.addListener(slimChromeCUIListener);
+	
+	// no point in showing on customization changes if it's still finishing initializing, there's a lot of these events here
+	// 5 second should be enough
+	timerAid.init('waitCUI', function() {
+		initialLoading = false;
+	}, 5000);
 	
 	dispatch(slimChromeContainer, { type: 'LoadedSlimChrome', cancelable: false });
 	
@@ -519,16 +558,24 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
+	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
+	observerAid.remove(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
+	observerAid.remove(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	CustomizableUI.removeListener(slimChromeCUIListener);
 	
-	gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
-	gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
-	gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;
-	delete gNavBar.overflowable.__onLazyResize;
-	delete gNavBar.overflowable._onOverflow;
-	delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+	initialLoading = true;
+	dragTabsEndObserver();
+	
+	if(gNavBar.overflowable) { // when closing windows?
+		gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
+		gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
+		gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+		delete gNavBar.overflowable.__onLazyResize;
+		delete gNavBar.overflowable._onOverflow;
+		delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+	}
 	
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
 	
