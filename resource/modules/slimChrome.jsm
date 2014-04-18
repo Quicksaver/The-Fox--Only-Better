@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.11';
+moduleAid.VERSION = '1.3.0';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -216,8 +216,9 @@ this.setHover = function(hover, now, force) {
 };
 
 this.setMini = function(mini) {
+	dispatch(slimChromeContainer, { type: 'willSetMiniChrome', cancelable: false, detail: mini });
+	
 	if(mini) {
-		blockedPopup = false;
 		timerAid.cancel('onlyURLBar');
 		timerAid.cancel('setMini');
 		setAttribute(slimChromeContainer, 'mini', 'true');
@@ -240,86 +241,6 @@ this.focusPasswords = function(e) {
 	&& !e.target.disabled
 	&& (prefAid.miniOnAllInput || e.target.type == 'password')) {
 		setMini(e.type == 'focus');
-	}
-};
-
-// Keep chrome visible when opening menus within it
-this.blockPopups = ['identity-popup', 'notification-popup'];
-this.blockedPopup = false;
-this.holdPopupNode = null;
-this.holdPopupMenu = function(e) {
-	var trigger = e.originalTarget.triggerNode;
-	
-	// check if the trigger node is present in our toolbars;
-	// there's no need to check the overflow panel here, as it will likely be open already in these cases
-	var hold = isAncestor(trigger, slimChromeContainer);
-	
-	if(!hold && !trigger) {
-		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
-		if(e.target.id == 'customizationui-widget-panel') {
-			hold_loop: for(var t=0; t<slimChromeToolbars.childNodes.length; t++) {
-				if(slimChromeToolbars.childNodes[t].localName != 'toolbar' || !CustomizableUI.getAreaType(slimChromeToolbars.childNodes[t].id)) { continue; }
-				
-				var widgets = CustomizableUI.getWidgetsInArea(slimChromeToolbars.childNodes[t].id);
-				for(var w=0; w<widgets.length; w++) {
-					var widget = widgets[w].forWindow(window);
-					if(!widget || !widget.node || !widget.node.open) { continue; }
-					
-					hold = true;
-					break hold_loop;
-				}
-			}
-		}
-		
-		// let's just assume all panels that are children from these toolbars are opening from them
-		else if(isAncestor(e.target, slimChromeContainer)) {
-			hold = true;
-		}
-	}
-	
-	// nothing "native" is opening this popup, so let's see if someone claims it
-	if(!hold) {
-		trigger = askForOwner(e.target);
-		if(trigger && typeof(trigger) == 'string') {
-			trigger = $(trigger);
-			// trigger could be either in the toolbars themselves or in the overflow panel
-			hold = isAncestor(trigger, slimChromeContainer) || isAncestor(trigger, $('widget-overflow-list'));
-		}
-	}
-	
-	if(hold) {
-		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
-		holdPopupNode = e.target;
-		
-		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
-		if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
-			setMini(true);
-			blockedPopup = true;
-		} else {
-			if(!trueAttribute(slimChromeContainer, 'hover')) {
-				e.target.collapsed = true;
-			}
-			
-			setHover(true);
-		}
-		
-		var selfRemover = function(ee) {
-			if(ee.originalTarget != e.originalTarget) { return; } //submenus
-			listenerAid.remove(e.target, 'popuphidden', selfRemover);
-			
-			if(typeof(setHover) != 'undefined') {
-				if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
-					if(blockedPopup) {
-						setMini(false);
-						blockedPopup = false;
-					}
-				} else {
-					setHover(false);
-				}
-				holdPopupNode = null;
-			}
-		}
-		listenerAid.add(e.target, 'popuphidden', selfRemover);
 	}
 };
 
@@ -434,10 +355,7 @@ this.slimChromeFinishedWidth = function() {
 		gNavBar.overflowable._onResize();
 		gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
 			gNavBar.overflowable._lazyResizeHandler = null;
-			if(holdPopupNode) {
-				holdPopupNode.moveTo(-1,-1);
-				holdPopupNode.collapsed = false;
-			}
+			dispatch(slimChromeContainer, { type: 'FinishedSlimChromeWidth', cancelable: false });
 		});
 	}
 };
@@ -555,9 +473,6 @@ this.loadSlimChrome = function() {
 	// the empty area of the tabs toolbar doesn't respond to mouse events, so we need to use mouseout from the browser-panel instead
 	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
 	
-	// if a menu or a panel is opened from the toolbox, keep it shown
-	listenerAid.add(window, 'popupshown', holdPopupMenu);
-	
 	// also keep the toolbox visible if it has focus of course
 	listenerAid.add(gNavToolbox, 'focus', onFocus, true);
 	listenerAid.add(gNavToolbox, 'blur', onMouseOut, true);
@@ -581,10 +496,14 @@ this.loadSlimChrome = function() {
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
 	CustomizableUI.addListener(slimChromeCUIListener);
 	
+	dispatch(slimChromeContainer, { type: 'LoadedSlimChrome', cancelable: false });
+	
 	moveSlimChrome();
 };
 
 this.unloadSlimChrome = function() {
+	dispatch(slimChromeContainer, { type: 'UnloadingSlimChrome', cancelable: false });
+	
 	listenerAid.remove(browserPanel, 'resize', delayMoveSlimChrome);
 	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	listenerAid.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
@@ -594,7 +513,6 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.remove(window, "drop", onDragExitAll);
 	listenerAid.remove(window, "dragend", onDragExitAll);
-	listenerAid.remove(window, 'popupshown', holdPopupMenu);
 	listenerAid.remove(gNavToolbox, 'focus', onFocus, true);
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);

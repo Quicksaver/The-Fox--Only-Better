@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -34,15 +34,21 @@ this.toggleSlimChrome = function(noLoad) {
 	moduleAid.loadIf('slimChrome', prefAid.slimChrome && !noLoad);
 };
 
+this.togglePopups = function() {
+	moduleAid.loadIf('popups', prefAid.slimChrome);
+};
+
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/windowFixes');
 	
 	prefAid.listen('slimChrome', toggleSlimChrome);
+	prefAid.listen('slimChrome', togglePopups);
 	
 	listenerAid.add(window, 'fullscreen', fullScreenListener);
 	listenerAid.add(window, 'beforecustomization', customizeListener, true);
 	listenerAid.add(window, 'aftercustomization', customizeListener, true);
 	
+	togglePopups();
 	toggleSlimChrome();
 };
 
@@ -52,8 +58,10 @@ moduleAid.UNLOADMODULE = function() {
 	listenerAid.remove(window, 'aftercustomization', customizeListener, true);
 	
 	prefAid.unlisten('slimChrome', toggleSlimChrome);
+	prefAid.unlisten('slimChrome', togglePopups);
 	
 	moduleAid.unload('slimChrome');
+	moduleAid.unload('popups');
 	
 	moduleAid.unload('compatibilityFix/windowFixes');
 };

@@ -1,8 +1,6 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 moduleAid.LOADMODULE = function() {
-	moduleAid.load('compatibilityFix/popups');
-	
 	AddonManager.getAddonByID('treestyletab@piro.sakura.ne.jp', function(addon) {
 		moduleAid.loadIf('compatibilityFix/TreeStyleTab', (addon && addon.isActive));
 	});
@@ -14,6 +12,5 @@ moduleAid.LOADMODULE = function() {
 
 moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/TreeStyleTab');
-	moduleAid.unload('compatibilityFix/popups');
 	moduleAid.unload('compatibilityFix/omnibar');
 };
