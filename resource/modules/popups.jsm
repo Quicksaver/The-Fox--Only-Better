@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.3';
+moduleAid.VERSION = '2.0.4';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -71,6 +71,11 @@ this.holdPopupMenu = function(e) {
 	// check if the trigger node is present in our toolbars;
 	// there's no need to check the overflow panel here, as it will likely be open already in these cases
 	var hold = isAncestor(trigger, slimChromeContainer);
+	
+	// try to use the anchor specified when opening the popup, if any; ditto from above for overflow panel nodes
+	if(!hold && e.target.anchorNode) {
+		hold = isAncestor(e.target.anchorNode, slimChromeContainer);
+	}
 	
 	if(!hold && !trigger) {
 		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
