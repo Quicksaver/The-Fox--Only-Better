@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.9';
+moduleAid.VERSION = '1.2.10';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -9,8 +9,9 @@ this.__defineGetter__('customToolbars', function() { return $('customToolbars');
 this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 
 // until I find a better way of finding out on which side of the browser is the scrollbar, I'm setting equal margins
-this.__defineGetter__('MIN_LEFT', function() { return 22; });
-this.__defineGetter__('MIN_RIGHT', function() { return 22; });
+this.MIN_LEFT = 22;
+this.MIN_RIGHT = 22;
+this.MIN_WIDTH = 550;
 
 this.moveSlimChromeStyle = {};
 this.lastSlimChromeStyle = null;
@@ -68,6 +69,8 @@ this.moveSlimChrome = function() {
 		}
 	}
 	
+	moveSlimChromeStyle.width = Math.max(moveSlimChromeStyle.width, 100);
+	
 	if(!shouldReMoveSlimChrome(moveSlimChromeStyle)) { return; }
 	
 	lastSlimChromeStyle = moveSlimChromeStyle;
@@ -82,10 +85,10 @@ this.moveSlimChrome = function() {
 	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container[hover] {\n';
-	sscode += '		width: ' + Math.max(moveSlimChromeStyle.width, 100) + 'px;\n';
+	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container:not([hover]) {\n';
-	sscode += '		width: ' + Math.min(Math.max(moveSlimChromeStyle.width, 100), 550) + 'px;\n';
+	sscode += '		width: ' + Math.min(moveSlimChromeStyle.width, MIN_WIDTH) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
 	
@@ -179,14 +182,19 @@ this.setHover = function(hover, now, force) {
 		} else {
 			timerAid.cancel('setHover');
 			setAttribute(slimChromeContainer, 'hover', 'true');
+			
+			// in case the width doesn't change, we need to make sure transitioning from mini mode to full mode doesn't hide the chrome when mousing out
+			if(lastSlimChromeStyle.width <= MIN_WIDTH && !trueAttribute(slimChromeContainer, 'fullWidth')) {
+				slimChromeFinishedWidth();
+			}
 		}
 		
-		if(force != undefined && typeof(force) == 'number') {
+		if(force !== undefined && typeof(force) == 'number') {
 			slimChromeContainer.hovers = force;
 		}
 	}
 	else {
-		if(force != undefined && typeof(force) == 'number') {
+		if(force !== undefined && typeof(force) == 'number') {
 			slimChromeContainer.hovers = force;
 		} else if(slimChromeContainer.hovers > 0) {
 			slimChromeContainer.hovers--;
@@ -399,27 +407,7 @@ this.slimChromeTransitioned = function(e) {
 	
 	switch(e.propertyName) {
 		case 'width':
-			if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
-				// make sure it doesn't get stuck open
-				setHover(true, false, 1);
-				
-				// account for queued hovers while in mini mode
-				if(slimChromeContainer.hoversQueued) {
-					slimChromeContainer.hovers += slimChromeContainer.hoversQueued;
-					slimChromeContainer.hoversQueued = 0;
-				}
-				
-				setAttribute(slimChromeContainer, 'fullWidth', 'true');
-				
-				gNavBar.overflowable._onResize();
-				gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
-					gNavBar.overflowable._lazyResizeHandler = null;
-					if(holdPopupNode) {
-						holdPopupNode.moveTo(-1,-1);
-						holdPopupNode.collapsed = false;
-					}
-				});
-			}
+			slimChromeFinishedWidth();
 			break;
 		
 		case 'opacity':
@@ -427,6 +415,30 @@ this.slimChromeTransitioned = function(e) {
 			break;
 		
 		default: break;
+	}
+};
+
+this.slimChromeFinishedWidth = function() {
+	if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
+		// make sure it doesn't get stuck open
+		setHover(true, false, 1);
+		
+		// account for queued hovers while in mini mode
+		if(slimChromeContainer.hoversQueued) {
+			slimChromeContainer.hovers += slimChromeContainer.hoversQueued;
+			slimChromeContainer.hoversQueued = 0;
+		}
+		
+		setAttribute(slimChromeContainer, 'fullWidth', 'true');
+		
+		gNavBar.overflowable._onResize();
+		gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
+			gNavBar.overflowable._lazyResizeHandler = null;
+			if(holdPopupNode) {
+				holdPopupNode.moveTo(-1,-1);
+				holdPopupNode.collapsed = false;
+			}
+		});
 	}
 };
 
