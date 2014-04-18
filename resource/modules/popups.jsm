@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.1';
+moduleAid.VERSION = '2.0.2';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -63,6 +63,9 @@ this.blockPopups = ['identity-popup', 'notification-popup'];
 this.blockedPopup = false;
 this.holdPopupNode = null;
 this.holdPopupMenu = function(e) {
+	// don't do anything on tooltips! the UI might collapse altogether
+	if(!e.target || e.target.nodeName == 'window' || e.target.nodeName == 'tooltip') { return; }
+	
 	var trigger = e.originalTarget.triggerNode;
 	
 	// check if the trigger node is present in our toolbars;
