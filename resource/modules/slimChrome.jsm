@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.6';
+moduleAid.VERSION = '1.3.7';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -467,11 +467,13 @@ this.dragTabsStartObserver = function() {
 	blockAllHovers = true;
 	listenerAid.add(window, 'dragend', dragEndTabs, true);
 	listenerAid.add(window, 'drop', dragEndTabs, true);
+	listenerAid.add(window, 'mouseup', dragEndTabs, true);
 };
 
 this.dragTabsEndObserver = function() {
 	listenerAid.remove(window, 'dragend', dragEndTabs, true);
 	listenerAid.remove(window, 'drop', dragEndTabs, true);
+	listenerAid.remove(window, 'mouseup', dragEndTabs, true);
 	aSync(function() { blockAllHovers = false; });
 };
 
