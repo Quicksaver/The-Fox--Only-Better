@@ -91,7 +91,8 @@
 	
 	/* this needs to be on top of our chrome, not below it */
 	#downloads-animation-container,
-	#bookmarked-notification-container {
+	#bookmarked-notification-container,
+	.tab-drop-indicator {
 		z-index: 500;
 	}
 
