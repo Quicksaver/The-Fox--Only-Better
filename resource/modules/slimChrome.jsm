@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.7';
+moduleAid.VERSION = '1.3.8';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -477,6 +477,14 @@ this.dragTabsEndObserver = function() {
 	aSync(function() { blockAllHovers = false; });
 };
 
+this.slimChromeTabSelected = function() {
+	// https://github.com/Quicksaver/The-Fox--Only-Better/issues/7 : UI corrupted sometimes when selecting image tabs
+	if(trueAttribute(slimChromeContainer, 'hover') && gBrowser.mCurrentBrowser.contentDocument && gBrowser.mCurrentBrowser.contentDocument.contentType.startsWith('image/')) {
+		$('urlbar-container').style.marginRight = "-0.01px";
+		aSync(function() { $('urlbar-container').style.marginRight = ""; });
+	}		
+};
+
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
@@ -555,6 +563,9 @@ this.loadSlimChrome = function() {
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
 	
+	// listener for TabSelect, see note in method for the bug this tries to fix
+	listenerAid.add(gBrowser.tabContainer, 'TabSelect', slimChromeTabSelected);
+	
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
 	CustomizableUI.addListener(slimChromeCUIListener);
 	
@@ -588,6 +599,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
+	listenerAid.remove(gBrowser.tabContainer, 'TabSelect', slimChromeTabSelected);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
 	observerAid.remove(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
