@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.8a';
+moduleAid.VERSION = '1.3.8b';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -480,8 +480,9 @@ this.dragTabsEndObserver = function() {
 this.slimChromeTabSelected = function() {
 	// https://github.com/Quicksaver/The-Fox--Only-Better/issues/7 : UI corrupted sometimes when selecting image tabs
 	if(trueAttribute(slimChromeContainer, 'hover') && gBrowser.mCurrentBrowser.contentDocument && gBrowser.mCurrentBrowser.contentDocument.contentType.startsWith('image/')) {
-		slimChromeToolbars.style.marginRight = "-0.01px";
-		aSync(function() { slimChromeToolbars.style.marginRight = ""; });
+		hideIt(slimChromeContainer);
+		slimChromeContainer.clientTop; // force reflow/repaint
+		hideIt(slimChromeContainer, true);
 	}		
 };
 
