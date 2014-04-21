@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.7';
+moduleAid.VERSION = '1.3.8';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -7,6 +7,7 @@ this.__defineGetter__('slimChromeToolbars', function() { return $(objName+'-slim
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
+this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
 this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 
 // until I find a better way of finding out on which side of the browser is the scrollbar, I'm setting equal margins
@@ -477,6 +478,14 @@ this.dragTabsEndObserver = function() {
 	aSync(function() { blockAllHovers = false; });
 };
 
+this.setSlimChromeTabDropIndicatorWatcher = function() {
+	objectWatcher.addAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
+};
+
+this.slimChromeTabDropIndicatorWatcher = function() {
+	toggleAttribute(gNavToolbox, 'dropIndicatorFix', !tabDropIndicator.collapsed);
+};
+
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
@@ -555,6 +564,12 @@ this.loadSlimChrome = function() {
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
 	
+	// make the drop indicator visible on windows with aero enabled;
+	// the indicator comes from the binding, and if for some reason it's removed/re-applied, we would lose this watcher, so we need to make sure it stays
+	if(Services.appinfo.OS == 'WINNT') {
+		listenerAid.add($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
+	}
+	
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
 	CustomizableUI.addListener(slimChromeCUIListener);
 	
@@ -588,6 +603,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
+	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
 	observerAid.remove(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
@@ -596,6 +612,9 @@ this.unloadSlimChrome = function() {
 	
 	initialLoading = true;
 	dragTabsEndObserver();
+	
+	removeAttribute(gNavToolbox, 'dropIndicatorFix');
+	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	
 	if(gNavBar.overflowable) { // when closing windows?
 		gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
