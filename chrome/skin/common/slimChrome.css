@@ -95,5 +95,15 @@
 	.tab-drop-indicator {
 		z-index: 500;
 	}
+	
+	/* https://github.com/Quicksaver/The-Fox--Only-Better/issues/7 : UI corrupted sometimes when selecting image tabs. Going nuclear now to "fix" this! */
+	#theFoxOnlyBetter-slimChrome-container[corruptFix],
+	#theFoxOnlyBetter-slimChrome-container[corruptFix] #theFoxOnlyBetter-slimChrome-toolbars > *,
+	#theFoxOnlyBetter-slimChrome-container[corruptFix] #theFoxOnlyBetter-slimChrome-toolbars > * > *,
+	#theFoxOnlyBetter-slimChrome-container[corruptFix] #nav-bar-customization-target > *,
+	#theFoxOnlyBetter-slimChrome-container[corruptFix] #urlbar-container > * {
+		margin-right: -0.01px;
+		background-color: transparent;
+	}
 
 }

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.8';
+moduleAid.VERSION = '1.3.9';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -478,6 +478,17 @@ this.dragTabsEndObserver = function() {
 	aSync(function() { blockAllHovers = false; });
 };
 
+this.slimChromeTabSelected = function() {
+	// https://github.com/Quicksaver/The-Fox--Only-Better/issues/7 : UI corrupted sometimes when selecting image tabs
+	aSync(function() {
+		if(trueAttribute(slimChromeContainer, 'hover') && gBrowser.mCurrentBrowser.contentDocument && gBrowser.mCurrentBrowser.contentDocument.contentType.startsWith('image/')) {
+			setAttribute(slimChromeContainer, 'corruptFix', 'true');
+			slimChromeContainer.clientTop; // force reflow/repaint
+			removeAttribute(slimChromeContainer, 'corruptFix');
+		}
+	});
+};
+
 this.setSlimChromeTabDropIndicatorWatcher = function() {
 	objectWatcher.addAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 };
@@ -564,6 +575,9 @@ this.loadSlimChrome = function() {
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
 	
+	// listener for TabSelect, see note in method for the bug this tries to fix
+	listenerAid.add(gBrowser.tabContainer, 'TabSelect', slimChromeTabSelected);
+	
 	// make the drop indicator visible on windows with aero enabled;
 	// the indicator comes from the binding, and if for some reason it's removed/re-applied, we would lose this watcher, so we need to make sure it stays
 	if(Services.appinfo.OS == 'WINNT') {
@@ -603,6 +617,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
+	listenerAid.remove(gBrowser.tabContainer, 'TabSelect', slimChromeTabSelected);
 	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
