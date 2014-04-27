@@ -3,7 +3,7 @@
 <?xml-stylesheet href="chrome://thefoxonlybetter-os/skin/slimChrome.css" type="text/css"?>
 <overlay id="slimChrome-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
-	<toolbox id="navigator-toolbox">
+	<toolbox id="navigator-toolbox" slimChrome="true">
 		<box id="objName-slimChrome-slimmer" insertafter="TabsToolbar"/>
 		<hbox id="objName-slimChrome-container" insertafter="objName-slimChrome-slimmer">
 			<vbox id="objName-slimChrome-toolbars" flex="1"/>
