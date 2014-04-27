@@ -46,6 +46,7 @@
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
@@ -67,6 +68,12 @@
 	
 	#theFoxOnlyBetter-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
 		transition: none;
+	}
+	
+	/* for changes in FF31 */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #back-button + #urlbar-wrapper {
+		-moz-margin-start: 0;
+		clip-path: none;
 	}
 	
 	/* animations */
