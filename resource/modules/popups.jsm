@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.4';
+moduleAid.VERSION = '2.0.5';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -123,7 +123,7 @@ this.holdPopupMenu = function(e) {
 				e.target.collapsed = true;
 			}
 			
-			setHover(true);
+			setHover(true, true);
 		}
 		
 		var selfRemover = function(ee) {
