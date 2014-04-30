@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.8';
+moduleAid.VERSION = '1.3.9';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -185,15 +185,12 @@ this.setHover = function(hover, now, force) {
 		if(!now) {
 			timerAid.init('setHover', function() {
 				setAttribute(slimChromeContainer, 'hover', 'true');
+				ensureSlimChromeFinishedWidth();
 			}, 75);
 		} else {
 			timerAid.cancel('setHover');
 			setAttribute(slimChromeContainer, 'hover', 'true');
-			
-			// in case the width doesn't change, we need to make sure transitioning from mini mode to full mode doesn't hide the chrome when mousing out
-			if(lastSlimChromeStyle.width <= MIN_WIDTH && !trueAttribute(slimChromeContainer, 'fullWidth')) {
-				slimChromeFinishedWidth();
-			}
+			ensureSlimChromeFinishedWidth();
 		}
 		
 		if(force !== undefined && typeof(force) == 'number') {
@@ -210,14 +207,9 @@ this.setHover = function(hover, now, force) {
 		if(slimChromeContainer.hovers == 0) {
 			removeAttribute(slimChromeContainer, 'fullWidth');
 			
-			if(!now) {
-				timerAid.init('setHover', function() {
-					removeAttribute(slimChromeContainer, 'hover');
-				}, 250);
-			} else {
-				timerAid.cancel('setHover');
+			timerAid.init('setHover', function() {
 				removeAttribute(slimChromeContainer, 'hover');
-			}
+			}, (!now) ? 250 : 0);
 		}
 	}
 };
@@ -357,7 +349,7 @@ this.slimChromeTransitioned = function(e) {
 };
 
 this.slimChromeFinishedWidth = function() {
-	if(gNavBar.overflowable && slimChromeContainer.hovers > 0) {
+	if(slimChromeContainer.hovers > 0) {
 		// make sure it doesn't get stuck open
 		setHover(true, false, 1);
 		
@@ -367,13 +359,28 @@ this.slimChromeFinishedWidth = function() {
 			slimChromeContainer.hoversQueued = 0;
 		}
 		
+		// also account for any initial timers still running
+		slimChromeContainer.hovers += initialShowings.length;
+		
 		setAttribute(slimChromeContainer, 'fullWidth', 'true');
 		
-		gNavBar.overflowable._onResize();
-		gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
-			gNavBar.overflowable._lazyResizeHandler = null;
+		if(gNavBar.overflowable) {
+			gNavBar.overflowable._onResize();
+			gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
+				gNavBar.overflowable._lazyResizeHandler = null;
+				dispatch(slimChromeContainer, { type: 'FinishedSlimChromeWidth', cancelable: false });
+			});
+		}
+		else {
 			dispatch(slimChromeContainer, { type: 'FinishedSlimChromeWidth', cancelable: false });
-		});
+		}
+	}
+};
+
+// in case the width doesn't change, we need to make sure transitioning from mini mode to full mode doesn't hide the chrome when mousing out
+this.ensureSlimChromeFinishedWidth = function() {
+	if(lastSlimChromeStyle.width <= MIN_WIDTH && !trueAttribute(slimChromeContainer, 'fullWidth')) {
+		slimChromeFinishedWidth();
 	}
 };
 
@@ -412,7 +419,13 @@ this.hideMiniInABit = function() {
 };
 
 this.slimChromeKeydown = function(e) {
-	if(e.ctrlKey || e.altKey || e.metaKey) { return; }
+	if(!e.repeat) { return; } // only trigger this on keydown if user keeps the key pressed down
+	slimChromeKeyup(e);
+};
+
+this.slimChromeKeyup = function(e) {
+	if(e.ctrlKey || e.altKey || e.metaKey) { return; } // don't trigger for modkeys or any keyboard shortcuts
+	if(typeof(holdPopupNode) != 'undefined' && holdPopupNode) { return; } // don't trigger from keystrokes when there's a popup open
 	setHover(false, true);
 	
 	// don't let it keep re-showing if the mouse is over it
@@ -428,13 +441,14 @@ this.initialShowChrome = function(delay) {
 	// we keep a reference to the timer, because otherwise sometimes it would not trigger (go figure...), hopefully this helps with that
 	var thisShowing = aSync(function() {
 		if(typeof(setHover) != 'undefined') {
-			setHover(false);
 			for(var i=0; i<initialShowings.length; i++) {
 				if(initialShowings[i] == thisShowing) {
 					initialShowings.splice(i, 1);
 					break;
 				}
 			}
+			
+			setHover(false);
 		}
 	}, delay || 3000);
 	initialShowings.push(thisShowing);
@@ -549,6 +563,7 @@ this.loadSlimChrome = function() {
 	
 	// hide chrome when typing in content
 	listenerAid.add(gBrowser, 'keydown', slimChromeKeydown, true);
+	listenerAid.add(gBrowser, 'keyup', slimChromeKeyup, true);
 	
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
@@ -601,6 +616,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
+	listenerAid.remove(gBrowser, 'keyup', slimChromeKeyup, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
 	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
