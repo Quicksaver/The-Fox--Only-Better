@@ -1,10 +1,11 @@
-moduleAid.VERSION = '1.3.10';
+moduleAid.VERSION = '1.3.11';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
 this.__defineGetter__('slimChromeToolbars', function() { return $(objName+'-slimChrome-toolbars'); });
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
+this.__defineGetter__('contentArea', function() { return $('browser'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
@@ -184,13 +185,11 @@ this.setHover = function(hover, now, force) {
 		
 		if(!now) {
 			timerAid.init('setHover', function() {
-				setAttribute(slimChromeContainer, 'hover', 'true');
-				ensureSlimChromeFinishedWidth();
+				hoverTrue();
 			}, 75);
 		} else {
 			timerAid.cancel('setHover');
-			setAttribute(slimChromeContainer, 'hover', 'true');
-			ensureSlimChromeFinishedWidth();
+			hoverTrue();
 		}
 		
 		if(force !== undefined && typeof(force) == 'number') {
@@ -208,9 +207,43 @@ this.setHover = function(hover, now, force) {
 			timerAid.init('setHover', function() {
 				removeAttribute(slimChromeContainer, 'fullWidth');
 				removeAttribute(slimChromeContainer, 'hover');
+				listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
+				contentAreaMovedReset();
 			}, (!now) ? 250 : 0);
 		}
 	}
+};
+
+this.hoverTrue = function() {
+	setAttribute(slimChromeContainer, 'hover', 'true');
+	ensureSlimChromeFinishedWidth();
+	
+	// safeguard against the chrome getting stuck sometimes when I can't control it
+	contentAreaMovedReset();
+	listenerAid.add(contentArea, 'mousemove', contentAreaOnMouseMove);
+};
+
+this.contentAreaMouseMoved = false;
+this.contentAreaMovedReset = function() {
+	timerAid.cancel('contentAreaMouseMoved');
+	contentAreaMouseMoved = false;
+};
+
+this.contentAreaOnMouseMove = function() {
+	// no need to keep doing all the routine on each event and lag the browser, it will happen when it happens
+	if(contentAreaMouseMoved) { return; }
+	contentAreaMouseMoved = true;
+	timerAid.init('contentAreaMouseMoved', function() {
+		if(slimChromeContainer.hovers > 0 // no point if it's already supposed to hide
+		&& initialShowings.length == 0 // don't hide if timers are active
+		&& !isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
+		&& !holdPopupNode // a popup could be holding it open
+		&& $$('#navigator-toolbox:hover') // trick to find out if the mouse is hovering the chrome
+		) {
+			// if we get here, nothing is holding the popup open, so it's likely that it should be hidden, but wasn't for some reason
+			setHover(false, true, 0);
+		}
+	}, 500);
 };
 
 this.setMini = function(mini) {
@@ -619,6 +652,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
 	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
+	listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
 	observerAid.remove(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
