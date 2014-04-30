@@ -1,4 +1,4 @@
-var defaultsVersion = '1.1.6';
+var defaultsVersion = '1.1.7';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
@@ -27,6 +27,8 @@ function startPreferences(window) {
 }
 
 function onStartup(aReason) {
+	moduleAid.load('compatibilityFix/sandboxFixes');
+	
 	// Apply the add-on to every window opened and to be opened
 	windowMediator.callOnAll(startAddon, 'navigator:browser');
 	windowMediator.register(startAddon, 'domwindowopened', 'navigator:browser');
@@ -42,4 +44,6 @@ function onShutdown(aReason) {
 	// remove the add-on from all windows
 	windowMediator.callOnAll(removeObject, null, null, true);
 	browserMediator.callOnAll(removeObject, null, true);
+	
+	moduleAid.unload('compatibilityFix/sandboxFixes');
 }
