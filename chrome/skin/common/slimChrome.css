@@ -3,7 +3,6 @@
 	
 	#theFoxOnlyBetter-slimChrome-container {
 		position: fixed;
-		border-radius: 20px 20px 200px 200px;
 		overflow: hidden;
 		z-index: 400;
 	}
@@ -31,15 +30,6 @@
 		height: 9px;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-toolbars > #nav-bar {
-		padding-left: 13px;
-		padding-right: 13px;
-	}
-	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
-		padding-left: 53px;
-		padding-right: 53px;
-	}
-	
 	/* mini chrome, the hover style always overrides all of this */
 	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar),
@@ -54,12 +44,9 @@
 	}
 	
 	/* this needs the important tag */
+	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #omnibar-in-urlbar {
 		visibility: collapse !important;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
-		border-radius: 0 0 4px 4px;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #nav-bar {
@@ -68,6 +55,25 @@
 	
 	#theFoxOnlyBetter-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
 		transition: none;
+	}
+	
+	/* the round borders in all the different chrome modes and views */
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container {
+		border-radius: 20px 20px 200px 200px;
+	}
+	
+	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container,
+	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
+		border-radius: 0 0 4px 4px;
+	}
+	
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-toolbars > #nav-bar {
+		padding-left: 13px;
+		padding-right: 13px;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+		padding-left: 53px;
+		padding-right: 53px;
 	}
 	
 	/* for changes in FF31 */
