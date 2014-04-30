@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.9';
+moduleAid.VERSION = '1.3.10';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -205,9 +205,8 @@ this.setHover = function(hover, now, force) {
 		}
 		
 		if(slimChromeContainer.hovers == 0) {
-			removeAttribute(slimChromeContainer, 'fullWidth');
-			
 			timerAid.init('setHover', function() {
+				removeAttribute(slimChromeContainer, 'fullWidth');
 				removeAttribute(slimChromeContainer, 'hover');
 			}, (!now) ? 250 : 0);
 		}

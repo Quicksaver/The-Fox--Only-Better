@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.6';
+moduleAid.VERSION = '2.0.7';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -114,14 +114,15 @@ this.holdPopupMenu = function(e) {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
 		timerAid.cancel('clearHoldPopup');
 		holdPopupNode = e.target;
+		timerAid.init('ensureHoldPopupShows', popupsFinishedWidth, 200);
 		
 		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
 		if(trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(e.target.id) > -1) {
 			setMini(true);
 			blockedPopup = true;
 		} else {
-			if(!trueAttribute(slimChromeContainer, 'hover')) {
-				e.target.collapsed = true;
+			if(!trueAttribute(slimChromeContainer, 'fullWidth')) {
+				hideIt(e.target);
 			}
 			
 			setHover(true, true);
@@ -141,6 +142,7 @@ this.holdPopupMenu = function(e) {
 					setHover(false);
 				}
 				timerAid.init('clearHoldPopup', function() {
+					hideIt(holdPopupNode, true); // making sure...
 					holdPopupNode = null;
 				}, 150);
 			}
@@ -155,9 +157,10 @@ this.popupsWillSetMini = function(e) {
 };
 
 this.popupsFinishedWidth = function() {
+	timerAid.cancel('ensureHoldPopupShows');
 	if(holdPopupNode && (holdPopupNode.open || holdPopupNode.state == 'open')) {
 		holdPopupNode.moveTo(-1,-1);
-		holdPopupNode.collapsed = false;
+		hideIt(holdPopupNode, true);
 	}
 };
 
