@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.12';
+moduleAid.VERSION = '1.3.13';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -458,8 +458,14 @@ this.slimChromeKeydown = function(e) {
 };
 
 this.slimChromeKeyup = function(e) {
-	if(e.ctrlKey || e.altKey || e.metaKey) { return; } // don't trigger for modkeys or any keyboard shortcuts
-	if(typeof(holdPopupNode) != 'undefined' && holdPopupNode) { return; } // don't trigger from keystrokes when there's a popup open
+	if(e.ctrlKey || e.altKey || e.metaKey // don't trigger for modkeys or any keyboard shortcuts
+	|| slimChromeContainer.hovers == 0 // don't bother of course...
+	|| (typeof(holdPopupNode) != 'undefined' && holdPopupNode) // don't trigger from keystrokes when there's a popup open
+	|| isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
+	) {
+		return true;
+	}
+	
 	setHover(false, true);
 	
 	// don't let it keep re-showing if the mouse is over it
