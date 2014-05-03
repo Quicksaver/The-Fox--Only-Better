@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.13';
+moduleAid.VERSION = '1.3.14';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -663,6 +663,14 @@ this.loadSlimChrome = function() {
 };
 
 this.unloadSlimChrome = function() {
+	// kill all the timers first, so they don't cause any (harmless) messages in the console
+	timerAid.cancel('waitCUI');
+	timerAid.cancel('setHover');
+	timerAid.cancel('setMini');
+	timerAid.cancel('onlyURLBar');
+	timerAid.cancel('contentAreaMouseMoved');
+	timerAid.cancel('delayMoveSlimChrome');
+	
 	dispatch(slimChromeContainer, { type: 'UnloadingSlimChrome', cancelable: false });
 	
 	listenerAid.remove(browserPanel, 'resize', delayMoveSlimChrome);
@@ -696,7 +704,7 @@ this.unloadSlimChrome = function() {
 	removeAttribute(gNavToolbox, 'dropIndicatorFix');
 	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	
-	if(gNavBar.overflowable) { // when closing windows?
+	if(gNavBar.overflowable && gNavBar.overflowable.__onLazyResize) { // when closing windows?
 		gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
 		gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
 		gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;

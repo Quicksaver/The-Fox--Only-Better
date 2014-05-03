@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.9';
+moduleAid.VERSION = '2.0.10';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -178,6 +178,9 @@ this.loadSlimChromePopups = function() {
 };
 
 this.unloadSlimChromePopups = function() {
+	timerAid.cancel('ensureHoldPopupShows');
+	timerAid.cancel('clearHoldPopup');
+	
 	listenerAid.remove(window, 'popupshown', holdPopupMenu);
 	listenerAid.remove(slimChromeContainer, 'willSetMiniChrome', popupsWillSetMini);
 	listenerAid.remove(slimChromeContainer, 'FinishedSlimChromeWidth', popupsFinishedWidth);
