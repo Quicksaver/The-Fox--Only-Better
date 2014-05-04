@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.14';
+moduleAid.VERSION = '1.3.15';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -385,16 +385,14 @@ this.slimChromeTransitioned = function(e) {
 this.slimChromeFinishedWidth = function() {
 	if(slimChromeContainer.hovers > 0) {
 		// make sure it doesn't get stuck open
-		setHover(true, false, 1);
+		// also account for any initial timers still running
+		setHover(true, false, Math.max(1, initialShowings.length));
 		
 		// account for queued hovers while in mini mode
 		if(slimChromeContainer.hoversQueued) {
 			slimChromeContainer.hovers += slimChromeContainer.hoversQueued;
 			slimChromeContainer.hoversQueued = 0;
 		}
-		
-		// also account for any initial timers still running
-		slimChromeContainer.hovers += initialShowings.length;
 		
 		setAttribute(slimChromeContainer, 'fullWidth', 'true');
 		
