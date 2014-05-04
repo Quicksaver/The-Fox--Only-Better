@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 this.__defineGetter__('DownloadsIndicatorView', function() { return window.DownloadsIndicatorView; });
 this.__defineGetter__('DownloadsCommon', function() { return window.DownloadsCommon; });
@@ -24,7 +24,11 @@ moduleAid.LOADMODULE = function() {
 		// only pause animation if the button is in the slimChromeContainer
 		if(typeof(slimChromeContainer) != 'undefined'
 		&& this._initialized && DownloadsCommon.animateNotifications
-		&& (isAncestor($('downloads-button'), slimChromeContainer) || isAncestor($('downloads-button'), overflowList))) {
+		&& (	isAncestor($('downloads-button'), slimChromeContainer)
+			|| isAncestor($('downloads-button'), overflowList)
+			// not using CUI.getPlacementOfWidget because this involves less checks
+			|| CustomizableUI.getWidgetIdsInArea('PanelUI-contents').indexOf('downloads-button') > -1)
+		) {
 			// if container is hidden, pause until it is shown
 			if(!trueAttribute(slimChromeContainer, 'hover')) {
 				reDoDownloadsNotifications = aType;
