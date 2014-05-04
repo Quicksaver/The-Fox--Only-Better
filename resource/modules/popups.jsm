@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.11';
+moduleAid.VERSION = '2.0.12';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -148,7 +148,12 @@ this.holdPopupMenu = function(e) {
 					setHover(false);
 				}
 				timerAid.init('clearHoldPopup', function() {
-					hideIt(holdPopupNode, true); // making sure...
+					// making sure we don't collapse it permanently
+					hideIt(holdPopupNode, true);
+					
+					// making sure another popup didn't open in the meantime
+					if(ee.target != holdPopupNode) { return; }
+					
 					holdPopupNode = null;
 				}, 150);
 			}
