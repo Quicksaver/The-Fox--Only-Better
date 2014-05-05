@@ -4,6 +4,7 @@ locale    thefoxonlybetter-en   en-US         chrome/locale/en-US/
 locale    thefoxonlybetter      en-US         chrome/locale/en-US/
 locale    thefoxonlybetter      nl            chrome/locale/nl/
 locale    thefoxonlybetter      pt-PT         chrome/locale/pt-PT/
+locale    thefoxonlybetter      zh-CN         chrome/locale/zh-CN/
 
 skin      thefoxonlybetter      classic/1.0   chrome/skin/common/
 skin      thefoxonlybetter-os   classic/1.0   chrome/skin/linux/

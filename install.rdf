@@ -44,6 +44,15 @@
 				<em:translator>Quicksaver</em:translator>
 			</Description>
 		</em:localized>
+		<em:localized>
+			<Description>
+				<em:locale>zh-CN</em:locale>
+				<em:name>The Fox, Only Better</em:name>
+				<em:description>全新的 Australis 主题，让 Firefox 浏览器用起来棒极了，而这个附加组件也不遑多让！</em:description>
+				<em:homepageURL>https://addons.mozilla.org/zh-CN/firefox/addon/the-fox-only-better/</em:homepageURL>
+				<em:translator>fang5566 - Babelzilla</em:translator>
+			</Description>
+		</em:localized>
 		
 	</Description>
 </RDF>

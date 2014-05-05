@@ -1,0 +1,9 @@
+<!ENTITY Optwindow.style "width: 33em; height: 35em;">
+<!ENTITY options.title "The Fox, Only Better">
+<!ENTITY optabout.label "关于">
+<!ENTITY about.name "The Fox, Only Better">
+<!ENTITY about.by "创建者：Quicksaver">
+<!ENTITY about.summary "虽然目前附加组件还没有任何选项设置，但我正计划在未来添加许多新特性！如果您想要添加什么特别的东西，请联系我。">
+<!ENTITY about.desc "所有附加组件和开发者的信息都可以到 Mozilla 附加组件主页中看到。如果有幸得到您的喜欢，不妨考虑给我们一个高的评价或一点小小的捐助以便继续开发。在技术支持页面您可以提出 Bug 报告和建议。">
+<!ENTITY about.home "附加组件主页">
+<!ENTITY about.tech "技术支持">
