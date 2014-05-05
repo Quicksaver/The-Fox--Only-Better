@@ -1,0 +1,9 @@
+<!ENTITY Optwindow.style "width: 40em; height: 39em;">
+<!ENTITY options.title "The Fox, Only Better">
+<!ENTITY optabout.label "À propos">
+<!ENTITY about.name "The Fox, Only Better">
+<!ENTITY about.by "par Quicksaver">
+<!ENTITY about.summary "Cette extension n'a pas encore d'options supplémentaires, bien que je prévoie d'ajouter de nombreuses nouvelles fonctionnalités au fil du temps ! S'il y a quelque chose en particulier que vous aimeriez voir ajouté, veuillez me le faire savoir.">
+<!ENTITY about.desc "Toutes les informations sur l'extension et son développeur peuvent être trouvées sur la page de Mozilla Add-ons dédiée à ce module. Si vous avez aimé l'extension, veuillez envisager de laisser un commentaire sympa ou une petite contribution pour aider à soutenir son développement continu. Les rapports de bogues et suggestions peuvent être faits sur la page web de support technique.">
+<!ENTITY about.home "Page d'accueil de l'extension">
+<!ENTITY about.tech "Assistance technique">

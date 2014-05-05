@@ -28,6 +28,15 @@
 		</em:localized>
 		<em:localized>
 			<Description>
+				<em:locale>fr</em:locale>
+				<em:name>The Fox, Only Better</em:name>
+				<em:description>Australis, le nouveau thème qui habille Firefox, rend génial votre navigateur. Mais maintenant, c'est en navigant que vous allez trouver ça génial !</em:description>
+				<em:homepageURL>https://addons.mozilla.org/fr/firefox/addon/the-fox-only-better/</em:homepageURL>
+				<em:translator>Goofy</em:translator>
+			</Description>
+		</em:localized>
+		<em:localized>
+			<Description>
 				<em:locale>nl</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>Australis, het nieuwe Firefox-thema, laat een prima browser er geweldig uitzien. En nu voelt het gebruik ook geweldig!</em:description>
