@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.17';
+moduleAid.VERSION = '1.3.18';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -8,8 +8,8 @@ this.__defineGetter__('browserPanel', function() { return $('browser-panel'); })
 this.__defineGetter__('contentArea', function() { return $('browser'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
-this.__defineGetter__('PlacesToolbar', function() { return $('PlacesToolbar'); });
 this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesToolbarHelper; });
+this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
 this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 
@@ -399,6 +399,15 @@ this.slimChromeFinishedWidth = function() {
 		
 		setAttribute(slimChromeContainer, 'fullWidth', 'true');
 		
+		// update the Places Toolbar, so its items are distributed correclty
+		var placesInToolbar = PlacesToolbarHelper._getParentToolbar(PlacesToolbar);
+		if(isAncestor(placesInToolbar, slimChromeContainer) && !placesInToolbar.collapsed) {
+			// don't block the rest in case this goes wrong
+			try { PlacesToolbar._placesView.updateOverflowStatus(); }
+			catch(ex) { Cu.reportError(ex); }
+		}
+		
+		// update the NavBar, so its items are distributed correclty
 		if(gNavBar.overflowable) {
 			gNavBar.overflowable._onResize();
 			gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
@@ -542,26 +551,26 @@ this.slimChromeTabDropIndicatorWatcher = function() {
 	toggleAttribute(gNavToolbox, 'dropIndicatorFix', !tabDropIndicator.collapsed);
 };
 
-this.movePlacesToolbar = {
-	moved: false,
-	before: function(aNode) {
-		if(isAncestor(PlacesToolbar, aNode)) {
-			this.moved = true;
-			if(PlacesToolbar._placesView) {
-				PlacesToolbar._placesView.uninit();
-			}
-		}
-	},
-	after: function() {
-		if(this.moved && PlacesToolbarHelper) {
-			PlacesToolbarHelper.init();
-		}
-	}
-};
-
 this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
+	
+	// prepare PlacesToolbar methods to work in our chrome in case it's there,
+	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width
+	window.PlacesToolbar.prototype.__onOverflow = window.PlacesToolbar.prototype._onOverflow;
+	window.PlacesToolbar.prototype.__onUnderflow = window.PlacesToolbar.prototype._onUnderflow;
+	window.PlacesToolbar.prototype._onOverflow = function() {
+		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
+		this.__onOverflow();
+	};
+	window.PlacesToolbar.prototype._onUnderflow = function() {
+		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
+		this.__onUnderflow();
+	};
+	
+	if(PlacesToolbar && PlacesToolbar._placesView) {
+		PlacesToolbar._placesView.uninit();
+	}
 	
 	slimChromeToolbars.appendChild(gNavBar);
 	
@@ -592,9 +601,6 @@ this.loadSlimChrome = function() {
 		toolbar = toolbar.nextSibling;
 		if(toolbar.id == 'addon-bar') { continue; }
 		
-		// in case we're moving the places toolbar, we need to uninitialize it first
-		movePlacesToolbar.before(toolbar);
-		
 		var toMove = toolbar;
 		toolbar = toolbar.previousSibling;
 		slimChromeToolbars.appendChild(toMove);
@@ -602,10 +608,9 @@ this.loadSlimChrome = function() {
 		if(gNavToolbox.externalToolbars.indexOf(toMove) == -1) {
 			gNavToolbox.externalToolbars.push(toMove);
 		}
-		
-		// if we moved the places toolbar, we should initialize it now, or it won't work properly
-		movePlacesToolbar.after();
 	}
+	
+	PlacesToolbarHelper.init();
 	
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
 	listenerAid.add(browserPanel, 'resize', delayMoveSlimChrome);
@@ -706,6 +711,16 @@ this.unloadSlimChrome = function() {
 	removeAttribute(gNavToolbox, 'dropIndicatorFix');
 	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	
+	// reset this before we move the toolbar
+	window.PlacesToolbar.prototype._onOverflow = window.PlacesToolbar.prototype.__onOverflow;
+	window.PlacesToolbar.prototype._onUnderflow = window.PlacesToolbar.prototype.__onUnderflow;
+	delete window.PlacesToolbar.prototype.__onOverflow;
+	delete window.PlacesToolbar.prototype.__onUnderflow;
+	
+	if(PlacesToolbar && PlacesToolbar._placesView) {
+		PlacesToolbar._placesView.uninit();
+	}
+	
 	if(gNavBar.overflowable && gNavBar.overflowable.__onLazyResize) { // when closing windows?
 		gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
 		gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
@@ -722,17 +737,15 @@ this.unloadSlimChrome = function() {
 	gNavToolbox.insertBefore(gNavBar, customToolbars);
 	
 	while(slimChromeToolbars.firstChild) {
-		movePlacesToolbar.before(slimChromeToolbars.firstChild);
-		
 		var e = gNavToolbox.externalToolbars.indexOf(slimChromeToolbars.firstChild);
 		if(e != -1) {
 			gNavToolbox.externalToolbars.splice(e, 1);
 		}
 		
 		gNavToolbox.appendChild(slimChromeToolbars.firstChild);
-		
-		movePlacesToolbar.after();
 	}
+	
+	PlacesToolbarHelper.init();
 };
 	
 moduleAid.LOADMODULE = function() {
