@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.15';
+moduleAid.VERSION = '1.3.16';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -239,7 +239,7 @@ this.contentAreaOnMouseMove = function() {
 		if(slimChromeContainer.hovers > 0 // no point if it's already supposed to hide
 		&& initialShowings.length == 0 // don't hide if timers are active
 		&& !isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
-		&& !holdPopupNode // a popup could be holding it open
+		&& holdPopupNodes.length == 0 // a popup could be holding it open
 		&& $$('#navigator-toolbox:hover') // trick to find out if the mouse is hovering the chrome
 		) {
 			// if we get here, nothing is holding the popup open, so it's likely that it should be hidden, but wasn't for some reason
@@ -458,7 +458,7 @@ this.slimChromeKeydown = function(e) {
 this.slimChromeKeyup = function(e) {
 	if(e.ctrlKey || e.altKey || e.metaKey // don't trigger for modkeys or any keyboard shortcuts
 	|| slimChromeContainer.hovers == 0 // don't bother of course...
-	|| (typeof(holdPopupNode) != 'undefined' && holdPopupNode) // don't trigger from keystrokes when there's a popup open
+	|| (typeof(holdPopupNodes) != 'undefined' && holdPopupNodes.length > 0) // don't trigger from keystrokes when there's a popup open
 	|| isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
 	) {
 		return true;

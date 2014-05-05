@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.12';
+moduleAid.VERSION = '2.0.13';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -61,7 +61,7 @@ this.holdBookmarkPanel = function(e) {
 // Keep chrome visible when opening menus within it
 this.blockPopups = ['identity-popup', 'notification-popup'];
 this.blockedPopup = false;
-this.holdPopupNode = null;
+this.holdPopupNodes = [];
 this.holdPopupMenu = function(e) {
 	// don't do anything on tooltips! the UI might collapse altogether
 	if(!e.target || e.target.nodeName == 'window' || e.target.nodeName == 'tooltip') { return; }
@@ -113,12 +113,12 @@ this.holdPopupMenu = function(e) {
 	if(hold) {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
 		timerAid.cancel('clearHoldPopup');
-		holdPopupNode = e.target;
+		holdPopupNodes.push(e.target);
 		
 		// sometimes when opening the menu panel, it will be nearly collapsed, I have no idea what is setting these values
-		if(holdPopupNode.id == 'PanelUI-popup') {
-			removeAttribute(holdPopupNode, 'width');
-			removeAttribute(holdPopupNode, 'height');
+		if(e.target.id == 'PanelUI-popup') {
+			removeAttribute(e.target, 'width');
+			removeAttribute(e.target, 'height');
 		}
 		
 		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
@@ -138,6 +138,9 @@ this.holdPopupMenu = function(e) {
 			if(ee.originalTarget != e.originalTarget) { return; } //submenus
 			listenerAid.remove(e.target, 'popuphidden', selfRemover);
 			
+			// making sure we don't collapse it permanently
+			hideIt(e.target, true);
+			
 			if(typeof(setHover) != 'undefined') {
 				if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
 					if(blockedPopup) {
@@ -147,16 +150,13 @@ this.holdPopupMenu = function(e) {
 				} else {
 					setHover(false);
 				}
-				timerAid.init('clearHoldPopup', function() {
-					// making sure we don't collapse it permanently
-					hideIt(holdPopupNode, true);
-					
-					// making sure another popup didn't open in the meantime
-					if(ee.target != holdPopupNode) { return; }
-					
-					holdPopupNode = null;
-				}, 150);
 			}
+			
+			timerAid.init('clearHoldPopup', function() {
+				if(holdPopupNodes.indexOf(e.target) > -1) {
+					holdPopupNodes.splice(holdPopupNodes.indexOf(e.target), 1);
+				}
+			}, 150);
 		}
 		listenerAid.add(e.target, 'popuphidden', selfRemover);
 	}
@@ -169,9 +169,14 @@ this.popupsWillSetMini = function(e) {
 
 this.popupsFinishedWidth = function() {
 	timerAid.cancel('ensureHoldPopupShows');
-	if(holdPopupNode && (holdPopupNode.open || holdPopupNode.state == 'open')) {
-		holdPopupNode.moveTo(-1,-1);
-		hideIt(holdPopupNode, true);
+	if(holdPopupNodes.length > 0) {
+		for(var i=0; i<holdPopupNodes.length; i++) {
+			// obviously we won't need to move it if it isn't open
+			if(holdPopupNodes[i].open || holdPopupNodes[i].state == 'open') {
+				holdPopupNodes[i].moveTo(-1,-1);
+				hideIt(holdPopupNodes[i], true);
+			}
+		}
 		
 		// in case opening the popup triggered the chrome to show, and the mouse just so happens to be in that area, we need to make sure the mouse leaving
 		// won't hide the chrome with the popup still shown
