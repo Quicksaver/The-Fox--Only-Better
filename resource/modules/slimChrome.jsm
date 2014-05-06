@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.18';
+moduleAid.VERSION = '1.3.19';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -610,7 +610,11 @@ this.loadSlimChrome = function() {
 		}
 	}
 	
+	// re-initialized the Places Toolbar
 	PlacesToolbarHelper.init();
+	
+	// make sure the urlbar keeps its value
+	window.URLBarSetURI();
 	
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
 	listenerAid.add(browserPanel, 'resize', delayMoveSlimChrome);
@@ -746,6 +750,7 @@ this.unloadSlimChrome = function() {
 	}
 	
 	PlacesToolbarHelper.init();
+	window.URLBarSetURI();
 };
 	
 moduleAid.LOADMODULE = function() {
