@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.19';
+moduleAid.VERSION = '1.3.20';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
