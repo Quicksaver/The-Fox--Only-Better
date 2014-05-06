@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.20';
+moduleAid.VERSION = '1.3.21';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -425,7 +425,9 @@ this.slimChromeFinishedWidth = function() {
 
 // in case the width doesn't change, we need to make sure transitioning from mini mode to full mode doesn't hide the chrome when mousing out
 this.ensureSlimChromeFinishedWidth = function() {
-	if(lastSlimChromeStyle.width <= MIN_WIDTH && !trueAttribute(slimChromeContainer, 'fullWidth')) {
+	if(trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
+	
+	if(lastSlimChromeStyle.width <= MIN_WIDTH) {
 		slimChromeFinishedWidth();
 	} else {
 		// for the extremelly rare cases where neither the above condition is true or when the animation doesn't need to take place (e.g. extremelly well placed clicks)
