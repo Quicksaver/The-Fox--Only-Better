@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.13';
+moduleAid.VERSION = '2.0.14';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -112,7 +112,6 @@ this.holdPopupMenu = function(e) {
 	
 	if(hold) {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
-		timerAid.cancel('clearHoldPopup');
 		holdPopupNodes.push(e.target);
 		
 		// sometimes when opening the menu panel, it will be nearly collapsed, I have no idea what is setting these values
@@ -152,8 +151,8 @@ this.holdPopupMenu = function(e) {
 				}
 			}
 			
-			timerAid.init('clearHoldPopup', function() {
-				if(holdPopupNodes.indexOf(e.target) > -1) {
+			aSync(function() {
+				if(typeof(holdPopupNodes) != 'undefined' && holdPopupNodes.indexOf(e.target) > -1) {
 					holdPopupNodes.splice(holdPopupNodes.indexOf(e.target), 1);
 				}
 			}, 150);
@@ -195,7 +194,6 @@ this.loadSlimChromePopups = function() {
 
 this.unloadSlimChromePopups = function() {
 	timerAid.cancel('ensureHoldPopupShows');
-	timerAid.cancel('clearHoldPopup');
 	
 	listenerAid.remove(window, 'popupshown', holdPopupMenu);
 	listenerAid.remove(slimChromeContainer, 'willSetMiniChrome', popupsWillSetMini);
