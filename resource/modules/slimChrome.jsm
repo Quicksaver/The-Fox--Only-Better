@@ -386,7 +386,9 @@ this.slimChromeTransitioned = function(e) {
 };
 
 this.slimChromeFinishedWidth = function() {
-	if(slimChromeContainer.hovers > 0) {
+	timerAid.cancel('ensureSlimChromeFinishedWidth');
+	
+	if(trueAttribute(slimChromeContainer, 'hover')) {
 		// make sure it doesn't get stuck open
 		// also account for any initial timers still running
 		setHover(true, false, Math.max(1, initialShowings.length));
@@ -425,6 +427,9 @@ this.slimChromeFinishedWidth = function() {
 this.ensureSlimChromeFinishedWidth = function() {
 	if(lastSlimChromeStyle.width <= MIN_WIDTH && !trueAttribute(slimChromeContainer, 'fullWidth')) {
 		slimChromeFinishedWidth();
+	} else {
+		// for the extremelly rare cases where neither the above condition is true or when the animation doesn't need to take place (e.g. extremelly well placed clicks)
+		timerAid.init('ensureSlimChromeFinishedWidth', slimChromeFinishedWidth, 400);
 	}
 };
 
@@ -681,6 +686,7 @@ this.unloadSlimChrome = function() {
 	timerAid.cancel('onlyURLBar');
 	timerAid.cancel('contentAreaMouseMoved');
 	timerAid.cancel('delayMoveSlimChrome');
+	timerAid.cancel('ensureSlimChromeFinishedWidth');
 	
 	dispatch(slimChromeContainer, { type: 'UnloadingSlimChrome', cancelable: false });
 	
