@@ -1,6 +1,7 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.1.0';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
+this.__defineGetter__('StarUI', function() { return window.StarUI; });
 
 moduleAid.LOADMODULE = function() {
 	BookmarkingUI.__showBookmarkedNotification = BookmarkingUI._showBookmarkedNotification;
@@ -13,9 +14,42 @@ moduleAid.LOADMODULE = function() {
 		}
 		this.__showBookmarkedNotification();
 	};
+	
+	// To prevent an issue with the BookarkedItem popup appearing below the browser window, because its anchor is destroyed between the time the popup is opened
+	// and the time the chrome expands from mini to full (because the anchor is an anonymous node? I have no idea...), we catch this before the popup is opened, and
+	// only continue with the operation after the chrome has expanded.
+	StarUI.__doShowEditBookmarkPanel = StarUI._doShowEditBookmarkPanel;
+	StarUI._doShowEditBookmarkPanel = function(aItemId, aAnchorElement, aPosition) {
+		// in case the panel will be attached to the star button, check to see if it's placed in our toolbars
+		if(typeof(slimChromeContainer) != 'undefined'
+		&& aAnchorElement && aAnchorElement == BookmarkingUI.anchor
+		&& isAncestor(aAnchorElement, slimChromeContainer)
+		&& !trueAttribute(slimChromeContainer, 'fullWidth')) {
+			// re-command the panel to open when the chrome finishes expanding
+			listenerAid.add(slimChromeContainer, 'FinishedSlimChromeWidth', function() {
+				// unfortunately this won't happen inside popupFinishedWidth in this case
+				if(slimChromeContainer.hovers === 1 && $$('#'+objName+'-slimChrome-container:hover')[0]) {
+					setHover(true);
+				}
+				
+				// get the anchor reference again, in case the previous node was lost
+				StarUI._doShowEditBookmarkPanel(aItemId, BookmarkingUI.anchor, aPosition);
+			}, false, true);
+			
+			// expand the chrome
+			initialShowChrome(750);
+			
+			return;
+		}
+		
+		this.__doShowEditBookmarkPanel(aItemId, aAnchorElement, aPosition);
+	};
 };
 
 moduleAid.UNLOADMODULE = function() {
 	BookmarkingUI._showBookmarkedNotification = BookmarkingUI.__showBookmarkedNotification;
 	delete BookmarkingUI.__showBookmarkedNotification;
+	
+	StarUI._doShowEditBookmarkPanel = StarUI.__doShowEditBookmarkPanel;
+	delete StarUI.__doShowEditBookmarkPanel;
 };
