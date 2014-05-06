@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.14';
+moduleAid.VERSION = '2.0.15';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -170,6 +170,11 @@ this.popupsFinishedWidth = function() {
 	timerAid.cancel('ensureHoldPopupShows');
 	if(holdPopupNodes.length > 0) {
 		for(var i=0; i<holdPopupNodes.length; i++) {
+			// don't bother if the popup was never hidden to begin with,
+			// it's not needed (the chrome was already expanded when it opened), so the popup is already properly placed,
+			// also this prevents some issues, for example the context menu jumping to the top left corner
+			if(!holdPopupNodes[i].collapsed) { continue; }
+			
 			// obviously we won't need to move it if it isn't open
 			if(holdPopupNodes[i].open || holdPopupNodes[i].state == 'open') {
 				holdPopupNodes[i].moveTo(-1,-1);
