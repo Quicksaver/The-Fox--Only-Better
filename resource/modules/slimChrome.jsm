@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.21';
+moduleAid.VERSION = '1.3.22';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -8,6 +8,7 @@ this.__defineGetter__('browserPanel', function() { return $('browser-panel'); })
 this.__defineGetter__('contentArea', function() { return $('browser'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
+this.__defineGetter__('MenuBar', function() { return $('toolbar-menubar'); });
 this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesToolbarHelper; });
 this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
@@ -140,7 +141,24 @@ this.onMouseReEnterBrowser = function(e) {
 	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
 };
 
+this.isMenuBarPopup = function(node) {
+	// we don't want the chrome to show or hide when hovering the menu popups from the menu bar
+	var toolbar = MenuBar;
+	if(isAncestor(node, toolbar)) {
+		var parent = node;
+		while(parent) {
+			if(parent == toolbar) { break; }
+			if(parent.nodeName == 'menupopup') { return true; }
+			parent = parent.parentNode;
+		}
+	}
+	
+	return false;
+};
+
 this.onMouseOverToolbox = function(e) {
+	if(isMenuBarPopup(e.target)) { return; }
+	
 	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
 		slimChromeContainer.hoversQueued++;
 		return;
@@ -149,6 +167,8 @@ this.onMouseOverToolbox = function(e) {
 };
 
 this.onMouseOutToolbox = function(e) {
+	if(isMenuBarPopup(e.target)) { return; }
+	
 	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
 		slimChromeContainer.hoversQueued--;
 		return;
