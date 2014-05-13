@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.4';
+moduleAid.VERSION = '1.0.5';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -6,6 +6,7 @@ this.__defineGetter__('overflowList', function() { return $('widget-overflow-lis
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('CustomizableUI', function() { return window.CustomizableUI; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
+this.__defineGetter__('fullScreenAutohide', function() { return Services.appinfo.OS != 'Darwin' && prefAid.autohide; });
 this.__defineGetter__('customizing', function() {
 	if(trueAttribute(document.documentElement, 'customizing')) { return true; }
 	
@@ -21,7 +22,11 @@ this.__defineGetter__('customizing', function() {
 
 this.fullScreenListener = function() {
 	// We get the fullscreen event _before_ the window transitions into or out of FS mode.
-	toggleSlimChrome(!fullScreen);
+	toggleSlimChrome(!fullScreen && fullScreenAutohide);
+};
+
+this.fullScreenAutohideListener = function() {
+	toggleSlimChrome(fullScreen && fullScreenAutohide);
 };
 
 this.customizeListener = function(e) {
@@ -30,7 +35,8 @@ this.customizeListener = function(e) {
 
 this.toggleSlimChrome = function(noLoad) {
 	if(noLoad === undefined) {
-		noLoad = fullScreen || customizing;
+		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
+		noLoad = (fullScreen && fullScreenAutohide) || customizing;
 	}
 	moduleAid.loadIf('slimChrome', prefAid.slimChrome && !noLoad);
 };
@@ -40,10 +46,13 @@ this.togglePopups = function() {
 };
 
 moduleAid.LOADMODULE = function() {
+	prefAid.setDefaults({ autohide: true }, 'fullscreen', 'browser');
+	
 	moduleAid.load('compatibilityFix/windowFixes');
 	
 	prefAid.listen('slimChrome', toggleSlimChrome);
 	prefAid.listen('slimChrome', togglePopups);
+	prefAid.listen('autohide', fullScreenAutohideListener);
 	
 	listenerAid.add(window, 'fullscreen', fullScreenListener);
 	listenerAid.add(window, 'beforecustomization', customizeListener, true);
@@ -60,6 +69,7 @@ moduleAid.UNLOADMODULE = function() {
 	
 	prefAid.unlisten('slimChrome', toggleSlimChrome);
 	prefAid.unlisten('slimChrome', togglePopups);
+	prefAid.unlisten('autohide', fullScreenAutohideListener);
 	
 	moduleAid.unload('slimChrome');
 	moduleAid.unload('popups');
