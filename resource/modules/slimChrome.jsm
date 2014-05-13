@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.22';
+moduleAid.VERSION = '1.3.23';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -256,6 +256,15 @@ this.contentAreaOnMouseMove = function() {
 	if(contentAreaMouseMoved) { return; }
 	contentAreaMouseMoved = true;
 	timerAid.init('contentAreaMouseMoved', function() {
+		// sometimes a popup can close or hide without triggering a popuphidden, or without being removed from the array. No idea why or exactly what happens...
+		// I've seen this with PopupAutoCompleteRichResult.
+		for(var p=0; p<holdPopupNodes.length; p++) {
+			if(!holdPopupNodes[p].open && holdPopupNodes[p].state != 'open') {
+				holdPopupNodes.splice(p, 1);
+				p--;
+			}
+		}
+		
 		if(slimChromeContainer.hovers > 0 // no point if it's already supposed to hide
 		&& initialShowings.length == 0 // don't hide if timers are active
 		&& !isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
