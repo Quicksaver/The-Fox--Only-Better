@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.10.1';
+moduleAid.VERSION = '2.10.2';
 moduleAid.LAZY = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1181,7 +1181,8 @@ this.overlayAid = {
 			try {
 				aWindow.CustomizableUI.registerArea(node.id, {
 					type: CustomizableUI.TYPE_TOOLBAR,
-					legacy: true
+					legacy: true,
+					defaultCollapsed: null
 				});
 			} catch(ex) { Cu.reportError(ex); }
 		}
