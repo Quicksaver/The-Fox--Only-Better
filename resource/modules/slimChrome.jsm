@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.23';
+moduleAid.VERSION = '1.3.24';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -587,7 +587,18 @@ this.slimChromeTabDropIndicatorWatcher = function() {
 	toggleAttribute(gNavToolbox, 'dropIndicatorFix', !tabDropIndicator.collapsed);
 };
 
+this.getParentWithId = function(node) {
+	while(node && !node.id) {
+		node = node.parentNode;
+	}
+	return node;
+};
+
 this.loadSlimChrome = function() {
+	// make sure the currently focused element stays focused after this.
+	// we get only a node with an id so that for example if the location bar is focused (most common case), we don't get its anonymous nodes that get destroyed in this process.
+	var focused = getParentWithId(document.commandDispatcher.focusedElement);
+	
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
 	
@@ -704,6 +715,13 @@ this.loadSlimChrome = function() {
 		initialLoading = false;
 	}, 5000);
 	
+	// do async because sometimes it wouldn't resize the chrome properly, so let it animate everything as it normally would
+	aSync(function() {
+		if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused) && isAncestor(focused, slimChromeContainer)) {
+			focused.focus();
+		}
+	});
+	
 	dispatch(slimChromeContainer, { type: 'LoadedSlimChrome', cancelable: false });
 	
 	moveSlimChrome();
@@ -720,6 +738,8 @@ this.unloadSlimChrome = function() {
 	timerAid.cancel('ensureSlimChromeFinishedWidth');
 	
 	dispatch(slimChromeContainer, { type: 'UnloadingSlimChrome', cancelable: false });
+	
+	var focused = isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) && getParentWithId(document.commandDispatcher.focusedElement);
 	
 	listenerAid.remove(browserPanel, 'resize', delayMoveSlimChrome);
 	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
@@ -788,8 +808,12 @@ this.unloadSlimChrome = function() {
 	
 	PlacesToolbarHelper.init();
 	window.URLBarSetURI();
-};
 	
+	if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused)) {
+		focused.focus();
+	}
+};
+
 moduleAid.LOADMODULE = function() {
 	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 };
