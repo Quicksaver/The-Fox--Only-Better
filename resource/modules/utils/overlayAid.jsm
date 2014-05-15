@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.10.2';
+moduleAid.VERSION = '2.10.3';
 moduleAid.LAZY = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -732,7 +732,7 @@ this.overlayAid = {
 							if(widget && widget.provider == aWindow.CustomizableUI.PROVIDER_API) {
 								// see note below (on createWidget)
 								var placement = aWindow.CustomizableUI.getPlacementOfWidget(action.node.id, aWindow);
-								areaType = (placement) ? aWindow.CustomizableUI.getAreaType(placement.area) : null;
+								var areaType = (placement) ? aWindow.CustomizableUI.getAreaType(placement.area) : null;
 								if(areaType == aWindow.CustomizableUI.TYPE_TOOLBAR) {
 									this.tempAppendAllToolbars(aWindow, placement.area);
 								}
@@ -1179,11 +1179,15 @@ this.overlayAid = {
 	registerAreas: function(aWindow, node) {
 		if(node.nodeName == 'toolbar' && node.id && !aWindow.CustomizableUI.getAreaType(node.id)) {
 			try {
-				aWindow.CustomizableUI.registerArea(node.id, {
+				var barArgs = {
 					type: CustomizableUI.TYPE_TOOLBAR,
 					legacy: true,
 					defaultCollapsed: null
-				});
+				};
+				if(Services.vc.compare(Services.appinfo.platformVersion, "30.0a1") < 0) {
+					delete barArgs.defaultCollapsed;
+				}
+				aWindow.CustomizableUI.registerArea(node.id, barArgs);
 			} catch(ex) { Cu.reportError(ex); }
 		}
 		
