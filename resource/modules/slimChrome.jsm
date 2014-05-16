@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.24';
+moduleAid.VERSION = '1.3.25';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -143,13 +143,15 @@ this.onMouseReEnterBrowser = function(e) {
 
 this.isMenuBarPopup = function(node) {
 	// we don't want the chrome to show or hide when hovering the menu popups from the menu bar
-	var toolbar = MenuBar;
-	if(isAncestor(node, toolbar)) {
-		var parent = node;
-		while(parent) {
-			if(parent == toolbar) { break; }
-			if(parent.nodeName == 'menupopup') { return true; }
-			parent = parent.parentNode;
+	var toolbars = [MenuBar, TabsToolbar];
+	for(var t=0; t<toolbars.length; t++) {
+		if(isAncestor(node, toolbars[t])) {
+			var parent = node;
+			while(parent) {
+				if(parent == toolbars[t]) { break; }
+				if(parent.nodeName == 'menupopup') { return true; }
+				parent = parent.parentNode;
+			}
 		}
 	}
 	
