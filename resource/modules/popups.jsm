@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.15';
+moduleAid.VERSION = '2.0.16';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -67,19 +67,20 @@ this.holdPopupMenu = function(e) {
 	if(!e.target || e.target.nodeName == 'window' || e.target.nodeName == 'tooltip') { return; }
 	
 	var trigger = e.originalTarget.triggerNode;
+	var target = e.target;
 	
 	// check if the trigger node is present in our toolbars;
 	// there's no need to check the overflow panel here, as it will likely be open already in these cases
 	var hold = isAncestor(trigger, slimChromeContainer);
 	
 	// try to use the anchor specified when opening the popup, if any; ditto from above for overflow panel nodes
-	if(!hold && e.target.anchorNode) {
-		hold = isAncestor(e.target.anchorNode, slimChromeContainer);
+	if(!hold && target.anchorNode) {
+		hold = isAncestor(target.anchorNode, slimChromeContainer);
 	}
 	
 	if(!hold && !trigger) {
 		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
-		if(e.target.id == 'customizationui-widget-panel') {
+		if(target.id == 'customizationui-widget-panel') {
 			hold_loop: for(var t=0; t<slimChromeToolbars.childNodes.length; t++) {
 				if(slimChromeToolbars.childNodes[t].localName != 'toolbar' || !CustomizableUI.getAreaType(slimChromeToolbars.childNodes[t].id)) { continue; }
 				
@@ -95,14 +96,19 @@ this.holdPopupMenu = function(e) {
 		}
 		
 		// let's just assume all panels that are children from these toolbars are opening from them
-		else if(isAncestor(e.target, slimChromeContainer)) {
+		else if(isAncestor(target, slimChromeContainer)) {
 			hold = true;
+			
+			// the search engine selection menu is an anonymous child of the searchbar; e.target == $('searchbar'), so we need to explicitely get the actual menu to use
+			if(target.id == 'searchbar') {
+				target = document.getAnonymousElementByAttribute(target, 'anonid', 'searchbar-popup');
+			}
 		}
 	}
 	
 	// nothing "native" is opening this popup, so let's see if someone claims it
 	if(!hold) {
-		trigger = askForOwner(e.target);
+		trigger = askForOwner(target);
 		if(trigger && typeof(trigger) == 'string') {
 			trigger = $(trigger);
 			// trigger could be either in the toolbars themselves or in the overflow panel
@@ -112,21 +118,21 @@ this.holdPopupMenu = function(e) {
 	
 	if(hold) {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
-		holdPopupNodes.push(e.target);
+		holdPopupNodes.push(target);
 		
 		// sometimes when opening the menu panel, it will be nearly collapsed, I have no idea what is setting these values
-		if(e.target.id == 'PanelUI-popup') {
-			removeAttribute(e.target, 'width');
-			removeAttribute(e.target, 'height');
+		if(target.id == 'PanelUI-popup') {
+			removeAttribute(target, 'width');
+			removeAttribute(target, 'height');
 		}
 		
 		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
-		if(trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(e.target.id) > -1) {
+		if(trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(target.id) > -1) {
 			setMini(true);
 			blockedPopup = true;
 		} else {
 			if(!trueAttribute(slimChromeContainer, 'fullWidth')) {
-				hideIt(e.target);
+				hideIt(target);
 				timerAid.init('ensureHoldPopupShows', popupsFinishedWidth, 200);
 			}
 			
@@ -135,13 +141,13 @@ this.holdPopupMenu = function(e) {
 		
 		var selfRemover = function(ee) {
 			if(ee.originalTarget != e.originalTarget) { return; } //submenus
-			listenerAid.remove(e.target, 'popuphidden', selfRemover);
+			listenerAid.remove(target, 'popuphidden', selfRemover);
 			
 			// making sure we don't collapse it permanently
-			hideIt(e.target, true);
+			hideIt(target, true);
 			
 			if(typeof(setHover) != 'undefined') {
-				if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(e.target.id) > -1) {
+				if(trueAttribute(slimChromeContainer, 'mini') && blockPopups.indexOf(target.id) > -1) {
 					if(blockedPopup) {
 						hideMiniInABit();
 						blockedPopup = false;
@@ -152,12 +158,12 @@ this.holdPopupMenu = function(e) {
 			}
 			
 			aSync(function() {
-				if(typeof(holdPopupNodes) != 'undefined' && holdPopupNodes.indexOf(e.target) > -1) {
-					holdPopupNodes.splice(holdPopupNodes.indexOf(e.target), 1);
+				if(typeof(holdPopupNodes) != 'undefined' && holdPopupNodes.indexOf(target) > -1) {
+					holdPopupNodes.splice(holdPopupNodes.indexOf(target), 1);
 				}
 			}, 150);
 		}
-		listenerAid.add(e.target, 'popuphidden', selfRemover);
+		listenerAid.add(target, 'popuphidden', selfRemover);
 	}
 };
 
