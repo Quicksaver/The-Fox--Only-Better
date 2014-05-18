@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.25';
+moduleAid.VERSION = '1.3.26';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -118,6 +118,9 @@ this.onFocus = function() {
 this.onMouseOutBrowser = function(e) {
 	// bascially this means that when the mouse left something, it entered "nothing", which is what we want to capture here
 	if(e.relatedTarget) { return; }
+	
+	// also, don't capture this if we're in HTML5 fullscreen mode and in Mac OS X, as it's just weird
+	if(Services.appinfo.OS == 'Darwin' && mozFullScreen) { return; }
 	
 	// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
 	if(e.screenY < gNavToolbox.boxObject.screenY

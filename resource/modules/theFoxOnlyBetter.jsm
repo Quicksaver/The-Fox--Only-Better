@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.5';
+moduleAid.VERSION = '1.0.6';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -6,6 +6,7 @@ this.__defineGetter__('overflowList', function() { return $('widget-overflow-lis
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('CustomizableUI', function() { return window.CustomizableUI; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
+this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
 this.__defineGetter__('fullScreenAutohide', function() { return Services.appinfo.OS != 'Darwin' && prefAid.autohide; });
 this.__defineGetter__('customizing', function() {
 	if(trueAttribute(document.documentElement, 'customizing')) { return true; }
@@ -22,11 +23,11 @@ this.__defineGetter__('customizing', function() {
 
 this.fullScreenListener = function() {
 	// We get the fullscreen event _before_ the window transitions into or out of FS mode.
-	toggleSlimChrome(!fullScreen && fullScreenAutohide);
+	toggleSlimChrome(!fullScreen && !mozFullScreen && fullScreenAutohide);
 };
 
 this.fullScreenAutohideListener = function() {
-	toggleSlimChrome(fullScreen && fullScreenAutohide);
+	toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
 };
 
 this.customizeListener = function(e) {
@@ -36,7 +37,7 @@ this.customizeListener = function(e) {
 this.toggleSlimChrome = function(noLoad) {
 	if(noLoad === undefined) {
 		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
-		noLoad = (fullScreen && fullScreenAutohide) || customizing;
+		noLoad = (fullScreen && !mozFullScreen && fullScreenAutohide) || customizing;
 	}
 	moduleAid.loadIf('slimChrome', prefAid.slimChrome && !noLoad);
 };
