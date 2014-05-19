@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -18,13 +18,18 @@ moduleAid.LOADMODULE = function() {
 	// To prevent an issue with the BookarkedItem popup appearing below the browser window, because its anchor is destroyed between the time the popup is opened
 	// and the time the chrome expands from mini to full (because the anchor is an anonymous node? I have no idea...), we catch this before the popup is opened, and
 	// only continue with the operation after the chrome has expanded.
+	// We do the same for when the anchor is the identity box, as in Mac OS X the bookmarked item panel would open outside of the window (no clue why though...)
 	StarUI.__doShowEditBookmarkPanel = StarUI._doShowEditBookmarkPanel;
 	StarUI._doShowEditBookmarkPanel = function(aItemId, aAnchorElement, aPosition) {
+		var identityAnchor = $("page-proxy-favicon");
+		
 		// in case the panel will be attached to the star button, check to see if it's placed in our toolbars
 		if(typeof(slimChromeContainer) != 'undefined'
-		&& aAnchorElement && aAnchorElement == BookmarkingUI.anchor
 		&& isAncestor(aAnchorElement, slimChromeContainer)
 		&& !trueAttribute(slimChromeContainer, 'fullWidth')) {
+			var anchor = $("page-proxy-favicon");
+			if(aAnchorElement != anchor) { anchor = null; }
+			
 			// re-command the panel to open when the chrome finishes expanding
 			listenerAid.add(slimChromeContainer, 'FinishedSlimChromeWidth', function() {
 				// unfortunately this won't happen inside popupFinishedWidth in this case
@@ -33,7 +38,7 @@ moduleAid.LOADMODULE = function() {
 				}
 				
 				// get the anchor reference again, in case the previous node was lost
-				StarUI._doShowEditBookmarkPanel(aItemId, BookmarkingUI.anchor, aPosition);
+				StarUI._doShowEditBookmarkPanel(aItemId, anchor || BookmarkingUI.anchor, aPosition);
 			}, false, true);
 			
 			// expand the chrome
