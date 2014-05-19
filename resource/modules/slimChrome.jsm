@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.26';
+moduleAid.VERSION = '1.3.27';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -181,14 +181,16 @@ this.onMouseOutToolbox = function(e) {
 	onMouseOut();
 };
 
-this.onDragEnter = function() {
-	if(blockAllHovers) { return; }
-	
-	setHover(true, false, 1);
-	listenerAid.remove(slimChromeContainer, 'dragenter', onDragEnter);
+this.onDragStart = function() {
+	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
 	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.add(window, "drop", onDragExitAll);
 	listenerAid.add(window, "dragend", onDragExitAll);
+};
+
+this.onDragEnter = function() {
+	setHover(true);
+	onDragStart();
 };
 
 this.onDragExit = function() {
@@ -203,11 +205,8 @@ this.onDragExitAll = function() {
 	setHover(false);
 };
 
-this.blockAllHovers = false;
 this.setHover = function(hover, now, force) {
 	if(hover) {
-		if(blockAllHovers) { return; }
-		
 		slimChromeContainer.hovers++;
 		
 		if(!now) {
@@ -561,29 +560,6 @@ this.slimChromeCUIListener = {
 	}
 };
 
-this.dragStartTabs = function() {
-	observerAid.notify('TheFOBDraggingTabsStart');
-};
-
-this.dragEndTabs = function() {
-	observerAid.notify('TheFOBDraggingTabsEnd');
-};
-
-this.dragTabsStartObserver = function() {
-	setHover(false, false, 0);
-	blockAllHovers = true;
-	listenerAid.add(window, 'dragend', dragEndTabs, true);
-	listenerAid.add(window, 'drop', dragEndTabs, true);
-	listenerAid.add(window, 'mouseup', dragEndTabs, true);
-};
-
-this.dragTabsEndObserver = function() {
-	listenerAid.remove(window, 'dragend', dragEndTabs, true);
-	listenerAid.remove(window, 'drop', dragEndTabs, true);
-	listenerAid.remove(window, 'mouseup', dragEndTabs, true);
-	aSync(function() { blockAllHovers = false; });
-};
-
 this.setSlimChromeTabDropIndicatorWatcher = function() {
 	objectWatcher.addAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 };
@@ -672,6 +648,7 @@ this.loadSlimChrome = function() {
 	listenerAid.add(browserPanel, 'resize', delayMoveSlimChrome);
 	
 	// keep the toolbox when hovering it
+	listenerAid.add(gNavToolbox, 'dragstart', onDragStart);
 	listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
 	listenerAid.add(gNavToolbox, 'mouseover', onMouseOverToolbox);
 	listenerAid.add(gNavToolbox, 'mouseout', onMouseOutToolbox);
@@ -693,11 +670,6 @@ this.loadSlimChrome = function() {
 	
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
-	
-	// the chrome isn't needed when dragging tabs
-	listenerAid.add(TabsToolbar, 'dragstart', dragStartTabs, true);
-	observerAid.add(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
-	observerAid.add(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
 	
 	// show mini when the current tab changes host; this will also capture when changing tabs
 	gBrowser.addProgressListener(slimChromeProgressListener);
@@ -749,6 +721,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(browserPanel, 'resize', delayMoveSlimChrome);
 	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	listenerAid.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
+	listenerAid.remove(gNavToolbox, 'dragstart', onDragStart);
 	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
 	listenerAid.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
 	listenerAid.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
@@ -762,17 +735,13 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(gBrowser, 'keyup', slimChromeKeyup, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
-	listenerAid.remove(TabsToolbar, 'dragstart', dragStartTabs, true);
 	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
 	gBrowser.removeProgressListener(slimChromeProgressListener);
-	observerAid.remove(dragTabsStartObserver, 'TheFOBDraggingTabsStart');
-	observerAid.remove(dragTabsEndObserver, 'TheFOBDraggingTabsEnd');
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	CustomizableUI.removeListener(slimChromeCUIListener);
 	
 	initialLoading = true;
-	dragTabsEndObserver();
 	
 	removeAttribute(gNavToolbox, 'dropIndicatorFix');
 	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
