@@ -108,5 +108,10 @@
 	.tab-drop-indicator {
 		z-index: 500;
 	}
+	
+	/* I have no idea why this value works, or why 25% works as the default value for all OS's... but this is required otherwise the drop indicator would be too high up */
+	#theFoxOnlyBetter-slimChrome-container #PlacesToolbarDropIndicatorHolder {
+		top: 60%;
+	}
 
 }
