@@ -32,8 +32,15 @@
 		padding-bottom: 1px;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-toolbars > #nav-bar {
+	#theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) #nav-bar,
+	#navigator-toolbox #RSSTICKERToolbar {
 		background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
+	}
+	#theFoxOnlyBetter-slimChrome-container[RSSTicker] #nav-bar {
+		background-image: none;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container #nav-bar {
 		box-shadow: none;
 		margin-top: 0;
 		padding-top: 2px;

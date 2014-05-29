@@ -36,8 +36,16 @@
 		box-shadow: none;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-toolbars #nav-bar:not(:-moz-lwtheme) {
+	#theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) #nav-bar:not(:-moz-lwtheme),
+	/* all the selector stuff is for specificity... */
+	#navigator-toolbox > toolbar#RSSTICKERToolbar:not(#nav-bar):not(#TabsToolbar):not(:-moz-lwtheme) {
 		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,91%), hsl(0,0%,83%));
+	}
+	#theFoxOnlyBetter-slimChrome-container[RSSTicker] #nav-bar:not(:-moz-lwtheme) {
+		background: url(chrome://browser/skin/Toolbar-background-noise.png) hsl(0,0%,83%);
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container #nav-bar:not(:-moz-lwtheme) {
 		margin-top: 0;
 	}
 	

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.27';
+moduleAid.VERSION = '1.3.28';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -795,4 +795,7 @@ moduleAid.LOADMODULE = function() {
 moduleAid.UNLOADMODULE = function() {
 	styleAid.unload('personaSlimChrome_'+_UUID);
 	overlayAid.removeOverlayWindow(window, 'slimChrome');
+	
+	// send this here so the nodes don't exist anymore when handling the event
+	dispatch(gNavToolbox, { type: 'UnloadedSlimChrome', cancelable: false });
 };
