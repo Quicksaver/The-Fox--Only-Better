@@ -3,7 +3,7 @@
 	
 	#theFoxOnlyBetter-slimChrome-container {
 		position: fixed;
-		overflow: hidden;
+		overflow: -moz-hidden-unscrollable;
 		z-index: 400;
 	}
 	
