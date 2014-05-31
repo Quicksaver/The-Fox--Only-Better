@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.8';
+moduleAid.VERSION = '1.0.9';
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/downloadsIndicator');
@@ -21,6 +21,10 @@ moduleAid.LOADMODULE = function() {
 		moduleAid.loadIf('compatibilityFix/TabGroupsManager', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("status4evar@caligonstudios.com", function(addon) {
+		moduleAid.loadIf('compatibilityFix/S4E', (addon && addon.isActive));
+	});
+	
 	moduleAid.load('compatibilityFix/UIEnhancer');
 };
 
@@ -32,5 +36,6 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/omnibar');
 	moduleAid.unload('compatibilityFix/RSSTicker');
 	moduleAid.unload('compatibilityFix/TabGroupsManager');
+	moduleAid.unload('compatibilityFix/S4E');
 	moduleAid.unload('compatibilityFix/UIEnhancer');
 };
