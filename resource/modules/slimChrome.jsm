@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.29';
+moduleAid.VERSION = '1.3.30';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -562,12 +562,12 @@ this.slimChromeCUIListener = {
 
 this.slimChromeChildListener = {
 	observer: null,
-	
+		
 	handler: function(mutations) {
 		for(var m of mutations) {
 			if(m.addedNodes) {
 				for(var n of m.addedNodes) {
-					if(n.id == 'addon-bar') { continue; }
+					if(slimChromeExceptions.indexOf(n.id) > -1) { continue; }
 					
 					var prevSibling = n.previousSibling;
 					while(prevSibling) {
@@ -653,7 +653,7 @@ this.loadSlimChrome = function() {
 	var toolbar = customToolbars;
 	while(toolbar.nextSibling) {
 		toolbar = toolbar.nextSibling;
-		if(toolbar.id == 'addon-bar') { continue; }
+		if(slimChromeExceptions.indexOf(toolbar.id) > -1) { continue; }
 		
 		var toMove = toolbar;
 		toolbar = toolbar.previousSibling;

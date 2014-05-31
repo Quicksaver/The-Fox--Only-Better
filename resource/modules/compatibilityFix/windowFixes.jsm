@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.7';
+moduleAid.VERSION = '1.0.8';
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/downloadsIndicator');
@@ -17,6 +17,10 @@ moduleAid.LOADMODULE = function() {
 		moduleAid.loadIf('compatibilityFix/RSSTicker', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("{ca526f8b-9e0a-4756-9077-19d6f3e64ea8}", function(addon) {
+		moduleAid.loadIf('compatibilityFix/TabGroupsManager', (addon && addon.isActive));
+	});
+	
 	moduleAid.load('compatibilityFix/UIEnhancer');
 };
 
@@ -27,5 +31,6 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/TreeStyleTab');
 	moduleAid.unload('compatibilityFix/omnibar');
 	moduleAid.unload('compatibilityFix/RSSTicker');
+	moduleAid.unload('compatibilityFix/TabGroupsManager');
 	moduleAid.unload('compatibilityFix/UIEnhancer');
 };

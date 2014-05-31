@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.6';
+moduleAid.VERSION = '1.0.7';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -20,6 +20,9 @@ this.__defineGetter__('customizing', function() {
 	
 	return false;
 });
+
+// set this here, so I can modify it through other modules without reseting it when slimChrome un/loads
+this.slimChromeExceptions = ['addon-bar'];
 
 this.fullScreenListener = function() {
 	// We get the fullscreen event _before_ the window transitions into or out of FS mode.
