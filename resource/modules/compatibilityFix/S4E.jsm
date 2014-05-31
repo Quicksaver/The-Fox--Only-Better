@@ -1,38 +1,31 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('S4Eprogress', function() { return $('urlbar-progress-alt'); });
 
-this.S4Elistener = {
-	observer: null,
-	state: false,
-	
-	handler: function() {
-		var current = S4Eprogress && !S4Eprogress.hidden && !S4Eprogress.collapsed;
-		this.state = current;
-		if(typeof(setMini) != 'undefined') {
-			if(this.state) {
-				// show immediately when progress bar becomes visible
-				setMini(this.state);
-			} else {
-				// don't hide immediately when page load ends
-				timerAid.init('setMini', hideMiniInABit, 2000);
-			}
+this.S4Estate = false;
+
+this.S4Elistener = function() {
+	var current = S4Eprogress && !S4Eprogress.hidden && !S4Eprogress.collapsed;
+	S4Estate = current;
+	if(typeof(setMini) != 'undefined') {
+		if(S4Estate) {
+			// show immediately when progress bar becomes visible
+			setMini(true);
+		} else {
+			// don't hide immediately when page load ends
+			timerAid.init('setMini', hideMiniInABit, 2000);
 		}
 	}
 };
 
-this.S4EkeepVisible = function(e) {
-	if(S4Elistener.state) {
-		e.preventDefault();
-		e.stopPropagation();
-	}
-};
-
 moduleAid.LOADMODULE = function() {
-	S4Elistener.observer = new window.MutationObserver(S4Elistener.handler);
-	S4Elistener.observer.observe(S4Eprogress, { attributes: true });
+	objectWatcher.addAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
+	objectWatcher.addAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
+	objectWatcher.addAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
 };
 
 moduleAid.UNLOADMODULE = function() {
-	S4Elistener.observer.disconnet();	
+	objectWatcher.removeAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
+	objectWatcher.removeAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
+	objectWatcher.removeAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
 };
