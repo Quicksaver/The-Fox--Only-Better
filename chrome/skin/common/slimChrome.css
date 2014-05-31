@@ -39,12 +39,14 @@
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons,
+	/* S4E moves some things around into a stack element for its progress bar display */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > toolbarbutton,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > dropmarker {
 		visibility: collapse;
 	}
 	
 	/* this needs the important tag */
-	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #omnibar-in-urlbar {
 		visibility: collapse !important;
 	}
