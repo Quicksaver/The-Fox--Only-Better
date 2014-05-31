@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.28';
+moduleAid.VERSION = '1.3.29';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -560,6 +560,32 @@ this.slimChromeCUIListener = {
 	}
 };
 
+this.slimChromeChildListener = {
+	observer: null,
+	
+	handler: function(mutations) {
+		for(var m of mutations) {
+			if(m.addedNodes) {
+				for(var n of m.addedNodes) {
+					if(n.id == 'addon-bar') { continue; }
+					
+					var prevSibling = n.previousSibling;
+					while(prevSibling) {
+						if(prevSibling == customToolbars) {
+							slimChromeToolbars.appendChild(n);
+							if(gNavToolbox.externalToolbars.indexOf(n) == -1) {
+								gNavToolbox.externalToolbars.push(n);
+							}
+							break;
+						}
+						prevSibling = prevSibling.previousSibling;
+					}
+				}
+			}
+		}
+	}
+};
+
 this.setSlimChromeTabDropIndicatorWatcher = function() {
 	objectWatcher.addAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 };
@@ -686,6 +712,10 @@ this.loadSlimChrome = function() {
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
 	CustomizableUI.addListener(slimChromeCUIListener);
 	
+	// make sure we move any toolbars are added after slimChrome is enabled
+	slimChromeChildListener.observer = new window.MutationObserver(slimChromeChildListener.handler);
+	slimChromeChildListener.observer.observe(gNavToolbox, { childList: true });
+	
 	// no point in showing on customization changes if it's still finishing initializing, there's a lot of these events here
 	// 5 second should be enough
 	timerAid.init('waitCUI', function() {
@@ -740,6 +770,7 @@ this.unloadSlimChrome = function() {
 	gBrowser.removeProgressListener(slimChromeProgressListener);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	CustomizableUI.removeListener(slimChromeCUIListener);
+	slimChromeChildListener.observer.disconnect();
 	
 	initialLoading = true;
 	
