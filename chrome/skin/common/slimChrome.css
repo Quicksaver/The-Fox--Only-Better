@@ -75,7 +75,7 @@
 		visibility: collapse !important;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #nav-bar {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
 		padding: 1px;
 	}
 	
@@ -123,7 +123,7 @@
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
-		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-out 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
+		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-in 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
 	}
 	
 	/* some widget animations fixes */

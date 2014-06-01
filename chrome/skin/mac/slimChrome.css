@@ -67,29 +67,29 @@
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
 		-moz-border-start: 1px solid #9d9d9d;
 		margin-left: 4px;
 	}
 	
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
 		border-top-left-radius: 3px;
 		border-bottom-left-radius: 3px;
 	}
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
 		border-top-right-radius: 3px;
 		border-bottom-right-radius: 3px;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #nav-bar-customization-target {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target {
 		padding: 1px 0;
 	}
 	
 	/* these are so the identity box doesn't jump around when going back/forward in the tab history */
 	/* remove: this isn't needed in FF31 */
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-container[forwarddisabled] > #forward-button ~ #urlbar-wrapper > #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon,
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container[forwarddisabled] > #forward-button ~ #urlbar-wrapper > #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon,
 	/* end remove */
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
 		-moz-margin-start: -6px;
 	}
 
