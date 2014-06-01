@@ -26,9 +26,7 @@ this.RSSTickerStyle = function() {
 moduleAid.LOADMODULE = function() {
 	prefAid.setDefaults({ tickerPlacement: 1 }, 'rssticker');
 	
-	// I really don't like using this, but the developer seems to have put his add-on in the backburner (if he hasn't abandoned completely),
-	// so I'd rather make sure both work correctly rather than wait for a response that may never come.
-	// If he does reply, I'll change this accordingly.
+	// the ticker toolbar should be added before our elements, not after
 	toCode.modify(RSS_TICKER_UI, 'RSS_TICKER_UI.loadTicker', [
 		["document.getElementById( 'navigator-toolbox' ).appendChild( RSS_TICKER_UI.toolbar );",
 			"document.getElementById('navigator-toolbox').insertBefore(RSS_TICKER_UI.toolbar, document.getElementById('"+objName+"-slimChrome-container'));"
