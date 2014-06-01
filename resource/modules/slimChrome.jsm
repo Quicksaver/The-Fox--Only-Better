@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.30';
+moduleAid.VERSION = '1.3.31';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -308,6 +308,7 @@ this.setMini = function(mini) {
 			// let chrome hide completely before showing the rest of the UI
 			timerAid.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
+				dispatch(slimChromeContainer, { type: 'RemovedOnlyURLBar', cancelable: false });
 			}, 300);
 		}, 50);
 	}
@@ -320,7 +321,9 @@ this.focusPasswords = function(e) {
 	&& !e.target.disabled
 	&& (prefAid.miniOnAllInput || e.target.type == 'password')) {
 		setMini(e.type == 'focus');
+		return true;
 	}
+	return false;
 };
 
 this.findPersonaPosition = function() {

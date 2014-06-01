@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.9';
+moduleAid.VERSION = '1.0.10';
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/downloadsIndicator');
@@ -25,6 +25,10 @@ moduleAid.LOADMODULE = function() {
 		moduleAid.loadIf('compatibilityFix/S4E', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("linklocationbar@gnt.de", function(addon) {
+		moduleAid.loadIf('compatibilityFix/LinkLocationBar', (addon && addon.isActive));
+	});
+	
 	moduleAid.load('compatibilityFix/UIEnhancer');
 };
 
@@ -37,5 +41,6 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/RSSTicker');
 	moduleAid.unload('compatibilityFix/TabGroupsManager');
 	moduleAid.unload('compatibilityFix/S4E');
+	moduleAid.unload('compatibilityFix/LinkLocationBar');
 	moduleAid.unload('compatibilityFix/UIEnhancer');
 };

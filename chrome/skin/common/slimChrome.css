@@ -40,10 +40,25 @@
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons,
+	/* Only show the link part in the mini bar when hovering a link and using the Link Location Bar add-on */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar[overlinkstate] #identity-box,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar[overlinkstate] [anonid="textbox-input-box"],
 	/* S4E moves some things around into a stack element for its progress bar display */
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > toolbarbutton,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > dropmarker {
 		visibility: collapse;
+	}
+	
+	/* make sure it doesn't distort the bar too much, and that the link spans the whole bar as well */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar[overlinkstate] [anonid="over-link-box"] {
+		padding-top: 2px;
+		padding-bottom: 2px;
+		max-width: 536px !important;
+	}
+	/* Link Location Bar also forces the dropmarker to be visible, but we don't want it in the mini bar */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker[style~="visibility:"],
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > dropmarker[style~="visibility:"] {
+		visibility: collapse !important;
 	}
 	
 	/* this needs the important tag */
