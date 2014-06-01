@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.1.0';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 
@@ -6,41 +6,68 @@ this.LLBlistener = function() {
 	if(typeof(setMini) == 'undefined') { return; }
 	if(typeof(blockedPopup) != 'undefined' && blockedPopup) { return; }
 	
+	// show the link hover state immediately
 	if(window.gURLBar.getAttribute('overlinkstate') == 'showing') {
+		timerAid.cancel('LBBlistener');
+		setAttribute(slimChromeContainer, 'overlinkstate', 'true');
 		setMini(true);
+	// see if a password field is focused, if not remove the overlinkstate attr only after the mini bar is hidden
 	} else if(!focusPasswords({ type: 'focus', target: document.commandDispatcher.focusedElement })) {
+		timerAid.init('LBBlistener', function() {
+			removeAttribute(slimChromeContainer, 'overlinkstate');
+		}, 400);
 		setMini(false);
+	// if we're in a password field, remove the attr immediately so the url is shown
+	} else {
+		removeAttribute(slimChromeContainer, 'overlinkstate');
 	}
 };
 
 // its preferences are lost when slimChrome un/loads
-this.LBBreapply = function() {
+this.LLBreapply = function() {
 	LinkLocationBar.startup();
 };
 
-// some times the attribute isn't removed and stays as "fade-out", so the mini bar won't render neither the hover link or the current location
-this.LBBclear = function() {
-	if(window.gURLBar.getAttribute('overlinkstate') != 'showing') {
-		removeAttribute(window.gURLBar, 'overlinkstate');
-	}
+this.LLBresize = function() {
+	// Unload current stylesheet if it's been loaded
+	styleAid.unload('LLBresize_'+_UUID);
+	
+	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
+	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
+	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) {\n';
+	sscode += '		max-width: ' + lastSlimChromeStyle.width + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="over-link-box"] {\n';
+	sscode += '		max-width: ' + (lastSlimChromeStyle.width -16) + 'px !important;\n';
+	sscode += '	}\n';
+	sscode += '}';
+	
+	styleAid.load('LLBresize_'+_UUID, sscode, true);
 };
 
 moduleAid.LOADMODULE = function() {
-	listenerAid.add(window, 'LoadedSlimChrome', LBBreapply);
-	listenerAid.add(window, 'UnloadedSlimChrome', LBBreapply);
-	listenerAid.add(window, 'RemovedOnlyURLBar', LBBclear);
+	listenerAid.add(window, 'LoadedSlimChrome', LLBreapply);
+	listenerAid.add(window, 'UnloadedSlimChrome', LLBreapply);
+	listenerAid.add(window, 'MovedSlimChrome', LLBresize);
 	
 	objectWatcher.addAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
 	
-	LBBreapply();
+	if(typeof(lastSlimChromeStyle) != 'undefined' && lastSlimChromeStyle) {
+		LLBresize();
+	}
+	
+	LLBreapply();
 };
 
 moduleAid.UNLOADMODULE = function() {
 	objectWatcher.removeAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
 	
-	listenerAid.remove(window, 'LoadedSlimChrome', LBBreapply);
-	listenerAid.remove(window, 'UnloadedSlimChrome', LBBreapply);
-	listenerAid.remove(window, 'RemovedOnlyURLBar', LBBclear);
+	listenerAid.remove(window, 'LoadedSlimChrome', LLBreapply);
+	listenerAid.remove(window, 'UnloadedSlimChrome', LLBreapply);
+	listenerAid.remove(window, 'MovedSlimChrome', LLBresize);
 	
-	LBBreapply();
+	styleAid.unload('LLBresize_'+_UUID);
+	
+	LLBreapply();
 };

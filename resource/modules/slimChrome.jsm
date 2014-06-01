@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.31';
+moduleAid.VERSION = '1.3.32';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -89,8 +89,6 @@ this.moveSlimChrome = function() {
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container {\n';
 	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
-	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container[hover] {\n';
 	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container:not([hover]) {\n';
@@ -101,6 +99,8 @@ this.moveSlimChrome = function() {
 	styleAid.load('slimChromeMove_'+_UUID, sscode, true);
 	
 	findPersonaPosition();
+	
+	dispatch(slimChromeContainer, { type: 'MovedSlimChrome', cancelable: false });
 };
 
 this.onMouseOver = function(e) {
@@ -308,7 +308,6 @@ this.setMini = function(mini) {
 			// let chrome hide completely before showing the rest of the UI
 			timerAid.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
-				dispatch(slimChromeContainer, { type: 'RemovedOnlyURLBar', cancelable: false });
 			}, 300);
 		}, 50);
 	}
