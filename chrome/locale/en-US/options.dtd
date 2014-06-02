@@ -5,6 +5,7 @@
 <!ENTITY pane.about.label "About">
 
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
+<!ENTITY opt.miniOnAllInput.label "Show the mini bar when any input box is focused">
 
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "by Quicksaver">

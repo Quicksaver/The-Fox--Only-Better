@@ -9,9 +9,13 @@
 	<prefpane id="slimChromePane" label="&pane.slimChrome.label;" style="&Optwindow.style;">
 		<preferences>
 			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
+			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
 		</preferences>
 		
-		<checkbox label="&opt.slimChrome.label;" preference="pref-slimChrome"/>
+		<groupbox align="start">
+			<caption><checkbox label="&opt.slimChrome.label;" preference="pref-slimChrome"/></caption>
+			<checkbox label="&opt.miniOnAllInput.label;" dependson="pref-slimChrome" preference="pref-miniOnAllInput"/>
+		</groupbox>
 	</prefpane>
 	
 	<prefpane id="aboutPane" label="&pane.about.label;" align="center" style="&Optwindow.style;">
