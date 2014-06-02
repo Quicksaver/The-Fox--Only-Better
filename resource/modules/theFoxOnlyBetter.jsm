@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.7';
+moduleAid.VERSION = '1.0.8';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -38,7 +38,7 @@ this.customizeListener = function(e) {
 };
 
 this.toggleSlimChrome = function(noLoad) {
-	if(noLoad === undefined) {
+	if(noLoad === undefined || noLoad == 'slimChrome') {
 		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
 		noLoad = (fullScreen && !mozFullScreen && fullScreenAutohide) || customizing;
 	}

@@ -5,8 +5,16 @@
 <prefwindow xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 			id="thefoxonlybetter-options-window"
 			title="&options.title;">
+			
+	<prefpane id="slimChromePane" label="&pane.slimChrome.label;" style="&Optwindow.style;">
+		<preferences>
+			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
+		</preferences>
+		
+		<checkbox label="&opt.slimChrome.label;" preference="pref-slimChrome"/>
+	</prefpane>
 	
-	<prefpane id="aboutPane" label="&optabout.label;" align="center" style="&Optwindow.style;">
+	<prefpane id="aboutPane" label="&pane.about.label;" align="center" style="&Optwindow.style;">
 		<hbox align="center">
 			<label flex="1" value=" "/>
 			<image id="logo"/>
@@ -19,7 +27,6 @@
 				<description id="addonVersion" hidden="true" class="closer"></description>
 			</hbox>
 			<description>&about.by;</description>
-			<description class="justify">&about.summary;</description>
 			<description class="justify">&about.desc;</description>
 			<label class="text-link closer" href="https://addons.mozilla.org/firefox/addon/the-fox-only-better/" value="&about.home;"/>
 			<label class="text-link closer" href="https://github.com/Quicksaver/The-Fox--Only-Better/issues" value="&about.tech;"/>

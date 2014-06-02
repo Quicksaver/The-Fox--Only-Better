@@ -1,11 +1,13 @@
-<!ENTITY Optwindow.style "width: 40em; height: 37em;">
+<!ENTITY Optwindow.style "width: 40em;">
 <!ENTITY options.title "The Fox, Only Better">
 
-<!ENTITY optabout.label "About">
+<!ENTITY pane.slimChrome.label "Slim Chrome">
+<!ENTITY pane.about.label "About">
+
+<!ENTITY opt.slimChrome.label "Enable Slim Chrome">
 
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "by Quicksaver">
-<!ENTITY about.summary "This add-on doesn't have any extra preferences yet, although I plan to add many new features over time! If there's anything in particular you'd like to see added, please let me know.">
 <!ENTITY about.desc "All information about the add-on and its developer can be found in its Mozilla Add-ons Homepage. If you liked the add-on, please consider leaving there a nice review or a small contribution to help support its continued development. Bug reports and suggestions can be made in the technical support webpage.">
 <!ENTITY about.home "Add-on Homepage">
 <!ENTITY about.tech "Technical Support">
