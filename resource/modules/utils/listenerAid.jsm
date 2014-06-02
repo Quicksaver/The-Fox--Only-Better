@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.1.1';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.2.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // listenerAid - Object to aid in setting and removing all kinds of event listeners to an object;
 // add(obj, type, listener, capture, maxTriggers) - attaches listener to obj
@@ -94,16 +95,18 @@ this.listenerAid = {
 	OmniSidebar - Started browser and opened new window then closed it, it would not remove the switchers listeners, I don't know in which window,
 	or it would but it would still leave a ZC somehow. Removing them manually in UNLOADMODULE fixed the ZC but they should have been taken care of here */
 	clean: function() {
-		var i = 0;
-		while(i < this.handlers.length) {
+		while(this.handlers[0]) {
 			try {
-				if(this.handlers[i].obj && this.handlers[i].obj.removeEventListener) {
-					this.handlers[i].obj.removeEventListener(this.handlers[i].type, this.handlers[i].handler, this.handlers[i].capture);
+				if(this.handlers[0].obj && this.handlers[0].obj.removeEventListener) {
+					this.handlers[0].obj.removeEventListener(this.handlers[0].type, this.handlers[0].handler, this.handlers[0].capture);
 				}
 			}
 			catch(ex) { handleDeadObject(ex); /* Prevents can't access dead object sometimes */ }
-			this.handlers.splice(i, 1);
+			this.handlers.splice(0, 1);
 		}
-		return true;
 	}
+};
+
+moduleAid.UNLOADMODULE = function() {
+	listenerAid.clean();
 };

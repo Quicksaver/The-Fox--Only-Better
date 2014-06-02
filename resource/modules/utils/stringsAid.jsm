@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.1.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.2.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // stringsAid - use for getting strings out of bundles from .properties locale files
 // get(bundle, string, replace, aNumber) - returns the desired string

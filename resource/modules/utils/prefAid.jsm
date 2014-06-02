@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.1.1';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.2.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // prefAid -	Object to contain and manage all preferences related to the add-on (and others if necessary)
 // 		All default preferences of the add-on ('extensions.objPathString.*') are sync'ed by Firefox Sync by default,
@@ -10,7 +11,7 @@ moduleAid.LAZY = true;
 //	(optional) trunk - (string) defaults to 'extensions'
 // listen(pref, handler) - add handler as a change event listener to pref
 //	pref - (string) name of preference to append handler to
-//	handler - (function) to be fired on change event
+//	handler - (function) to be fired on change event, expects (pref, newValue) arguments
 // unlisten(pref, handler) - remove handler as a change event listener of pref
 //	see listen()
 // listening(pref, handler) - returns (int) with corresponding listener index in _onChange[] if handler is registered as pref listener, returns (bool) false otherwise
@@ -77,7 +78,7 @@ this.prefAid = {
 		// when set*Pref()'ing "somethingElse"
 		var syncBranch = Services.prefs.getDefaultBranch('services.sync.prefs.sync.');
 		for(var pref in prefList) {
-			if(pref.indexOf('NoSync_') == 0) { continue; }
+			if(pref.startsWith('NoSync_')) { continue; }
 			
 			if(!this._prefObjects[pref]) {
 				this._setPref(pref, branch, trunk);
@@ -154,7 +155,7 @@ this.prefAid = {
 		}
 		
 		for(var i = 0; i < prefAid._onChange[pref].length; i++) {
-			prefAid._onChange[pref][i]();
+			prefAid._onChange[pref][i](pref, prefAid[pref]);
 		}
 	},
 	

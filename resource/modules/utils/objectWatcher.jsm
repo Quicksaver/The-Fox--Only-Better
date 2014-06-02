@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.2.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.3.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // objectWatcher - This acts as a replacement for the event DOM Attribute Modified, works for both attributes and object properties
 //	addPropertyWatcher(obj, prop, handler, capture) - registers handler as a watcher for obj property prop changes
@@ -185,9 +186,9 @@ this.objectWatcher = {
 			if(attrList.length > 0) {
 				var observerProperties = {
 					attributes: true,
-					attributeOldValue: true
+					attributeOldValue: true,
+					attributeFilter: attrList
 				};
-				observerProperties.attributeFilter = attrList;
 				this.mutationObserver.observe(obj, observerProperties);
 			}
 		};
@@ -200,8 +201,8 @@ this.objectWatcher = {
 				obj._propWatchers.schedule = null;
 			}
 			
-			for(var m=0; m<mutations.length; m++) {
-				obj._propWatchers.mutations.push(mutations[m]);
+			for(var m of mutations) {
+				obj._propWatchers.mutations.push(m);
 			}
 			
 			// the script could become really heavy if it called the main function everytime (width attribute on sidebar and dragging it for instance)

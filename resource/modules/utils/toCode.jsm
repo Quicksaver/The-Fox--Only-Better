@@ -1,5 +1,6 @@
-moduleAid.VERSION = '1.0.1';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '1.1.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // toCode - object that allows me to modify a function quickly from within my scripts, being able to revert afterwards and control for any errors in the process.
 // USE WITH CAUTION! It's not 100% failsafe.

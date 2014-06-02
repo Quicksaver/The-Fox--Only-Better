@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.0.2';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.1.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // observerAid - Helper for adding and removing observers
 // add(anObserver, aTopic, ownsWeak) - Create the observer object from a function if that is what is provided and registers it

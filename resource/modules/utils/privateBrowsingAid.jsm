@@ -1,5 +1,5 @@
-moduleAid.VERSION = '3.0.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '3.1.0';
+moduleAid.UTILS = true;
 
 // privateBrowsingAid - Aid object for private browsing mode
 // get autoStarted - returns (bool) pb permanentPrivateBrowsing
@@ -36,8 +36,6 @@ this.privateBrowsingAid = {
 		if(!watcherObj.autoStarted) { watcherObj.autoStarted = null; }
 		if(!watcherObj.addonEnabled) { watcherObj.addonEnabled = null; }
 		if(!watcherObj.addonDisabled) { watcherObj.addonDisabled = null; }
-		if(!watcherObj.onEnter) { watcherObj.onEnter = null; }
-		if(!watcherObj.onExit) { watcherObj.onExit = null; }
 		if(!watcherObj.onQuit) { watcherObj.onQuit = null; }
 		return watcherObj;
 	},

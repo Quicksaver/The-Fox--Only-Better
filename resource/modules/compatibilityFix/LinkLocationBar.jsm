@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 
@@ -11,15 +11,14 @@ this.LLBlistener = function() {
 		timerAid.cancel('LBBlistener');
 		setAttribute(slimChromeContainer, 'overlinkstate', 'true');
 		setMini(true);
-	// see if a password field is focused, if not remove the overlinkstate attr only after the mini bar is hidden
-	} else if(!focusPasswords({ type: 'focus', target: document.commandDispatcher.focusedElement })) {
+	// see if a password field is focused, if yes remove the attr immediately so the url is shown
+	} else if(focusPasswords()) {
+		removeAttribute(slimChromeContainer, 'overlinkstate');
+	// if not remove the overlinkstate attr only after the mini bar is hidden
+	} else {
 		timerAid.init('LBBlistener', function() {
 			removeAttribute(slimChromeContainer, 'overlinkstate');
 		}, 400);
-		setMini(false);
-	// if we're in a password field, remove the attr immediately so the url is shown
-	} else {
-		removeAttribute(slimChromeContainer, 'overlinkstate');
 	}
 };
 

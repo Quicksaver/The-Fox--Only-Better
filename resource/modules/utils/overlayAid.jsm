@@ -1,5 +1,5 @@
-moduleAid.VERSION = '2.10.3';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.11.0';
+moduleAid.UTILS = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
 // When a window with an overlay is opened, the elements in both the window and the overlay with the same ids are combined together.

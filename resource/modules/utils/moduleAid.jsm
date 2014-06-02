@@ -18,9 +18,11 @@ this.self = this;
 //	moduleAid.VARSLIST - (array) list with all the objects the module inserts into the object when loaded, for easy unloading. If not set, it will be automatically compiled.
 //	moduleAid.LOADMODULE - (function) to be executed on module loading
 //	moduleAid.UNLOADMODULE - (function) to be executed on module unloading
-//	moduleAid.LAZY - (bool) vital modules that should be the last ones to be unloaded (like the utils) should have this set to true
+//	moduleAid.UTILS - (bool) vital modules that should be the last ones to be unloaded (like the utils) should have this set to true; should only be used in backbone modules
+//	moduleAid.BASEUTILS - 	(bool) some modules may depend on others even on unload, this should be set on modules that don't depend on any others,
+//				so that they only unload on the very end; like above, should only be used in backbone modules
 this.moduleAid = {
-	version: '2.2.2',
+	version: '2.3.0',
 	modules: [],
 	moduleVars: {},
 	
@@ -55,7 +57,8 @@ this.moduleAid = {
 			unload: (this.UNLOADMODULE) ? this.UNLOADMODULE : null,
 			vars: (this.VARSLIST) ? this.VARSLIST : null,
 			version: (this.VERSION) ? this.VERSION : null,
-			lazy: (this.LAZY) ? this.LAZY : null,
+			utils: (this.UTILS) ? this.UTILS : false,
+			baseutils: (this.BASEUTILS) ? this.BASEUTILS : false,
 			loaded: false,
 			failed: false
 		};
@@ -65,7 +68,8 @@ this.moduleAid = {
 		delete this.LOADMODULE;
 		delete this.UNLOADMODULE;
 		delete this.VERSION;
-		delete this.LAZY;
+		delete this.UTILS;
+		delete this.BASEUTILS;
 		
 		if(!this.modules[i].vars) {
 			if(!Globals.moduleCache[aModule]) {
@@ -165,19 +169,23 @@ this.moduleAid = {
 		// We can't unload modules in i++ mode for two reasons:
 		// One: dependencies, some modules require others to run, so by unloading in the inverse order they were loaded we are assuring dependencies are maintained
 		// Two: creates endless loops when unloading a module failed, it would just keep trying to unload that module
-		// We also need to unload main modules before lazy (utils) modules.
-		var i = moduleAid.modules.length -1;
-		while(i > 0) {
-			if(!moduleAid.modules[i].lazy) {
-				moduleAid.unload(moduleAid.modules[i].name);
-			}
-			i--;
-		}
+		// We also need to unload main modules before utils modules. Other dependencies should resolve themselves in the order the modules are (un)loaded.
+		var utils = false;
+		var baseutils = false;
+		var done = false;
 		
-		var i = moduleAid.modules.length -1;
-		while(i > 0) {
-			moduleAid.unload(moduleAid.modules[i].name);
-			i--;
+		while(!done) {
+			var i = moduleAid.modules.length -1;
+			while(i > 0) {
+				if(moduleAid.modules[i].utils == utils && moduleAid.modules[i].baseutils == baseutils) {
+					moduleAid.unload(moduleAid.modules[i].name);
+				}
+				i--;
+			}
+			
+			if(!utils) { utils = true; }
+			else if(!baseutils) { baseutils = true; }
+			else { done = true; }
 		}
 	},
 	

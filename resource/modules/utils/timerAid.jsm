@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.0.3';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.1.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // timerAid - Object to aid in setting, initializing and cancelling timers
 // init(aName, aFunc, aDelay, aType) - initializes a named timer to be kept in the timers object

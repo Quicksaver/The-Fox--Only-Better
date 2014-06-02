@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.1.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.2.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // setAttribute(obj, attr, val) - helper me that saves me the trouble of checking if the obj exists first everywhere in my scripts; yes I'm that lazy
 //	obj - (xul element) to set the attribute

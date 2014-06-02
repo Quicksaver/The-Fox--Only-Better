@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.32';
+moduleAid.VERSION = '1.4.0';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -275,7 +275,7 @@ this.contentAreaOnMouseMove = function() {
 		&& holdPopupNodes.length == 0 // a popup could be holding it open
 		&& !$$('#navigator-toolbox:hover')[0] // trick to find out if the mouse is hovering the chrome
 		) {
-			// if we get here, nothing is holding the popup open, so it's likely that it should be hidden, but wasn't for some reason
+			// if we get here, nothing is holding the chrome open, so it's likely that it should be hidden, but wasn't for some reason
 			setHover(false, true, 0);
 			return;
 		}
@@ -313,16 +313,17 @@ this.setMini = function(mini) {
 	}
 };
 
-this.focusPasswords = function(e) {
-	if(e.target
-	&& e.target.nodeName
-	&& e.target.nodeName.toLowerCase() == 'input'
-	&& !e.target.disabled
-	&& (prefAid.miniOnAllInput || e.target.type == 'password')) {
-		setMini(e.type == 'focus');
-		return true;
+this.contentFocusPasswords = function(m) {
+	m.target._showMiniBar = m.data;
+	
+	if(m.target == gBrowser.mCurrentBrowser) {
+		focusPasswords();
 	}
-	return false;
+};
+
+this.focusPasswords = function() {
+	setMini(gBrowser.mCurrentBrowser._showMiniBar);
+	return gBrowser.mCurrentBrowser._showMiniBar;
 };
 
 this.findPersonaPosition = function() {
@@ -470,27 +471,29 @@ this.ensureSlimChromeFinishedWidth = function() {
 	}
 };
 
-this.slimChromeProgressListener = {
+this.slimChromeOnLocationChange = function(m) {
+	m.target._currentHost = m.data.host;
+	m.target._currentSpec = m.data.spec;
+	
+	if(m.target == gBrowser.mCurrentBrowser) {
+		slimChromeOnTabSelect.handler();
+	}
+};
+
+this.slimChromeOnTabSelect = {
 	last: null,
-	onLocationChange: function(aProgress, aRequest, aURI) {
-		// happens when exiting customize mode, although I have no clue why...
-		if(typeof(slimChromeContainer) == 'undefined') { return; }
-		
-		try { var host = aURI.host; }
-		catch(ex) { var host = aURI.spec; }
-		
-		// no point in showing in certain cases
-		if(host == this.last || gBrowser.selectedTab.pinned || window.XULBrowserWindow.inContentWhitelist.indexOf(aURI.spec) > -1) { return; }
-		
-		this.last = host;
-		
-		// also no point in showing mini if it's already shown
-		if(trueAttribute(slimChromeContainer, 'hover')) {
-			setMini(false);
-		} else {
+	
+	handler: function() {
+		if(!focusPasswords() // focusPasswords will always show mini if a password field is focused
+		&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
+		&& slimChromeOnTabSelect.last != gBrowser.mCurrentBrowser._currentHost // only show mini when the webhost has changed
+		&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
+		&& window.XULBrowserWindow.inContentWhitelist.indexOf(gBrowser.mCurrentBrowser._currentSpec) == -1 // and if the current address is not whitelisted
+		) {
 			setMini(true);
 			timerAid.init('setMini', hideMiniInABit, 2000);
 		}
+		slimChromeOnTabSelect.last = gBrowser.mCurrentBrowser._currentHost;
 	}
 };
 
@@ -688,9 +691,12 @@ this.loadSlimChrome = function() {
 	listenerAid.add(gNavToolbox, 'focus', onFocus, true);
 	listenerAid.add(gNavToolbox, 'blur', onMouseOut, true);
 	
+	// show mini when the current tab changes host
+	messenger.listenWindow(window, 'locationChange', slimChromeOnLocationChange);
+	
 	// show mini chrome when focusing password fields
-	listenerAid.add(gBrowser, 'focus', focusPasswords, true);
-	listenerAid.add(gBrowser, 'blur', focusPasswords, true);
+	messenger.listenWindow(window, 'focusPasswords', contentFocusPasswords);
+	listenerAid.add(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
 	
 	// hide chrome when typing in content
 	listenerAid.add(gBrowser, 'keydown', slimChromeKeydown, true);
@@ -698,9 +704,6 @@ this.loadSlimChrome = function() {
 	
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
-	
-	// show mini when the current tab changes host; this will also capture when changing tabs
-	gBrowser.addProgressListener(slimChromeProgressListener);
 	
 	// support personas in hovering toolbox
 	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
@@ -762,14 +765,14 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(window, "dragend", onDragExitAll);
 	listenerAid.remove(gNavToolbox, 'focus', onFocus, true);
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
-	listenerAid.remove(gBrowser, 'focus', focusPasswords, true);
-	listenerAid.remove(gBrowser, 'blur', focusPasswords, true);
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(gBrowser, 'keyup', slimChromeKeyup, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
-	gBrowser.removeProgressListener(slimChromeProgressListener);
+	listenerAid.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
+	messenger.unlistenWindow(window, 'locationChange', slimChromeOnLocationChange);
+	messenger.unlistenWindow(window, 'focusPasswords', contentFocusPasswords);
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	CustomizableUI.removeListener(slimChromeCUIListener);
 	slimChromeChildListener.observer.disconnect();
@@ -822,13 +825,24 @@ this.unloadSlimChrome = function() {
 };
 
 moduleAid.LOADMODULE = function() {
-	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
+	messenger.messageWindow(window, 'load', 'slimChrome');
+	
+	//overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 };
 
 moduleAid.UNLOADMODULE = function() {
-	styleAid.unload('personaSlimChrome_'+_UUID);
+	/*styleAid.unload('personaSlimChrome_'+_UUID);
 	overlayAid.removeOverlayWindow(window, 'slimChrome');
 	
 	// send this here so the nodes don't exist anymore when handling the event
 	dispatch(gNavToolbox, { type: 'UnloadedSlimChrome', cancelable: false });
+	
+	for(var b=0; b<gBrowser.browsers.length; b++) {
+		var aBrowser = gBrowser.getBrowserAtIndex(b);
+		delete aBrowser._showMiniBar;
+		delete aBrowser._currentHost;
+		delete aBrowser._currentSpec;
+	}*/
+	
+	messenger.messageWindow(window, 'unload', 'slimChrome');
 };

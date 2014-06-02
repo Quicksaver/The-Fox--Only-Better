@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.3.1';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.4.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // xmlHttpRequest(url, callback, method) - aid for quickly using the nsIXMLHttpRequest interface
 //	url - (string) to send the request
@@ -38,13 +39,16 @@ this.aSync = function(aFunc, aDelay) {
 //		(optional) cancelable - (bool) defaults to true
 //		(optional) detail - to be passed to the event
 this.dispatch = function(obj, properties) {
-	if(!obj || (!obj.ownerDocument && !obj.document) || !obj.dispatchEvent || !properties || !properties.type) { return false; }
+	if(!obj || !obj.dispatchEvent
+	|| (!obj.ownerDocument && !obj.document && (!obj.content || !obj.content.document))
+	|| !properties || !properties.type) { return false; }
 	
 	var bubbles = properties.bubbles || true;
 	var cancelable = properties.cancelable || true;
 	var detail = properties.detail || undefined;
 	
-	var event = (obj.ownerDocument) ? obj.ownerDocument.createEvent('CustomEvent') : obj.document.createEvent('CustomEvent');
+	var doc = (obj.ownerDocument) ? obj.ownerDocument : (obj.document) ? obj.document : obj.content.document; // last one's for content processes
+	var event = doc.createEvent('CustomEvent');
 	event.initCustomEvent(properties.type, bubbles, cancelable, detail);
 	return obj.dispatchEvent(event);
 };
@@ -90,7 +94,8 @@ this.isAncestor = function(aNode, aParent, aWindow) {
 	
 	var browsers = (aParent.tagName == 'browser') ? [aParent] : aParent.getElementsByTagName('browser');
 	for(var i=0; i<browsers.length; i++) {
-		if(isAncestor(aNode, browsers[i].contentDocument, browsers[i].contentWindow)) { return true; }
+		try { if(isAncestor(aNode, browsers[i].contentDocument, browsers[i].contentWindow)) { return true; } }
+		catch(ex) { /* this will fail in e10s */ }
 	}
 	
 	if(!aWindow) { return false; }
@@ -117,16 +122,7 @@ this.trim = function(str) {
 	return str.substring(Math.max(str.search(/\S/), 0), str.search(/\S\s*$/) + 1);
 };
 
-// closeCustomize() - useful for when you want to close the customize toolbar dialogs for whatever reason
-this.closeCustomize = function() {
-	windowMediator.callOnAll(function(aWindow) {
-		if(aWindow.gCustomizeMode) {
-			aWindow.gCustomizeMode.exit();
-		}
-	}, 'navigator:browser');
-};
-
-// replaceObjStrings(node, prop) - replace all objName, objPathString and UserAgentLocale references in the node attributes and its children with the proper names
+// replaceObjStrings(node, prop) - replace all objName and objPathString references in the node attributes and its children with the proper names
 //	node - (xul element) to replace the strings in
 //	(optional) prop - (string) if specified, instead of checking attributes, it will check for node.prop for occurences of what needs to be replaced. This will not check child nodes.
 this.replaceObjStrings = function(node, prop) {
@@ -141,9 +137,6 @@ this.replaceObjStrings = function(node, prop) {
 		while(node[prop].indexOf('objPathString') > -1) {
 			node[prop] = node[prop].replace('objPathString', objPathString);
 		}
-		while(node[prop].indexOf('UserAgentLocale') > -1) {
-			node[prop] = node[prop].replace('UserAgentLocale', UserAgentLocale);
-		}
 		
 		return;
 	}
@@ -155,9 +148,6 @@ this.replaceObjStrings = function(node, prop) {
 			}
 			while(node.attributes[a].value.indexOf('objPathString') > -1) {
 				node.attributes[a].value = node.attributes[a].value.replace('objPathString', objPathString);
-			}
-			while(node.attributes[a].value.indexOf('UserAgentLocale') > -1) {
-				node.attributes[a].value = node.attributes[a].value.replace('UserAgentLocale', UserAgentLocale);
 			}
 		}
 	}

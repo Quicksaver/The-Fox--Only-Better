@@ -1,14 +1,16 @@
-moduleAid.VERSION = '2.1.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.2.2';
+moduleAid.UTILS = true;
 
-// browserMediator - Aid object to track and perform tasks on all document browsers across the windows
+// browserMediator - Aid object to track and perform tasks on all document browsers across the windows.
 // callOnAll(aCallback, aURI, beforeComplete, onlyTabs) - goes through every opened browser (tabs and sidebar) and executes aCallback on it
+//	Important note: this method will no-op in remote browsers (e10s, anything not about: or chrome://).
 //	aCallback - (function(aBrowser)) to be called on aBrowser
 //	(optional) aURI - (string) when defined, checks the documentURI property against the aURI value and only executes aCallback when true, defaults to null
 //	(optional) beforeComplete - 	true calls aCallback immediatelly regardless of readyState, false fires aCallback when window loads if readyState != complete, defaults to false
 //					see notes on windowMediator.register()
 //	(optional) onlyTabs - (bool) true only executes aCallback on actual tabs, not sidebars or others, defaults to (bool) false
 // register(aHandler, aTopic, aURI, beforeComplete) - registers aHandler to be notified of every aTopic
+//	Important note: handlers will no-op in remote browsers (e10s).
 //	aHandler - (function(aBrowser)) handler to be fired
 //	aTopic - (string) "pageshow" or (string) "pagehide" or (string) "SidebarFocused"
 //	see callOnAll()
@@ -28,6 +30,10 @@ this.browserMediator = {
 				// Browser panels (tabs)
 				for(var b=0; b<aWindow.gBrowser.browsers.length; b++) {
 					var aBrowser = aWindow.gBrowser.getBrowserAtIndex(b);
+					
+					// e10s fix, we don't check remote tabs
+					if(trueAttribute(aBrowser, 'remote')) { continue; }
+					
 					if(!aURI || aBrowser.contentDocument.documentURI == aURI) {
 						if(aBrowser.contentDocument.readyState == "complete" || beforeComplete) {
 							aCallback(aBrowser.contentWindow);
@@ -38,17 +44,6 @@ this.browserMediator = {
 				}
 				
 				if(onlyTabs) { continue; }
-				
-				// Customize panel in OS X
-				if(aWindow.document.getElementById('customizeToolbarSheetIFrame')
-				&& aWindow.document.getElementById('customizeToolbarSheetIFrame').contentWindow
-				&& (!aURI || aWindow.document.getElementById('customizeToolbarSheetIFrame').contentDocument.documentURI == aURI)) {
-					if(aWindow.document.getElementById('customizeToolbarSheetIFrame').contentDocument.readyState == "complete" || beforeComplete) {
-						aCallback(aWindow.document.getElementById('customizeToolbarSheetIFrame').contentWindow);
-					} else if(!UNLOADED) {
-						callOnLoad(aWindow.document.getElementById('customizeToolbarSheetIFrame').contentWindow, aCallback);
-					}
-				}
 				
 				// Sidebars (compatible with OmniSidebar)
 				if(aWindow.document.getElementById('sidebar')
@@ -123,6 +118,9 @@ this.browserMediator = {
 	
 	// pagehide and unload by themselves don't catch everything, this completes it
 	tabClosed: function(e) {
+		// e10s fix, we don't check remote tabs, we only check about: and chrome:// tabs
+		if(trueAttribute(e.target.linkedBrowser, 'remote')) { return; }
+		
 		browserMediator.callWatchers({
 			type: 'pagehide',
 			originalTarget: e.target.linkedBrowser.contentDocument
@@ -133,13 +131,6 @@ this.browserMediator = {
 		browserMediator.callWatchers({
 			type: e.type,
 			originalTarget: e.target.document
-		});
-	},
-	
-	iframeLoaded: function(e) {
-		browserMediator.callWatchers({
-			type: (e.type == 'load') ? 'pageshow' : 'pagehide',
-			originalTarget: e.originalTarget
 		});
 	},
 	

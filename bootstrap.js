@@ -27,12 +27,11 @@
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
 // Note: Firefox 29 is the minimum version supported as the modules assume we're in a version with Australis already.
 
-let bootstrapVersion = '1.3.0';
+let bootstrapVersion = '1.4.0';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
 let AddonData = null;
-let UserAgentLocale = 'en-US';
 let observerLOADED = false;
 let onceListeners = [];
 let alwaysRunOnShutdown = [];
@@ -41,12 +40,14 @@ let alwaysRunOnShutdown = [];
 let Globals = {};
 
 const {classes: Cc, interfaces: Ci, utils: Cu, manager: Cm} = Components;
-Cu.import("resource://gre/modules/AddonManager.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-Cu.import("resource://gre/modules/PlacesUtils.jsm");
-Cu.import("resource://gre/modules/PluralForm.jsm");
-Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
+
+XPCOMUtils.defineLazyModuleGetter(this, "AddonManager", "resource://gre/modules/AddonManager.jsm");
+XPCOMUtils.defineLazyModuleGetter(this, "PlacesUtils", "resource://gre/modules/PlacesUtils.jsm");
+XPCOMUtils.defineLazyModuleGetter(this, "PluralForm", "resource://gre/modules/PluralForm.jsm");
+XPCOMUtils.defineLazyModuleGetter(this, "PrivateBrowsingUtils", "resource://gre/modules/PrivateBrowsingUtils.jsm");
+XPCOMUtils.defineLazyModuleGetter(this, "Promise", "resource://gre/modules/Promise.jsm");
 
 // Note: defining the localStore lazy getter on the Services object causes a ZC if it's never called.
 let PlacesUIUtils = {};
@@ -88,6 +89,7 @@ function prepareObject(window, aName) {
 	};
 	
 	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/moduleAid.jsm", window[objectName]);
+	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/windowUtilsPreload.jsm", window[objectName]);
 	window[objectName].moduleAid.load("utils/windowUtils");
 	
 	setAttribute(window.document.documentElement, objectName+'_UUID', window[objectName]._UUID);
@@ -170,6 +172,7 @@ function setResourceHandler() {
 	
 	// Get the utils.jsm module into our sandbox
 	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/moduleAid.jsm", this);
+	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
 	moduleAid.load("utils/sandboxUtils");
 }
 
@@ -203,9 +206,6 @@ function startup(aData, aReason) {
 	
 	// add resource:// protocol handler so I can access my modules
 	setResourceHandler();
-	
-	// Get the current application locale
-	UserAgentLocale = Services.fuel.prefs.get('general.useragent.locale').value;
 	
 	// set add-on preferences defaults
 	// This should come before startConditions() so we can use it in there

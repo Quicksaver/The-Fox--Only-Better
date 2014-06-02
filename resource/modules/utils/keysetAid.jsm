@@ -1,5 +1,5 @@
-moduleAid.VERSION = '1.3.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '1.4.0';
+moduleAid.UTILS = true;
 
 // keysetAid - handles editable keysets for the add-on
 //	register(key) - registers a keyset from object key

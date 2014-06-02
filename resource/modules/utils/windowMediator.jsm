@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.1.4';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.2.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // windowMediator - Aid object to help with window tasks involving window-mediator and window-watcher
 // getEnumerator(aType) - returns an nsISimpleEnumerator object with all windows of aType

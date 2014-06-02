@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.0.2';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.1.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // styleAid - handle loading and unloading of stylesheets in a quick and easy way
 // load(aName, aPath, isData) - loads aPath css stylesheet with type AGENT_SHEET

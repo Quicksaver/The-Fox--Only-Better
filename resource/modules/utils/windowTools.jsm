@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.0.2';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '2.1.0';
+moduleAid.UTILS = true;
+moduleAid.BASEUTILS = true;
 
 // aSync(aFunc, aDelay) - lets me run aFunc asynchronously, basically it's a one shot timer with a delay of aDelay msec
 //	aFunc - (function) to be called asynchronously

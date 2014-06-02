@@ -1,5 +1,5 @@
-moduleAid.VERSION = '1.2.0';
-moduleAid.LAZY = true;
+moduleAid.VERSION = '1.3.0';
+moduleAid.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
 // Just add the attribute to the desired xul element and let the script do its thing. dependson accepts comma-separated or semicolon-separated strings in the following format:
