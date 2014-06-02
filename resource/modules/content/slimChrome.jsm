@@ -40,7 +40,7 @@ moduleAid.UNLOADMODULE = function() {
 	webProgress.removeProgressListener(slimChromeProgressListener);
 	
 	// these will be removed through listenerAid.clean(), calling them here would just cause an error, as the sandboxTools module wouldn't have been loaded at this point,
-	// it couldn't be loaded now because the resource handler has been removed already.
+	// and it couldn't be loaded now (it would throw) because the resource handler has been removed already.
 	//listenerAid.remove(Scope, 'focus', focusPasswords, true);
 	//listenerAid.remove(Scope, 'blur', focusPasswords, true);
 };

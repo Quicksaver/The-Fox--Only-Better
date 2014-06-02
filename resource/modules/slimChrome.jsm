@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.0';
+moduleAid.VERSION = '1.4.1';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -827,11 +827,11 @@ this.unloadSlimChrome = function() {
 moduleAid.LOADMODULE = function() {
 	messenger.messageWindow(window, 'load', 'slimChrome');
 	
-	//overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
+	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 };
 
 moduleAid.UNLOADMODULE = function() {
-	/*styleAid.unload('personaSlimChrome_'+_UUID);
+	styleAid.unload('personaSlimChrome_'+_UUID);
 	overlayAid.removeOverlayWindow(window, 'slimChrome');
 	
 	// send this here so the nodes don't exist anymore when handling the event
@@ -842,7 +842,7 @@ moduleAid.UNLOADMODULE = function() {
 		delete aBrowser._showMiniBar;
 		delete aBrowser._currentHost;
 		delete aBrowser._currentSpec;
-	}*/
+	}
 	
 	messenger.messageWindow(window, 'unload', 'slimChrome');
 };
