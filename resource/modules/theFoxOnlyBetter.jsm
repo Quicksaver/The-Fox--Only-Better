@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.8';
+moduleAid.VERSION = '1.1.0';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -37,6 +37,14 @@ this.customizeListener = function(e) {
 	toggleSlimChrome(e.type == 'beforecustomization');
 };
 
+this.doOpenOptions = function() {
+	openOptions();
+};
+
+this.toggleSlimChromePref = function() {
+	prefAid.slimChrome = !prefAid.slimChrome;
+};
+
 this.toggleSlimChrome = function(noLoad) {
 	if(noLoad === undefined || noLoad == 'slimChrome') {
 		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
@@ -51,6 +59,8 @@ this.togglePopups = function() {
 
 moduleAid.LOADMODULE = function() {
 	prefAid.setDefaults({ autohide: true }, 'fullscreen', 'browser');
+	
+	overlayAid.overlayWindow(window, 'TheFOB');
 	
 	moduleAid.load('compatibilityFix/windowFixes');
 	
@@ -79,4 +89,6 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('popups');
 	
 	moduleAid.unload('compatibilityFix/windowFixes');
+	
+	overlayAid.removeOverlayWindow(window, 'TheFOB');
 };
