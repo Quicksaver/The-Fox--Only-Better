@@ -108,6 +108,9 @@
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
 		-moz-margin-start: 0;
 	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box {
+		padding-left: 3px;
+	}
 	
 	@media	(-moz-os-version: windows-vista),
 		(-moz-os-version: windows-win7) {
