@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.6';
+moduleAid.VERSION = '1.4.7';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -287,6 +287,8 @@ this.contentAreaOnMouseMove = function() {
 };
 
 this.setMini = function(mini) {
+	if(!prefAid.includeNavBar) { return; }
+	
 	dispatch(slimChromeContainer, { type: 'willSetMiniChrome', cancelable: false, detail: mini });
 	
 	if(mini) {
@@ -324,7 +326,7 @@ this.contentFocusPasswords = function(m) {
 };
 
 this.focusPasswords = function() {
-	if(typeof(blockedPopup) == 'undefined' || !blockedPopup) {
+	if(prefAid.includeNavBar && (typeof(blockedPopup) == 'undefined' || !blockedPopup)) {
 		setMini(gBrowser.mCurrentBrowser._showMiniBar);
 		return gBrowser.mCurrentBrowser._showMiniBar;
 	}
@@ -489,7 +491,8 @@ this.slimChromeOnTabSelect = {
 	last: null,
 	
 	handler: function() {
-		if(!focusPasswords() // focusPasswords will always show mini if a password field is focused
+		if(prefAid.includeNavBar // if the nav bar isn't in our container, all this is useless
+		&& !focusPasswords() // focusPasswords will always show mini if a password field is focused
 		&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
 		&& slimChromeOnTabSelect.last != gBrowser.mCurrentBrowser._currentHost // only show mini when the webhost has changed
@@ -508,6 +511,8 @@ this.slimChromeOnTabSelect = {
 };
 
 this.hideMiniInABit = function() {
+	if(!prefAid.includeNavBar) { return; }
+	
 	// don't hide mini if we're hovering it
 	if(slimChromeContainer.hoversQueued > 0 && !trueAttribute(slimChromeContainer, 'hover')) {
 		timerAid.init('setMini', hideMiniInABit, 1000);
@@ -689,6 +694,53 @@ this.slimChromeUseMouse = function() {
 	}
 };
 
+this.slimChromeIncludeNavBar = function(unload) {
+	if(unload !== true) { unload = false; }
+	
+	if(!unload && prefAid.includeNavBar && !isAncestor(gNavBar, slimChromeContainer)) {
+		slimChromeToolbars.insertBefore(gNavBar, slimChromeToolbars.firstChild);
+		
+		// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
+		gNavBar.overflowable.__onLazyResize = gNavBar.overflowable._onLazyResize;
+		gNavBar.overflowable._onLazyResize = function() {
+			if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+			this.__onLazyResize();
+		};
+		gNavBar.overflowable._onOverflow = gNavBar.overflowable.onOverflow;
+		gNavBar.overflowable.onOverflow = function(e) {
+			if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+			this._onOverflow(e);
+		};
+		gNavBar.overflowable.__moveItemsBackToTheirOrigin = gNavBar.overflowable._moveItemsBackToTheirOrigin;
+		gNavBar.overflowable._moveItemsBackToTheirOrigin = function(shouldMoveAllItems) {
+			if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+			this.__moveItemsBackToTheirOrigin(shouldMoveAllItems);
+		};
+		if(gNavBar.overflowable._lazyResizeHandler) {
+			gNavBar.overflowable._lazyResizeHandler.disarm();
+			gNavBar.overflowable._lazyResizeHandler = null;
+		}
+	}
+	else if((unload || !prefAid.includeNavBar) && isAncestor(gNavBar, slimChromeContainer)) {
+		if(gNavBar.overflowable && gNavBar.overflowable.__onLazyResize) { // when closing windows?
+			gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
+			gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
+			gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+			delete gNavBar.overflowable.__onLazyResize;
+			delete gNavBar.overflowable._onOverflow;
+			delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
+			if(gNavBar.overflowable._lazyResizeHandler) {
+				gNavBar.overflowable._lazyResizeHandler.disarm();
+				gNavBar.overflowable._lazyResizeHandler = null;
+			}
+		}
+		
+		gNavToolbox.insertBefore(gNavBar, slimChromeSlimmer || customToolbars);
+	}
+	
+	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
+};
+
 this.loadSlimChrome = function() {
 	// make sure the currently focused element stays focused after this.
 	// we get only a node with an id so that for example if the location bar is focused (most common case), we don't get its anonymous nodes that get destroyed in this process.
@@ -714,28 +766,8 @@ this.loadSlimChrome = function() {
 		PlacesToolbar._placesView.uninit();
 	}
 	
-	slimChromeToolbars.appendChild(gNavBar);
-	
-	// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
-	gNavBar.overflowable.__onLazyResize = gNavBar.overflowable._onLazyResize;
-	gNavBar.overflowable._onLazyResize = function() {
-		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
-		this.__onLazyResize();
-	};
-	gNavBar.overflowable._onOverflow = gNavBar.overflowable.onOverflow;
-	gNavBar.overflowable.onOverflow = function(e) {
-		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
-		this._onOverflow(e);
-	};
-	gNavBar.overflowable.__moveItemsBackToTheirOrigin = gNavBar.overflowable._moveItemsBackToTheirOrigin;
-	gNavBar.overflowable._moveItemsBackToTheirOrigin = function(shouldMoveAllItems) {
-		if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
-		this.__moveItemsBackToTheirOrigin(shouldMoveAllItems);
-	};
-	if(gNavBar.overflowable._lazyResizeHandler) {
-		gNavBar.overflowable._lazyResizeHandler.disarm();
-		gNavBar.overflowable._lazyResizeHandler = null;
-	}
+	prefAid.listen('includeNavBar', slimChromeIncludeNavBar);
+	slimChromeIncludeNavBar();
 	
 	// also append all other custom toolbars
 	var toolbar = customToolbars;
@@ -878,20 +910,8 @@ this.unloadSlimChrome = function() {
 		PlacesToolbar._placesView.uninit();
 	}
 	
-	if(gNavBar.overflowable && gNavBar.overflowable.__onLazyResize) { // when closing windows?
-		gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
-		gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
-		gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;
-		delete gNavBar.overflowable.__onLazyResize;
-		delete gNavBar.overflowable._onOverflow;
-		delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
-		if(gNavBar.overflowable._lazyResizeHandler) {
-			gNavBar.overflowable._lazyResizeHandler.disarm();
-			gNavBar.overflowable._lazyResizeHandler = null;
-		}
-	}
-	
-	gNavToolbox.insertBefore(gNavBar, customToolbars);
+	prefAid.unlisten('includeNavBar', slimChromeIncludeNavBar);
+	slimChromeIncludeNavBar(true);
 	
 	while(slimChromeToolbars.firstChild) {
 		var e = gNavToolbox.externalToolbars.indexOf(slimChromeToolbars.firstChild);

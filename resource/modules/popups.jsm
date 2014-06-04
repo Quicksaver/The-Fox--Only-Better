@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.18';
+moduleAid.VERSION = '2.0.19';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -133,7 +133,7 @@ this.holdPopupMenu = function(e) {
 		}
 		
 		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
-		if(trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(target.id) > -1) {
+		if(prefAid.includeNavBar && trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(target.id) > -1) {
 			setMini(true);
 			blockedPopup = true;
 		} else {

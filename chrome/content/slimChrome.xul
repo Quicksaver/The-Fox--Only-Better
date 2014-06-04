@@ -4,7 +4,7 @@
 <overlay id="slimChrome-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<toolbox id="navigator-toolbox" slimChrome="true">
-		<box id="objName-slimChrome-slimmer" insertafter="TabsToolbar"/>
+		<box id="objName-slimChrome-slimmer" insertbefore="customToolbars"/>
 		<hbox id="objName-slimChrome-container" insertafter="objName-slimChrome-slimmer" noPointerEvents="true">
 			<vbox id="objName-slimChrome-toolbars" flex="1"/>
 		</hbox>

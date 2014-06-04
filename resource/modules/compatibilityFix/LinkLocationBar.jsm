@@ -1,8 +1,9 @@
-moduleAid.VERSION = '1.1.2';
+moduleAid.VERSION = '1.1.3';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 
 this.LLBlistener = function() {
+	if(!prefAid.includeNavBar) { return; }
 	if(typeof(setMini) == 'undefined') { return; }
 	if(typeof(blockedPopup) != 'undefined' && blockedPopup) { return; }
 	

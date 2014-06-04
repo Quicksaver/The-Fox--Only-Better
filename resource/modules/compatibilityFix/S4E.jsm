@@ -1,10 +1,12 @@
-moduleAid.VERSION = '1.0.3';
+moduleAid.VERSION = '1.0.4';
 
 this.__defineGetter__('S4Eprogress', function() { return $('urlbar-progress-alt'); });
 
 this.S4Estate = false;
 
 this.S4Elistener = function() {
+	if(!prefAid.includeNavBar) { return; }
+	
 	var current = S4Eprogress && !S4Eprogress.hidden && !S4Eprogress.collapsed;
 	S4Estate = current;
 	if(typeof(setMini) != 'undefined') {
