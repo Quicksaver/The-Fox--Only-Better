@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.5';
+moduleAid.VERSION = '1.4.6';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -214,7 +214,7 @@ this.setHover = function(hover, now, force) {
 		if(!now) {
 			timerAid.init('setHover', function() {
 				hoverTrue();
-			}, 75);
+			}, prefAid.delayIn);
 		} else {
 			timerAid.cancel('setHover');
 			hoverTrue();
@@ -237,7 +237,7 @@ this.setHover = function(hover, now, force) {
 				removeAttribute(slimChromeContainer, 'hover');
 				listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
 				contentAreaMovedReset();
-			}, (!now) ? 250 : 0);
+			}, (!now) ? prefAid.delayOut : 0);
 		}
 	}
 };

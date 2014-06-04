@@ -11,6 +11,8 @@
 			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
 			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
 			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
+			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
+			<preference id="pref-delayOut" name="extensions.thefoxonlybetter.delayOut" type="int"/>
 			<preference id="pref-slimChromeKeycode" name="extensions.thefoxonlybetter.slimChromeKeycode" type="string"/>
 			<preference id="pref-slimChromeAccel" name="extensions.thefoxonlybetter.slimChromeAccel" type="bool"/>
 			<preference id="pref-slimChromeShift" name="extensions.thefoxonlybetter.slimChromeShift" type="bool"/>
@@ -21,7 +23,39 @@
 		<groupbox align="start">
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome" preference="pref-miniOnAllInput"/>
-			<checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/>
+		</groupbox>
+		<groupbox>
+			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
+			<hbox tooltiptext="&opt.delayIn.tooltip;">
+				<label value="&opt.delayIn.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				<hbox flex="1"/>
+				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				<scale id="delayInScale" dependson="pref-slimChrome,pref-useMouse"
+					dir="reverse"
+					width="150"
+					min="75"
+					max="1000"
+					value="75"
+					increment="25"
+					pageincrement="150"
+					preference="pref-delayIn"/>
+				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
+			</hbox>
+			<hbox tooltiptext="&opt.delayOut.tooltip;">
+				<label value="&opt.delayOut.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				<hbox flex="1"/>
+				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				<scale id="delayOutScale" dependson="pref-slimChrome,pref-useMouse"
+					dir="reverse"
+					width="150"
+					min="75"
+					max="1000"
+					value="75"
+					increment="25"
+					pageincrement="150"
+					preference="pref-delayOut"/>
+				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
+			</hbox>
 		</groupbox>
 		
 		<groupbox align="center">
