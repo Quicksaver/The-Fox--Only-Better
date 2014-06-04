@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.4';
+moduleAid.VERSION = '1.4.5';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -12,6 +12,8 @@ this.__defineGetter__('MenuBar', function() { return $('toolbar-menubar'); });
 this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesToolbarHelper; });
 this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
+this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
+this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 
 // until I find a better way of finding out on which side of the browser is the scrollbar, I'm setting equal margins
@@ -536,6 +538,60 @@ this.slimChromeKeyup = function(e) {
 	toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0);
 };
 
+this.slimChromeEsc = function(e) {
+	// we're only interested in the esc key in the location bar and the search bar when in our chrome container
+	if(!e.target
+	|| e.keyCode != e.DOM_VK_ESCAPE
+	|| (e.target.nodeName != 'textbox' && e.target.nodeName != 'searchbar')
+	|| !isAncestor(e.target, slimChromeContainer)
+	|| e.defaultPrevented) {
+		return;
+	}
+	
+	// if esc will do something in the urlbar, let it do its thing
+	if(e.target == gURLBar) {
+		if(gURLBar.valueIsTyped || (gURLBar.popup && gURLBar.popup.state == 'open')) { return; }
+		
+		// we need the "original" value so we can compare with the current value,
+		// we can only do this by mimicking what happens in URLBarSetURI()
+		var uri = gBrowser.currentURI;
+		// Strip off "wyciwyg://" and passwords for the location bar
+		try { uri = Services.uriFixup.createExposableURI(uri); }
+		catch(ex) {}
+		
+		// Replace initial page URIs with an empty string
+		// only if there's no opener (bug 370555).
+		// Bug 863515 - Make content.opener checks work in electrolysis.
+		if(window.gInitialPages.indexOf(uri.spec) != -1) {
+			var value = !window.gMultiProcessBrowser && window.content.opener ? uri.spec : "";
+		} else {
+			var value = window.losslessDecodeURI(uri);
+		}
+		
+		// we need to check ._value, as .value goes through a whole lot more processing which is unnecessary to check for here
+		if(gURLBar._value != value || gURLBar.mController.handleEscape()) { return; }
+	}
+	
+	// let it also close the search bar's suggestions popup before we hide the chrome
+	if(e.target == gSearchBar && $('PopupAutoComplete').state == 'open') { return; }
+	
+	// .blur() doesn't work so...
+	if(window.focusNextFrame) {
+		window.focusNextFrame(e);
+	} else if(window.content) {
+		window.content.focus();
+	} else {
+		gBrowser.mCurrentBrowser.focus();
+	}
+	
+	setHover(false, true);
+	e.preventDefault();
+	e.stopPropagation();
+	
+	// don't let it keep re-showing if the mouse is over it
+	toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0);
+};
+
 this.initialShowings = [];
 this.initialShowChrome = function(delay) {
 	setHover(true);
@@ -724,6 +780,11 @@ this.loadSlimChrome = function() {
 	listenerAid.add(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.add(gBrowser, 'keyup', slimChromeKeyup, true);
 	
+	// hide chrome when hitting esc key in the location bar or search bar,
+	// can't set the listener directly on the target node because the search bar may not exist yet when the document is created (depends on its placement),
+	// also other add-ons can add textboxes, and in theory we want the same behavior with them as well.
+	listenerAid.add(window, 'keydown', slimChromeEsc, true);
+	
 	// re-do widgets positions after resizing
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	
@@ -789,6 +850,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
 	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
 	listenerAid.remove(gBrowser, 'keyup', slimChromeKeyup, true);
+	listenerAid.remove(window, 'keydown', slimChromeEsc, true);
 	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
