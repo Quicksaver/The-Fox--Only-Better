@@ -39,35 +39,8 @@
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons,
-	/* Only show the link part in the mini bar when hovering a link and using the Link Location Bar add-on */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) #identity-box,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="textbox-input-box"],
-	/* S4E moves some things around into a stack element for its progress bar display */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > toolbarbutton,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > dropmarker {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
 		visibility: collapse;
-	}
-	
-	/* make sure it doesn't distort the bar too much, and that the link spans the whole bar as well */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="over-link-box"] {
-		padding-top: 2px;
-		padding-bottom: 2px;
-	}
-	/* Link Location Bar also forces the dropmarker to be visible, but we don't want it in the mini bar */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker[style~="visibility:"],
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar [anonid="urlbar-input-layer"] > dropmarker[style~="visibility:"] {
-		visibility: collapse !important;
-	}
-	/* the mini bar should extend to show as much of the link as possible */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) #urlbar {
-		width: auto !important;
-	}
-	/* prevent the link from collapsing before the mini bar is fully hidden */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) .urlbar-over-link-box:not([overlinkstate="showing"]) {
-		opacity: 1 !important;
-		visibility: visible !important;
 	}
 	
 	/* this needs the important tag */

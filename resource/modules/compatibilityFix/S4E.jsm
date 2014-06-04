@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('S4Eprogress', function() { return $('urlbar-progress-alt'); });
 
@@ -19,6 +19,8 @@ this.S4Elistener = function() {
 };
 
 moduleAid.LOADMODULE = function() {
+	styleAid.load('S4E', 'S4E');
+	
 	objectWatcher.addAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
 	objectWatcher.addAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
 	objectWatcher.addAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
@@ -28,4 +30,8 @@ moduleAid.UNLOADMODULE = function() {
 	objectWatcher.removeAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
 	objectWatcher.removeAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
 	objectWatcher.removeAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
+	
+	if(UNLOADED) {
+		styleAid.unload('S4E');
+	}
 };

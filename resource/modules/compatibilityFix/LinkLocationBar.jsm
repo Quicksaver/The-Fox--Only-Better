@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.1.2';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 
@@ -46,6 +46,8 @@ this.LLBresize = function() {
 };
 
 moduleAid.LOADMODULE = function() {
+	styleAid.load('LinkLocationBar', 'LinkLocationBar');
+	
 	listenerAid.add(window, 'LoadedSlimChrome', LLBreapply);
 	listenerAid.add(window, 'UnloadedSlimChrome', LLBreapply);
 	listenerAid.add(window, 'MovedSlimChrome', LLBresize);
@@ -69,4 +71,8 @@ moduleAid.UNLOADMODULE = function() {
 	styleAid.unload('LLBresize_'+_UUID);
 	
 	LLBreapply();
+	
+	if(UNLOADED) {
+		styleAid.unload('LinkLocationBar');
+	}
 };
