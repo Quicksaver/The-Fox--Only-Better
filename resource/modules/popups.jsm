@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.17';
+moduleAid.VERSION = '2.0.18';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -68,6 +68,12 @@ this.holdPopupMenu = function(e) {
 	
 	var trigger = e.originalTarget.triggerNode;
 	var target = e.target;
+	
+	// don't bother with any of this if the opened popup is a child of any currently opened panel
+	if(isAncestor(e.target, blockedPopup)) { return; }
+	for(p of holdPopupNodes) {
+		if(e.target != p && isAncestor(e.target, p)) { return; }
+	}
 	
 	// check if the trigger node is present in our toolbars;
 	// there's no need to check the overflow panel here, as it will likely be open already in these cases
