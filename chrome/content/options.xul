@@ -12,9 +12,10 @@
 			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
 		</preferences>
 		
+		<checkbox label="&opt.slimChrome.label;" tooltiptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
 		<groupbox align="start">
-			<caption><checkbox label="&opt.slimChrome.label;" preference="pref-slimChrome"/></caption>
-			<checkbox label="&opt.miniOnAllInput.label;" dependson="pref-slimChrome" preference="pref-miniOnAllInput"/>
+			<caption label="&cat.general.label;"/>
+			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome" preference="pref-miniOnAllInput"/>
 		</groupbox>
 	</prefpane>
 	
@@ -32,8 +33,14 @@
 			</hbox>
 			<description>&about.by;</description>
 			<description class="justify">&about.desc;</description>
-			<label class="text-link closer" href="https://addons.mozilla.org/firefox/addon/the-fox-only-better/" value="&about.home;"/>
-			<label class="text-link closer" href="https://github.com/Quicksaver/The-Fox--Only-Better/issues" value="&about.tech;"/>
+			<label	class="text-link closer"
+					tooltiptext="https://addons.mozilla.org/firefox/addon/the-fox-only-better/"
+					href="https://addons.mozilla.org/firefox/addon/the-fox-only-better/"
+					value="&about.home;"/>
+			<label	class="text-link closer"
+					tooltiptext="https://github.com/Quicksaver/The-Fox--Only-Better/issues"
+					href="https://github.com/Quicksaver/The-Fox--Only-Better/issues"
+					value="&about.tech;"/>
 		</vbox>
 	</prefpane>
 </prefwindow>

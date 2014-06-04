@@ -4,8 +4,11 @@
 <!ENTITY pane.slimChrome.label "Slim Chrome">
 <!ENTITY pane.about.label "About">
 
+<!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
-<!ENTITY opt.miniOnAllInput.label "Show the mini bar when any input box is focused">
+<!ENTITY opt.slimChrome.tooltip "Conveniently hides the top toolbars while you don't need them, to maximize content viewing space.">
+<!ENTITY opt.miniOnAllInput.label "Show the mini bar when focusing any type of input box">
+<!ENTITY opt.miniOnAllInput.tooltip "Enable this if you'd like the mini location bar to be shown when typing in any type of input field, and not just password fields.">
 
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "by Quicksaver">
