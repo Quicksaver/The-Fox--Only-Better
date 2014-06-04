@@ -5,7 +5,7 @@
 <!ENTITY pane.about.label "About">
 
 <!ENTITY cat.general.label "General">
-<!ENTITY cat.slimChromeKeyset.label "Toggle Keyboard Shortcut">
+<!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars while you don't need them.">
 <!ENTITY opt.miniOnAllInput.label "Show the mini bar when focusing any type of input box">
