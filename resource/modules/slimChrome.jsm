@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.2';
+moduleAid.VERSION = '1.4.3';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -322,8 +322,11 @@ this.contentFocusPasswords = function(m) {
 };
 
 this.focusPasswords = function() {
-	setMini(gBrowser.mCurrentBrowser._showMiniBar);
-	return gBrowser.mCurrentBrowser._showMiniBar;
+	if(typeof(blockedPopup) == 'undefined' || !blockedPopup) {
+		setMini(gBrowser.mCurrentBrowser._showMiniBar);
+		return gBrowser.mCurrentBrowser._showMiniBar;
+	}
+	return false;
 };
 
 this.findPersonaPosition = function() {
@@ -485,6 +488,7 @@ this.slimChromeOnTabSelect = {
 	
 	handler: function() {
 		if(!focusPasswords() // focusPasswords will always show mini if a password field is focused
+		&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
 		&& slimChromeOnTabSelect.last != gBrowser.mCurrentBrowser._currentHost // only show mini when the webhost has changed
 		&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
@@ -492,8 +496,12 @@ this.slimChromeOnTabSelect = {
 		) {
 			setMini(true);
 			timerAid.init('setMini', hideMiniInABit, 2000);
+			slimChromeOnTabSelect.last = gBrowser.mCurrentBrowser._currentHost;
+			return true;
 		}
+		
 		slimChromeOnTabSelect.last = gBrowser.mCurrentBrowser._currentHost;
+		return false;
 	}
 };
 
