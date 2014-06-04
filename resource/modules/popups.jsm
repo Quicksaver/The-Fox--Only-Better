@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.16';
+moduleAid.VERSION = '2.0.17';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -190,7 +190,7 @@ this.popupsFinishedWidth = function() {
 		
 		// in case opening the popup triggered the chrome to show, and the mouse just so happens to be in that area, we need to make sure the mouse leaving
 		// won't hide the chrome with the popup still shown
-		if(slimChromeContainer.hovers === 1 && $$('#'+objName+'-slimChrome-container:hover')[0]) {
+		if(slimChromeContainer.hovers === 1 && prefAid.useMouse && $$('#'+objName+'-slimChrome-container:hover')[0]) {
 			setHover(true);
 		}
 	}

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.1';
+moduleAid.VERSION = '1.4.2';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -273,7 +273,7 @@ this.contentAreaOnMouseMove = function() {
 		&& initialShowings.length == 0 // don't hide if timers are active
 		&& !isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
 		&& holdPopupNodes.length == 0 // a popup could be holding it open
-		&& !$$('#navigator-toolbox:hover')[0] // trick to find out if the mouse is hovering the chrome
+		&& (!prefAid.useMouse || !$$('#navigator-toolbox:hover')[0]) // trick to find out if the mouse is hovering the chrome
 		) {
 			// if we get here, nothing is holding the chrome open, so it's likely that it should be hidden, but wasn't for some reason
 			setHover(false, true, 0);
@@ -606,6 +606,25 @@ this.getParentWithId = function(node) {
 	return node;
 };
 
+this.slimChromeUseMouse = function() {
+	if(prefAid.useMouse) {
+		// keep the toolbox when hovering it
+		listenerAid.add(gNavToolbox, 'dragstart', onDragStart);
+		listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
+		listenerAid.add(gNavToolbox, 'mouseover', onMouseOverToolbox);
+		listenerAid.add(gNavToolbox, 'mouseout', onMouseOutToolbox);
+		
+		// the empty area of the tabs toolbar doesn't respond to mouse events, so we need to use mouseout from the browser-panel instead
+		listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
+	} else {
+		listenerAid.remove(gNavToolbox, 'dragstart', onDragStart);
+		listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
+		listenerAid.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
+		listenerAid.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
+		listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
+	}
+};
+
 this.loadSlimChrome = function() {
 	// make sure the currently focused element stays focused after this.
 	// we get only a node with an id so that for example if the location bar is focused (most common case), we don't get its anonymous nodes that get destroyed in this process.
@@ -675,17 +694,12 @@ this.loadSlimChrome = function() {
 	// make sure the urlbar keeps its value
 	window.URLBarSetURI();
 	
+	// should the toolbars react to mouse events
+	prefAid.listen('useMouse', slimChromeUseMouse);
+	slimChromeUseMouse();
+	
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
 	listenerAid.add(browserPanel, 'resize', delayMoveSlimChrome);
-	
-	// keep the toolbox when hovering it
-	listenerAid.add(gNavToolbox, 'dragstart', onDragStart);
-	listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
-	listenerAid.add(gNavToolbox, 'mouseover', onMouseOverToolbox);
-	listenerAid.add(gNavToolbox, 'mouseout', onMouseOutToolbox);
-	
-	// the empty area of the tabs toolbar doesn't respond to mouse events, so we need to use mouseout from the browser-panel instead
-	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
 	
 	// also keep the toolbox visible if it has focus of course
 	listenerAid.add(gNavToolbox, 'focus', onFocus, true);
@@ -776,6 +790,8 @@ this.unloadSlimChrome = function() {
 	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
 	CustomizableUI.removeListener(slimChromeCUIListener);
 	slimChromeChildListener.observer.disconnect();
+	
+	prefAid.unlisten('useMouse', slimChromeUseMouse);
 	
 	initialLoading = true;
 	

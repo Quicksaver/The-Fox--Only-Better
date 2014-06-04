@@ -10,12 +10,14 @@
 		<preferences>
 			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
 			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
+			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
 		</preferences>
 		
 		<checkbox label="&opt.slimChrome.label;" tooltiptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
 		<groupbox align="start">
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome" preference="pref-miniOnAllInput"/>
+			<checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/>
 		</groupbox>
 	</prefpane>
 	

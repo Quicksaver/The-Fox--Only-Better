@@ -1,9 +1,10 @@
-var defaultsVersion = '1.1.7';
+var defaultsVersion = '1.1.8';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
 	slimChrome: true,
 	miniOnAllInput: false,
+	useMouse: true,
 	
 	lwthemebgImage: '',
 	lwthemebgWidth: 0,

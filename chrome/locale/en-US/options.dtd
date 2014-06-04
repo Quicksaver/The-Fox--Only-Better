@@ -6,9 +6,11 @@
 
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
-<!ENTITY opt.slimChrome.tooltip "Conveniently hides the top toolbars while you don't need them, to maximize content viewing space.">
+<!ENTITY opt.slimChrome.tooltip "Conveniently hides the top toolbars while you don't need them, to streamline the browser interface and maximize content viewing space.">
 <!ENTITY opt.miniOnAllInput.label "Show the mini bar when focusing any type of input box">
 <!ENTITY opt.miniOnAllInput.tooltip "Enable this if you'd like the mini location bar to be shown when typing in any type of input field, and not just password fields.">
+<!ENTITY opt.useMouse.label "Show the chrome when the mouse moves to the top">
+<!ENTITY opt.useMouse.tooltip "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves. If this is disabled, you can only access the toolbars by hitting F6 to focus the location bar, or when a panel opens anchored to one of the hidden toolbars.">
 
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "by Quicksaver">

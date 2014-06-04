@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.1.2';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -33,7 +33,7 @@ moduleAid.LOADMODULE = function() {
 			// re-command the panel to open when the chrome finishes expanding
 			listenerAid.add(slimChromeContainer, 'FinishedSlimChromeWidth', function() {
 				// unfortunately this won't happen inside popupFinishedWidth in this case
-				if(slimChromeContainer.hovers === 1 && $$('#'+objName+'-slimChrome-container:hover')[0]) {
+				if(slimChromeContainer.hovers === 1 && prefAid.useMouse && $$('#'+objName+'-slimChrome-container:hover')[0]) {
 					setHover(true);
 				}
 				
