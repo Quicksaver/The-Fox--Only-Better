@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/options.dtd">
+<overlay id="optionsMac-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	<checkbox id="accelCheckboxSlimChrome" label="&opt.keyset.command;"/>
+	<checkbox id="altCheckboxSlimChrome" label="&opt.keyset.option;"/>
+	
+</overlay>

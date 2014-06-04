@@ -1,10 +1,15 @@
-var defaultsVersion = '1.1.8';
+var defaultsVersion = '1.1.9';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
 	slimChrome: true,
 	miniOnAllInput: false,
 	useMouse: true,
+	
+	slimChromeKeycode: 'VK_F9',
+	slimChromeAccel: false,
+	slimChromeShift: false,
+	slimChromeAlt: false,
 	
 	lwthemebgImage: '',
 	lwthemebgWidth: 0,
@@ -24,11 +29,12 @@ function startConditions(aReason) {
 function startPreferences(window) {
 	replaceObjStrings(window.document);
 	preparePreferences(window);
-	fillVersion(window.document.getElementById('addonVersion'));
+	window[objName].moduleAid.load('options');
 }
 
 function onStartup(aReason) {
 	moduleAid.load('compatibilityFix/sandboxFixes');
+	moduleAid.load('keysets');
 	
 	// Apply the add-on to every window opened and to be opened
 	windowMediator.callOnAll(startAddon, 'navigator:browser');
@@ -46,5 +52,6 @@ function onShutdown(aReason) {
 	windowMediator.callOnAll(removeObject, null, null, true);
 	browserMediator.callOnAll(removeObject, null, true);
 	
+	moduleAid.unload('keysets');
 	moduleAid.unload('compatibilityFix/sandboxFixes');
 }

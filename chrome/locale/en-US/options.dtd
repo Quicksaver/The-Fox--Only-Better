@@ -1,16 +1,33 @@
-<!ENTITY Optwindow.style "width: 37em;">
+<!ENTITY Optwindow.style "width: 34em;">
 <!ENTITY options.title "The Fox, Only Better">
 
 <!ENTITY pane.slimChrome.label "Slim Chrome">
 <!ENTITY pane.about.label "About">
 
 <!ENTITY cat.general.label "General">
+<!ENTITY cat.slimChromeKeyset.label "Toggle Keyboard Shortcut">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars while you don't need them.">
 <!ENTITY opt.miniOnAllInput.label "Show the mini bar when focusing any type of input box">
 <!ENTITY opt.miniOnAllInput.tooltip "Enable this if you'd like the mini location bar to be shown when typing in any type of input field, and not just password fields.">
 <!ENTITY opt.useMouse.label "Show the chrome when the mouse moves to the top">
 <!ENTITY opt.useMouse.tooltip "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves. If this is disabled, you can only access the toolbars by hitting F6 to focus the location bar, or when a panel opens anchored to one of the hidden toolbars.">
+
+<!ENTITY opt.keyset.control "Control">
+<!ENTITY opt.keyset.shift "Shift">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Command">
+<!ENTITY opt.keyset.option "Option">
+<!ENTITY opt.keyset.none "None">
+<!ENTITY opt.keyset.spacebar "Spacebar">
+<!ENTITY opt.keyset.pageup "Page Up">
+<!ENTITY opt.keyset.pagedown "Page Down">
+<!ENTITY opt.keyset.end "End">
+<!ENTITY opt.keyset.home "Home">
+<!ENTITY opt.keyset.left "Left">
+<!ENTITY opt.keyset.up "Up">
+<!ENTITY opt.keyset.right "Right">
+<!ENTITY opt.keyset.down "Down">
 
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "by Quicksaver">
