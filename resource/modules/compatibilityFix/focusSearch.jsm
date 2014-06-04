@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('BrowserSearch', function() { return window.BrowserSearch; });
 
@@ -18,7 +18,7 @@ moduleAid.LOADMODULE = function() {
 	BrowserSearch._webSearch = BrowserSearch.webSearch;
 	BrowserSearch.webSearch = function() {
 		// For Mac, opens a new window or focuses an existing window, if necessary.
-		if(Services.appinfo.OS == 'Darwin') {
+		if(DARWIN) {
 			if(window.location.href != window.getBrowserURL()) {
 				var win = window.getTopWin();
 				if(win) {

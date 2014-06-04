@@ -24,7 +24,7 @@ this.theFoxOnlyBetter = {
 	objName: 'theFoxOnlyBetter',
 	objPathString: 'thefoxonlybetter',
 	
-	version: '1.0.1',
+	version: '1.0.2',
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
@@ -41,6 +41,10 @@ this.theFoxOnlyBetter = {
 	Globals: {},
 	prefAid: {},
 	
+	WINNT: false,
+	DARWIN: false,
+	LINUX: false,
+	
 	// and some global (content) things
 	webProgress: null,
 	
@@ -48,6 +52,10 @@ this.theFoxOnlyBetter = {
 		// some global (content) things, needed for one thing or another
 		this.Cu.import("resource://gre/modules/Services.jsm", this);
 		this.Cu.import("resource://gre/modules/XPCOMUtils.jsm", this);
+		
+		this.WINNT = Services.appinfo.OS == 'WINNT';
+		this.DARWIN = Services.appinfo.OS == 'Darwin';
+		this.LINUX = Services.appinfo.OS != 'WINNT' && Services.appinfo.OS != 'Darwin';
 		
 		this.XPCOMUtils.defineLazyModuleGetter(this, "PluralForm", "resource://gre/modules/PluralForm.jsm");
 		this.XPCOMUtils.defineLazyServiceGetter(this.Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");

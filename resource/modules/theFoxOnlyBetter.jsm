@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
@@ -7,7 +7,7 @@ this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('CustomizableUI', function() { return window.CustomizableUI; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
 this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
-this.__defineGetter__('fullScreenAutohide', function() { return Services.appinfo.OS != 'Darwin' && prefAid.autohide; });
+this.__defineGetter__('fullScreenAutohide', function() { return !DARWIN && prefAid.autohide; });
 this.__defineGetter__('customizing', function() {
 	if(trueAttribute(document.documentElement, 'customizing')) { return true; }
 	

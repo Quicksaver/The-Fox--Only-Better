@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.0';
+moduleAid.VERSION = '1.3.1';
 moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
@@ -38,7 +38,7 @@ this.keydownPanel = {
 				if(e[keycode] && e[keycode] == e.which
 				&& panel._toggleKeyset.shift == e.shiftKey
 				&& panel._toggleKeyset.alt == e.altKey
-				&& panel._toggleKeyset.accel == ((Services.appinfo.OS == 'Darwin') ? e.metaKey : e.ctrlKey)) {
+				&& panel._toggleKeyset.accel == (DARWIN ? e.metaKey : e.ctrlKey)) {
 					e.preventDefault();
 					e.stopPropagation();
 					

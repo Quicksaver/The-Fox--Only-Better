@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.3';
+moduleAid.VERSION = '1.4.4';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -120,7 +120,7 @@ this.onMouseOutBrowser = function(e) {
 	if(e.relatedTarget) { return; }
 	
 	// also, don't capture this if we're in HTML5 fullscreen mode and in Mac OS X, as it's just weird
-	if(Services.appinfo.OS == 'Darwin' && mozFullScreen) { return; }
+	if(DARWIN && mozFullScreen) { return; }
 	
 	// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
 	if(e.screenY < gNavToolbox.boxObject.screenY
@@ -732,7 +732,7 @@ this.loadSlimChrome = function() {
 	
 	// make the drop indicator visible on windows with aero enabled;
 	// the indicator comes from the binding, and if for some reason it's removed/re-applied, we would lose this watcher, so we need to make sure it stays
-	if(Services.appinfo.OS == 'WINNT') {
+	if(WINNT) {
 		listenerAid.add($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	}
 	

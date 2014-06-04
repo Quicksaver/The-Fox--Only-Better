@@ -27,7 +27,7 @@
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
 // Note: Firefox 29 is the minimum version supported as the modules assume we're in a version with Australis already.
 
-let bootstrapVersion = '1.4.0';
+let bootstrapVersion = '1.4.1';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -57,6 +57,11 @@ XPCOMUtils.defineLazyGetter(PlacesUIUtils, "localStore", function() { return Pla
 XPCOMUtils.defineLazyServiceGetter(Services, "fuel", "@mozilla.org/fuel/application;1", "fuelIApplication");
 XPCOMUtils.defineLazyServiceGetter(Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
 XPCOMUtils.defineLazyServiceGetter(Services, "stylesheet", "@mozilla.org/content/style-sheet-service;1", "nsIStyleSheetService");
+
+// I check these pretty much everywhere, so might as well keep a single reference to them
+let WINNT = Services.appinfo.OS == 'WINNT';
+let DARWIN = Services.appinfo.OS == 'Darwin';
+let LINUX = Services.appinfo.OS != 'WINNT' && Services.appinfo.OS != 'Darwin';
 
 function handleDeadObject(ex) {
 	if(ex.message == "can't access dead object") {
