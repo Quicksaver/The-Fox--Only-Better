@@ -5,6 +5,7 @@
 <!ENTITY pane.about.label "About">
 
 <!ENTITY cat.general.label "General">
+<!ENTITY cat.appearance.label "Style">
 <!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars while you don't need them.">
@@ -20,6 +21,8 @@
 <!ENTITY opt.delayOut.tooltip "Determines the delay after which the chrome will hide, when the mouse leaves it.">
 <!ENTITY opt.delayLow.label "Low">
 <!ENTITY opt.delayHigh.label "High">
+<!ENTITY opt.style.round.label "Spacious">
+<!ENTITY opt.style.round.tooltip "Shows the toolbars in a spacious container with a large round shape. Fits nicely with the default firefox theme overall.">
 
 <!ENTITY opt.keyset.control "Control">
 <!ENTITY opt.keyset.shift "Shift">

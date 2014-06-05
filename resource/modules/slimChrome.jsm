@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.7';
+moduleAid.VERSION = '1.4.8';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -694,6 +694,10 @@ this.slimChromeUseMouse = function() {
 	}
 };
 
+this.slimChromeStyle = function() {
+	setAttribute(slimChromeContainer, 'slimStyle', prefAid.slimStyle);
+};
+
 this.slimChromeIncludeNavBar = function(unload) {
 	if(unload !== true) { unload = false; }
 	
@@ -749,6 +753,10 @@ this.loadSlimChrome = function() {
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
 	
+	// toggle the style used in slimChrome
+	prefAid.listen('slimStyle', slimChromeStyle);
+	slimChromeStyle();
+	
 	// prepare PlacesToolbar methods to work in our chrome in case it's there,
 	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width
 	window.PlacesToolbar.prototype.__onOverflow = window.PlacesToolbar.prototype._onOverflow;
@@ -766,6 +774,7 @@ this.loadSlimChrome = function() {
 		PlacesToolbar._placesView.uninit();
 	}
 	
+	// should we append the nav-bar?
 	prefAid.listen('includeNavBar', slimChromeIncludeNavBar);
 	slimChromeIncludeNavBar();
 	
@@ -924,6 +933,8 @@ this.unloadSlimChrome = function() {
 	
 	PlacesToolbarHelper.init();
 	window.URLBarSetURI();
+	
+	prefAid.unlisten('slimStyle', slimChromeStyle);
 	
 	if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused)) {
 		focused.focus();

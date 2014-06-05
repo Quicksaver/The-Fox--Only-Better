@@ -14,6 +14,7 @@
 			<preference id="pref-includeNavBar" name="extensions.thefoxonlybetter.includeNavBar" type="bool"/>
 			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
 			<preference id="pref-delayOut" name="extensions.thefoxonlybetter.delayOut" type="int"/>
+			<preference id="pref-slimStyle" name="extensions.thefoxonlybetter.slimStyle" type="string"/>
 			<preference id="pref-slimChromeKeycode" name="extensions.thefoxonlybetter.slimChromeKeycode" type="string"/>
 			<preference id="pref-slimChromeAccel" name="extensions.thefoxonlybetter.slimChromeAccel" type="bool"/>
 			<preference id="pref-slimChromeShift" name="extensions.thefoxonlybetter.slimChromeShift" type="bool"/>
@@ -21,11 +22,13 @@
 		</preferences>
 		
 		<checkbox label="&opt.slimChrome.label;" tooltiptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
+		
 		<groupbox align="start">
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.includeNavBar.label;" tooltiptext="&opt.includeNavBar.tooltip;" dependson="pref-slimChrome" preference="pref-includeNavBar"/>
 			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-miniOnAllInput"/>
 		</groupbox>
+		
 		<groupbox>
 			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-useMouse"/></caption>
 			<hbox tooltiptext="&opt.delayIn.tooltip;">
@@ -58,6 +61,13 @@
 					preference="pref-delayOut"/>
 				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
 			</hbox>
+		</groupbox>
+		
+		<groupbox align="center">
+			<caption label="&cat.appearance.label;"/>
+			<radiogroup preference="pref-slimStyle">
+				<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
+			</radiogroup>
 		</groupbox>
 		
 		<groupbox align="center">
