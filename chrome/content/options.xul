@@ -66,7 +66,10 @@
 		<groupbox align="center">
 			<caption label="&cat.appearance.label;"/>
 			<radiogroup preference="pref-slimStyle">
-				<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
+				<hbox>
+					<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
+					<radio dependson="pref-slimChrome" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
+				</hbox>
 			</radiogroup>
 		</groupbox>
 		

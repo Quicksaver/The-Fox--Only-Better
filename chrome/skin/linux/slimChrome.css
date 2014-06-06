@@ -70,5 +70,66 @@
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
 		-moz-margin-start: -1px;
 	}
+	
+	/* compact style */
+	
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button {
+		border-radius: 2px 0 0 2px;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button > .toolbarbutton-icon {
+		border-radius: 2px 0 0 2px;
+		padding: 2px 3px;
+	}
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
+		background-color: transparent;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
+		padding-left: 3px;
+	}
+	
+	/* remove: in FF31 it isn't needed */
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #urlbar-container > #forward-button > .toolbarbutton-icon {
+		clip-path: none;
+		margin-left: 0;
+		padding-left: 3px;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #urlbar-container[forwarddisabled] > #forward-button[occluded-by-urlbar="true"] > .toolbarbutton-icon {
+		margin-right: 4px;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #urlbar-container[forwarddisabled] > #forward-button ~ #urlbar-wrapper {
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath");
+	}
+	/* end remove (also can remove the "back-button + " bits below */
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button + #urlbar-wrapper {
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath");
+		-moz-margin-start: 0;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
+		margin-left: -28px;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
+		/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
+		margin-left: -28.01px;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button {
+		padding: 0 1px;
+	}
+
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
+		-moz-margin-start: -2px;
+		-moz-margin-end: 1px;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
+		padding: 0 3px;
+	}
 
 }

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.8';
+moduleAid.VERSION = '1.4.9';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -694,8 +694,18 @@ this.slimChromeUseMouse = function() {
 	}
 };
 
-this.slimChromeStyle = function() {
+this.slimChromeStyle = function(unload) {
+	var showChrome = (unload === 'slimStyle');
+	if(unload !== true) { unload = false; }
+	
 	setAttribute(slimChromeContainer, 'slimStyle', prefAid.slimStyle);
+	
+	var d = !DARWIN ? 'm 1,-5 l 0,7.8 l 0,0.2 l 0,22l10000,0 l 0,-50 l -10000,0 z' : 'M 1,-5 l 0,34 l 10000,0 l 0,-34 l -10000,0 z';
+	setAttribute($(objName+'-slimChrome-clipPath-path'), 'd', d);
+	
+	if(showChrome) {
+		initialShowChrome(1500);
+	}
 };
 
 this.slimChromeIncludeNavBar = function(unload) {
@@ -935,6 +945,7 @@ this.unloadSlimChrome = function() {
 	window.URLBarSetURI();
 	
 	prefAid.unlisten('slimStyle', slimChromeStyle);
+	slimChromeStyle(true);
 	
 	if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused)) {
 		focused.focus();

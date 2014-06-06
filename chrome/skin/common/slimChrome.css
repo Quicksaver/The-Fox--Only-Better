@@ -70,6 +70,17 @@
 		padding-right: 53px;
 	}
 	
+	/* compact style */
+	
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"]:-moz-any(:not([mini]),[mini][hover]) {
+		border-radius: 0 0 8px 8px;
+	}
+	
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+		padding-left: 3px;
+		padding-right: 3px;
+	}
+	
 	/* common elements to all styles */
 	
 	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container,

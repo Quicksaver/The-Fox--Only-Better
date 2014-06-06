@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="chrome://thefoxonlybetter/skin/slimChrome.css" type="text/css"?>
 <?xml-stylesheet href="chrome://thefoxonlybetter-os/skin/slimChrome.css" type="text/css"?>
-<overlay id="slimChrome-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay id="slimChrome-overlay"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<toolbox id="navigator-toolbox" slimChrome="true">
 		<box id="objName-slimChrome-slimmer" insertbefore="customToolbars"/>
@@ -9,5 +11,13 @@
 			<vbox id="objName-slimChrome-toolbars" flex="1"/>
 		</hbox>
 	</toolbox>
+	
+	<vbox id="browser-panel">
+		<svg:svg id="objName-slimChrome-svg" height="0">
+			<svg:clipPath id="objName-slimChrome-clipPath" clipPathUnits="userSpaceOnUse">
+				<svg:path id="objName-slimChrome-clipPath-path" d=""/>
+			</svg:clipPath>
+		</svg:svg>
+	</vbox>
 	
 </overlay>

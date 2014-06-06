@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.11.0';
+moduleAid.VERSION = '2.11.1';
 moduleAid.UTILS = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1168,9 +1168,11 @@ this.overlayAid = {
 				this.getChildrenOf(aWindow, node);
 				
 				// Surf through all the children of node for the getchildrenof attribute
-				var allGetChildrenOf = node.getElementsByAttribute('getchildrenof', '*');
-				for(var gco = 0; gco < allGetChildrenOf.length; gco++) {
-					this.getChildrenOf(aWindow, allGetChildrenOf[gco]);
+				if(node.getElementsByAttribute) {
+					var allGetChildrenOf = node.getElementsByAttribute('getchildrenof', '*');
+					for(var gco = 0; gco < allGetChildrenOf.length; gco++) {
+						this.getChildrenOf(aWindow, allGetChildrenOf[gco]);
+					}
 				}
 			}
 		}
