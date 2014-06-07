@@ -15,6 +15,11 @@
 		position: relative;
 		z-index: 1;
 	}
+	window[theFoxOnlyBetter-FF32] #theFoxOnlyBetter-slimChrome-slimmer {
+		border-top: 1px solid hsla(209,67%,12%,0.35);
+		background-clip: padding-box;
+	}
+	
 	#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
 		background-color: -moz-dialog;
 	}
@@ -41,6 +46,8 @@
 	#theFoxOnlyBetter-slimChrome-container #nav-bar {
 		margin-top: 0;
 		box-shadow: none;
+		/* !important needed for bug 8426282 */
+		border-top: none !important;
 	}
 	
 	@media (-moz-windows-default-theme) {
@@ -82,15 +89,27 @@
 		@media	(-moz-os-version: windows-vista),
 			(-moz-os-version: windows-win7) {
 			
-			#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-slimmer {
+			#main-window[sizemode=normal]:not([theFoxOnlyBetter]) #theFoxOnlyBetter-slimChrome-slimmer {
 				border-top-left-radius: 2.5px;
 				border-top-right-radius: 2.5px;
 			}
 			
-			#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
+			#main-window[sizemode=normal]:not([theFoxOnlyBetter]) #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
 			}
+		}
+	}
+	
+	@media (-moz-windows-glass) {
+		#main-window[sizemode=normal][theFoxOnlyBetter] #theFoxOnlyBetter-slimChrome-slimmer {
+			border-top-left-radius: 2.5px;
+			border-top-right-radius: 2.5px;
+		}
+		
+		#main-window[sizemode=normal][theFoxOnlyBetter] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 		}
 	}
 	

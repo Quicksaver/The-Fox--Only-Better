@@ -19,9 +19,15 @@
 		background-repeat: repeat-x, no-repeat;
 		background-position: 0 1px, 0 0;
 		box-shadow: inset 0 1px 0 hsla(0,0%,100%,.4);
-		margin-top: -1px;
 		position: relative;
 		z-index: 1;
+	}
+	window:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-slimmer {
+		margin-top: -1px;
+	}
+	window[theFoxOnlyBetter-FF32][customize-entered] #theFoxOnlyBetter-slimChrome-slimmer {
+		border-top-left-radius: 2.5px;
+		border-top-right-radius: 2.5px;
 	}
 	#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
 		background: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
@@ -34,6 +40,10 @@
 	
 	#theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 		box-shadow: none;
+		margin-top: 0;
+		border-radius: 0;
+		/* !important needed for bug 1018582 */
+		border-top: none !important;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) #nav-bar:not(:-moz-lwtheme),

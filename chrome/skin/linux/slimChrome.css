@@ -16,9 +16,21 @@
 	#theFoxOnlyBetter-slimChrome-slimmer {
 		background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.25));
 		box-shadow: 0 1px 0 rgba(255,255,255,.3) inset;
-		margin-top: -1px;
 		position: relative;
 		z-index: 1;
+	}
+	#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
+		background-color: -moz-dialog;
+	}
+	window:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-slimmer {
+		margin-top: -1px;
+	}
+	window[theFoxOnlyBetter-FF32] #theFoxOnlyBetter-slimChrome-slimmer {
+		border-top: 1px solid hsla(0,0%,0%,.3);
+		background-clip: padding-box;
+	}
+	window[theFoxOnlyBetter-FF32] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
+		margin-top: -1px;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
@@ -45,6 +57,8 @@
 		margin-top: 0;
 		padding-top: 2px;
 		padding-bottom: 2px;
+		/* !important needed for bug 1016056 */
+		border-top: none !important;
 	}
 	
 	/* mini chrome, the hover style always overrides all of this */

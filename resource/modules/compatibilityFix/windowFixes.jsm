@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.10';
+moduleAid.VERSION = '1.0.11';
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/downloadsIndicator');
@@ -30,6 +30,10 @@ moduleAid.LOADMODULE = function() {
 	});
 	
 	moduleAid.load('compatibilityFix/UIEnhancer');
+	
+	// changes introduced to the top TabsToolbar/nav-bar divider style,
+	// this can be removed in FF32
+	toggleAttribute(document.documentElement, objName+'-FF32', Services.vc.compare(Services.appinfo.platformVersion, "32.0a1") >= 0);
 };
 
 moduleAid.UNLOADMODULE = function() {
@@ -43,4 +47,6 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/S4E');
 	moduleAid.unload('compatibilityFix/LinkLocationBar');
 	moduleAid.unload('compatibilityFix/UIEnhancer');
+	
+	removeAttribute(document.documentElement, objName+'-FF32');
 };
