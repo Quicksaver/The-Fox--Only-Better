@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathContainer', function() { return $(objName+'-slimChrome-clipPath-container-path'); });
@@ -99,12 +99,12 @@ this.slimChromeClipPaths = function() {
 	sscode += '		width: ' + width + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars > *:not(#nav-bar) {\n';
-	sscode += '		padding-left: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_OTHERS) + 'px;\n';
-	sscode += '		padding-right: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_OTHERS) + 'px;\n';
+	sscode += '		padding-left: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_OTHERS) + 'px !important;\n';
+	sscode += '		padding-right: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_OTHERS) + 'px !important;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars > #nav-bar {\n';
-	sscode += '		padding-left: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_NAVBAR) + 'px;\n';
-	sscode += '		padding-right: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_NAVBAR) + 'px;\n';
+	sscode += '		padding-left: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_NAVBAR) + 'px !important;\n';
+	sscode += '		padding-right: ' + (width +AUSTRALIS_BORDER_PADDING_ADJUST_NAVBAR) + 'px !important;\n';
 	sscode += '	}\n';
 	sscode += '}';
 	
