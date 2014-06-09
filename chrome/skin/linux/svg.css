@@ -1,0 +1,7 @@
+@namespace svg url(http://www.w3.org/2000/svg);
+
+#theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke: ThreeDShadow;
+	stroke-width: 0.03;
+}

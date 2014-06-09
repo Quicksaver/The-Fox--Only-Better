@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.9';
+moduleAid.VERSION = '1.4.10';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -89,11 +89,11 @@ this.moveSlimChrome = function() {
 	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
 	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
 	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
 	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container:not([hover]) {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([hover]) {\n';
 	sscode += '		width: ' + Math.min(moveSlimChromeStyle.width, MIN_WIDTH) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
@@ -398,7 +398,7 @@ this.stylePersonaSlimChrome = function() {
 		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
 		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
 		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
 		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
@@ -694,20 +694,6 @@ this.slimChromeUseMouse = function() {
 	}
 };
 
-this.slimChromeStyle = function(unload) {
-	var showChrome = (unload === 'slimStyle');
-	if(unload !== true) { unload = false; }
-	
-	setAttribute(slimChromeContainer, 'slimStyle', prefAid.slimStyle);
-	
-	var d = !DARWIN ? 'm 1,-5 l 0,7.8 l 0,0.2 l 0,22l10000,0 l 0,-50 l -10000,0 z' : 'M 1,-5 l 0,34 l 10000,0 l 0,-34 l -10000,0 z';
-	setAttribute($(objName+'-slimChrome-clipPath-path'), 'd', d);
-	
-	if(showChrome) {
-		initialShowChrome(1500);
-	}
-};
-
 this.slimChromeIncludeNavBar = function(unload) {
 	if(unload !== true) { unload = false; }
 	
@@ -762,10 +748,6 @@ this.loadSlimChrome = function() {
 	
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
-	
-	// toggle the style used in slimChrome
-	prefAid.listen('slimStyle', slimChromeStyle);
-	slimChromeStyle();
 	
 	// prepare PlacesToolbar methods to work in our chrome in case it's there,
 	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width
@@ -944,9 +926,6 @@ this.unloadSlimChrome = function() {
 	PlacesToolbarHelper.init();
 	window.URLBarSetURI();
 	
-	prefAid.unlisten('slimStyle', slimChromeStyle);
-	slimChromeStyle(true);
-	
 	if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused)) {
 		focused.focus();
 	}
@@ -956,9 +935,13 @@ moduleAid.LOADMODULE = function() {
 	messenger.messageWindow(window, 'load', 'slimChrome');
 	
 	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
+	
+	moduleAid.load('slimStyle');
 };
 
 moduleAid.UNLOADMODULE = function() {
+	moduleAid.unload('slimStyle');
+	
 	styleAid.unload('personaSlimChrome_'+_UUID);
 	overlayAid.removeOverlayWindow(window, 'slimChrome');
 	

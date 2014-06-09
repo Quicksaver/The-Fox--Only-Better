@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.tgmGroupBarId = 'TabGroupsManagerToolbar';
 this.__defineGetter__('tgmGroupBar', function() { return $(tgmGroupBarId); });
@@ -23,8 +23,8 @@ this.tgmOrdinal = function() {
 	var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-slimmer,\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-slimChrome-container {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer,\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
 	sscode += '	  -moz-box-ordinal-group: '+ordinal+';\n';
 	sscode += '	}\n';
 	sscode += '}';

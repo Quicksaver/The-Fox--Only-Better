@@ -25,6 +25,8 @@
 <!ENTITY opt.style.round.tooltip "Shows the toolbars in a spacious container with a large round shape. Fits nicely with the default firefox theme overall.">
 <!ENTITY opt.style.compact.label "Compact">
 <!ENTITY opt.style.compact.tooltip "A minimized style that shows the maximum amount of toolbar buttons and textboxes in the least space possible, as to not overpower the webpage area with chrome elements.">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Designed to have the look and feel of the native firefox theme.">
 
 <!ENTITY opt.keyset.control "Control">
 <!ENTITY opt.keyset.shift "Shift">

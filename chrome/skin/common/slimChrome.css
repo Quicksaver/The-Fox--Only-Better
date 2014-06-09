@@ -19,7 +19,7 @@
 		opacity: 1;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container > * {
+	#theFoxOnlyBetter-slimChrome-container > [flex] {
 		width: 100%;
 	}
 	
@@ -53,6 +53,7 @@
 	}
 	
 	/* round style */
+	
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="round"]:-moz-any(:not([mini]),[mini][hover]) {
 		border-radius: 20px 20px 200px 200px;
 	}
@@ -81,6 +82,29 @@
 		padding-right: 3px;
 	}
 	
+	/* Australis style */
+	
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="australis"]:-moz-any([hover],:not([onlyURLBar])) {
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-container");
+	}
+	
+	#theFoxOnlyBetter-slimChrome-toolbars-before,
+	#theFoxOnlyBetter-slimChrome-toolbars-after {
+		position: absolute;
+		z-index: 2;
+		height: 100%;
+		top: 0;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(ltr),
+	#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(rtl) {
+		left: -1px;
+	}
+	#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(rtl),
+	#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(ltr) {
+		right: -1px;
+	}
+	
 	/* common elements to all styles */
 	
 	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container,
@@ -90,6 +114,13 @@
 	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
 		padding: 1px;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container:-moz-any(:not([slimStyle="australis"]),:not([hover])[onlyURLBar]) #theFoxOnlyBetter-slimChrome-toolbars-before,
+	#theFoxOnlyBetter-slimChrome-container:-moz-any(:not([slimStyle="australis"]),:not([hover])[onlyURLBar]) #theFoxOnlyBetter-slimChrome-toolbars-after,
+	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-before,
+	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after {
+		display: none;
 	}
 	
 	/* for changes in FF31 */

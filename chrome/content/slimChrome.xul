@@ -8,14 +8,37 @@
 	<toolbox id="navigator-toolbox" slimChrome="true">
 		<box id="objName-slimChrome-slimmer" insertbefore="customToolbars"/>
 		<hbox id="objName-slimChrome-container" insertafter="objName-slimChrome-slimmer" noPointerEvents="true">
+			<box id="objName-slimChrome-toolbars-before">
+				<svg:svg id="objName-slimChrome-svg-before"
+					width="100%"
+					height="100%"
+					preserveAspectRatio="none slice"
+					viewBox="0 0 1 1">
+					
+					<svg:path id="objName-slimChrome-svg-before-path" fill="transparent" d=""/>
+				</svg:svg>
+			</box>
 			<vbox id="objName-slimChrome-toolbars" flex="1"/>
+			<box id="objName-slimChrome-toolbars-after">
+				<svg:svg id="objName-slimChrome-svg-after"
+					width="100%"
+					height="100%"
+					preserveAspectRatio="none slice"
+					viewBox="0 0 1 1">
+					
+					<svg:path id="objName-slimChrome-svg-after-path" fill="transparent" d=""/>
+				</svg:svg>
+			</box>
 		</hbox>
 	</toolbox>
 	
 	<vbox id="browser-panel">
-		<svg:svg id="objName-slimChrome-svg" height="0">
-			<svg:clipPath id="objName-slimChrome-clipPath" clipPathUnits="userSpaceOnUse">
-				<svg:path id="objName-slimChrome-clipPath-path" d=""/>
+		<svg:svg id="objName-slimChrome-clipPath" height="0">
+			<svg:clipPath id="objName-slimChrome-clipPath-urlbar-wrapper" clipPathUnits="userSpaceOnUse">
+				<svg:path id="objName-slimChrome-clipPath-urlbar-wrapper-path" d=""/>
+			</svg:clipPath>
+			<svg:clipPath id="objName-slimChrome-clipPath-container" clipPathUnits="objectBoundingBox">
+				<svg:path id="objName-slimChrome-clipPath-container-path" d=""/>
 			</svg:clipPath>
 		</svg:svg>
 	</vbox>

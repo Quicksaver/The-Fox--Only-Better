@@ -1,3 +1,5 @@
+@import url("chrome://thefoxonlybetter-os/skin/svg.css");
+
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
@@ -115,11 +117,11 @@
 		margin-right: 4px;
 	}
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #urlbar-container[forwarddisabled] > #forward-button ~ #urlbar-wrapper {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath");
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
 	}
 	/* end remove (also can remove the "back-button + " bits below */
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button + #urlbar-wrapper {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath");
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
 		-moz-margin-start: 0;
 	}
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {

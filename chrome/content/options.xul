@@ -69,6 +69,7 @@
 				<hbox>
 					<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
+					<radio dependson="pref-slimChrome" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
 				</hbox>
 			</radiogroup>
 		</groupbox>

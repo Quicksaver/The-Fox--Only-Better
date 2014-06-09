@@ -27,7 +27,7 @@
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
 // Note: Firefox 29 is the minimum version supported as the modules assume we're in a version with Australis already.
 
-let bootstrapVersion = '1.4.1';
+let bootstrapVersion = '1.4.2';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -80,10 +80,14 @@ function prepareObject(window, aName) {
 	let objectName = aName || objName;
 	if(window[objectName]) { return; }
 	
+	var rtl = window.getComputedStyle(window.document.documentElement).getPropertyValue('direction') == 'rtl';
+	
 	window[objectName] = {
 		objName: objectName,
 		objPathString: objPathString,
 		_UUID: new Date().getTime(),
+		RTL: rtl,
+		LTR: !rtl,
 		
 		// every supposedly global variable is inaccessible because bootstraped means sandboxed, so I have to reference all these;
 		// it's easier to reference more specific objects from within the modules for better control, only setting these two here because they're more generalized

@@ -1,0 +1,18 @@
+@namespace svg url(http://www.w3.org/2000/svg);
+
+#theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke: ThreeDShadow;
+	stroke-width: 0.03;
+}
+
+@media (-moz-windows-default-theme) {
+	@media	(-moz-os-version: windows-vista),
+		(-moz-os-version: windows-win7) {
+	
+		#theFoxOnlyBetter-slimChrome-svg-before-path:not(:-moz-lwtheme),
+		#theFoxOnlyBetter-slimChrome-svg-after-path:not(:-moz-lwtheme) {
+			stroke: #aabccf;
+		}
+	}
+}
