@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.10';
+moduleAid.VERSION = '1.4.11';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -90,8 +90,13 @@ this.moveSlimChrome = function() {
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
-	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
 	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(ltr) {\n';
+	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(rtl) {\n';
+	sscode += '		right: ' + moveSlimChromeStyle.right + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([hover]) {\n';
 	sscode += '		width: ' + Math.min(moveSlimChromeStyle.width, MIN_WIDTH) + 'px;\n';
@@ -393,7 +398,11 @@ this.stylePersonaSlimChrome = function() {
 			var borderStart = parseInt(containerStyle.getPropertyValue('border-right-width'));
 		}
 		
-		var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
+		if(LTR) {
+			var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
+		} else {
+			var offsetPersonaX = -lastSlimChromeStyle.right +prefAid.lwthemebgWidth -borderStart;
+		}
 		
 		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
@@ -402,7 +411,7 @@ this.stylePersonaSlimChrome = function() {
 		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
 		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
 		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
-		sscode += '	  background-position: left '+offsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
+		sscode += '	  background-position: '+((RTL) ? 'right' : 'left')+' '+offsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
 		sscode += '	  background-repeat: repeat !important;\n';
 		sscode += '	  background-size: auto auto !important;\n';
 		sscode += '	}\n';
