@@ -30,12 +30,12 @@
 		</groupbox>
 		
 		<groupbox>
-			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-useMouse"/></caption>
+			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
 			<hbox tooltiptext="&opt.delayIn.tooltip;">
-				<label value="&opt.delayIn.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
+				<label value="&opt.delayIn.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				<hbox flex="1"/>
-				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
-				<scale id="delayInScale" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"
+				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				<scale id="delayInScale" dependson="pref-slimChrome,pref-useMouse"
 					dir="reverse"
 					width="150"
 					min="75"
@@ -44,13 +44,13 @@
 					increment="25"
 					pageincrement="150"
 					preference="pref-delayIn"/>
-				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
+				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 			</hbox>
 			<hbox tooltiptext="&opt.delayOut.tooltip;">
-				<label value="&opt.delayOut.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
+				<label value="&opt.delayOut.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				<hbox flex="1"/>
-				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
-				<scale id="delayOutScale" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"
+				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				<scale id="delayOutScale" dependson="pref-slimChrome,pref-useMouse"
 					dir="reverse"
 					width="150"
 					min="75"
@@ -59,7 +59,7 @@
 					increment="25"
 					pageincrement="150"
 					preference="pref-delayOut"/>
-				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-includeNavBar,pref-useMouse"/>
+				<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 			</hbox>
 		</groupbox>
 		
