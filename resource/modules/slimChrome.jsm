@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.13';
+moduleAid.VERSION = '1.4.14';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -108,6 +108,89 @@ this.moveSlimChrome = function() {
 	findPersonaPosition();
 	
 	dispatch(slimChromeContainer, { type: 'MovedSlimChrome', cancelable: false });
+};
+
+this.findPersonaPosition = function() {
+	if(!trueAttribute(document.documentElement, 'lwtheme')) {
+		prefAid.lwthemebgImage = '';
+		prefAid.lwthemebgWidth = 0;
+		prefAid.lwthemecolor = '';
+		prefAid.lwthemebgColor = '';
+		stylePersonaSlimChrome();
+		return;
+	}
+	
+	var windowStyle = getComputedStyle(document.documentElement);
+	if(prefAid.lwthemebgImage != windowStyle.getPropertyValue('background-image') && windowStyle.getPropertyValue('background-image') != 'none') {
+		prefAid.lwthemebgImage = windowStyle.getPropertyValue('background-image');
+		prefAid.lwthemecolor = windowStyle.getPropertyValue('color');
+		prefAid.lwthemebgColor = windowStyle.getPropertyValue('background-color');
+		prefAid.lwthemebgWidth = 0;
+		
+		lwthemeImage = new window.Image();
+		lwthemeImage.onload = function() { findPersonaWidth(); };
+		lwthemeImage.src = prefAid.lwthemebgImage.substr(5, prefAid.lwthemebgImage.length - 8);
+		return;
+	}
+	
+	stylePersonaSlimChrome();
+};
+
+this.findPersonaWidth = function() {
+	if(prefAid.lwthemebgWidth == 0 && lwthemeImage.naturalWidth != 0) {
+		prefAid.lwthemebgWidth = lwthemeImage.naturalWidth;
+	}
+	
+	if(prefAid.lwthemebgWidth != 0) {
+		stylePersonaSlimChrome();
+	}
+};
+
+this.stylePersonaSlimChrome = function() {
+	// Unload current stylesheet if it's been loaded
+	styleAid.unload('personaSlimChrome_'+_UUID);
+	
+	if(prefAid.lwthemebgImage != '') {
+		var windowStyle = getComputedStyle(document.documentElement);
+		var containerBox = slimChromeContainer.getBoundingClientRect();
+		var containerStyle = getComputedStyle(slimChromeContainer);
+		
+		// Another personas in OSX tweak
+		var offsetWindowPadding = windowStyle.getPropertyValue('background-position');
+		var offsetPersonaY = -containerBox.top;
+		offsetPersonaY += parseInt(containerStyle.getPropertyValue('margin-top'));
+		if(offsetWindowPadding.indexOf(' ') > -1 && offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1) > -1) {
+			var offset = parseInt(offsetWindowPadding.substr(offsetWindowPadding.indexOf(' ') +1, offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1)));
+			offsetPersonaY += offset;
+		}
+		
+		if(containerStyle.getPropertyValue('direction') == 'ltr') {
+			var borderStart = parseInt(containerStyle.getPropertyValue('border-left-width'));
+		} else {
+			var borderStart = parseInt(containerStyle.getPropertyValue('border-right-width'));
+		}
+		
+		if(LTR) {
+			var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
+		} else {
+			var offsetPersonaX = -lastSlimChromeStyle.right +prefAid.lwthemebgWidth -borderStart;
+		}
+		
+		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
+		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
+		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
+		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
+		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
+		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
+		sscode += '	  background-position: '+((RTL) ? 'right' : 'left')+' '+offsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
+		sscode += '	  background-repeat: repeat !important;\n';
+		sscode += '	  background-size: auto auto !important;\n';
+		sscode += '	}\n';
+		sscode += '}';
+		
+		styleAid.load('personaSlimChrome_'+_UUID, sscode, true);
+	}
 };
 
 this.onMouseOver = function(e) {
@@ -337,89 +420,6 @@ this.focusPasswords = function() {
 		return gBrowser.mCurrentBrowser._showMiniBar;
 	}
 	return false;
-};
-
-this.findPersonaPosition = function() {
-	if(!trueAttribute(document.documentElement, 'lwtheme')) {
-		prefAid.lwthemebgImage = '';
-		prefAid.lwthemebgWidth = 0;
-		prefAid.lwthemecolor = '';
-		prefAid.lwthemebgColor = '';
-		stylePersonaSlimChrome();
-		return;
-	}
-	
-	var windowStyle = getComputedStyle(document.documentElement);
-	if(prefAid.lwthemebgImage != windowStyle.getPropertyValue('background-image') && windowStyle.getPropertyValue('background-image') != 'none') {
-		prefAid.lwthemebgImage = windowStyle.getPropertyValue('background-image');
-		prefAid.lwthemecolor = windowStyle.getPropertyValue('color');
-		prefAid.lwthemebgColor = windowStyle.getPropertyValue('background-color');
-		prefAid.lwthemebgWidth = 0;
-		
-		lwthemeImage = new window.Image();
-		lwthemeImage.onload = function() { findPersonaWidth(); };
-		lwthemeImage.src = prefAid.lwthemebgImage.substr(5, prefAid.lwthemebgImage.length - 8);
-		return;
-	}
-	
-	stylePersonaSlimChrome();
-};
-
-this.findPersonaWidth = function() {
-	if(prefAid.lwthemebgWidth == 0 && lwthemeImage.naturalWidth != 0) {
-		prefAid.lwthemebgWidth = lwthemeImage.naturalWidth;
-	}
-	
-	if(prefAid.lwthemebgWidth != 0) {
-		stylePersonaSlimChrome();
-	}
-};
-
-this.stylePersonaSlimChrome = function() {
-	// Unload current stylesheet if it's been loaded
-	styleAid.unload('personaSlimChrome_'+_UUID);
-	
-	if(prefAid.lwthemebgImage != '') {
-		var windowStyle = getComputedStyle(document.documentElement);
-		var containerBox = slimChromeContainer.getBoundingClientRect();
-		var containerStyle = getComputedStyle(slimChromeContainer);
-		
-		// Another personas in OSX tweak
-		var offsetWindowPadding = windowStyle.getPropertyValue('background-position');
-		var offsetPersonaY = -containerBox.top;
-		offsetPersonaY += parseInt(containerStyle.getPropertyValue('margin-top'));
-		if(offsetWindowPadding.indexOf(' ') > -1 && offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1) > -1) {
-			var offset = parseInt(offsetWindowPadding.substr(offsetWindowPadding.indexOf(' ') +1, offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1)));
-			offsetPersonaY += offset;
-		}
-		
-		if(containerStyle.getPropertyValue('direction') == 'ltr') {
-			var borderStart = parseInt(containerStyle.getPropertyValue('border-left-width'));
-		} else {
-			var borderStart = parseInt(containerStyle.getPropertyValue('border-right-width'));
-		}
-		
-		if(LTR) {
-			var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
-		} else {
-			var offsetPersonaX = -lastSlimChromeStyle.right +prefAid.lwthemebgWidth -borderStart;
-		}
-		
-		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
-		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
-		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
-		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
-		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
-		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
-		sscode += '	  background-position: '+((RTL) ? 'right' : 'left')+' '+offsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
-		sscode += '	  background-repeat: repeat !important;\n';
-		sscode += '	  background-size: auto auto !important;\n';
-		sscode += '	}\n';
-		sscode += '}';
-		
-		styleAid.load('personaSlimChrome_'+_UUID, sscode, true);
-	}
 };
 
 this.slimChromeTransitioned = function(e) {
