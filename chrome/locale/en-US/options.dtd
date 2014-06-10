@@ -34,6 +34,8 @@
 <!ENTITY opt.animation.none.tooltip "The toolbars pop into view without any special effects.">
 <!ENTITY opt.animation.fadein.label "Fade in">
 <!ENTITY opt.animation.fadein.tooltip "Simple animation that fades the toolbars into view.">
+<!ENTITY opt.animation.slidedown.label "Slide down">
+<!ENTITY opt.animation.slidedown.tooltip "A simple sliding effect, where the toolbars appear from the top chrome.">
 <!ENTITY opt.animation.rollout.label "Roll out">
 <!ENTITY opt.animation.rollout.tooltip "The toolbars roll out into view at the top.">
 

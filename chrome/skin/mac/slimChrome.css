@@ -197,7 +197,7 @@
 	
 	/* animations */
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="rollout"]:not([hover]):not([mini]) {
+	#theFoxOnlyBetter-slimChrome-container:-moz-any([animation="rollout"],[animation="slidedown"]):not([hover]):not([mini]) {
 		margin-top: -6px;
 	}
 

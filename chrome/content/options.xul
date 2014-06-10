@@ -64,27 +64,26 @@
 			</hbox>
 		</groupbox>
 		
-		<groupbox align="center">
-			<caption label="&cat.appearance.label;"/>
-			<radiogroup preference="pref-slimStyle">
-				<hbox>
+		<hbox>
+			<groupbox align="center" flex="1">
+				<caption label="&cat.appearance.label;"/>
+				<radiogroup preference="pref-slimStyle">
 					<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
-				</hbox>
-			</radiogroup>
-		</groupbox>
-		
-		<groupbox align="center">
-			<caption label="&cat.animation.label;"/>
-			<radiogroup preference="pref-slimAnimation">
-				<hbox>
+				</radiogroup>
+			</groupbox>
+			
+			<groupbox align="center" flex="1">
+				<caption label="&cat.animation.label;"/>
+				<radiogroup preference="pref-slimAnimation">
 					<radio dependson="pref-slimChrome" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.fadein.label;" tooltiptext="&opt.animation.fadein.tooltip;" value="fadein"/>
+					<radio dependson="pref-slimChrome" label="&opt.animation.slidedown.label;" tooltiptext="&opt.animation.slidedown.tooltip;" value="slidedown"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.rollout.label;" tooltiptext="&opt.animation.rollout.tooltip;" value="rollout"/>
-				</hbox>
-			</radiogroup>
-		</groupbox>
+				</radiogroup>
+			</groupbox>
+		</hbox>
 		
 		<groupbox align="center">
 			<caption label="&cat.slimChromeKeyset.label;"/>
