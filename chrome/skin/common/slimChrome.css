@@ -133,19 +133,19 @@
 	
 	/* animations */
 	
-	#theFoxOnlyBetter-slimChrome-container[mini][hover] {
+	#theFoxOnlyBetter-slimChrome-container[animation="rollout"][mini][hover] {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 
-	#theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
+	#theFoxOnlyBetter-slimChrome-container[animation="rollout"]:not([mini])[hover] {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 
-	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
+	#theFoxOnlyBetter-slimChrome-container[animation="rollout"][mini]:not([hover]) {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
+	#theFoxOnlyBetter-slimChrome-container[animation="rollout"]:not([mini]):not([hover]) {
 		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-in 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
 	}
 	

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.11';
+moduleAid.VERSION = '1.4.12';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -479,7 +479,7 @@ this.slimChromeFinishedWidth = function() {
 this.ensureSlimChromeFinishedWidth = function() {
 	if(trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
 	
-	if(lastSlimChromeStyle.width <= MIN_WIDTH) {
+	if(prefAid.slimAnimation == 'none' || lastSlimChromeStyle.width <= MIN_WIDTH) {
 		slimChromeFinishedWidth();
 	} else {
 		// for the extremelly rare cases where neither the above condition is true or when the animation doesn't need to take place (e.g. extremelly well placed clicks)
@@ -750,6 +750,14 @@ this.slimChromeIncludeNavBar = function(unload) {
 	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
 };
 
+this.slimChromeAnimation = function(show) {
+	setAttribute(slimChromeContainer, 'animation', prefAid.slimAnimation);
+	
+	if(show) {
+		initialShowChrome(1000);
+	}
+};
+
 this.loadSlimChrome = function() {
 	// make sure the currently focused element stays focused after this.
 	// we get only a node with an id so that for example if the location bar is focused (most common case), we don't get its anonymous nodes that get destroyed in this process.
@@ -846,6 +854,10 @@ this.loadSlimChrome = function() {
 	slimChromeChildListener.observer = new window.MutationObserver(slimChromeChildListener.handler);
 	slimChromeChildListener.observer.observe(gNavToolbox, { childList: true });
 	
+	// set the animation style
+	prefAid.listen('slimAnimation', slimChromeAnimation);
+	slimChromeAnimation();
+	
 	// no point in showing on customization changes if it's still finishing initializing, there's a lot of these events here
 	// 5 second should be enough
 	timerAid.init('waitCUI', function() {
@@ -904,6 +916,7 @@ this.unloadSlimChrome = function() {
 	slimChromeChildListener.observer.disconnect();
 	
 	prefAid.unlisten('useMouse', slimChromeUseMouse);
+	prefAid.unlisten('slimAnimation', slimChromeAnimation);
 	
 	initialLoading = true;
 	

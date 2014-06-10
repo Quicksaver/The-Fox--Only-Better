@@ -1,4 +1,4 @@
-var defaultsVersion = '1.1.13';
+var defaultsVersion = '1.1.14';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
@@ -9,6 +9,7 @@ var prefList = {
 	delayIn: 75,
 	delayOut: 250,
 	slimStyle: 'australis',
+	slimAnimation: 'rollout',
 	
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,

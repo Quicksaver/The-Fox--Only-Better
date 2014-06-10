@@ -27,6 +27,10 @@
 <!ENTITY opt.style.compact.tooltip "A minimized style that shows the maximum amount of toolbar buttons and textboxes in the least space possible, as to not overpower the webpage area with chrome elements.">
 <!ENTITY opt.style.australis.label "Australis">
 <!ENTITY opt.style.australis.tooltip "Designed to have the look and feel of the native firefox theme.">
+<!ENTITY opt.animation.none.label "No animation">
+<!ENTITY opt.animation.none.tooltip "The toolbars simply pop into view without any special effects.">
+<!ENTITY opt.animation.rollout.label "Roll out">
+<!ENTITY opt.animation.rollout.tooltip "The toolbars roll out into view at the top.">
 
 <!ENTITY opt.keyset.control "Control">
 <!ENTITY opt.keyset.shift "Shift">

@@ -15,6 +15,7 @@
 			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
 			<preference id="pref-delayOut" name="extensions.thefoxonlybetter.delayOut" type="int"/>
 			<preference id="pref-slimStyle" name="extensions.thefoxonlybetter.slimStyle" type="string"/>
+			<preference id="pref-slimAnimation" name="extensions.thefoxonlybetter.slimAnimation" type="string"/>
 			<preference id="pref-slimChromeKeycode" name="extensions.thefoxonlybetter.slimChromeKeycode" type="string"/>
 			<preference id="pref-slimChromeAccel" name="extensions.thefoxonlybetter.slimChromeAccel" type="bool"/>
 			<preference id="pref-slimChromeShift" name="extensions.thefoxonlybetter.slimChromeShift" type="bool"/>
@@ -70,6 +71,16 @@
 					<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
+				</hbox>
+			</radiogroup>
+		</groupbox>
+		
+		<groupbox align="center">
+			<caption label="&cat.appearance.label;"/>
+			<radiogroup preference="pref-slimAnimation">
+				<hbox>
+					<radio dependson="pref-slimChrome" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>
+					<radio dependson="pref-slimChrome" label="&opt.animation.rollout.label;" tooltiptext="&opt.animation.rollout.tooltip;" value="rollout"/>
 				</hbox>
 			</radiogroup>
 		</groupbox>
