@@ -31,7 +31,9 @@
 
 <!ENTITY cat.animation.label "Animation">
 <!ENTITY opt.animation.none.label "No animation">
-<!ENTITY opt.animation.none.tooltip "The toolbars simply pop into view without any special effects.">
+<!ENTITY opt.animation.none.tooltip "The toolbars pop into view without any special effects.">
+<!ENTITY opt.animation.fadein.label "Fade in">
+<!ENTITY opt.animation.fadein.tooltip "Simple animation that fades the toolbars into view.">
 <!ENTITY opt.animation.rollout.label "Roll out">
 <!ENTITY opt.animation.rollout.tooltip "The toolbars roll out into view at the top.">
 

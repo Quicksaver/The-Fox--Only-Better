@@ -80,6 +80,7 @@
 			<radiogroup preference="pref-slimAnimation">
 				<hbox>
 					<radio dependson="pref-slimChrome" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>
+					<radio dependson="pref-slimChrome" label="&opt.animation.fadein.label;" tooltiptext="&opt.animation.fadein.tooltip;" value="fadein"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.rollout.label;" tooltiptext="&opt.animation.rollout.tooltip;" value="rollout"/>
 				</hbox>
 			</radiogroup>

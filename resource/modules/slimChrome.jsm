@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.14';
+moduleAid.VERSION = '1.4.15';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -89,16 +89,16 @@ this.moveSlimChrome = function() {
 	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
-	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
-	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(ltr) {\n';
 	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(rtl) {\n';
 	sscode += '		right: ' + moveSlimChromeStyle.right + 'px;\n';
 	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([hover]) {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
+	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([hover]):-moz-any(:not([animation="rollout"])[onlyURLBar],[animation="rollout"]) {\n';
 	sscode += '		width: ' + Math.min(moveSlimChromeStyle.width, MIN_WIDTH) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
@@ -321,6 +321,7 @@ this.setHover = function(hover, now, force) {
 		
 		if(slimChromeContainer.hovers == 0) {
 			timerAid.init('setHover', function() {
+				slimChromeOut();
 				removeAttribute(slimChromeContainer, 'fullWidth');
 				removeAttribute(slimChromeContainer, 'hover');
 				ensureSlimChromeFinishedOpacity();
@@ -332,6 +333,7 @@ this.setHover = function(hover, now, force) {
 };
 
 this.hoverTrue = function() {
+	slimChromeIn();
 	setAttribute(slimChromeContainer, 'hover', 'true');
 	ensureSlimChromeFinishedWidth();
 	
@@ -383,11 +385,13 @@ this.setMini = function(mini) {
 	if(mini) {
 		timerAid.cancel('onlyURLBar');
 		timerAid.cancel('setMini');
+		slimChromeIn();
 		setAttribute(slimChromeContainer, 'mini', 'true');
 		setAttribute(slimChromeContainer, 'onlyURLBar', 'true');
 	} else {
 		// aSync so the toolbox focus handler knows what it's doing
 		timerAid.init('setMini', function() {
+			slimChromeOut();
 			removeAttribute(slimChromeContainer, 'mini');
 			
 			if(!trueAttribute(slimChromeContainer, 'hover')) {
@@ -422,19 +426,38 @@ this.focusPasswords = function() {
 	return false;
 };
 
+this.slimChromeIn = function() {
+	setAttribute(slimChromeContainer, 'in', 'true');
+	removeAttribute(slimChromeContainer, 'out');
+};
+
+this.slimChromeOut = function() {
+	setAttribute(slimChromeContainer, 'out', 'true');
+	removeAttribute(slimChromeContainer, 'in');
+};
+
 this.slimChromeTransitioned = function(e) {
 	if(e.target != slimChromeContainer) { return; }
 	
-	switch(e.propertyName) {
-		case 'width':
-			slimChromeFinishedWidth();
+	var prop = 'width';
+	switch(prefAid.slimAnimation) {
+		case 'fadein':
+			if(!trueAttribute(slimChromeContainer, 'mini')) {
+				prop = 'opacity';
+			}
 			break;
+			
+		case 'rollout':
+		default:
+			break;
+	}
+	
+	switch(e.propertyName) {
+		case prop:
+			slimChromeFinishedWidth();
 		
 		case 'opacity':
 			slimChromeFinishedOpacity();
-			break;
-		
-		default: break;
 	}
 };
 
@@ -723,17 +746,17 @@ this.slimChromeIncludeNavBar = function(unload) {
 		// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
 		gNavBar.overflowable.__onLazyResize = gNavBar.overflowable._onLazyResize;
 		gNavBar.overflowable._onLazyResize = function() {
-			if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+			if(!trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
 			this.__onLazyResize();
 		};
 		gNavBar.overflowable._onOverflow = gNavBar.overflowable.onOverflow;
 		gNavBar.overflowable.onOverflow = function(e) {
-			if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+			if(!trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
 			this._onOverflow(e);
 		};
 		gNavBar.overflowable.__moveItemsBackToTheirOrigin = gNavBar.overflowable._moveItemsBackToTheirOrigin;
 		gNavBar.overflowable._moveItemsBackToTheirOrigin = function(shouldMoveAllItems) {
-			if(!trueAttribute(slimChromeContainer, 'hover')) { return; }
+			if(!trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
 			this.__moveItemsBackToTheirOrigin(shouldMoveAllItems);
 		};
 		if(gNavBar.overflowable._lazyResizeHandler) {

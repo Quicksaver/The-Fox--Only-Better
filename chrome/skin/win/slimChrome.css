@@ -3,13 +3,6 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
 	
-	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
-		margin-top: -5px;
-	}
-	#theFoxOnlyBetter-slimChrome-container:-moz-any([hover],[mini]) {
-		margin-top: 0;
-	}
-	
 	#theFoxOnlyBetter-slimChrome-slimmer {
 		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
@@ -27,6 +20,7 @@
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container {
+		margin-top: 0;
 		border: 1px solid ThreeDShadow;
 		border-top: none;
 	}
@@ -226,6 +220,12 @@
 	
 	#navigator-toolbox[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
 		padding: 0 3px;
+	}
+	
+	/* animations */
+	
+	#theFoxOnlyBetter-slimChrome-container[animation="rollout"]:not([hover]):not([mini]) {
+		margin-top: -5px;
 	}
 	
 }
