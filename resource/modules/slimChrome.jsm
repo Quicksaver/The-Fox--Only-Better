@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.12';
+moduleAid.VERSION = '1.4.13';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -240,6 +240,7 @@ this.setHover = function(hover, now, force) {
 			timerAid.init('setHover', function() {
 				removeAttribute(slimChromeContainer, 'fullWidth');
 				removeAttribute(slimChromeContainer, 'hover');
+				ensureSlimChromeFinishedOpacity();
 				listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
 				contentAreaMovedReset();
 			}, (!now) ? prefAid.delayOut : 0);
@@ -430,7 +431,7 @@ this.slimChromeTransitioned = function(e) {
 			break;
 		
 		case 'opacity':
-			toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover'));
+			slimChromeFinishedOpacity();
 			break;
 		
 		default: break;
@@ -485,6 +486,16 @@ this.ensureSlimChromeFinishedWidth = function() {
 		// for the extremelly rare cases where neither the above condition is true or when the animation doesn't need to take place (e.g. extremelly well placed clicks)
 		timerAid.init('ensureSlimChromeFinishedWidth', slimChromeFinishedWidth, 400);
 	}
+};
+
+this.ensureSlimChromeFinishedOpacity = function() {
+	if(prefAid.slimAnimation == 'none') {
+		slimChromeFinishedOpacity();
+	}
+};
+
+this.slimChromeFinishedOpacity = function() {
+	toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover'));
 };
 
 this.slimChromeOnLocationChange = function(m) {
