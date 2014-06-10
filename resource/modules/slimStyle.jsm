@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathContainer', function() { return $(objName+'-slimChrome-clipPath-container-path'); });
@@ -142,10 +142,6 @@ this.slimChromeClipPaths = function() {
 this.slimChromeStyle = function(show) {
 	setAttribute(gNavToolbox, 'slimStyle', prefAid.slimStyle);
 	slimChromeClipPaths();
-	
-	if(show && typeof(initialShowChrome) != 'undefined') {
-		initialShowChrome(1500);
-	}
 };
 
 this.slimChromeStyleChildListener = {
