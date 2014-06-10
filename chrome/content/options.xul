@@ -76,7 +76,7 @@
 		</groupbox>
 		
 		<groupbox align="center">
-			<caption label="&cat.appearance.label;"/>
+			<caption label="&cat.animation.label;"/>
 			<radiogroup preference="pref-slimAnimation">
 				<hbox>
 					<radio dependson="pref-slimChrome" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>

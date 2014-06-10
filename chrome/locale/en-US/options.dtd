@@ -5,14 +5,13 @@
 <!ENTITY pane.about.label "About">
 
 <!ENTITY cat.general.label "General">
-<!ENTITY cat.appearance.label "Style">
-<!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars while you don't need them.">
 <!ENTITY opt.includeNavBar.label "Include the navigation bar in the hidden toolbars">
 <!ENTITY opt.includeNavBar.tooltip "Hides the navigation bar along with the other toolbars. If this is disabled, the navigation bar will always be visible at the top like before.">
 <!ENTITY opt.miniOnAllInput.label "Show the mini bar when focusing any type of input box">
 <!ENTITY opt.miniOnAllInput.tooltip "Enable this if you'd like the mini location bar to be shown when typing in any type of input field, and not just password fields.">
+
 <!ENTITY opt.useMouse.label "Show the chrome when the mouse moves to the top">
 <!ENTITY opt.useMouse.tooltip "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves. If this is disabled, you can only access the toolbars by hitting F6 to focus the location bar, or when a panel opens anchored to one of the hidden toolbars.">
 <!ENTITY opt.delayIn.label "Sensitivity on entering">
@@ -21,17 +20,22 @@
 <!ENTITY opt.delayOut.tooltip "Determines the delay after which the chrome will hide, when the mouse leaves it.">
 <!ENTITY opt.delayLow.label "Low">
 <!ENTITY opt.delayHigh.label "High">
+
+<!ENTITY cat.appearance.label "Style">
 <!ENTITY opt.style.round.label "Spacious">
 <!ENTITY opt.style.round.tooltip "Shows the toolbars in a spacious container with a large round shape. Fits nicely with the default firefox theme overall.">
 <!ENTITY opt.style.compact.label "Compact">
 <!ENTITY opt.style.compact.tooltip "A minimized style that shows the maximum amount of toolbar buttons and textboxes in the least space possible, as to not overpower the webpage area with chrome elements.">
 <!ENTITY opt.style.australis.label "Australis">
 <!ENTITY opt.style.australis.tooltip "Designed to have the look and feel of the native firefox theme.">
+
+<!ENTITY cat.animation.label "Animation">
 <!ENTITY opt.animation.none.label "No animation">
 <!ENTITY opt.animation.none.tooltip "The toolbars simply pop into view without any special effects.">
 <!ENTITY opt.animation.rollout.label "Roll out">
 <!ENTITY opt.animation.rollout.tooltip "The toolbars roll out into view at the top.">
 
+<!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 <!ENTITY opt.keyset.control "Control">
 <!ENTITY opt.keyset.shift "Shift">
 <!ENTITY opt.keyset.alt "Alt">
