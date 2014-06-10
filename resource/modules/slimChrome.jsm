@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.16';
+moduleAid.VERSION = '1.4.17';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -405,7 +405,7 @@ this.setMini = function(mini) {
 			// let chrome hide completely before showing the rest of the UI
 			timerAid.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
-			}, 300);
+			}, prefAid.slimAnimation == 'hinge' ? 500 : 300);
 		}, 50);
 	}
 };
@@ -439,25 +439,35 @@ this.slimChromeOut = function() {
 this.slimChromeTransitioned = function(e) {
 	if(e.target != slimChromeContainer) { return; }
 	
-	var prop = 'width';
+	var prop1 = 'width';
 	switch(prefAid.slimAnimation) {
 		case 'fadein':
 		case 'slidedown':
 			if(!trueAttribute(slimChromeContainer, 'mini')) {
-				prop = 'opacity';
+				prop1 = 'opacity';
 			}
 			break;
 			
-		case 'rollout':
+		case 'hinge':
+			if(!trueAttribute(slimChromeContainer, 'mini')) {
+				prop1 = 'transform';
+			}
+			break;
+			
 		default:
 			break;
 	}
 	
+	var prop2 = 'opacity';
+	if(prefAid.slimAnimation == 'hinge') {
+		prop2 = 'transform';
+	}
+	
 	switch(e.propertyName) {
-		case prop:
+		case prop1:
 			slimChromeFinishedWidth();
 		
-		case 'opacity':
+		case prop2:
 			slimChromeFinishedOpacity();
 	}
 };

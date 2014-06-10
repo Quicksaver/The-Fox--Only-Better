@@ -81,6 +81,7 @@
 					<radio dependson="pref-slimChrome" label="&opt.animation.fadein.label;" tooltiptext="&opt.animation.fadein.tooltip;" value="fadein"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.slidedown.label;" tooltiptext="&opt.animation.slidedown.tooltip;" value="slidedown"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.rollout.label;" tooltiptext="&opt.animation.rollout.tooltip;" value="rollout"/>
+					<radio dependson="pref-slimChrome" label="&opt.animation.hinge.label;" tooltiptext="&opt.animation.hinge.tooltip;" value="hinge"/>
 				</radiogroup>
 			</groupbox>
 		</hbox>

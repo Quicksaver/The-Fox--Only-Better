@@ -38,6 +38,8 @@
 <!ENTITY opt.animation.slidedown.tooltip "A simple sliding effect, where the toolbars appear from the top chrome.">
 <!ENTITY opt.animation.rollout.label "Roll out">
 <!ENTITY opt.animation.rollout.tooltip "The toolbars roll out into view at the top.">
+<!ENTITY opt.animation.hinge.label "GiT's Hinge Effect">
+<!ENTITY opt.animation.hinge.tooltip "Special hinge effect, created by Geek in Training. If you like it you should thank him!">
 
 <!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 <!ENTITY opt.keyset.control "Control">
