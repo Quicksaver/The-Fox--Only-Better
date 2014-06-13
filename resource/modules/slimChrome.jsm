@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.21';
+moduleAid.VERSION = '1.4.22';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -567,6 +567,7 @@ this.slimChromeOnTabSelect = {
 	
 	handler: function() {
 		if(prefAid.includeNavBar // if the nav bar isn't in our container, all this is useless
+		&& prefAid.miniOnTabSelect // and of course only if the pref is enabled
 		&& !focusPasswords() // focusPasswords will always show mini if a password field is focused
 		&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown

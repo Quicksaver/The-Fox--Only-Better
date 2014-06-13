@@ -10,6 +10,7 @@
 		<preferences>
 			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
 			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
+			<preference id="pref-miniOnTabSelect" name="extensions.thefoxonlybetter.miniOnTabSelect" type="bool"/>
 			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
 			<preference id="pref-includeNavBar" name="extensions.thefoxonlybetter.includeNavBar" type="bool"/>
 			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
@@ -28,6 +29,7 @@
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.includeNavBar.label;" tooltiptext="&opt.includeNavBar.tooltip;" dependson="pref-slimChrome" preference="pref-includeNavBar"/>
 			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-miniOnAllInput"/>
+			<checkbox label="&opt.miniOnTabSelect.label;" tooltiptext="&opt.miniOnTabSelect.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-miniOnTabSelect"/>
 		</groupbox>
 		
 		<groupbox>
