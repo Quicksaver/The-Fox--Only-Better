@@ -30,6 +30,12 @@
 		height: 9px;
 	}
 	
+	/* when the container has no visible toolbars, don't show its borders */
+	#theFoxOnlyBetter-slimChrome-container[numToolbars="0"] {
+		opacity: 0;
+		pointer-events: none !important;
+	}
+	
 	/* mini chrome, the hover style always overrides all of this */
 	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar),
