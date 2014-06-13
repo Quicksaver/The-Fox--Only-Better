@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.19';
+moduleAid.VERSION = '1.4.20';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -98,7 +98,8 @@ this.moveSlimChrome = function() {
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
 	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
 	sscode += '	}\n';
-	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([hover]):-moz-any(:not([animation="rollout"])[onlyURLBar],[animation="rollout"]) {\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimAnimation="rollout"]) #'+objName+'-slimChrome-container:not([hover])[onlyURLBar],\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimAnimation="rollout"] #'+objName+'-slimChrome-container:not([hover]) {\n';
 	sscode += '		width: ' + Math.min(moveSlimChromeStyle.width, MIN_WIDTH) + 'px;\n';
 	sscode += '	}\n';
 	sscode += '}';
@@ -798,7 +799,7 @@ this.slimChromeIncludeNavBar = function(unload) {
 };
 
 this.slimChromeAnimation = function(show) {
-	setAttribute(slimChromeContainer, 'animation', prefAid.slimAnimation);
+	setAttribute(gNavToolbox, 'slimAnimation', prefAid.slimAnimation);
 };
 
 this.loadSlimChrome = function() {
@@ -963,6 +964,7 @@ this.unloadSlimChrome = function() {
 	
 	initialLoading = true;
 	
+	removeAttribute(gNavToolbox, 'slimAnimation');
 	removeAttribute(gNavToolbox, 'dropIndicatorFix');
 	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	

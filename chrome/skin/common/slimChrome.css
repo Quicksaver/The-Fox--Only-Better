@@ -144,56 +144,53 @@
 	
 	/* animations */
 	
-	#theFoxOnlyBetter-slimChrome-container:not([animation="none"])[mini][hover],
-	#theFoxOnlyBetter-slimChrome-container[animation="fadein"][out][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="slidedown"][out][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="hinge"][out][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="rollout"][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="rollout"]:not([mini])[hover] {
+	#navigator-toolbox:not([slimAnimation="none"]) #theFoxOnlyBetter-slimChrome-container[mini][hover],
+	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
 		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="rollout"]:not([mini]):not([hover]) {
+	#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-in 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="fadein"][in][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="fadein"]:not([mini])[hover] {
+	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container[in][mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
 		transition: opacity 0.15s ease-out 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="fadein"]:not([mini]):not([hover]) {
+	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 		transition: opacity 0.20s ease-out 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="slidedown"][in][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="slidedown"]:not([mini])[hover] {
+	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container[in][mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
 		transition: opacity 0.15s ease-in 0s, margin-top 0.15s linear 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="slidedown"]:not([mini]):not([hover]) {
+	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 		transition: opacity 0.15s ease-out 0s, margin-top 0.2s ease-out 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="hinge"]:not([mini]):not([hover]) {
+	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 		transition: opacity 0s linear .5s, transform .5s linear 0s;
+		transform: rotateX(-90deg);
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="hinge"][mini]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[animation="hinge"]:not([mini])[hover] {
+	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
+	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
 		transition: transform .25s ease-in 0s;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container[animation="hinge"] {
+	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container {
 		transform-origin: top;
 	}
 	
-	#navigator-toolbox {
+	#navigator-toolbox[slimAnimation="hinge"]  {
 		perspective: 1500px;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container[animation="hinge"]:not([mini]):not([hover]) {
-		transform: rotateX(-90deg);
 	}
 	
 	/* some widget animations fixes */
