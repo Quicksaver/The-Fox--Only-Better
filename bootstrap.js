@@ -25,7 +25,8 @@
 //	aSubject - (xul object) to execute aCallback on
 //	aCallback - (function(aSubject)) to be called on aSubject
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
-// Note: Firefox 29 is the minimum version supported as the modules assume we're in a version with Australis already.
+// Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
+// along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
 
 let bootstrapVersion = '1.4.2';
 let UNLOADED = false;

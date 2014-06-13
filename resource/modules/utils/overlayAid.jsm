@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.11.1';
+moduleAid.VERSION = '2.11.2';
 moduleAid.UTILS = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1186,9 +1186,6 @@ this.overlayAid = {
 					legacy: true,
 					defaultCollapsed: null
 				};
-				if(Services.vc.compare(Services.appinfo.platformVersion, "30.0a1") < 0) {
-					delete barArgs.defaultCollapsed;
-				}
 				aWindow.CustomizableUI.registerArea(node.id, barArgs);
 			} catch(ex) { Cu.reportError(ex); }
 		}
