@@ -195,6 +195,16 @@
 		padding: 0 4px;
 	}
 	
+	/* australis style */
+	
+	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+		border-color: transparent;
+	}
+	
+	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars {
+		border-bottom: 1px solid #ababab;
+	}
+	
 	/* animations */
 	
 	#theFoxOnlyBetter-slimChrome-container:-moz-any([animation="rollout"],[animation="slidedown"]):not([hover]):not([mini]) {

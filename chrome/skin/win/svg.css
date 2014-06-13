@@ -3,7 +3,16 @@
 #theFoxOnlyBetter-slimChrome-svg-before-path,
 #theFoxOnlyBetter-slimChrome-svg-after-path {
 	stroke: ThreeDShadow;
+}
+
+#theFoxOnlyBetter-slimChrome-container[numToolbars="1"] #theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-container[numToolbars="1"] #theFoxOnlyBetter-slimChrome-svg-after-path {
 	stroke-width: 0.03;
+}
+
+#theFoxOnlyBetter-slimChrome-container:not([numToolbars="1"]) #theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-container:not([numToolbars="1"]) #theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke-width: 0.02;
 }
 
 @media (-moz-windows-default-theme) {

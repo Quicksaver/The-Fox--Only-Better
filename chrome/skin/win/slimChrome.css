@@ -222,6 +222,26 @@
 		padding: 0 3px;
 	}
 	
+	/* australis style */
+	
+	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+		border-color: transparent;
+	}
+	
+	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
+		border-bottom: 1px solid ThreeDShadow;
+	}
+	
+	@media (-moz-windows-default-theme) {
+		@media	(-moz-os-version: windows-vista),
+			(-moz-os-version: windows-win7) {
+		
+			#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
+				border-bottom-color: #aaaccf;
+			}
+		}
+	}
+	
 	/* animations */
 	
 	#theFoxOnlyBetter-slimChrome-container:-moz-any([animation="rollout"],[animation="slidedown"]):not([hover]):not([mini]) {

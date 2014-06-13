@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.18';
+moduleAid.VERSION = '1.4.19';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -513,6 +513,8 @@ this.slimChromeFinishedWidth = function() {
 // in case the width doesn't change, we need to make sure transitioning from mini mode to full mode doesn't hide the chrome when mousing out
 this.ensureSlimChromeFinishedWidth = function() {
 	if(trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
+	
+	dispatch(slimChromeContainer, { type: 'EnsureSlimChrome', cancelable: false });
 	
 	if(prefAid.slimAnimation == 'none' || lastSlimChromeStyle.width <= MIN_WIDTH) {
 		slimChromeFinishedWidth();

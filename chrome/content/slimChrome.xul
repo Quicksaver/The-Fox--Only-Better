@@ -29,6 +29,7 @@
 					<svg:path id="objName-slimChrome-svg-after-path" fill="transparent" d=""/>
 				</svg:svg>
 			</box>
+			<box id="objName-slimChrome-toolbars-bottom"/>
 		</hbox>
 	</toolbox>
 	
@@ -39,6 +40,9 @@
 			</svg:clipPath>
 			<svg:clipPath id="objName-slimChrome-clipPath-container" clipPathUnits="objectBoundingBox">
 				<svg:path id="objName-slimChrome-clipPath-container-path" d=""/>
+			</svg:clipPath>
+			<svg:clipPath id="objName-slimChrome-clipPath-toolbars" clipPathUnits="userSpaceOnUse">
+				<svg:path id="objName-slimChrome-clipPath-toolbars-path" d=""/>
 			</svg:clipPath>
 		</svg:svg>
 	</vbox>
