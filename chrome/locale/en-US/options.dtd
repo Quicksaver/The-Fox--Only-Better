@@ -22,12 +22,14 @@
 <!ENTITY opt.delayHigh.label "High">
 
 <!ENTITY cat.appearance.label "Style">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Designed to have the look and feel of the native firefox theme.">
 <!ENTITY opt.style.round.label "Spacious">
 <!ENTITY opt.style.round.tooltip "Shows the toolbars in a spacious container with a large round shape. Fits nicely with the default firefox theme overall.">
 <!ENTITY opt.style.compact.label "Compact">
 <!ENTITY opt.style.compact.tooltip "A minimized style that shows the maximum amount of toolbar buttons and textboxes in the least space possible, as to not overpower the webpage area with chrome elements.">
-<!ENTITY opt.style.australis.label "Australis">
-<!ENTITY opt.style.australis.tooltip "Designed to have the look and feel of the native firefox theme.">
+<!ENTITY opt.style.full.label "Full width">
+<!ENTITY opt.style.full.tooltip "The toolbars extend through all the available space, just like they would if they were still attached to the top chrome, without any borders or margins on the sides.">
 
 <!ENTITY cat.animation.label "Animation">
 <!ENTITY opt.animation.none.label "No animation">

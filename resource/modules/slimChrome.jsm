@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.20';
+moduleAid.VERSION = '1.4.21';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -77,6 +77,10 @@ this.moveSlimChrome = function() {
 		}
 	}
 	
+	moveSlimChromeStyle.fullWidth = Math.max(moveSlimChromeStyle.width +MIN_RIGHT +MIN_LEFT, 100);
+	moveSlimChromeStyle.fullLeft = moveSlimChromeStyle.left -MIN_LEFT;
+	moveSlimChromeStyle.fullRight =  moveSlimChromeStyle.right -MIN_RIGHT;
+	
 	moveSlimChromeStyle.width = Math.max(moveSlimChromeStyle.width, 100);
 	
 	if(!shouldReMoveSlimChrome(moveSlimChromeStyle)) { return; }
@@ -97,6 +101,15 @@ this.moveSlimChrome = function() {
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
 	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(ltr) {\n';
+	sscode += '		left: ' + moveSlimChromeStyle.fullLeft + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(rtl) {\n';
+	sscode += '		right: ' + moveSlimChromeStyle.fullRight + 'px;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {\n';
+	sscode += '		width: ' + moveSlimChromeStyle.fullWidth + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimAnimation="rollout"]) #'+objName+'-slimChrome-container:not([hover])[onlyURLBar],\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimAnimation="rollout"] #'+objName+'-slimChrome-container:not([hover]) {\n';
@@ -173,8 +186,10 @@ this.stylePersonaSlimChrome = function() {
 		
 		if(LTR) {
 			var offsetPersonaX = -lastSlimChromeStyle.left -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
+			var fullOffsetPersonaX = -lastSlimChromeStyle.fullLeft -(prefAid.lwthemebgWidth - document.documentElement.clientWidth) -borderStart;
 		} else {
 			var offsetPersonaX = -lastSlimChromeStyle.right +prefAid.lwthemebgWidth -borderStart;
+			var fullOffsetPersonaX = -lastSlimChromeStyle.fullRight +prefAid.lwthemebgWidth -borderStart;
 		}
 		
 		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
@@ -187,6 +202,9 @@ this.stylePersonaSlimChrome = function() {
 		sscode += '	  background-position: '+((RTL) ? 'right' : 'left')+' '+offsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
 		sscode += '	  background-repeat: repeat !important;\n';
 		sscode += '	  background-size: auto auto !important;\n';
+		sscode += '	}\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {\n';
+		sscode += '	  background-position: '+((RTL) ? 'right' : 'left')+' '+fullOffsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
 		sscode += '	}\n';
 		sscode += '}';
 		

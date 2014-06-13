@@ -68,9 +68,10 @@
 			<groupbox align="center" flex="1">
 				<caption label="&cat.appearance.label;"/>
 				<radiogroup preference="pref-slimStyle" oncommand="objName.initialShowInOpener(1500);">
+					<radio dependson="pref-slimChrome" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
-					<radio dependson="pref-slimChrome" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
+					<radio dependson="pref-slimChrome" label="&opt.style.full.label;" tooltiptext="&opt.style.full.tooltip;" value="full"/>
 				</radiogroup>
 			</groupbox>
 			

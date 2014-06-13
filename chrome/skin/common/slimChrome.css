@@ -122,6 +122,13 @@
 		border-bottom: none;
 	}
 	
+	/* full width style */
+	
+	#navigator-toolbox[slimStyle="full"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+		border-left: none;
+		border-right: none;
+	}
+	
 	/* common elements to all styles */
 	
 	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container,
