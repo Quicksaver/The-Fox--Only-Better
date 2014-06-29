@@ -24,10 +24,9 @@
 	}
 	
 	#theFoxOnlyBetter-slimChrome-slimmer {
+		-moz-appearance: none;
+		min-height: 0;
 		height: 5px;
-	}
-	window[chromehidden~="menubar"] #theFoxOnlyBetter-slimChrome-slimmer {
-		height: 9px;
 	}
 	
 	/* when the container has no visible toolbars, don't show its borders */

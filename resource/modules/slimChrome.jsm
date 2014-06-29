@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.22';
+moduleAid.VERSION = '1.4.23';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -20,6 +20,9 @@ this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 this.MIN_LEFT = 22;
 this.MIN_RIGHT = 22;
 this.MIN_WIDTH = 550;
+
+// how much (px) should the active area of the slimmer "extend" on windows with chromehidden~=menubar
+this.EXTEND_SLIM_CHROMEHIDDEN = 15;
 
 this.moveSlimChromeStyle = {};
 this.lastSlimChromeStyle = null;
@@ -231,11 +234,19 @@ this.onMouseOutBrowser = function(e) {
 	// also, don't capture this if we're in HTML5 fullscreen mode and in Mac OS X, as it's just weird
 	if(DARWIN && mozFullScreen) { return; }
 	
-	// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
-	if(e.screenY < gNavToolbox.boxObject.screenY
-	|| e.screenY > (gNavToolbox.boxObject.screenY +gNavToolbox.boxObject.height)
-	|| e.screenX < gNavToolbox.boxObject.screenX
-	|| e.screenY > (gNavToolbox.boxObject.screenX +gNavToolbox.boxObject.width)) { return; }
+	if(document.documentElement.getAttribute('chromehidden').indexOf('menubar') == -1) {
+		// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
+		if(e.screenY < gNavToolbox.boxObject.screenY
+		|| e.screenY > gNavToolbox.boxObject.screenY +gNavToolbox.boxObject.height
+		|| e.screenX < gNavToolbox.boxObject.screenX
+		|| e.screenX > gNavToolbox.boxObject.screenX +gNavToolbox.boxObject.width) { return; }
+	} else {
+		// in popup windows, we "extend the hover area" by pretending the slimmer is taller than it actually is
+		if(e.screenY < slimChromeSlimmer.boxObject.screenY -EXTEND_SLIM_CHROMEHIDDEN
+		|| e.screenY > slimChromeSlimmer.boxObject.screenY
+		|| e.screenX < slimChromeSlimmer.boxObject.screenX
+		|| e.screenX > slimChromeSlimmer.boxObject.screenX +slimChromeSlimmer.boxObject.width) { return; }
+	}
 	
 	onMouseOver();
 	
@@ -272,6 +283,7 @@ this.isMenuBarPopup = function(node) {
 
 this.onMouseOverToolbox = function(e) {
 	if(isMenuBarPopup(e.target)) { return; }
+	if(!dispatch(slimChromeContainer, { type: 'WillShowSlimChrome', detail: e })) { return; }
 	
 	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
 		slimChromeContainer.hoversQueued++;
@@ -354,6 +366,7 @@ this.setHover = function(hover, now, force) {
 this.hoverTrue = function() {
 	slimChromeIn();
 	setAttribute(slimChromeContainer, 'hover', 'true');
+	setAttribute(gNavToolbox, 'slimChromeVisible', 'true');
 	ensureSlimChromeFinishedWidth();
 	
 	// safeguard against the chrome getting stuck sometimes when I can't control it
@@ -407,6 +420,7 @@ this.setMini = function(mini) {
 		slimChromeIn();
 		setAttribute(slimChromeContainer, 'mini', 'true');
 		setAttribute(slimChromeContainer, 'onlyURLBar', 'true');
+		setAttribute(gNavToolbox, 'slimChromeVisible', 'true');
 	} else {
 		// aSync so the toolbox focus handler knows what it's doing
 		timerAid.init('setMini', function() {
@@ -424,6 +438,7 @@ this.setMini = function(mini) {
 			// let chrome hide completely before showing the rest of the UI
 			timerAid.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
+				toggleAttribute(gNavToolbox, 'slimChromeVisible', trueAttribute(slimChromeContainer, 'hover'));
 			}, prefAid.slimAnimation == 'hinge' ? 500 : 300);
 		}, 50);
 	}
@@ -550,7 +565,9 @@ this.ensureSlimChromeFinishedOpacity = function() {
 };
 
 this.slimChromeFinishedOpacity = function() {
-	toggleAttribute(slimChromeContainer, 'noPointerEvents', !trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover'));
+	var visible = trueAttribute(slimChromeContainer, 'hover') || trueAttribute(slimChromeContainer, 'mini');
+	toggleAttribute(slimChromeContainer, 'noPointerEvents', !visible);
+	toggleAttribute(gNavToolbox, 'slimChromeVisible', visible);
 };
 
 this.slimChromeOnLocationChange = function(m) {
@@ -1017,15 +1034,27 @@ this.unloadSlimChrome = function() {
 	}
 };
 
+this.toggleSkyLights = function() {
+	moduleAid.loadIf('skyLights', prefAid.skyLights && prefAid.includeNavBar);
+};
+
 moduleAid.LOADMODULE = function() {
 	messenger.messageWindow(window, 'load', 'slimChrome');
 	
 	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 	
+	prefAid.listen('skyLights', toggleSkyLights);
+	prefAid.listen('includeNavBar', toggleSkyLights);
+	
 	moduleAid.load('slimStyle');
+	toggleSkyLights();
 };
 
 moduleAid.UNLOADMODULE = function() {
+	prefAid.unlisten('skyLights', toggleSkyLights);
+	prefAid.unlisten('includeNavBar', toggleSkyLights);
+	
+	moduleAid.unload('skyLights');
 	moduleAid.unload('slimStyle');
 	
 	styleAid.unload('personaSlimChrome_'+_UUID);

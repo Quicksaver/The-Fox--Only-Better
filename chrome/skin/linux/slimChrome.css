@@ -12,21 +12,18 @@
 	#theFoxOnlyBetter-slimChrome-slimmer {
 		background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.25));
 		box-shadow: 0 1px 0 rgba(255,255,255,.3) inset;
+	}
+	
+	#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
 		position: relative;
 		z-index: 1;
-	}
-	#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
-		background-color: -moz-dialog;
-	}
-	window:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-slimmer {
 		margin-top: -1px;
 	}
-	window[theFoxOnlyBetter-FF32] #theFoxOnlyBetter-slimChrome-slimmer {
+	
+	/* extra selectors are for specificity */
+	window[theFoxOnlyBetter-FF32] #navigator-toolbox > #TabsToolbar:not([collapsed="true"]) + toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#toolbar-menubar):not(#TabsToolbar) {
 		border-top: 1px solid hsla(0,0%,0%,.3);
 		background-clip: padding-box;
-	}
-	window[theFoxOnlyBetter-FF32] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
-		margin-top: -1px;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {

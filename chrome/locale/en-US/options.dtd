@@ -13,6 +13,10 @@
 <!ENTITY opt.miniOnAllInput.tooltip "Enable this if you'd like the mini location bar to be shown when typing in any type of input field, and not just password fields.">
 <!ENTITY opt.miniOnTabSelect.label "Show the mini bar when changing to another location">
 <!ENTITY opt.miniOnTabSelect.tooltip "The mini bar will appear whenever the current tab changes to another location (different web host), or whenever you select a background tab that has changed location in the meantime.">
+<!ENTITY opt.skyLights.label "Enable Sky Lights">
+<!ENTITY opt.skyLights.tooltip "Sky Lights give you information about the webpage you are currently visiting, through an alternate and non-obtrusive visual aid in the top chrome. They help you always be sure of where you are and of what is safe to do in there!">
+<!ENTITY opt.skyLightsHide.label "Hide Sky Lights when chrome is visible">
+<!ENTITY opt.skyLightsHide.tooltip "The Sky Lights will hide when the toolbars or the mini bar is visible, since all their information should already be included somewhere in the toolbars themselves.">
 
 <!ENTITY opt.useMouse.label "Show the chrome when the mouse moves to the top">
 <!ENTITY opt.useMouse.tooltip "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves. If this is disabled, you can only access the toolbars by hitting F6 to focus the location bar, or when a panel opens anchored to one of the hidden toolbars.">

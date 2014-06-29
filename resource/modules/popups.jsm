@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.19';
+moduleAid.VERSION = '2.0.20';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -24,14 +24,11 @@ this.holdPopupAutoCompleteRichResult = function(e) {
 	e.stopPropagation();
 };
 
-this.holdIdentityPopup = function(e) {
-	e.detail = 'identity-box';
-	e.stopPropagation();
-};
-
 this.holdNotificationPopup = function(e) {
-	e.detail = 'notification-popup-box';
-	e.stopPropagation();
+	if(typeof(slimChromeContainer) != 'undefined' && isAncestor(e.target.anchorNode, slimChromeContainer)) {
+		e.detail = 'notification-popup-box';
+		e.stopPropagation();
+	}
 };
 
 this.setupHoldDownloadsPanel = function(e) {
@@ -231,7 +228,6 @@ moduleAid.LOADMODULE = function() {
 	listenerAid.add($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
 	listenerAid.add($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
 	listenerAid.add($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
-	listenerAid.add($('identity-popup'), 'AskingForNodeOwner', holdIdentityPopup);
 	listenerAid.add($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
 	
 	// the downloadsPanel is only created when first called
@@ -254,7 +250,6 @@ moduleAid.UNLOADMODULE = function() {
 	listenerAid.remove($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
 	listenerAid.remove($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
 	listenerAid.remove($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
-	listenerAid.remove($('identity-popup'), 'AskingForNodeOwner', holdIdentityPopup);
 	listenerAid.remove($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
 	listenerAid.remove($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
 	listenerAid.remove($('editBookmarkPanel'), 'AskingForNodeOwner', holdBookmarkPanel);

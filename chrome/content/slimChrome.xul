@@ -6,7 +6,7 @@
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<toolbox id="navigator-toolbox" slimChrome="true">
-		<box id="objName-slimChrome-slimmer" insertbefore="customToolbars"/>
+		<toolbar id="objName-slimChrome-slimmer" class="toolbar-primary" insertbefore="customToolbars" customizable="false"/>
 		<hbox id="objName-slimChrome-container" insertafter="objName-slimChrome-slimmer" noPointerEvents="true">
 			<box id="objName-slimChrome-toolbars-before">
 				<svg:svg id="objName-slimChrome-svg-before"

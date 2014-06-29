@@ -6,17 +6,16 @@
 	#theFoxOnlyBetter-slimChrome-slimmer {
 		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
-		margin-top: -1px;
-		position: relative;
-		z-index: 1;
-	}
-	window[theFoxOnlyBetter-FF32] #theFoxOnlyBetter-slimChrome-slimmer {
-		border-top: 1px solid hsla(209,67%,12%,0.35);
 		background-clip: padding-box;
 	}
+	window[theFoxOnlyBetter-FF32] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
+		border-top: 1px solid hsla(209,67%,12%,0.35);
+	}
 	
-	#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
-		background-color: -moz-dialog;
+	#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
+		position: relative;
+		z-index: 1;
+		margin-top: -1px;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container {
@@ -54,7 +53,6 @@
 				border-color: #aabccf;
 			}
 			
-			#theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme),
 			#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
 				background-color: hsl(210,75%,92%);
 			}
@@ -62,19 +60,11 @@
 	}
 	
 	@media (-moz-windows-compositor) {
-		#theFoxOnlyBetter-slimChrome-slimmer {
+		window:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-slimmer {
   			border-top: 1px solid hsla(209,67%,12%,0.35);
-  			background-clip: padding-box;
 		}
 		
 		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-container {
-			background-clip: padding-box;
-		}
-		
-		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-slimmer {
-  			border-top: 1px solid hsla(209,67%,12%,0.35);
-			border-left: 1px solid hsla(209,67%,12%,0.35);
-			border-right: 1px solid hsla(209,67%,12%,0.35);
 			background-clip: padding-box;
 		}
 		
@@ -85,12 +75,12 @@
 		@media	(-moz-os-version: windows-vista),
 			(-moz-os-version: windows-win7) {
 			
-			#main-window[sizemode=normal]:not([theFoxOnlyBetter]) #theFoxOnlyBetter-slimChrome-slimmer {
+			#main-window[sizemode=normal]:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-slimmer {
 				border-top-left-radius: 2.5px;
 				border-top-right-radius: 2.5px;
 			}
 			
-			#main-window[sizemode=normal]:not([theFoxOnlyBetter]) #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
+			#main-window[sizemode=normal]:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
 			}
@@ -98,12 +88,12 @@
 	}
 	
 	@media (-moz-windows-glass) {
-		#main-window[sizemode=normal][theFoxOnlyBetter] #theFoxOnlyBetter-slimChrome-slimmer {
+		#main-window[sizemode=normal][theFoxOnlyBetter-FF32] #theFoxOnlyBetter-slimChrome-slimmer {
 			border-top-left-radius: 2.5px;
 			border-top-right-radius: 2.5px;
 		}
 		
-		#main-window[sizemode=normal][theFoxOnlyBetter] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
+		#main-window[sizemode=normal][theFoxOnlyBetter-FF32] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 		}
