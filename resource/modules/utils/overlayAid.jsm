@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.11.2';
+moduleAid.VERSION = '2.11.3';
 moduleAid.UTILS = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -34,6 +34,7 @@ moduleAid.UTILS = true;
 //	menuRemove : "Remove from X" context menu entries
 //	menuMain : "Move to Toolbar" context menu entries, that will move widgets to the nav-bar
 // All of these attributes above can be complemented with the corresponding menuXXXAccesskey attribute.
+// If a toolbar element has a ignoreCUI=true attribute, it won't be registered in the CustomizableUI module.
 // 
 // overlayURI(aURI, aWith, beforeload, onload, onunload) - overlays aWith in all windows with aURI
 //	aURI - (string) uri to be overlayed
@@ -1179,10 +1180,10 @@ this.overlayAid = {
 	},
 	
 	registerAreas: function(aWindow, node) {
-		if(node.nodeName == 'toolbar' && node.id && !aWindow.CustomizableUI.getAreaType(node.id)) {
+		if(node.nodeName == 'toolbar' && node.id && !trueAttribute(node, 'ignoreCUI') && !aWindow.CustomizableUI.getAreaType(node.id)) {
 			try {
 				var barArgs = {
-					type: CustomizableUI.TYPE_TOOLBAR,
+					type: aWindow.CustomizableUI.TYPE_TOOLBAR,
 					legacy: true,
 					defaultCollapsed: null
 				};
