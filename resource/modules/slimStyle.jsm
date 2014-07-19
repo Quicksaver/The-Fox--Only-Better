@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathContainer', function() { return $(objName+'-slimChrome-clipPath-container-path'); });
@@ -46,7 +46,14 @@ this.slimChromeClipPaths = function() {
 		return;
 	}
 	
-	if(prefAid.slimStyle != 'australis' || typeof(lastSlimChromeStyle) == 'undefined' || !lastSlimChromeStyle || !trueAttribute(slimChromeContainer, 'hover')) { return; }
+	if(prefAid.slimStyle != 'australis' || typeof(lastSlimChromeStyle) == 'undefined' || !lastSlimChromeStyle) { return; }
+	
+	// we don't want to calculate the paths in this case, as they rely on the actual height of the toolbars, which would be incorrect here;
+	// the paths will be re-done when the chrome is next shown
+	if(trueAttribute(slimChromeContainer, 'onlyURLBar') && !trueAttribute(slimChromeContainer, 'hover')) {
+		removeAttribute(slimChromeContainer, 'numToolbars');
+		return;
+	}
 	
 	var width = AUSTRALIS_BORDER_WIDTH + (AUSTRALIS_BORDER_WIDTH_INCR * slimChromeNumToolbars());
 	
@@ -180,7 +187,7 @@ this.slimChromeStyle = function(show) {
 
 this.slimChromeStyleOnEnsure = function() {
 	// make sure this is applied at least once, and only when the chrome is actually shown
-	if(trueAttribute(slimChromeContainer, 'hover')) {
+	if(trueAttribute(slimChromeContainer, 'hover') || !trueAttribute(slimChromeContainer, 'onlyURLBar')) {
 		var t = slimChromeNumToolbars();
 		if(parseInt(slimChromeContainer.getAttribute('numToolbars')) != t) {
 			setAttribute(slimChromeContainer, 'numToolbars', slimChromeNumToolbars());
