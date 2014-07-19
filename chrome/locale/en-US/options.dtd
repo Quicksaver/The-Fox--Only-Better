@@ -12,7 +12,7 @@
 <!ENTITY opt.miniOnAllInput.label "Show the mini bar when focusing any type of input box">
 <!ENTITY opt.miniOnAllInput.tooltip "Enable this if you'd like the mini location bar to be shown when typing in any type of input field, and not just password fields.">
 <!ENTITY opt.miniOnTabSelect.label "Show the mini bar when changing to another location">
-<!ENTITY opt.miniOnTabSelect.tooltip "The mini bar will appear whenever the current tab changes to another location (different web host), or whenever you select a background tab that has changed location in the meantime.">
+<!ENTITY opt.miniOnTabSelect.tooltip "Highly recommended! The mini bar will appear whenever the current tab changes to another location (different web host), or whenever you select a background tab that has changed location in the meantime.">
 <!ENTITY opt.skyLights.label "Enable Sky Lights">
 <!ENTITY opt.skyLights.tooltip "Sky Lights give you information about the webpage you are currently visiting, through an alternate and non-obtrusive visual aid in the top chrome. They help you always be sure of where you are and of what is safe to do in there!">
 <!ENTITY opt.skyLightsHide.label "Hide Sky Lights when chrome is visible">
