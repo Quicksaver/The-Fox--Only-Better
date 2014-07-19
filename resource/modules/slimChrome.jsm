@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.25';
+moduleAid.VERSION = '1.4.26';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -198,7 +198,7 @@ this.stylePersonaSlimChrome = function() {
 		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars {\n';
 		sscode += '	  background-image: ' + prefAid.lwthemebgImage + ' !important;\n';
 		sscode += '	  background-color: ' + prefAid.lwthemebgColor + ' !important;\n';
 		sscode += '	  color: ' + prefAid.lwthemecolor + ' !important;\n';
@@ -206,7 +206,7 @@ this.stylePersonaSlimChrome = function() {
 		sscode += '	  background-repeat: repeat !important;\n';
 		sscode += '	  background-size: auto auto !important;\n';
 		sscode += '	}\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {\n';
+		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n';
 		sscode += '	  background-position: '+((RTL) ? 'right' : 'left')+' '+fullOffsetPersonaX+'px top '+offsetPersonaY+'px !important;\n';
 		sscode += '	}\n';
 		sscode += '}';
