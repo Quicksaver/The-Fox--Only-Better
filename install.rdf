@@ -9,6 +9,7 @@
 		<em:optionsURL>chrome://thefoxonlybetter/content/options.xul</em:optionsURL>
 		<em:name>The Fox, Only Better</em:name>
 		<em:bootstrap>true</em:bootstrap>
+		<em:multiprocessCompatible>true</em:multiprocessCompatible>
 		
 		<em:targetApplication>
 			<Description>
