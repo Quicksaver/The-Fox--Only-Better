@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.2';
+moduleAid.VERSION = '1.1.3';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -46,6 +46,13 @@ this.toggleSlimChromePref = function() {
 	prefAid.slimChrome = !prefAid.slimChrome;
 };
 
+this.ensureNotAllDisabled = function() {
+	if(prefAid.includeNavBar && !prefAid.skyLights && !prefAid.miniOnTabSelect) {
+		prefAid.skyLights = true;
+		prefAid.miniOnTabSelect = true;
+	}
+};
+
 this.toggleSlimChrome = function(noLoad) {
 	toggleAttribute(slimChromeBroadcaster, 'checked', prefAid.slimChrome);
 	
@@ -62,6 +69,9 @@ this.togglePopups = function() {
 
 moduleAid.LOADMODULE = function() {
 	prefAid.setDefaults({ autohide: true }, 'fullscreen', 'browser');
+	
+	// for security reasons, we don't let both skyLights and miniOnTabSelect be disabled at the same time
+	ensureNotAllDisabled();
 	
 	overlayAid.overlayWindow(window, 'TheFOB', null, function() { toggleSlimChrome(); });
 	

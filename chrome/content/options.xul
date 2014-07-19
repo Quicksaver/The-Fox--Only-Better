@@ -31,8 +31,8 @@
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.includeNavBar.label;" tooltiptext="&opt.includeNavBar.tooltip;" dependson="pref-slimChrome" preference="pref-includeNavBar"/>
 			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-miniOnAllInput"/>
-			<checkbox label="&opt.miniOnTabSelect.label;" tooltiptext="&opt.miniOnTabSelect.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-miniOnTabSelect"/>
-			<checkbox label="&opt.skyLights.label;" tooltiptext="&opt.skyLights.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-skyLights"/>
+			<checkbox label="&opt.miniOnTabSelect.label;" tooltiptext="&opt.miniOnTabSelect.tooltip;" dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights" preference="pref-miniOnTabSelect"/>
+			<checkbox label="&opt.skyLights.label;" tooltiptext="&opt.skyLights.tooltip;" dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnTabSelect" preference="pref-skyLights"/>
 			<checkbox label="&opt.skyLightsHide.label;" tooltiptext="&opt.skyLightsHide.tooltip;" dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights" preference="pref-skyLightsHide"/>
 		</groupbox>
 		
