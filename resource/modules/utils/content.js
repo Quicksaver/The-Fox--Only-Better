@@ -1,8 +1,7 @@
 // This is the file that is loaded as a content script directly. It helps with defining a "separate" environment in the content
 // script, while remaining accessible to the rest of the content scope.
 // We have to redefine objName and objPathString here, because there's no easy way to fetch them automatically from defaults.js.
-// Also, setting them in the global scope can potentially lead to conflicts with other add-ons, since the scope is shared.
-// Important: Do not change anything else other than the name of the object (and again at the end) and the objName and objPathString properties!
+// Important: Do not change anything else other than the name of the object (and again at the bottom) and the objName and objPathString properties!
 //
 // Use the messenger object to send message safely to this object without conflicting with other add-ons.
 // To load or unload modules in the modules/content/ folder into this object, send a 'load' or 'unload' message through messenger, followed by another
@@ -20,22 +19,20 @@
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
 //				This should be a copy of the same method in bootstrap.js.
 
+this.Cc = Components.classes;
+this.Ci = Components.interfaces;
+this.Cu = Components.utils;
+this.Cm = Components.manager;
+
 this.theFoxOnlyBetter = {
 	objName: 'theFoxOnlyBetter',
 	objPathString: 'thefoxonlybetter',
 	
-	version: '1.0.2',
+	version: '1.1.0',
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
 	$$: function(sel) { return content.document.querySelectorAll(sel); },
-	
-	// we shouldn't rely on these that are globally defined, and since re-defining them there can also cause trouble, might as well just add our own references to them here.
-	// Follow https://bugzilla.mozilla.org/show_bug.cgi?id=673569
-	Cc: Components.classes,
-	Ci: Components.interfaces,
-	Cu: Components.utils,
-	Cm: Components.manager,
 	
 	// some local things
 	Globals: {},
@@ -49,23 +46,19 @@ this.theFoxOnlyBetter = {
 	webProgress: null,
 	
 	init: function() {
-		// some global (content) things, needed for one thing or another
-		this.Cu.import("resource://gre/modules/Services.jsm", this);
-		this.Cu.import("resource://gre/modules/XPCOMUtils.jsm", this);
-		
 		this.WINNT = Services.appinfo.OS == 'WINNT';
 		this.DARWIN = Services.appinfo.OS == 'Darwin';
 		this.LINUX = Services.appinfo.OS != 'WINNT' && Services.appinfo.OS != 'Darwin';
 		
-		this.XPCOMUtils.defineLazyModuleGetter(this, "PluralForm", "resource://gre/modules/PluralForm.jsm");
-		this.XPCOMUtils.defineLazyServiceGetter(this.Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
+		XPCOMUtils.defineLazyModuleGetter(this.Scope, "PluralForm", "resource://gre/modules/PluralForm.jsm");
+		XPCOMUtils.defineLazyServiceGetter(Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
 		
-		this.webProgress = docShell.QueryInterface(this.Ci.nsIInterfaceRequestor).getInterface(this.Ci.nsIWebProgress);
+		this.webProgress = docShell.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIWebProgress);
 		
 		// and finally our add-on stuff begins
-		this.Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/moduleAid.jsm", this);
-		this.Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
-		this.Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/windowUtilsPreload.jsm", this);
+		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/moduleAid.jsm", this);
+		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
+		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/windowUtilsPreload.jsm", this);
 		
 		this.listen('shutdown', this.unload);
 		this.listen('load', this.loadModule);
@@ -118,12 +111,12 @@ this.theFoxOnlyBetter = {
 	
 	handleDeadObject: function(ex) {
 		if(ex.message == "can't access dead object") {
-			var scriptError = this.Cc["@mozilla.org/scripterror;1"].createInstance(this.Ci.nsIScriptError);
+			var scriptError = Cc["@mozilla.org/scripterror;1"].createInstance(Ci.nsIScriptError);
 			scriptError.init("Can't access dead object. This shouldn't cause any problems.", ex.sourceName || ex.fileName || null, ex.sourceLine || null, ex.lineNumber || null, ex.columnNumber || null, scriptError.warningFlag, 'XPConnect JavaScript');
-			this.Services.console.logMessage(scriptError);
+			Services.console.logMessage(scriptError);
 			return true;
 		} else {
-			this.Cu.reportError(ex);
+			Cu.reportError(ex);
 			return false;
 		}
 	},
