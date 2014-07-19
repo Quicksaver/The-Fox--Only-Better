@@ -202,6 +202,10 @@
 		border-right-color: rgba(23, 51, 78, 0.25);
 	}
 	
+	/* appropriating this bit of code to also style the nav-bar in popup windows */
+	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
+	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
+	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
 	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
 	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
 	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {

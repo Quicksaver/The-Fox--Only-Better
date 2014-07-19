@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.1.2';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathContainer', function() { return $(objName+'-slimChrome-clipPath-container-path'); });
@@ -14,6 +14,7 @@ this.AUSTRALIS_BORDER_OFFSET_X1 = 0.02; // percentage by which the border svg sh
 this.AUSTRALIS_BORDER_OFFSET_Y1 = 0.015; // percentage by which the border svg ends should be offset of the actual clipPath (top)
 this.AUSTRALIS_BORDER_OFFSET_X2 = 0.01; // percentage by which the border svg should be offset of the actual clipPath, so that it looks thicker (bottom)
 this.AUSTRALIS_BORDER_OFFSET_Y2 = 0; // percentage by which the border svg ends should be offset of the actual clipPath (bottom)
+this.AUSTRALIS_BORDER_OFFSET_Y2_TOOLBARS = (!WINNT) ? 0.02 : 0; // percentage by which the toolbars clippath should be offset of border (bottom)
 this.AUSTRALIS_BORDER_PADDING_ADJUST_NAVBAR = -15; // this is added to AUSTRALIS_BORDER_WIDTH and that is applied as the navbar's padding
 this.AUSTRALIS_BORDER_PADDING_ADJUST_OTHERS = -8; // this is added to AUSTRALIS_BORDER_WIDTH and that is applied as all toolbars' padding
 
@@ -66,7 +67,7 @@ this.slimChromeClipPaths = function() {
 	var aC = width /lastSlimChromeStyle.width;
 	var d = "M "+(AUSTRALIS_BORDER_COORD_X1*aC)+","+(AUSTRALIS_BORDER_COORD_Y1-AUSTRALIS_BORDER_OFFSET_Y1);
 	
-	// next bit, the left border; we even though we clip again the inner toolbars container below, we still need to clip here as well,
+	// next bit, the left border; even though we clip again the inner toolbars container below, we still need to clip here as well,
 	// so that the border stroke is consistent with the opposite side
 	d += " C";
 	d += " "+(AUSTRALIS_BORDER_CURVE1_X1*aC)+","+AUSTRALIS_BORDER_CURVE1_Y1;
@@ -106,11 +107,11 @@ this.slimChromeClipPaths = function() {
 	d += " "+((AUSTRALIS_BORDER_COORD_X2-AUSTRALIS_BORDER_OFFSET_X1)*width)+","+(AUSTRALIS_BORDER_COORD_Y2*height);
 	d += " "+((AUSTRALIS_BORDER_CURVE2_X1-AUSTRALIS_BORDER_OFFSET_X2)*width)+","+(AUSTRALIS_BORDER_CURVE2_Y1*height);
 	d += " "+((AUSTRALIS_BORDER_CURVE2_X2-AUSTRALIS_BORDER_OFFSET_X2)*width)+","+(AUSTRALIS_BORDER_CURVE2_Y2*height);
-	d += " "+((AUSTRALIS_BORDER_COORD_X3+AUSTRALIS_BORDER_OFFSET_X2)*width)+","+(((AUSTRALIS_BORDER_COORD_Y3+AUSTRALIS_BORDER_OFFSET_Y2)*height));
+	d += " "+((AUSTRALIS_BORDER_COORD_X3+AUSTRALIS_BORDER_OFFSET_X2)*width)+","+(((AUSTRALIS_BORDER_COORD_Y3+AUSTRALIS_BORDER_OFFSET_Y2+AUSTRALIS_BORDER_OFFSET_Y2_TOOLBARS)*height));
 	
 	// and we extend the clip-path so that the rest of the toolbars are sure to be drawn,
 	// don't forget to account for the border! (we don't check for the actual border, we just assume it's not of a ridiculous stroke width)
-	d += " l 0,50 l 10000,0 l 0,-"+(height+51)+" l -10000,0 z";
+	d += " l 0,50 l 10000,0 l 0,-"+(height+100)+" l -10000,0 z";
 	
 	setAttribute(slimChromeClipPathToolbars, 'd', d);
 	

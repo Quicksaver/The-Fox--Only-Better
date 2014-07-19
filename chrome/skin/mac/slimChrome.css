@@ -198,6 +198,8 @@
 		margin: 0;
 	}
 	
+	/* appropriating this bit of code to also style the nav-bar in popup windows */
+	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not(#back-button):not(#forward-button),
 	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not(#back-button):not(#forward-button) {
 		margin: 0 2px;
 	}
