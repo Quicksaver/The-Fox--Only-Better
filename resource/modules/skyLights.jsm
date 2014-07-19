@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('skyLightsContainer', function() { return $(objName+'-skyLights-container'); });
 
@@ -18,6 +18,7 @@ this.skyLights = {
 			light = document.createElement('box');
 			light.id = objName+'-skyLights-'+name;
 			setAttribute(light, 'class', 'skyLight');
+			setAttribute(light, 'context', 'toolbar-context-menu');
 			
 			light._action = null;
 			listenerAid.add(light, 'click', skyLightsOnClick);
@@ -73,6 +74,11 @@ this.skyLights = {
 				// tooltip is the text that should appear when the mouse is hovered to the light
 				case 'tooltip':
 					setAttribute(light, 'tooltiptext', props[p]);
+					break;
+				
+				// context defines which context menu should the light use if it is right-clicked; by default it will use the toolbar context menu
+				case 'context':
+					setAttribute(light, 'context', props[p]);
 					break;
 				
 				// action is the method to be called when the user clicks the sky light
