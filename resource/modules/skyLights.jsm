@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('skyLightsContainer', function() { return $(objName+'-skyLights-container'); });
 
@@ -204,6 +204,11 @@ this.skyLightsUnload = function() {
 };
 
 moduleAid.LOADMODULE = function() {
+	// in case the overlay is already loaded (don't even know if this can happen but better make sure)
+	if(skyLightsContainer) {
+		skyLightsLoad();
+	}
+	
 	overlayAid.overlayURI('chrome://'+objPathString+'/content/slimChrome.xul', 'skyLights', null,
 		function(aWindow) { if(typeof(aWindow[objName].skyLightsLoad) != 'undefined') { aWindow[objName].skyLightsLoad(); } },
 		function(aWindow) { if(typeof(aWindow[objName].skyLightsUnload) != 'undefined') { aWindow[objName].skyLightsUnload(); } }
@@ -211,6 +216,9 @@ moduleAid.LOADMODULE = function() {
 };
 
 moduleAid.UNLOADMODULE = function() {
+	// make sure this runs in case the overlay unloads after the module
+	skyLightsUnload();
+	
 	if(UNLOADED || !prefAid.skyLights || !prefAid.includeNavBar) {
 		overlayAid.removeOverlayURI('chrome://'+objPathString+'/content/slimChrome.xul', 'skyLights');
 	}
