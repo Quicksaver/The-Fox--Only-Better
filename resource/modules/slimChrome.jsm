@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.24';
+moduleAid.VERSION = '1.4.25';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -322,7 +322,12 @@ this.onMouseOutToolbox = function(e) {
 	onMouseOut();
 };
 
+this.beforeDragAnimation = null;
+
 this.onDragStart = function() {
+	beforeDragAnimation = prefAid.slimAnimation;
+	prefAid.slimAnimation = 'none';
+	
 	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
 	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.add(window, "drop", onDragExitAll);
@@ -336,6 +341,7 @@ this.onDragEnter = function() {
 
 this.onDragExit = function() {
 	setHover(false);
+	restoreAnimationAfterDrag();
 };
 
 this.onDragExitAll = function() {
@@ -344,6 +350,14 @@ this.onDragExitAll = function() {
 	listenerAid.remove(window, "drop", onDragExitAll);
 	listenerAid.remove(window, "dragend", onDragExitAll);
 	setHover(false);
+	restoreAnimationAfterDrag();
+};
+
+this.restoreAnimationAfterDrag = function() {
+	if(beforeDragAnimation) {
+		prefAid.slimAnimation = beforeDragAnimation;
+		beforeDragAnimation = null;
+	}
 };
 
 this.setHover = function(hover, now, force) {
