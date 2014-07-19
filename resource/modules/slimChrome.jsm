@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.23';
+moduleAid.VERSION = '1.4.24';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -264,15 +264,35 @@ this.onMouseReEnterBrowser = function(e) {
 	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
 };
 
-this.isMenuBarPopup = function(node) {
+this.isMenuBarPopup = function(e) {
+	var node = e.originalTarget;
+	
 	// we don't want the chrome to show or hide when hovering the menu popups from the menu bar
 	var toolbars = [MenuBar, TabsToolbar];
+	
+	// if we're not including the nav-bar in the container, might as well apply the same rule to it
+	if(!prefAid.includeNavBar) {
+		toolbars.push(gNavBar);
+	}
+	
 	for(var t=0; t<toolbars.length; t++) {
 		if(isAncestor(node, toolbars[t])) {
 			var parent = node;
 			while(parent) {
 				if(parent == toolbars[t]) { break; }
-				if(parent.nodeName == 'menupopup') { return true; }
+				if(parent.localName == 'menupopup') { return true; }
+				
+				// the searchbar's engine selection popup is a bit of a special case; the mouseover events repeat for the actual searchbar
+				if(parent.localName == 'searchbar' && e.type == 'mouseover') {
+					var searchPopup = document.getAnonymousElementByAttribute(parent, 'anonid', 'searchbar-popup');
+					if(searchPopup.state == 'open') {
+						if(e.screenY >= searchPopup.boxObject.screenY
+						&& e.screenY <= searchPopup.boxObject.screenY +searchPopup.boxObject.height
+						&& e.screenX >= searchPopup.boxObject.screenX
+						&& e.screenX <= searchPopup.boxObject.screenX +searchPopup.boxObject.width) { return true; }
+					}
+				}
+				
 				parent = parent.parentNode;
 			}
 		}
@@ -282,7 +302,7 @@ this.isMenuBarPopup = function(node) {
 };
 
 this.onMouseOverToolbox = function(e) {
-	if(isMenuBarPopup(e.target)) { return; }
+	if(isMenuBarPopup(e)) { return; }
 	if(!dispatch(slimChromeContainer, { type: 'WillShowSlimChrome', detail: e })) { return; }
 	
 	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
@@ -293,7 +313,7 @@ this.onMouseOverToolbox = function(e) {
 };
 
 this.onMouseOutToolbox = function(e) {
-	if(isMenuBarPopup(e.target)) { return; }
+	if(isMenuBarPopup(e)) { return; }
 	
 	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
 		slimChromeContainer.hoversQueued--;
