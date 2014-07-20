@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.11.3';
+moduleAid.VERSION = '2.11.4';
 moduleAid.UTILS = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1247,6 +1247,14 @@ this.overlayAid = {
 				overlayAid.tempRestoreToolbar(wToolbar);
 			}
 		}, aWindow.document.documentElement.getAttribute('windowtype'));
+	},
+	
+	// moves a toolbar without triggering its _init() method
+	safeMoveToolbar: function(aToolbar, aParent, aSibling) {
+		var backupInit = aToolbar._init;
+		aToolbar._init = function() { return; }
+		aParent.insertBefore(aToolbar, aSibling);
+		aToolbar._init = backupInit;
 	},
 	
 	addToolbars: function(aWindow, node) {

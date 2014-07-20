@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.26';
+moduleAid.VERSION = '1.4.27';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -862,7 +862,12 @@ this.slimChromeIncludeNavBar = function(unload) {
 			}
 		}
 		
-		gNavToolbox.insertBefore(gNavBar, slimChromeSlimmer || customToolbars);
+		// don't trigger a re-register of this toolbar node with CUI when it's not needed
+		if(window.closed || window.willClose) {
+			overlayAid.safeMoveToolbar(gNavBar, gNavToolbox, slimChromeSlimmer || customToolbars);
+		} else {
+			gNavToolbox.insertBefore(gNavBar, slimChromeSlimmer || customToolbars);
+		}
 	}
 	
 	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
@@ -1057,7 +1062,12 @@ this.unloadSlimChrome = function() {
 			gNavToolbox.externalToolbars.splice(e, 1);
 		}
 		
-		gNavToolbox.appendChild(slimChromeToolbars.firstChild);
+		// don't trigger a re-register of this toolbar node with CUI when it's not needed
+		if(window.closed || window.willClose) {
+			overlayAid.safeMoveToolbar(slimChromeToolbars.firstChild, gNavToolbox);
+		} else {
+			gNavToolbox.insertBefore(slimChromeToolbars.firstChild);
+		}
 	}
 	
 	PlacesToolbarHelper.init();
