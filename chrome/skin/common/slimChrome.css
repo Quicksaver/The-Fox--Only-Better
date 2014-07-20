@@ -67,11 +67,11 @@
 		padding-left: 13px;
 		padding-right: 13px;
 	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer[collapsed="true"] + #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer[collapsed="true"] ~ #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
 		padding-left: 16px;
 		padding-right: 16px;
 	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer:not([collapsed="true"]) ~ #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
 		padding-left: 53px;
 		padding-right: 53px;
 	}
