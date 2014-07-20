@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.27';
+moduleAid.VERSION = '1.4.28';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -1066,7 +1066,7 @@ this.unloadSlimChrome = function() {
 		if(window.closed || window.willClose) {
 			overlayAid.safeMoveToolbar(slimChromeToolbars.firstChild, gNavToolbox);
 		} else {
-			gNavToolbox.insertBefore(slimChromeToolbars.firstChild);
+			gNavToolbox.appendChild(slimChromeToolbars.firstChild);
 		}
 	}
 	
