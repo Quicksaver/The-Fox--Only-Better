@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.29';
+moduleAid.VERSION = '1.4.30';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -322,14 +322,7 @@ this.onMouseOutToolbox = function(e) {
 	onMouseOut();
 };
 
-this.beforeDragAnimation = null;
-
 this.onDragStart = function() {
-	if(!beforeDragAnimation) {
-		beforeDragAnimation = prefAid.slimAnimation;
-		prefAid.slimAnimation = 'none';
-	}
-	
 	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
 	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
 	listenerAid.add(window, "drop", onDragExitAll);
@@ -343,7 +336,6 @@ this.onDragEnter = function() {
 
 this.onDragExit = function() {
 	setHover(false);
-	restoreAnimationAfterDrag();
 };
 
 this.onDragExitAll = function() {
@@ -352,14 +344,6 @@ this.onDragExitAll = function() {
 	listenerAid.remove(window, "drop", onDragExitAll);
 	listenerAid.remove(window, "dragend", onDragExitAll);
 	setHover(false);
-	restoreAnimationAfterDrag();
-};
-
-this.restoreAnimationAfterDrag = function() {
-	if(beforeDragAnimation) {
-		prefAid.slimAnimation = beforeDragAnimation;
-		beforeDragAnimation = null;
-	}
 };
 
 this.setHover = function(hover, now, force) {
@@ -875,7 +859,7 @@ this.slimChromeIncludeNavBar = function(unload) {
 	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
 };
 
-this.slimChromeAnimation = function(show) {
+this.slimChromeAnimation = function() {
 	setAttribute(gNavToolbox, 'slimAnimation', prefAid.slimAnimation);
 };
 
@@ -1071,9 +1055,6 @@ this.unloadSlimChrome = function() {
 			gNavToolbox.appendChild(slimChromeToolbars.firstChild);
 		}
 	}
-	
-	// make sure we don't reset the pref because of the drag safety
-	restoreAnimationAfterDrag();
 	
 	PlacesToolbarHelper.init();
 	window.URLBarSetURI();
