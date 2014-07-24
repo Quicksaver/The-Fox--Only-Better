@@ -107,9 +107,6 @@
 	}
 	
 	/* these are so the identity box doesn't jump around when going back/forward in the tab history */
-	/* remove: this isn't needed in FF31 */
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container[forwarddisabled] > #forward-button ~ #urlbar-wrapper > #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon,
-	/* end remove */
 	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
 		-moz-margin-start: 0;
 	}
@@ -171,19 +168,6 @@
 		padding-left: 3px !important;
 	}
 	
-	/* remove: in FF31 it isn't needed */
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-container > #forward-button > .toolbarbutton-icon {
-		clip-path: none !important;
-		margin-left: 0 !important;
-		padding-left: 3px !important;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-container[forwarddisabled] > #forward-button[occluded-by-urlbar="true"] > .toolbarbutton-icon {
-		margin-right: 4px !important;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-container[forwarddisabled] > #forward-button ~ #urlbar-wrapper {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
-	}
-	/* end remove (also can remove the "back-button + " bits below */
 	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
 		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
 		-moz-margin-start: 0;

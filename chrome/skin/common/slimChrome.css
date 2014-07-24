@@ -57,6 +57,11 @@
 		transition: none;
 	}
 	
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #back-button + #urlbar-wrapper {
+		-moz-margin-start: 0;
+		clip-path: none;
+	}
+	
 	/* round style */
 	
 	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([mini]),[mini][hover]) {
@@ -146,12 +151,6 @@
 	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-before,
 	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after {
 		display: none;
-	}
-	
-	/* for changes in FF31 */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #back-button + #urlbar-wrapper {
-		-moz-margin-start: 0;
-		clip-path: none;
 	}
 	
 	/* animations */
