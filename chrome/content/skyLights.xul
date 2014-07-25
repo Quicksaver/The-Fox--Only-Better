@@ -4,7 +4,12 @@
 <overlay id="skyLights-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<toolbox id="navigator-toolbox">
-		<toolbar id="objName-skyLights-container" class="toolbar-primary" insertafter="objName-slimChrome-slimmer" customizable="false" ignoreCUI="true"/>
+		<toolbar id="objName-skyLights-container"
+			class="toolbar-primary"
+			fullscreentoolbar="true"
+			insertafter="objName-slimChrome-slimmer"
+			customizable="false"
+			ignoreCUI="true"/>
 	</toolbox>
 	
 </overlay>
