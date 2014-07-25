@@ -37,8 +37,8 @@
 	
 	/* mini chrome, the hover style always overrides all of this */
 	
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar):not([showInMiniBar="true"]),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container):not([showInMiniBar="true"]),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
