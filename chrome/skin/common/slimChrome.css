@@ -135,9 +135,14 @@
 	
 	/* common elements to all styles */
 	
-	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container,
+	window[chromehidden~="toolbar"] #navigator-toolbox:not([slimStyle="full"]) #theFoxOnlyBetter-slimChrome-container,
 	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
 		border-radius: 0 0 4px 4px;
+	}
+	
+	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #urlbar-container {
+		padding-top: 2px;
+		padding-bottom: 2px;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
@@ -146,10 +151,13 @@
 	
 	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-before,
 	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-after,
+	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-bottom,
 	#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-before,
 	#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-after,
+	#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-bottom,
 	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-before,
-	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after {
+	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after,
+	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-bottom {
 		display: none;
 	}
 	
