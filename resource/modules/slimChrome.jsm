@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.30';
+moduleAid.VERSION = '1.4.31';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -857,6 +857,7 @@ this.slimChromeIncludeNavBar = function(unload) {
 	}
 	
 	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
+	dispatch(gNavBar, { type: 'SlimChromeMovedNavBar', cancelable: false });
 };
 
 this.slimChromeAnimation = function() {
