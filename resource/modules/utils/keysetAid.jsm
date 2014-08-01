@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.0';
+moduleAid.VERSION = '1.4.1';
 moduleAid.UTILS = true;
 
 // keysetAid - handles editable keysets for the add-on
@@ -208,6 +208,7 @@ this.keysetAid = {
 			
 			var key = {
 				id: keys[k].id,
+				hasModifiers: keys[k].hasAttribute('modifiers'),
 				self: keys[k].getAttribute('keysetAid') == objName
 			};
 			
