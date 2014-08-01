@@ -31,9 +31,9 @@
 			<Description>
 				<em:locale>fr</em:locale>
 				<em:name>The Fox, Only Better</em:name>
-				<em:description>La nouvelle interface « Australis » pour Firefox rend votre navigateur plus élégant, cette extension le rendra encore meilleure !</em:description>
+				<em:description>La nouvelle interface « Australis » pour Firefox rend votre navigateur plus élégant, cette extension le rendra encore meilleur !</em:description>
 				<em:homepageURL>https://addons.mozilla.org/fr/firefox/addon/the-fox-only-better/</em:homepageURL>
-				<em:translator>Goofy, squeeze - Babelzilla</em:translator>
+				<em:translator>Goofy, squeeze - Babelzilla, ZanzaO - Babelzilla</em:translator>
 			</Description>
 		</em:localized>
 		<em:localized>
@@ -58,7 +58,7 @@
 			<Description>
 				<em:locale>zh-CN</em:locale>
 				<em:name>The Fox, Only Better</em:name>
-				<em:description>全新的 Australis 主题，让 Firefox 浏览器用起来棒极了，而这个附加组件也不遑多让！</em:description>
+				<em:description>全新的 Australis 主题，让 Firefox 浏览器用起来棒极了，而这个附加组件也也相得益彰！</em:description>
 				<em:homepageURL>https://addons.mozilla.org/zh-CN/firefox/addon/the-fox-only-better/</em:homepageURL>
 				<em:translator>fang5566 - Babelzilla</em:translator>
 			</Description>

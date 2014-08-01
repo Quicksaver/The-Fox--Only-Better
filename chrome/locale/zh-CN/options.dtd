@@ -1,9 +1,66 @@
-<!ENTITY Optwindow.style "width: 33em; height: 35em;">
+<!ENTITY Optwindow.style "width: 29em;">
 <!ENTITY options.title "The Fox, Only Better">
-<!ENTITY optabout.label "关于">
+<!ENTITY pane.slimChrome.label "精简界面">
+<!ENTITY pane.about.label "关于">
+<!ENTITY cat.general.label "常规">
+<!ENTITY opt.slimChrome.label "启用精简界面功能">
+<!ENTITY opt.slimChrome.tooltip "在您不需要的时候方便地隐藏顶部工具栏，使得用户界面更具流线型，同时最大化网页显示面积。">
+<!ENTITY opt.includeNavBar.label "同时隐藏导航栏和其他工具栏">
+<!ENTITY opt.includeNavBar.tooltip "导航栏连同其他工具栏一并隐藏。如果禁用该项，则导航栏仍始终显示在顶部。">
+<!ENTITY opt.miniOnAllInput.label "定位到输入框时显示为迷你栏">
+<!ENTITY opt.miniOnAllInput.tooltip "允许您在任何输入框键入内容时显示为迷你栏，而不仅仅包括密码框。">
+<!ENTITY opt.miniOnTabSelect.label "打开其他站点网页时显示为迷你栏">
+<!ENTITY opt.miniOnTabSelect.tooltip "强烈推荐！无论是您从当前网页打开其他不同网站（不同域名），还是选中在后台标签页打开的其他网站时都将显示为一个迷你栏。">
+<!ENTITY opt.skyLights.label "启用 Sky Lights">
+<!ENTITY opt.skyLights.tooltip "Sky Lights 通过在标签栏下方添加一个不太显眼的小小长方块来告诉您当前所访问网页的信息，用来代替地址栏左侧的网页识别框。这样就能够帮助您始终确认您所在的网页是否安全！">
+<!ENTITY opt.skyLightsHide.label "工具栏显示时隐藏 SkyLights">
+<!ENTITY opt.skyLightsHide.tooltip "工具栏或迷你栏显示时自动隐藏 Sky Lights，您可以通过工具栏本身的网页识别框来查看网页信息。">
+<!ENTITY opt.useMouse.label "鼠标移动到顶部时显示 chrome 界面">
+<!ENTITY opt.useMouse.tooltip "工具栏会对鼠标移动产生反应，当鼠标移入时显示，移出时隐藏。如果禁用该项，则只有按 F6 定位到状态栏，或通过面板菜单打开时才会显示工具栏。">
+<!ENTITY opt.delayIn.label "鼠标移入时的灵敏度">
+<!ENTITY opt.delayIn.tooltip "指定鼠标移入浏览器顶部时 chrome 界面显示的延迟时间。">
+<!ENTITY opt.delayOut.label "鼠标移出时的灵敏度">
+<!ENTITY opt.delayOut.tooltip "指定鼠标移出浏览器顶部时 chrome 界面显示的延迟时间。">
+<!ENTITY opt.delayLow.label "低">
+<!ENTITY opt.delayHigh.label "高">
+<!ENTITY cat.appearance.label "样式">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "与 Firefox 原生主题相适应的外观设计。">
+<!ENTITY opt.style.round.label "宽阔">
+<!ENTITY opt.style.round.tooltip "工具栏显示在边缘为一个大圆弧的容器当中，与默认的 Firefox 主题相得益彰。">
+<!ENTITY opt.style.compact.label "紧凑">
+<!ENTITY opt.style.compact.tooltip "可显示最多数量工具栏按钮盒文本框且占用空间最少的精简样式，chrome 界面元素对网页显示区域的影响也最小。">
+<!ENTITY opt.style.full.label "全部宽度">
+<!ENTITY opt.style.full.tooltip "工具栏占据所有可用的宽度，与顶部界面紧密衔接，两侧不包含任何边框或边距。">
+<!ENTITY cat.animation.label "动画效果">
+<!ENTITY opt.animation.none.label "无动画效果">
+<!ENTITY opt.animation.none.tooltip "工具栏显示时无任何特殊动画效果。">
+<!ENTITY opt.animation.fadein.label "淡入">
+<!ENTITY opt.animation.fadein.tooltip "简单的淡入显示工具栏。">
+<!ENTITY opt.animation.slidedown.label "滑动">
+<!ENTITY opt.animation.slidedown.tooltip "简单的从顶部滑动显示工具栏。">
+<!ENTITY opt.animation.rollout.label "铺开">
+<!ENTITY opt.animation.rollout.tooltip "铺开显示工具栏。">
+<!ENTITY opt.animation.hinge.label "GiT 的翻转特效">
+<!ENTITY opt.animation.hinge.tooltip "Geek in Training 制作的特殊翻转特效。觉得满意的话就请对他表示感谢吧！">
+<!ENTITY cat.slimChromeKeyset.label "启用或禁用的键盘快捷键">
+<!ENTITY opt.keyset.control "Ctrl">
+<!ENTITY opt.keyset.shift "Shift">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Command">
+<!ENTITY opt.keyset.option "Option">
+<!ENTITY opt.keyset.none "无">
+<!ENTITY opt.keyset.spacebar "空格">
+<!ENTITY opt.keyset.pageup "Page Up">
+<!ENTITY opt.keyset.pagedown "Page Down">
+<!ENTITY opt.keyset.end "End">
+<!ENTITY opt.keyset.home "Home">
+<!ENTITY opt.keyset.left "左键">
+<!ENTITY opt.keyset.up "上键">
+<!ENTITY opt.keyset.right "右键">
+<!ENTITY opt.keyset.down "下键">
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "创建者：Quicksaver">
-<!ENTITY about.summary "虽然目前附加组件还没有任何选项设置，但我正计划在未来添加许多新特性！如果您想要添加什么特别的东西，请联系我。">
 <!ENTITY about.desc "所有附加组件和开发者的信息都可以到 Mozilla 附加组件主页中看到。如果有幸得到您的喜欢，不妨考虑给我们一个高的评价或一点小小的捐助以便继续开发。在技术支持页面您可以提出 Bug 报告和建议。">
 <!ENTITY about.home "附加组件主页">
 <!ENTITY about.tech "技术支持">

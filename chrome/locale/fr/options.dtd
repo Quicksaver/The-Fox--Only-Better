@@ -1,9 +1,66 @@
-<!ENTITY Optwindow.style "width: 40em; height: 39em;">
+<!ENTITY Optwindow.style "width: 36em;">
 <!ENTITY options.title "The Fox, Only Better">
-<!ENTITY optabout.label "À propos">
+<!ENTITY pane.slimChrome.label "Interface Réduite">
+<!ENTITY pane.about.label "À propos">
+<!ENTITY cat.general.label "Général">
+<!ENTITY opt.slimChrome.label "Activer l'Interface Réduite">
+<!ENTITY opt.slimChrome.tooltip "Simplifie l'interface et maximise l'espace d'affichage du contenu, en cachant les barres d'outils supérieures lorsque vous n'en avez pas besoin.">
+<!ENTITY opt.includeNavBar.label "Inclure la barre de navigation dans les barres d'outils cachées.">
+<!ENTITY opt.includeNavBar.tooltip "Cache la barre d'adresse avec les autres barres d'outils. Si cette option est désactivée, la barre d'adresse sera toujours visible en haut de l'interface comme auparavant.">
+<!ENTITY opt.miniOnAllInput.label "Afficher la mini-barre quand le focus est sur n'importe quel type de boîte d'entrée.">
+<!ENTITY opt.miniOnAllInput.tooltip "Activez cette option si vous voulez que la mini-barre s'affiche quand vous tapez dans n'importe quel champs de texte, et pas seulement un de mot de passe.">
+<!ENTITY opt.miniOnTabSelect.label "Montrer la mini-barre lorsque l'on change de site">
+<!ENTITY opt.miniOnTabSelect.tooltip "Hautement recommandé! La mini-barre apparaîtra lorsque dans l'onglet courant, l'adresse change pour une autre (nom de domaine différent), ou quand vous basculez vers un onglet jusque là en arrière plan, et qui aurait changé d'adresse pendant ce temps.">
+<!ENTITY opt.skyLights.label "Activer les Sky Lights">
+<!ENTITY opt.skyLights.tooltip "Les Sky Lights vous donnent des informations sur la page web que vous êtes actuellement en train de visiter à travers une aide alternative et non-intrusive en haut de l'interface. Ils vous aident à être sûr de l'endroit où vous êtes et ce qu'il est possible de faire sans danger!">
+<!ENTITY opt.skyLightsHide.label "Cacher les Sky Lights lorsque l'interface est visible">
+<!ENTITY opt.skyLightsHide.tooltip "Les Sky Lights se cacheront lorsque les barres d'outils ou la mini-barre sont visibles, dans la mesure où toutes leurs informations seront déjà incluses dans les barres d'outils.">
+<!ENTITY opt.useMouse.label "Affiche l'interface lorsque la souris va vers sur le haut de la fenêtre">
+<!ENTITY opt.useMouse.tooltip "Les barres d'outils réagiront aux mouvements de la souris, apparaîtront lorsque la souris survolera leur position, et se cacheront lorsque la quittera. Si cette option est désactivée, les barres d'outils ne seront accessibles qu'en utilisant la touche F6 (ce qui donnera le focus à la barre d'adresse), ou quand un panneau s'ouvre ancré à une des barres d'outils cachées.">
+<!ENTITY opt.delayIn.label "Sensibilité à l'entrée">
+<!ENTITY opt.delayIn.tooltip "Détermine le délai après lequel l'interface apparaîtra, quand la souris passera sur le haut du navigateur.">
+<!ENTITY opt.delayOut.label "Sensibilité à la sortie">
+<!ENTITY opt.delayOut.tooltip "Détermine le délai après lequel l'interface disparaîtra, quand la souris quittera le haut du navigateur.">
+<!ENTITY opt.delayLow.label "Bas">
+<!ENTITY opt.delayHigh.label "Haut">
+<!ENTITY cat.appearance.label "Style">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Créee pour avoir les mêmes affichage et comportement que le thème de Firefox.">
+<!ENTITY opt.style.round.label "Spacieuse">
+<!ENTITY opt.style.round.tooltip "Montre les barres d'outils dans un container large aux bords arrondis. Colle parfaitement avec le thème par défaut de Firefox.">
+<!ENTITY opt.style.compact.label "Compacte">
+<!ENTITY opt.style.compact.tooltip "Un style minimal qui affiche un maximum de boutons et de zones de textes dans le minimum d'espace possible, afin d'optimiser l'espace laissé à la page web par l'interface.">
+<!ENTITY opt.style.full.label "Pleine largeur">
+<!ENTITY opt.style.full.tooltip "Les barres d'outils sont étirées jusqu'à prendre tout l'espace possible, comme si elles étaient encore attachées à l'interface, sans marges ou bordures sur les cotés.">
+<!ENTITY cat.animation.label "Animation">
+<!ENTITY opt.animation.none.label "Aucune animation">
+<!ENTITY opt.animation.none.tooltip "Les barres d'outils apparaissent sans aucun effet.">
+<!ENTITY opt.animation.fadein.label "Fondu">
+<!ENTITY opt.animation.fadein.tooltip "Une animation simple faisant apparaître par fondu les barres d'outils dans la vue.">
+<!ENTITY opt.animation.slidedown.label "Glissement vers le bas">
+<!ENTITY opt.animation.slidedown.tooltip "Un effet de glissement simple, où les barres d'outils apparaissent du haut de l'interface.">
+<!ENTITY opt.animation.rollout.label "Déploiement">
+<!ENTITY opt.animation.rollout.tooltip "Les barres d'outils se déploie dans le haut de la vue.">
+<!ENTITY opt.animation.hinge.label "Effet de Charnière de GiT">
+<!ENTITY opt.animation.hinge.tooltip "Un effet spécial en charnière, crée par Geek in Training. Si vous aimez, remerciez-le !">
+<!ENTITY cat.slimChromeKeyset.label "Raccourci clavier pour activer ou désactiver">
+<!ENTITY opt.keyset.control "Ctrl">
+<!ENTITY opt.keyset.shift "Maj">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Command">
+<!ENTITY opt.keyset.option "Option">
+<!ENTITY opt.keyset.none "Aucune">
+<!ENTITY opt.keyset.spacebar "Barre d'espace">
+<!ENTITY opt.keyset.pageup "Page précédante">
+<!ENTITY opt.keyset.pagedown "Page suivante">
+<!ENTITY opt.keyset.end "Fin">
+<!ENTITY opt.keyset.home "Origine">
+<!ENTITY opt.keyset.left "Gauche">
+<!ENTITY opt.keyset.up "Haut">
+<!ENTITY opt.keyset.right "Droite">
+<!ENTITY opt.keyset.down "Bas">
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "par Quicksaver">
-<!ENTITY about.summary "Cette extension n'a pas encore d'options supplémentaires, bien que je prévoie d'ajouter de nombreuses fonctionnalités au fil du temps ! Si vous avez des propositions d'ajouts vous pouvez me contacter.">
 <!ENTITY about.desc "Toutes les informations sur l'extension et son développeur peuvent être trouvées sur la page de Mozilla Add-ons dédiée à ce module. Si vous aimez l'extension, vous pouvez laisser un commentaire ou aider au développement en réalisant un don. Les rapports de bugs et suggestions peuvent être faits sur la page web de support technique.">
 <!ENTITY about.home "Page d'accueil de l'extension">
 <!ENTITY about.tech "Assistance technique">

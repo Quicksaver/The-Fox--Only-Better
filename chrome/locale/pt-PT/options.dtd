@@ -1,9 +1,66 @@
-<!ENTITY Optwindow.style "width: 40em; height: 38.5em;">
+<!ENTITY Optwindow.style "width: 38em;">
 <!ENTITY options.title "O Fox, Só Que Melhor">
-<!ENTITY optabout.label "Sobre">
+<!ENTITY pane.slimChrome.label "Interface Reduzida">
+<!ENTITY pane.about.label "Sobre">
+<!ENTITY cat.general.label "Geral">
+<!ENTITY opt.slimChrome.label "Activar a Interface Reduzida">
+<!ENTITY opt.slimChrome.tooltip "Simplifica a interface do navegador e maximiza o espaço de visualização de conteúdo, escondendo convenientemente as barras de ferramentas do topo quando não são necessárias.">
+<!ENTITY opt.includeNavBar.label "Esconder também a barra de navegação">
+<!ENTITY opt.includeNavBar.tooltip "A barra de navegação também é escondida com as outras barras de ferramentas. Se desactivar esta opção, a barra de navegação estará sempre visível no topo como sempre.">
+<!ENTITY opt.miniOnAllInput.label "Mostrar a mini barra quando o cursor se encontra em qualquer tipo de caixa de texto">
+<!ENTITY opt.miniOnAllInput.tooltip "Actie esta opção se desejar que a mini barra de endereço seja mostrada ao inserir texto em qualquer tipo de caixa de texto, e não apenas em campos de palavra-passe.">
+<!ENTITY opt.miniOnTabSelect.label "Mostrar a mini barra ao mudar de endereço">
+<!ENTITY opt.miniOnTabSelect.tooltip "Altamente recomendado! A mini barra irá aparecer sempre que o separador actual mudar de endereço (com um anfitrião diferente), ou sempre que selecionar um separador que tenha mudado de endereço entretanto.">
+<!ENTITY opt.skyLights.label "Activar as Luzes no Céu">
+<!ENTITY opt.skyLights.tooltip "As Luzes no Céu fornecem informação acerca da página actual, através de um sistema visual não intrusivo no topo do navegador. Elas permitem-lhe ter sempre a certeza de onde se encontra e o quão seguro é lá se encontrar!">
+<!ENTITY opt.skyLightsHide.label "Esconder as Luzes no Céu quando as barras de ferramentas estão visíveis">
+<!ENTITY opt.skyLightsHide.tooltip "As Luzes no Céu escondem-se sempre que as barras de ferramentas ou a mini barra esteja visível, já que toda a informação dada pelas luzes já deva existir nas barras de ferramentas em si de algum modo.">
+<!ENTITY opt.useMouse.label "Mostrar as barras de ferramentas consoante a posição do rato">
+<!ENTITY opt.useMouse.tooltip "As barras de ferramentas irão reagir ao movimento do rota, aparecendo sempre que o rato se encontre sobre elas, e escondendo-se sempre que o rato as deixe. Se esta opção for desactivada, só será possível aceder às barras de ferramentas ao pressionar F6 para focar a barra de endereço, ou quando algum painel abre ancorado a uma delas.">
+<!ENTITY opt.delayIn.label "Sensibilidade ao entrar">
+<!ENTITY opt.delayIn.tooltip "Determina o tempo de espera após o qual as barras de ferramentas aparecem, quando o rato é movido para o topo do navegador.">
+<!ENTITY opt.delayOut.label "Sensibilidade ao sair">
+<!ENTITY opt.delayOut.tooltip "Determina o tempo de espera após o qual as barras de ferramentas se escondem, quando o rato as deixa.">
+<!ENTITY opt.delayLow.label "Baixa">
+<!ENTITY opt.delayHigh.label "Alta">
+<!ENTITY cat.appearance.label "Estilo">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Desenhado para se enquadrar o melhor possível com estilo nativo do firefox.">
+<!ENTITY opt.style.round.label "Espaçoso">
+<!ENTITY opt.style.round.tooltip "Mostra as barras de ferramentas com uma forma larga e redonda. Encaixa bem com o estilo nativo do firefox.">
+<!ENTITY opt.style.compact.label "Compacto">
+<!ENTITY opt.style.compact.tooltip "Um estilo minimalista que mostra o máximo de botões e caixas de texto no menor espaço possível, de modo a não ocupar demasiado espaço de visualização do conteúdo web.">
+<!ENTITY opt.style.full.label "Largura total">
+<!ENTITY opt.style.full.tooltip "As barras de ferramentas estendem-se por toda a largura da janela disponível, sem bordas ou margens laterias, tal como o fariam caso estivessem ainda anexadas ao topo do navegador.">
+<!ENTITY cat.animation.label "Animação">
+<!ENTITY opt.animation.none.label "Sem animação">
+<!ENTITY opt.animation.none.tooltip "As barras de ferramentas aparecem no ecrã sem qualquer tipo de efeitos.">
+<!ENTITY opt.animation.fadein.label "Dissolver">
+<!ENTITY opt.animation.fadein.tooltip "Uma animação simples em que as barras de ferramentas se dissolvem no ecrã.">
+<!ENTITY opt.animation.slidedown.label "Deslizar para baixo">
+<!ENTITY opt.animation.slidedown.tooltip "Um efeito de deslize simples, em que as barras de ferramentas aparecem do topo do navegador.">
+<!ENTITY opt.animation.rollout.label "Rolar para fora">
+<!ENTITY opt.animation.rollout.tooltip "As barras de ferramentas rolam para o ecrã a partir de um dos cantos.">
+<!ENTITY opt.animation.hinge.label "Efeito dobradiça do GiT">
+<!ENTITY opt.animation.hinge.tooltip "Efeito especial de dobradiça, criado por Geek in Training. Se gosta deste efeito devia agradecer-lhe!">
+<!ENTITY cat.slimChromeKeyset.label "Atalho de teclado para activar e desactivar">
+<!ENTITY opt.keyset.control "Control">
+<!ENTITY opt.keyset.shift "Shift">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Comando">
+<!ENTITY opt.keyset.option "Opção">
+<!ENTITY opt.keyset.none "Nenhum">
+<!ENTITY opt.keyset.spacebar "Barra de espaços">
+<!ENTITY opt.keyset.pageup "Página para cima">
+<!ENTITY opt.keyset.pagedown "Página para baixo">
+<!ENTITY opt.keyset.end "Fim">
+<!ENTITY opt.keyset.home "Início">
+<!ENTITY opt.keyset.left "Seta esquerda">
+<!ENTITY opt.keyset.up "Seta cima">
+<!ENTITY opt.keyset.right "Seta direita">
+<!ENTITY opt.keyset.down "Seta baixo">
 <!ENTITY about.name "O Fox, Só Que Melhor">
 <!ENTITY about.by "por Quicksaver">
-<!ENTITY about.summary "Este extra ainda não tem opções, embora esteja a planear adicionar várias functionalidades com o tempo. Se há algo em específico que gostaria de ver adicionado, por favor diga-me.">
 <!ENTITY about.desc "Toda a informação relativa a este extra e ao seu autor pode ser encontrada na página dos Extras do Mozilla. Se gostou da extensão, pode mostrar o seu agrado ao lá deixar um comentário ou pode também fazer uma pequena contribuição para manter o seu desenvolvimento. Sugestões e problemas podem ser comunicados na página de suporte técnico.">
 <!ENTITY about.home "Página do Extra do Mozilla">
 <!ENTITY about.tech "Suporte Técnico">

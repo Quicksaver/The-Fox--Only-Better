@@ -1,9 +1,66 @@
-<!ENTITY Optwindow.style "width: 41em; height: 37em;">
+<!ENTITY Optwindow.style "width: 36em;">
 <!ENTITY options.title "The Fox, Only Better">
-<!ENTITY optabout.label "Over">
+<!ENTITY pane.slimChrome.label "Chrome verkleinen">
+<!ENTITY pane.about.label "Over">
+<!ENTITY cat.general.label "Algemeen">
+<!ENTITY opt.slimChrome.label "Chrome verkleinen inschakelen">
+<!ENTITY opt.slimChrome.tooltip "Stroomlijnt de interface en maximaliseert de ruimte voor inhoud, door de bovenste werkbalken te verbergen als u ze niet nodig hebt.">
+<!ENTITY opt.includeNavBar.label "De navigatiebalk opnemen bij de verborgen werkbalken">
+<!ENTITY opt.includeNavBar.tooltip "Verbergt de navigatiebalk met de overige werkbalken. Als dit is uitgeschakeld zal de navigatiebalk net als voorheen altijd zichtbaar zijn.">
+<!ENTITY opt.miniOnAllInput.label "Minibalk weergeven bij focus op een invoerveld.">
+<!ENTITY opt.miniOnAllInput.tooltip "Schakel dit in als u de mini-locatiebalk wilt weergeven bij invoer in elk type invoerveld, en niet alleen wachtwoordvelden.">
+<!ENTITY opt.miniOnTabSelect.label "Minibalk weergeven bij wijzigen locatie">
+<!ENTITY opt.miniOnTabSelect.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
+<!ENTITY opt.skyLights.label "Daklichten inschakelen">
+<!ENTITY opt.skyLights.tooltip "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm. Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
+<!ENTITY opt.skyLightsHide.label "Daklichten verbergen als chrome zichtbaar is">
+<!ENTITY opt.skyLightsHide.tooltip "De Daklichten worden verborgen als de werkbalken of de minibalk zichtbaar zijn, aangezien al hun informatie al ergens in de werkbalken zichtbaar is.">
+<!ENTITY opt.useMouse.label "Chrome weergeven als muis bovenzijde aanwijst">
+<!ENTITY opt.useMouse.tooltip "De werkbalken reageren op muisbewegingen en zullen verschijnen als de muis erboven hangt en verdwijnen als de muisaanwijzer weg is. Als dit is uitgeschakeld kunt u de werkbalken alleen benaderen door op F6 te drukken om de locatiebalk focus te geven, of wanneer een paneel dat aan één van de verborgen werkbalken is verankerd opent.">
+<!ENTITY opt.delayIn.label "Gevoeligheid bij binnenkomst">
+<!ENTITY opt.delayIn.tooltip "Bepaalt de vertraging waarna de chrome verschijnt wanneer de muis naar de bovenzijde van de browser beweegt.">
+<!ENTITY opt.delayOut.label "Gevoeligheid bij verlaten">
+<!ENTITY opt.delayOut.tooltip "Bepaalt de vertraging waarna de chrome verdwijnt wanneer de muis naar de bovenzijde van de browser verlaat.">
+<!ENTITY opt.delayLow.label "Laag">
+<!ENTITY opt.delayHigh.label "Hoog">
+<!ENTITY cat.appearance.label "Stijl">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Ontworpen om de uitstraling van het meegeleverde Firefox-thema te hebben.">
+<!ENTITY opt.style.round.label "Spacious">
+<!ENTITY opt.style.round.tooltip "Toont de werkbalken in een ruim veld met een grote ronde vorm. Past goed bij het algemene Firefox-thema.">
+<!ENTITY opt.style.compact.label "Compact">
+<!ENTITY opt.style.compact.tooltip "Een geminimaliseerde stijl die het maximale aantal werkbalkknoppen en tekstvelden in zo min mogelijk ruimte weergeeft, om de webpagina niet te overbevolken met chrome-elementen.">
+<!ENTITY opt.style.full.label "Full width">
+<!ENTITY opt.style.full.tooltip "De werkbalken strekken zich over de gehele beschikbare ruimte uit, alsof ze nog steeds bevestigd zijn aan de bovenzijde van de chrome, zonder randen of marges aan de zijkant.">
+<!ENTITY cat.animation.label "Animatie">
+<!ENTITY opt.animation.none.label "Geen animatie">
+<!ENTITY opt.animation.none.tooltip "De werkbalken worden zichtbaar zonder speciale effecten.">
+<!ENTITY opt.animation.fadein.label "Geleidelijk">
+<!ENTITY opt.animation.fadein.tooltip "Simpele animatie die de werkbalken geleidelijk zichtbaar maakt.">
+<!ENTITY opt.animation.slidedown.label "Omlaag schuiven">
+<!ENTITY opt.animation.slidedown.tooltip "Een simpel schuifeffect, waarin de werkbalken vanuit de bovenzijde van de chrome verschijnen.">
+<!ENTITY opt.animation.rollout.label "Uitrollen">
+<!ENTITY opt.animation.rollout.tooltip "De werkbalken worden rollend vanaf de bovenzijde zichtbaar.">
+<!ENTITY opt.animation.hinge.label "GiT’s scharniereffect">
+<!ENTITY opt.animation.hinge.tooltip "Speciaal scharniereffect, gemaakt door Geek in Training. Als u het mooi vindt kunt u hem bedanken!">
+<!ENTITY cat.slimChromeKeyset.label "Sneltoets voor in- of uitschakelen">
+<!ENTITY opt.keyset.control "Ctrl">
+<!ENTITY opt.keyset.shift "Shift">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Cmd">
+<!ENTITY opt.keyset.option "Optie">
+<!ENTITY opt.keyset.none "Geen">
+<!ENTITY opt.keyset.spacebar "Spatiebalk">
+<!ENTITY opt.keyset.pageup "PgUp">
+<!ENTITY opt.keyset.pagedown "PgDn">
+<!ENTITY opt.keyset.end "End">
+<!ENTITY opt.keyset.home "Home">
+<!ENTITY opt.keyset.left "Links">
+<!ENTITY opt.keyset.up "Omhoog">
+<!ENTITY opt.keyset.right "Rechts">
+<!ENTITY opt.keyset.down "Omlaag">
 <!ENTITY about.name "The Fox, Only Better">
 <!ENTITY about.by "door Quicksaver">
-<!ENTITY about.summary "Deze add-on heeft nog geen voorkeursinstellingen, maar ik ben wel van plan nieuwe functies toe te voegen! Laat het me weten als er iets is dat u graag toegevoegd wilt zien.">
 <!ENTITY about.desc "Alle informatie over de add-on en zijn ontwikkelaar kan worden gevonden op de startpagina op Mozilla Add-ons. Als u plezier aan de add-on beleeft, overweeg dan een aardige beoordeling of een kleine bijdrage om verdere ontwikkeling te ondersteunen. Bugrapporten en suggesties kunnen worden doorgegeven in de webpagina voor technische ondersteuning.">
 <!ENTITY about.home "Add-on-startpagina">
 <!ENTITY about.tech "Technische ondersteuning">
