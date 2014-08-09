@@ -26,11 +26,11 @@
 <!ENTITY cat.appearance.label "Stijl">
 <!ENTITY opt.style.australis.label "Australis">
 <!ENTITY opt.style.australis.tooltip "Ontworpen om de uitstraling van het meegeleverde Firefox-thema te hebben.">
-<!ENTITY opt.style.round.label "Spacious">
+<!ENTITY opt.style.round.label "Ruimtelijk">
 <!ENTITY opt.style.round.tooltip "Toont de werkbalken in een ruim veld met een grote ronde vorm. Past goed bij het algemene Firefox-thema.">
 <!ENTITY opt.style.compact.label "Compact">
 <!ENTITY opt.style.compact.tooltip "Een geminimaliseerde stijl die het maximale aantal werkbalkknoppen en tekstvelden in zo min mogelijk ruimte weergeeft, om de webpagina niet te overbevolken met chrome-elementen.">
-<!ENTITY opt.style.full.label "Full width">
+<!ENTITY opt.style.full.label "Volledige breedte">
 <!ENTITY opt.style.full.tooltip "De werkbalken strekken zich over de gehele beschikbare ruimte uit, alsof ze nog steeds bevestigd zijn aan de bovenzijde van de chrome, zonder randen of marges aan de zijkant.">
 <!ENTITY cat.animation.label "Animatie">
 <!ENTITY opt.animation.none.label "Geen animatie">
