@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.1.0';
 moduleAid.UTILS = true;
 
 // messenger - 	Aid object to communicate with browser content scripts (e10s).
@@ -16,7 +16,7 @@ moduleAid.UTILS = true;
 //	see messageBrowser()
 // listenBrowser(aBrowser, aMessage, aListener) - registers a listener for messages sent from content scripts through this backbone's methods
 //	aBrowser - (xul element) the browser element from which to listen to messages
-//	aMessage - (string) - message to listen for
+//	aMessage - (string) message to listen for
 //	aListener - (function) the listener that will respond to the message. Expects (message) as its only argument; see https://developer.mozilla.org/en-US/docs/The_message_manager
 // unlistenBrowser(aBrowser, aMessage, aListener) - unregisters a listener for messages sent from content scripts
 //	see listenBrowser()
@@ -29,7 +29,23 @@ moduleAid.UTILS = true;
 //	see listenBrowser()
 // unlistenAll(aMessage, aListener) - unregisters a listener for messages sent from all browsers open in all windows
 //	see listenBrowser()
+// loadInBrowser(aBrowser, aModule) - loads a module into the content script of the specified browser
+//	aBrowser - (xul element) the browser element corresponding to the content script into which to load the module
+//	aModule - (string) name of the module to load
+// unloadFromBrowser(aBrowser, aModule) - unloads a module from a content script [undoes loadInBrowser()]
+//	see loadInBrowser()
+// loadInWindow(aWindow, aModule) - loads a module into all the content scripts of a specified window
+//	aWindow - (xul element) navigator window of which all content scripts will have the module loaded into
+//	see loadInBrowser()
+// unloadFromWindow(aWindow, aModule) - unloads a module from all the content scripts of a window [undoes loadInWindow()]
+//	see loadInWindow()
+// loadInAll(aModule) - loads a module into all content scripts
+//	see loadInBrowser()
+// unloadFromAll(aModule) - unloads a module from all content scripts [undoes loadInAll()]
+//	see loadInBrowser()
 this.messenger = {
+	loadedInAll: [],
+	
 	globalMM: Cc["@mozilla.org/globalmessagemanager;1"].getService(Ci.nsIMessageListenerManager),
 	
 	messageBrowser: function(aBrowser, aMessage, aData, aCPOW) {
@@ -80,13 +96,86 @@ this.messenger = {
 		this.globalMM.removeMessageListener(objName+':'+aMessage, aListener);
 	},
 	
-	getInitialPrefs: function(m) {
+	loadInBrowser: function(aBrowser, aModule) {
+		this.messageBrowser(aBrowser, 'load', aModule);
+	},
+	
+	unloadFromBrowser: function(aBrowser, aModule) {
+		this.messageBrowser(aBrowser, 'unload', aModule);
+	},
+	
+	loadInWindow: function(aWindow, aModule) {
+		if(aWindow.gBrowser && aWindow.gBrowser.tabContainer) {
+			if(!aWindow.gBrowser.tabContainer[objName+'Content']) {
+				aWindow.gBrowser.tabContainer[objName+'Content'] = {
+					modules: [aModule],
+					listener: function(e) {
+						messenger.messageBrowser(e.target.linkedBrowser, 'reinit');
+					}
+				};
+				aWindow.gBrowser.tabContainer.addEventListener('TabOpen', aWindow.gBrowser.tabContainer[objName+'Content'].listener, true);
+			}
+			else if(aWindow.gBrowser.tabContainer[objName+'Content'].modules.indexOf(aModule) == -1) {
+				aWindow.gBrowser.tabContainer[objName+'Content'].modules.push(aModule);
+			}
+		}
+		
+		this.messageWindow(aWindow, 'load', aModule);
+	},
+	
+	unloadFromWindow: function(aWindow, aModule) {
+		if(aWindow.gBrowser && aWindow.gBrowser.tabContainer) {
+			if(aWindow.gBrowser.tabContainer[objName+'Content'] && aWindow.gBrowser.tabContainer[objName+'Content'].modules.indexOf(aModule) != -1) {
+				aWindow.gBrowser.tabContainer[objName+'Content'].modules.splice(aWindow.gBrowser.tabContainer[objName+'Content'].modules.indexOf(aModule), 1);
+				if(aWindow.gBrowser.tabContainer[objName+'Content'].modules.length == 0) {
+					aWindow.gBrowser.tabContainer.removeEventListener('TabOpen', aWindow.gBrowser.tabContainer[objName+'Content'].listener, true);
+					delete aWindow.gBrowser.tabContainer[objName+'Content'];
+				}
+			}
+		}
+		
+		this.messageWindow(aWindow, 'unload', aModule);
+	},
+	
+	loadInAll: function(aModule) {
+		if(this.loadedInAll.indexOf(aModule) != -1) { return; }
+		this.loadedInAll.push(aModule);
+		
+		this.messageAll('load', aModule);
+	},
+	
+	unloadFromAll: function(aModule) {
+		if(this.loadedInAll.indexOf(aModule) == -1) { return; }
+		this.loadedInAll.splice(this.loadedInAll.indexOf(aModule), 1);
+		
+		this.messageAll('unload', aModule);
+	},
+	
+	initContent: function(m) {
+		// if this is a preloaded browser, we don't need to load in it, the content script will still be loaded in the actual tab's browser
+		if(m.target.parentNode.localName == 'window' && m.target.parentNode.id == 'win') { return; }
+		
+		messenger.messageBrowser(m.target, 'init');
+		
+		// carry the preferences current values into content
 		var current = {};
 		for(var pref in prefList) {
 			if(pref.startsWith('NoSync_')) { continue; }
 			current[pref] = prefAid[pref];
 		}
 		messenger.messageBrowser(m.target, 'pref', current);
+		
+		// load into this browser all the content modules that should be loaded in all content scripts
+		for(var module of messenger.loadedInAll) {
+			messenger.messageBrowser(m.target, 'load', module);
+		}
+		
+		// load into this browser all the content modules that should be loaded into content scripts of this window
+		if(m.target.ownerGlobal.gBrowser && m.target.ownerGlobal.gBrowser.tabContainer && m.target.ownerGlobal.gBrowser.tabContainer[objName+'Content']) {
+			for(var module of m.target.ownerGlobal.gBrowser.tabContainer[objName+'Content'].modules) {
+				messenger.messageBrowser(m.target, 'load', module);
+			}
+		}
 	},
 	
 	carryPref: function(pref, val) {
@@ -95,11 +184,18 @@ this.messenger = {
 		var carry = {};
 		carry[pref] = val;
 		messenger.messageAll('pref', carry);
+	},
+	
+	cleanWindow: function(aWindow) {
+		if(aWindow.gBrowser && aWindow.gBrowser.tabContainer && aWindow.gBrowser.tabContainer[objName+'Content']) {
+			aWindow.gBrowser.tabContainer.removeEventListener('TabOpen', aWindow.gBrowser.tabContainer[objName+'Content'].listener, true);
+			delete aWindow.gBrowser.tabContainer[objName+'Content'];
+		}
 	}
 };
 
 moduleAid.LOADMODULE = function() {
-	messenger.listenAll('getPrefAid', messenger.getInitialPrefs);
+	messenger.listenAll('init', messenger.initContent);
 	messenger.globalMM.loadFrameScript('resource://'+objPathString+'/modules/utils/content.js', true);
 	
 	for(var pref in prefList) {
@@ -110,13 +206,15 @@ moduleAid.LOADMODULE = function() {
 };
 
 moduleAid.UNLOADMODULE = function() {
-	messenger.unlistenAll('getPrefAid', messenger.getInitialPrefs);
+	messenger.unlistenAll('init', messenger.initContent);
 	
 	for(var pref in prefList) {
 		if(pref.startsWith('NoSync_')) { continue; }
 		
 		prefAid.unlisten(pref, messenger.carryPref);
 	}
+	
+	windowMediator.callOnAll(messenger.cleanWindow, 'navigator:browser');
 	
 	messenger.messageAll('shutdown');
 };

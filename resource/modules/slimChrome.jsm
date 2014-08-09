@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.30';
+moduleAid.VERSION = '1.4.31';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -1069,7 +1069,7 @@ this.toggleSkyLights = function() {
 };
 
 moduleAid.LOADMODULE = function() {
-	messenger.messageWindow(window, 'load', 'slimChrome');
+	messenger.loadInWindow(window, 'slimChrome');
 	
 	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 	
@@ -1100,5 +1100,5 @@ moduleAid.UNLOADMODULE = function() {
 		delete aBrowser._currentSpec;
 	}
 	
-	messenger.messageWindow(window, 'unload', 'slimChrome');
+	messenger.unloadFromWindow(window, 'slimChrome');
 };

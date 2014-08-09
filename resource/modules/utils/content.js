@@ -4,8 +4,8 @@
 // Important: Do not change anything else other than the name of the object (and again at the bottom) and the objName and objPathString properties!
 //
 // Use the messenger object to send message safely to this object without conflicting with other add-ons.
-// To load or unload modules in the modules/content/ folder into this object, send a 'load' or 'unload' message through messenger, followed by another
-// string argument with the name of the module to load. Example: messenger.messageAll('load', 'example');
+// To load or unload modules in the modules/content/ folder into this object, use messenger's loadIn* methods.
+// Reserved messages for the messenger system: load, unload, init, reinit, pref, shutdown
 //
 // Methods that can be used inside content modules:
 // listen(aMessage, aListener) - adds aListener as a receiver for when aMessage is passed from chrome to content through the messenger object.
@@ -28,7 +28,9 @@ this.theFoxOnlyBetter = {
 	objName: 'theFoxOnlyBetter',
 	objPathString: 'thefoxonlybetter',
 	
-	version: '1.1.0',
+	initialized: false,
+	
+	version: '1.1.1',
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
@@ -64,7 +66,19 @@ this.theFoxOnlyBetter = {
 		this.listen('load', this.loadModule);
 		this.listen('unload', this.unloadModule);
 		this.listen('pref', this.carriedPref);
-		this.message('getPrefAid');
+		this.listen('init', this.finishInit);
+		this.listen('reinit', this.reinit);
+		this.message('init');
+	},
+	
+	finishInit: function() {
+		this.initialized = true;
+	},
+	
+	reinit: function() {
+		if(!this.initialized) {
+			this.message('init');
+		}
 	},
 	
 	// aids to listen for messages from chrome
