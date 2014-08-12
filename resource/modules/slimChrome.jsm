@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.31';
+moduleAid.VERSION = '1.4.32';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -234,7 +234,7 @@ this.onMouseOutBrowser = function(e) {
 	// also, don't capture this if we're in HTML5 fullscreen mode and in Mac OS X, as it's just weird
 	if(DARWIN && mozFullScreen) { return; }
 	
-	if(document.documentElement.getAttribute('chromehidden').indexOf('menubar') == -1) {
+	if(document.documentElement.getAttribute('chromehidden').indexOf('menubar') == -1 && dispatch(slimChromeContainer, { type: 'SlimChromeNormalActiveArea' })) {
 		// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
 		if(e.screenY < gNavToolbox.boxObject.screenY
 		|| e.screenY > gNavToolbox.boxObject.screenY +gNavToolbox.boxObject.height
