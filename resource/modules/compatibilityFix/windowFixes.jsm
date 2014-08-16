@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.12';
+moduleAid.VERSION = '1.0.13';
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/downloadsIndicator');
@@ -30,6 +30,10 @@ moduleAid.LOADMODULE = function() {
 		moduleAid.loadIf('compatibilityFix/LinkLocationBar', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("{F5DDF39C-9293-4d5e-9AA8-E04E6DD5E9B4}", function(addon) {
+		moduleAid.loadIf('compatibilityFix/hackBar', (addon && addon.isActive));
+	});
+	
 	moduleAid.load('compatibilityFix/UIEnhancer');
 	
 	// changes introduced to the top TabsToolbar/nav-bar divider style,
@@ -48,6 +52,7 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/TabGroupsManager');
 	moduleAid.unload('compatibilityFix/S4E');
 	moduleAid.unload('compatibilityFix/LinkLocationBar');
+	moduleAid.unload('compatibilityFix/hackBar');
 	moduleAid.unload('compatibilityFix/UIEnhancer');
 	
 	removeAttribute(document.documentElement, objName+'-FF32');
