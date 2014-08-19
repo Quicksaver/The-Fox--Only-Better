@@ -73,7 +73,7 @@
 		<hbox>
 			<groupbox align="center" flex="1">
 				<caption label="&cat.appearance.label;"/>
-				<radiogroup preference="pref-slimStyle" oncommand="objName.initialShowInOpener(1500);">
+				<radiogroup id="slimStyleRadio" preference="pref-slimStyle" oncommand="objName.initialShowInOpener(this.value, document.getElementById('slimAnimationRadio').value, 1500);">
 					<radio dependson="pref-slimChrome" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
 					<radio dependson="pref-slimChrome" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
@@ -83,7 +83,7 @@
 			
 			<groupbox align="center" flex="1">
 				<caption label="&cat.animation.label;"/>
-				<radiogroup preference="pref-slimAnimation" oncommand="objName.initialShowInOpener(1000);">
+				<radiogroup id="slimAnimationRadio" preference="pref-slimAnimation" oncommand="objName.initialShowInOpener(document.getElementById('slimStyleRadio').value, this.value, 1000);">
 					<radio dependson="pref-slimChrome" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.fadein.label;" tooltiptext="&opt.animation.fadein.tooltip;" value="fadein"/>
 					<radio dependson="pref-slimChrome" label="&opt.animation.slidedown.label;" tooltiptext="&opt.animation.slidedown.tooltip;" value="slidedown"/>

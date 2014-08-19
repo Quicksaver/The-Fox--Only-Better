@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -51,10 +51,12 @@ this.fillKeycodes = function() {
 	}
 };
 
-this.initialShowInOpener = function(duration) {
+this.initialShowInOpener = function(style, animation, duration) {
 	timerAid.init('initialShowInOpener', function() {
-		if(window.opener && window.opener.theFoxOnlyBetter && window.opener.theFoxOnlyBetter.initialShowChrome) {
-			window.opener.theFoxOnlyBetter.initialShowChrome(duration);
+		if(window.opener && window.opener[objName] && window.opener[objName].initialShowChrome && window.opener[objName].slimChromeStyle) {
+			window.opener[objName].slimStyle = style;
+			window.opener[objName].slimAnimation = animation;
+			window.opener[objName].initialShowChrome(duration);
 		}
 	}, 150);
 };

@@ -1,8 +1,20 @@
-moduleAid.VERSION = '1.4.33';
+moduleAid.VERSION = '1.4.34';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
 this.__defineGetter__('slimChromeToolbars', function() { return $(objName+'-slimChrome-toolbars'); });
+
+this._slimAnimation = null;
+this.__defineGetter__('slimAnimation', function() { return this._slimAnimation || prefAid.slimAnimation; });
+this.__defineSetter__('slimAnimation', function(v) {
+	if(v) {
+		timerAid.init('resetSlimAnimation', function() {
+			slimAnimation = null;
+		}, 2250);
+	}
+	this._slimAnimation = v;
+	slimChromeAnimation();
+});
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -459,7 +471,7 @@ this.setMini = function(mini) {
 			timerAid.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
 				toggleAttribute(gNavToolbox, 'slimChromeVisible', trueAttribute(slimChromeContainer, 'hover'));
-			}, prefAid.slimAnimation == 'hinge' ? 500 : 300);
+			}, slimAnimation == 'hinge' ? 500 : 300);
 		}, 50);
 	}
 };
@@ -494,7 +506,7 @@ this.slimChromeTransitioned = function(e) {
 	if(e.target != slimChromeContainer) { return; }
 	
 	var prop1 = 'width';
-	switch(prefAid.slimAnimation) {
+	switch(slimAnimation) {
 		case 'fadein':
 		case 'slidedown':
 			if(!trueAttribute(slimChromeContainer, 'mini')) {
@@ -513,7 +525,7 @@ this.slimChromeTransitioned = function(e) {
 	}
 	
 	var prop2 = 'opacity';
-	if(prefAid.slimAnimation == 'hinge') {
+	if(slimAnimation == 'hinge') {
 		prop2 = 'transform';
 	}
 	
@@ -570,7 +582,7 @@ this.ensureSlimChromeFinishedWidth = function() {
 	
 	dispatch(slimChromeContainer, { type: 'EnsureSlimChrome', cancelable: false });
 	
-	if(prefAid.slimAnimation == 'none' || lastSlimChromeStyle.width <= MIN_WIDTH) {
+	if(slimAnimation == 'none' || lastSlimChromeStyle.width <= MIN_WIDTH) {
 		slimChromeFinishedWidth();
 	} else {
 		// for the extremelly rare cases where neither the above condition is true or when the animation doesn't need to take place (e.g. extremelly well placed clicks)
@@ -579,7 +591,7 @@ this.ensureSlimChromeFinishedWidth = function() {
 };
 
 this.ensureSlimChromeFinishedOpacity = function() {
-	if(prefAid.slimAnimation == 'none') {
+	if(slimAnimation == 'none') {
 		slimChromeFinishedOpacity();
 	}
 };
@@ -861,7 +873,7 @@ this.slimChromeIncludeNavBar = function(unload) {
 };
 
 this.slimChromeAnimation = function() {
-	setAttribute(gNavToolbox, 'slimAnimation', prefAid.slimAnimation);
+	setAttribute(gNavToolbox, 'slimAnimation', slimAnimation);
 };
 
 this.loadSlimChrome = function() {

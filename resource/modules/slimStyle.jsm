@@ -1,10 +1,22 @@
-moduleAid.VERSION = '1.1.3';
+moduleAid.VERSION = '1.1.4';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathContainer', function() { return $(objName+'-slimChrome-clipPath-container-path'); });
 this.__defineGetter__('slimChromeClipPathToolbars', function() { return $(objName+'-slimChrome-clipPath-toolbars-path'); });
 this.__defineGetter__('slimChromeSVGBefore', function() { return $(objName+'-slimChrome-svg-before-path'); });
 this.__defineGetter__('slimChromeSVGAfter', function() { return $(objName+'-slimChrome-svg-after-path'); });
+
+this._slimStyle = null;
+this.__defineGetter__('slimStyle', function() { return this._slimStyle || prefAid.slimStyle; });
+this.__defineSetter__('slimStyle', function(v) {
+	if(v) {
+		timerAid.init('resetSlimStyle', function() {
+			slimStyle = null;
+		}, 2250);
+	}
+	this._slimStyle = v;
+	slimChromeStyle();
+});
 
 this.appliedSlimStyle = false;
 
@@ -54,14 +66,14 @@ this.AUSTRALIS_BORDER_COORD_X5 = 1;
 this.AUSTRALIS_BORDER_COORD_Y5 = 1;
 
 this.slimChromeClipPaths = function() {
-	if(prefAid.slimStyle == 'compact') {
+	if(slimStyle == 'compact') {
 		var d = !DARWIN ? 'm 1,-5 l 0,7.8 l 0,0.2 l 0,22 l 10000,0 l 0,-50 l -10000,0 z' : 'M 1,-5 l 0,34 l 10000,0 l 0,-34 l -10000,0 z';
 		setAttribute(slimChromeClipPathURLBarWrapper, 'd', d);
 		
 		return;
 	}
 	
-	if(prefAid.slimStyle != 'australis' || typeof(lastSlimChromeStyle) == 'undefined' || !lastSlimChromeStyle) { return; }
+	if(slimStyle != 'australis' || typeof(lastSlimChromeStyle) == 'undefined' || !lastSlimChromeStyle) { return; }
 	
 	// we don't want to calculate the paths in this case, as they rely on the actual height of the toolbars, which would be incorrect here;
 	// the paths will be re-done when the chrome is next shown
@@ -225,8 +237,8 @@ this.slimChromeNumToolbars = function() {
 	return t;
 };
 
-this.slimChromeStyle = function(show) {
-	setAttribute(gNavToolbox, 'slimStyle', prefAid.slimStyle);
+this.slimChromeStyle = function() {
+	setAttribute(gNavToolbox, 'slimStyle', slimStyle);
 	slimChromeClipPaths();
 };
 
