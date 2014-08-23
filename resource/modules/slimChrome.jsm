@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.34';
+moduleAid.VERSION = '1.4.35';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -137,6 +137,10 @@ this.moveSlimChrome = function() {
 	findPersonaPosition();
 	
 	dispatch(slimChromeContainer, { type: 'MovedSlimChrome', cancelable: false });
+};
+
+this.personaChanged = function() {
+	aSync(findPersonaPosition);
 };
 
 this.findPersonaPosition = function() {
@@ -958,7 +962,7 @@ this.loadSlimChrome = function() {
 	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	
 	// support personas in hovering toolbox
-	observerAid.add(findPersonaPosition, "lightweight-theme-changed");
+	observerAid.add(personaChanged, "lightweight-theme-styling-update");
 	
 	// make the drop indicator visible on windows with aero enabled;
 	// the indicator comes from the binding, and if for some reason it's removed/re-applied, we would lose this watcher, so we need to make sure it stays
@@ -1030,7 +1034,7 @@ this.unloadSlimChrome = function() {
 	listenerAid.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
 	messenger.unlistenWindow(window, 'locationChange', slimChromeOnLocationChange);
 	messenger.unlistenWindow(window, 'focusPasswords', contentFocusPasswords);
-	observerAid.remove(findPersonaPosition, "lightweight-theme-changed");
+	observerAid.remove(personaChanged, "lightweight-theme-styling-update");
 	CustomizableUI.removeListener(slimChromeCUIListener);
 	slimChromeChildListener.observer.disconnect();
 	
