@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.2.0';
+moduleAid.VERSION = '2.2.1';
 moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
@@ -34,7 +34,7 @@ this.prefAid = {
 		var branchString = ((trunk) ? trunk+'.' : '') +branch+'.';
 		var defaultBranch = Services.prefs.getDefaultBranch(branchString);
 		for(var pref in prefList) {
-			if(pref.indexOf('NoSync_') == 0) { continue; }
+			if(pref.startsWith('NoSync_')) { continue; }
 			
 			// When updating from a version with prefs of same name but different type would throw an error and stop.
 			// In this case, we need to clear it before we can set its default value again.
