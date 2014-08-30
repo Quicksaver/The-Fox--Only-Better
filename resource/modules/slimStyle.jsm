@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.4';
+moduleAid.VERSION = '1.1.5';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathContainer', function() { return $(objName+'-slimChrome-clipPath-container-path'); });
@@ -67,7 +67,7 @@ this.AUSTRALIS_BORDER_COORD_Y5 = 1;
 
 this.slimChromeClipPaths = function() {
 	if(slimStyle == 'compact') {
-		var d = !DARWIN ? 'm 1,-5 l 0,7.8 l 0,0.2 l 0,22 l 10000,0 l 0,-50 l -10000,0 z' : 'M 1,-5 l 0,34 l 10000,0 l 0,-34 l -10000,0 z';
+		var d = !DARWIN ? 'm 1,-5 l 0,7.8 l 0,0.2 l 0,50 l 10000,0 l 0,-100 l -10000,0 z' : 'M 1,-5 l 0,50 l 10000,0 l 0,-100 l -10000,0 z';
 		setAttribute(slimChromeClipPathURLBarWrapper, 'd', d);
 		
 		return;
@@ -83,11 +83,17 @@ this.slimChromeClipPaths = function() {
 	}
 	
 	var width = AUSTRALIS_BORDER_WIDTH + (AUSTRALIS_BORDER_WIDTH_INCR * slimChromeNumToolbars());
+	var height = slimChromeToolbars.clientHeight;
 	
 	// don't bother if nothing changed in the meantime
-	if(slimChromeContainer._borderSize == width && slimChromeContainer._lastSize == lastSlimChromeStyle.width) { return; }
+	if(slimChromeContainer._borderSize == width
+	&& slimChromeContainer._lastWidth == lastSlimChromeStyle.width
+	&& slimChromeContainer._lastHeight == height) {
+		return;
+	}
 	slimChromeContainer._borderSize = width;
-	slimChromeContainer._lastSize = lastSlimChromeStyle.width;
+	slimChromeContainer._lastWidth = lastSlimChromeStyle.width;
+	slimChromeContainer._lastHeight = height;
 	
 	// first bit, define the initial point
 	var aC = width /lastSlimChromeStyle.width;
@@ -135,7 +141,6 @@ this.slimChromeClipPaths = function() {
 	
 	// the following clipPath is to prevent the background from "bleeding out" when the chrome shows and hides,
 	// because the above clipPath would adapt to the width change outside the drawn borders; so we clip the left border in the -toolbars element rather than in its outer container
-	var height = slimChromeToolbars.clientHeight;
 	var d = "M "+((AUSTRALIS_BORDER_COORD_X1-AUSTRALIS_BORDER_OFFSET_X1)*width)+","+((AUSTRALIS_BORDER_COORD_Y1-AUSTRALIS_BORDER_OFFSET_Y1)*height);
 	
 	// we clip the toolbars along the same curve as the container
@@ -286,7 +291,8 @@ this.slimChromeStyleOnUnload = function() {
 	slimChromeStyleHiddenListener.observer.disconnect();
 	
 	delete slimChromeContainer._borderSize;
-	delete slimChromeContainer._lastSize;
+	delete slimChromeContainer._lastWidth;
+	delete slimChromeContainer._lastHeight;
 	
 	removeAttribute(gNavToolbox, 'slimStyle');
 };
