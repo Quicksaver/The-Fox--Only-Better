@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.1';
+moduleAid.VERSION = '1.4.2';
 moduleAid.UTILS = true;
 
 // keysetAid - handles editable keysets for the add-on
@@ -79,14 +79,14 @@ this.keysetAid = {
 	],
 	
 	// Restricts available key combos, I'm setting all displaying keys and other common ones to at least need the Ctrl key
-	allCodesAccel: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'VK_PAGE_UP', 'VK_PAGE_DOWN', 'VK_HOME', 'VK_END', 'VK_UP', 'VK_DOWN', 'VK_LEFT', 'VK_RIGHT', '.', ',', ';', '/', '\\', '=', '+', '-', '*' ],
+	allCodesAccel: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' ', 'VK_PAGE_UP', 'VK_PAGE_DOWN', 'VK_HOME', 'VK_END', 'VK_UP', 'VK_DOWN', 'VK_LEFT', 'VK_RIGHT', '.', ',', ';', '/', '\\', '=', '+', '-', '*', '<', '>' ],
 	
 	allCodes: ['VK_F1', 'VK_F2', 'VK_F3', 'VK_F4', 'VK_F5', 'VK_F6', 'VK_F7', 'VK_F8', 'VK_F9', 'VK_F10', 'VK_F11', 'VK_F12', 'VK_F13', 'VK_F14', 'VK_F15', 'VK_F16', 'VK_F17', 'VK_F18', 'VK_F19', 'VK_F20', 'VK_F21', 'VK_F22', 'VK_F23', 'VK_F24'],
 	
 	translateToConstantCode: function(input) {
 		var keycode = input;
-		if(keycode.indexOf('DOM_') != 0) {
-			if(keycode.indexOf('VK_') != 0) {
+		if(!keycode.startsWith('DOM_')) {
+			if(!keycode.startsWith('VK_')) {
 				switch(keycode) {
 					case ' ': keycode = 'SPACE'; break;
 					case '.': keycode = 'PERIOD'; break;
@@ -388,7 +388,7 @@ this.keysetAid = {
 				var key = aWindow.document.createElement('key');
 				key.id = keysetAid.registered[r].id;
 				key.setAttribute('keysetAid', objName);
-				key.setAttribute((keysetAid.registered[r].keycode.indexOf('VK_') == 0 ? 'keycode' : 'key'), keysetAid.registered[r].keycode);
+				key.setAttribute((keysetAid.registered[r].keycode.startsWith('VK_') ? 'keycode' : 'key'), keysetAid.registered[r].keycode);
 				toggleAttribute(key, 'command', keysetAid.registered[r].command, keysetAid.registered[r].command);
 				toggleAttribute(key, 'oncommand', keysetAid.registered[r].oncommand, keysetAid.registered[r].oncommand);
 				

@@ -146,6 +146,8 @@
 						<menuitem value="+" label="+"/>
 						<menuitem value="-" label="-"/>
 						<menuitem value="*" label="*"/>
+						<menuitem value="&lt;" label="&lt;"/>
+						<menuitem value="&gt;" label="&gt;"/>
 						<menuitem value="VK_F1" label="F1"/>
 						<menuitem value="VK_F2" label="F2"/>
 						<menuitem value="VK_F3" label="F3"/>
