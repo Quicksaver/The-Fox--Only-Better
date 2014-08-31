@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.3.0';
+moduleAid.VERSION = '2.3.1';
 moduleAid.UTILS = true;
+moduleAid.CLEAN = false;
 
 // window - Similarly to windowMediator.callOnMostRecent, the window property returns the most recent navigator:browser window object
 this.__defineGetter__('window', function() { return Services.wm.getMostRecentWindow('navigator:browser'); });

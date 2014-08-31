@@ -1,5 +1,6 @@
-moduleAid.VERSION = '2.3.0';
+moduleAid.VERSION = '2.3.1';
 moduleAid.UTILS = true;
+moduleAid.CLEAN = false;
 
 // privateBrowsingAid - Private browsing mode aid
 this.__defineGetter__('privateBrowsingAid', function() { observerAid; delete this.privateBrowsingAid; moduleAid.load('utils/privateBrowsingAid'); return privateBrowsingAid; });

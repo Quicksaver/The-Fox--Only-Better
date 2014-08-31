@@ -21,8 +21,9 @@ this.self = this;
 //	moduleAid.UTILS - (bool) vital modules that should be the last ones to be unloaded (like the utils) should have this set to true; should only be used in backbone modules
 //	moduleAid.BASEUTILS - 	(bool) some modules may depend on others even on unload, this should be set on modules that don't depend on any others,
 //				so that they only unload on the very end; like above, should only be used in backbone modules
+//	moduleAid.CLEAN - (bool) if false, this module won't be removed by clean(); defaults to true
 this.moduleAid = {
-	version: '2.3.0',
+	version: '2.3.1',
 	modules: [],
 	moduleVars: {},
 	
@@ -59,6 +60,7 @@ this.moduleAid = {
 			version: (this.VERSION) ? this.VERSION : null,
 			utils: (this.UTILS) ? this.UTILS : false,
 			baseutils: (this.BASEUTILS) ? this.BASEUTILS : false,
+			clean: (this.CLEAN !== undefined) ? this.CLEAN : true,
 			loaded: false,
 			failed: false
 		};
@@ -70,6 +72,7 @@ this.moduleAid = {
 		delete this.VERSION;
 		delete this.UTILS;
 		delete this.BASEUTILS;
+		delete this.CLEAN;
 		
 		if(!this.modules[i].vars) {
 			if(!Globals.moduleCache[aModule]) {
@@ -176,8 +179,11 @@ this.moduleAid = {
 		
 		while(!done) {
 			var i = moduleAid.modules.length -1;
-			while(i > 0) {
-				if(moduleAid.modules[i].utils == utils && moduleAid.modules[i].baseutils == baseutils) {
+			
+			while(i >= 0) {
+				if(moduleAid.modules[i].clean
+				&& moduleAid.modules[i].utils == utils
+				&& moduleAid.modules[i].baseutils == baseutils) {
 					moduleAid.unload(moduleAid.modules[i].name);
 				}
 				i--;
