@@ -1,12 +1,22 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
+
+this.miniActive = false;
 
 this.focusPasswords = function(e) {
-	if(e.target
+	var active = false;
+	
+	if(e.type == 'focus'
+	&& e.target
 	&& e.target.nodeName
 	&& e.target.nodeName.toLowerCase() == 'input'
 	&& !e.target.disabled
 	&& (prefAid.miniOnAllInput || e.target.type == 'password')) {
-		message('focusPasswords', (e.type == 'focus'));
+		active = true;
+	}
+	
+	if(active != miniActive) {
+		miniActive = active;
+		message('focusPasswords', miniActive);
 	}
 };
 
@@ -27,6 +37,28 @@ this.slimChromeProgressListener = {
 	}
 };
 
+this.focusLoadListener = function() {
+	// I don't think there's a way to do this without relying on each document's MutationObserver instance
+	try {
+		var listener = {
+			observer: null,
+			handler: function(mutations) {
+				try {
+					focusPasswords({
+						target: document.activeElement,
+						type: 'focus'
+					});
+				}
+				catch(ex) {}
+			}
+		}
+		
+		listener.observer = new content.MutationObserver(listener.handler);
+		listener.observer.observe(document.documentElement, { childList: true, subtree: true });
+	}
+	catch(ex) {}
+};
+
 moduleAid.LOADMODULE = function() {
 	// show mini chrome when focusing password fields
 	listenerAid.add(Scope, 'focus', focusPasswords, true);
@@ -34,6 +66,10 @@ moduleAid.LOADMODULE = function() {
 	
 	// show mini when the current tab changes host
 	webProgress.addProgressListener(slimChromeProgressListener, Ci.nsIWebProgress.NOTIFY_ALL);
+	
+	// observe when any changes to the webpage are made, so that for instance when a focused input field is removed, the mini bar doesn't stay stuck open
+	listenerAid.add(Scope, 'DOMContentLoaded', focusLoadListener);
+	focusLoadListener();
 };
 
 moduleAid.UNLOADMODULE = function() {
@@ -43,4 +79,5 @@ moduleAid.UNLOADMODULE = function() {
 	// and it couldn't be loaded now (it would throw) because the resource handler has been removed already.
 	//listenerAid.remove(Scope, 'focus', focusPasswords, true);
 	//listenerAid.remove(Scope, 'blur', focusPasswords, true);
+	//listenerAid.remove(Scope, 'DOMContentLoaded', focusLoadListener, true);
 };
