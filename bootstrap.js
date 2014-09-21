@@ -28,7 +28,7 @@
 // Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
 // along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
 
-let bootstrapVersion = '1.4.3';
+let bootstrapVersion = '1.4.4';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -103,13 +103,15 @@ function prepareObject(window, aName) {
 	window[objectName].moduleAid.load("utils/windowUtils");
 	
 	setAttribute(window.document.documentElement, objectName+'_UUID', window[objectName]._UUID);
+	setAttribute(window.document.documentElement, objectName+'_Version', AddonData.version);
 }
 
 function removeObject(window, aName) {
 	let objectName = aName || objName;
 	
 	if(window[objectName]) {
-		removeAttribute(window.document.documentElement, objectName+'_UUID', window[objectName]._UUID);
+		removeAttribute(window.document.documentElement, objectName+'_UUID');
+		removeAttribute(window.document.documentElement, objectName+'_Version');
 		window[objectName].moduleAid.unload("utils/windowUtils");
 		delete window[objectName];
 	}
