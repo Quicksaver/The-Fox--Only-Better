@@ -4,18 +4,11 @@
 	#theFoxOnlyBetter-skyLights-container {
 		margin-top: -6px;
 	}
-	window:not([theFoxOnlyBetter-FF32]):not([chromehidden~="toolbar"]) #theFoxOnlyBetter-skyLights-container {
-		margin-top: -7px;
-	}
 	
 	#theFoxOnlyBetter-skyLights-container .skyLight {
 		height: 6px;
 		border: 1px solid hsla(0,0%,0%,.3);
 		border-bottom-color: ThreeDShadow;
-	}
-	
-	window:not([theFoxOnlyBetter-FF32]):not([chromehidden~="toolbar"]) #theFoxOnlyBetter-skyLights-container .skyLight {
-		height: 7px;
 	}
 	
 	#theFoxOnlyBetter-skyLights-container .skyLight[transparent]:-moz-any(:hover,[active],[alert="on"]):-moz-lwtheme {

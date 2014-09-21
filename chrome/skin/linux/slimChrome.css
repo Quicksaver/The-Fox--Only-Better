@@ -21,7 +21,7 @@
 	}
 	
 	/* extra selectors are for specificity */
-	window[theFoxOnlyBetter-FF32] #navigator-toolbox > #TabsToolbar:not([collapsed="true"]) + toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#toolbar-menubar):not(#TabsToolbar) {
+	#navigator-toolbox > #TabsToolbar:not([collapsed="true"]) + toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#toolbar-menubar):not(#TabsToolbar) {
 		border-top: 1px solid hsla(0,0%,0%,.3);
 		background-clip: padding-box;
 	}

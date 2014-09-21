@@ -15,24 +15,16 @@
 		border-bottom-color: hsla(0,0%,60%,.4);
 	}
 	
-	#main-window[theFoxOnlyBetter-FF32][sizemode="fullscreen"] #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container,
-	#main-window[theFoxOnlyBetter-FF32]:not([tabsintitlebar]) #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container,
-	window[theFoxOnlyBetter-FF32] #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container:-moz-lwtheme {
+	#main-window[sizemode="fullscreen"] #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container,
+	#main-window:not([tabsintitlebar]) #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container,
+	#TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container:-moz-lwtheme {
 		margin-top: -5px;
 	}
 	
-	#main-window[theFoxOnlyBetter-FF32][sizemode="fullscreen"] #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container .skyLight,
-	#main-window[theFoxOnlyBetter-FF32]:not([tabsintitlebar]) #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container .skyLight,
-	window[theFoxOnlyBetter-FF32] #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container .skyLight:-moz-lwtheme {
+	#main-window[sizemode="fullscreen"] #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container .skyLight,
+	#main-window:not([tabsintitlebar]) #TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container .skyLight,
+	#TabsToolbar:not([collapsed="true"]) ~ #theFoxOnlyBetter-skyLights-container .skyLight:-moz-lwtheme {
 		height: 5px;
-	}
-	
-	window:not([theFoxOnlyBetter-FF32])[chromehidden~="toolbar"] #theFoxOnlyBetter-skyLights-container {
-		margin-top: -4px;
-	}
-	
-	window:not([theFoxOnlyBetter-FF32])[chromehidden~="toolbar"] #theFoxOnlyBetter-skyLights-container .skyLight {
-		height: 4px;
 	}
 	
 }

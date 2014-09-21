@@ -15,14 +15,4 @@
 		border-bottom-color: ThreeDDarkShadow;
 	}
 	
-	@media not all and (-moz-windows-glass) {
-		window:not([theFoxOnlyBetter-FF32]):not([chromehidden~="toolbar"]) #theFoxOnlyBetter-skyLights-container {
-			margin-top: -6px;
-		}
-		
-		window:not([theFoxOnlyBetter-FF32]):not([chromehidden~="toolbar"]) #theFoxOnlyBetter-skyLights-container .skyLight {
-			height: 7px;
-		}
-	}
-	
 }

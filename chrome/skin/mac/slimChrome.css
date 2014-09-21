@@ -21,9 +21,9 @@
 		background-image: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 	}
 	
-	#main-window[theFoxOnlyBetter-FF32][sizemode="fullscreen"] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer,
-	#main-window[theFoxOnlyBetter-FF32]:not([tabsintitlebar]) #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer,
-	window[theFoxOnlyBetter-FF32] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer:-moz-lwtheme {
+	#main-window[sizemode="fullscreen"] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer,
+	#main-window:not([tabsintitlebar]) #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer,
+	#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer:-moz-lwtheme {
 		position: relative;
 		z-index: 1;
 		border-top: 1px solid hsla(0,0%,0%,.3);
@@ -31,11 +31,7 @@
 		margin-top: -1px;
 	}
 	
-	window:not([theFoxOnlyBetter-FF32]) #theFoxOnlyBetter-slimChrome-slimmer {
-		margin-top: -1px;
-	}
-	
-	window[theFoxOnlyBetter-FF32][customize-entered] #theFoxOnlyBetter-slimChrome-slimmer {
+	#main-window[customize-entered] #theFoxOnlyBetter-slimChrome-slimmer {
 		border-top-left-radius: 2.5px;
 		border-top-right-radius: 2.5px;
 	}
