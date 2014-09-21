@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.14';
+moduleAid.VERSION = '1.0.15';
 
 moduleAid.LOADMODULE = function() {
 	moduleAid.load('compatibilityFix/downloadsIndicator');
@@ -34,6 +34,10 @@ moduleAid.LOADMODULE = function() {
 		moduleAid.loadIf('compatibilityFix/hackBar', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("{4176DFF4-4698-11DE-BEEB-45DA55D89593}", function(addon) {
+		moduleAid.loadIf('compatibilityFix/AniWeather', (addon && addon.isActive));
+	});
+	
 	moduleAid.load('compatibilityFix/UIEnhancer');
 };
 
@@ -49,5 +53,6 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('compatibilityFix/S4E');
 	moduleAid.unload('compatibilityFix/LinkLocationBar');
 	moduleAid.unload('compatibilityFix/hackBar');
+	moduleAid.unload('compatibilityFix/AniWeather');
 	moduleAid.unload('compatibilityFix/UIEnhancer');
 };
