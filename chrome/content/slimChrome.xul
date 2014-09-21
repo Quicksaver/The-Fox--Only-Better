@@ -9,11 +9,12 @@
 		<toolbar id="objName-slimChrome-slimmer"
 			class="toolbar-primary"
 			fullscreentoolbar="true"
+			context="toolbar-context-menu"
 			insertbefore="customToolbars"
 			customizable="false"
 			ignoreCUI="true"/>
 		<hbox id="objName-slimChrome-container" insertafter="objName-slimChrome-slimmer" noPointerEvents="true">
-			<box id="objName-slimChrome-toolbars-before">
+			<box id="objName-slimChrome-toolbars-before" context="toolbar-context-menu">
 				<svg:svg id="objName-slimChrome-svg-before"
 					width="100%"
 					height="100%"
@@ -24,7 +25,7 @@
 				</svg:svg>
 			</box>
 			<vbox id="objName-slimChrome-toolbars" flex="1"/>
-			<box id="objName-slimChrome-toolbars-after">
+			<box id="objName-slimChrome-toolbars-after" context="toolbar-context-menu">
 				<svg:svg id="objName-slimChrome-svg-after"
 					width="100%"
 					height="100%"
@@ -34,7 +35,7 @@
 					<svg:path id="objName-slimChrome-svg-after-path" fill="transparent" d=""/>
 				</svg:svg>
 			</box>
-			<box id="objName-slimChrome-toolbars-bottom"/>
+			<box id="objName-slimChrome-toolbars-bottom" context="toolbar-context-menu"/>
 		</hbox>
 	</toolbox>
 	
@@ -43,11 +44,11 @@
 			<svg:clipPath id="objName-slimChrome-clipPath-urlbar-wrapper" clipPathUnits="userSpaceOnUse">
 				<svg:path id="objName-slimChrome-clipPath-urlbar-wrapper-path" d=""/>
 			</svg:clipPath>
-			<svg:clipPath id="objName-slimChrome-clipPath-container" clipPathUnits="objectBoundingBox">
-				<svg:path id="objName-slimChrome-clipPath-container-path" d=""/>
+			<svg:clipPath id="objName-slimChrome-clipPath-toolbars-left" clipPathUnits="objectBoundingBox">
+				<svg:path id="objName-slimChrome-clipPath-toolbars-left-path" d=""/>
 			</svg:clipPath>
-			<svg:clipPath id="objName-slimChrome-clipPath-toolbars" clipPathUnits="userSpaceOnUse">
-				<svg:path id="objName-slimChrome-clipPath-toolbars-path" d=""/>
+			<svg:clipPath id="objName-slimChrome-clipPath-toolbars-right" clipPathUnits="objectBoundingBox">
+				<svg:path id="objName-slimChrome-clipPath-toolbars-right-path" d=""/>
 			</svg:clipPath>
 		</svg:svg>
 	</vbox>

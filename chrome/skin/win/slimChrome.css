@@ -26,19 +26,23 @@
 	
 	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
 		-moz-appearance: none;
-		background-color: -moz-dialog;
 		border-style: none;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) #nav-bar,
+	#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+		background-color: -moz-dialog;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+		background-image: linear-gradient(rgba(253,253,253,0.4) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
+	}
+	
 	#navigator-toolbox #RSSTICKERToolbar {
 		background-image: linear-gradient(rgba(253,253,253,0.4), rgba(255,255,255,0));
 	}
-	#theFoxOnlyBetter-slimChrome-container[RSSTicker] #nav-bar {
-		background-image: none;
-	}
 	
 	#theFoxOnlyBetter-slimChrome-container #nav-bar {
+		background-image: none;
 		margin-top: 0;
 		box-shadow: none;
 		/* !important needed for bug 8426282 */
@@ -53,7 +57,7 @@
 				border-color: #aabccf;
 			}
 			
-			#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
+			#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
 				background-color: hsl(210,75%,92%);
 			}
 		}

@@ -94,13 +94,6 @@
 	
 	/* Australis style */
 	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-container");
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars");
-	}
-	
 	#theFoxOnlyBetter-slimChrome-toolbars-before,
 	#theFoxOnlyBetter-slimChrome-toolbars-after {
 		position: absolute;
@@ -111,10 +104,12 @@
 	
 	#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(ltr),
 	#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(rtl) {
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars-left");
 		left: -1px;
 	}
 	#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(rtl),
 	#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(ltr) {
+		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars-right");
 		right: -1px;
 	}
 	
@@ -122,8 +117,17 @@
 		position: absolute;
 		height: 0;
 		bottom: 0;
-		z-index: 2;
+		z-index: 4;
 		border-bottom: none;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-toolbars {
+		position: relative;
+		z-index: 4;
+	}
+	
+	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar) {
+		margin: 0 -3px;
 	}
 	
 	/* full width style */

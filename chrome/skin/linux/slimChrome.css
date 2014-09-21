@@ -29,7 +29,6 @@
 	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
 		-moz-appearance: none;
 		border-style: none;
-		background-color: -moz-dialog;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
@@ -37,15 +36,20 @@
 		padding-bottom: 1px;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) #nav-bar,
+	#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+		background-color: -moz-dialog;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+		background-image: linear-gradient(rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
+	}
+	
 	#navigator-toolbox #RSSTICKERToolbar {
 		background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
 	}
-	#theFoxOnlyBetter-slimChrome-container[RSSTicker] #nav-bar {
-		background-image: none;
-	}
 	
 	#theFoxOnlyBetter-slimChrome-container #nav-bar {
+		background-image: none;
 		box-shadow: none;
 		margin-top: 0;
 		padding-top: 2px;

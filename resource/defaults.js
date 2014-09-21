@@ -1,4 +1,4 @@
-var defaultsVersion = '1.1.16';
+var defaultsVersion = '1.1.17';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
@@ -18,12 +18,7 @@ var prefList = {
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,
 	slimChromeShift: false,
-	slimChromeAlt: false,
-	
-	lwthemebgImage: '',
-	lwthemebgWidth: 0,
-	lwthemecolor: '',
-	lwthemebgColor: ''
+	slimChromeAlt: false
 };
 
 function startAddon(window) {
