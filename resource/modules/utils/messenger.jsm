@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 moduleAid.UTILS = true;
 
 // messenger - 	Aid object to communicate with browser content scripts (e10s).
@@ -196,7 +196,7 @@ this.messenger = {
 
 moduleAid.LOADMODULE = function() {
 	messenger.listenAll('init', messenger.initContent);
-	messenger.globalMM.loadFrameScript('resource://'+objPathString+'/modules/utils/content.js', true);
+	messenger.globalMM.loadFrameScript('resource://'+objPathString+'/modules/utils/content.js?'+AddonData.initTime, true);
 	
 	for(var pref in prefList) {
 		if(pref.startsWith('NoSync_')) { continue; }

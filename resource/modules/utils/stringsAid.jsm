@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.2.0';
+moduleAid.VERSION = '2.2.1';
 moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
@@ -16,7 +16,7 @@ this.stringsAid = {
 	bundles: {},
 	
 	getPath: function(aPath, alt) {
-		return "chrome://"+objPathString+((alt) ? '-en' : '')+"/locale/"+aPath+".properties";
+		return "chrome://"+objPathString+((alt) ? '-en' : '')+"/locale/"+aPath+".properties?"+AddonData.initTime;
 	},
 	
 	get: function(bundle, string, replace, aNumber, alt) {

@@ -28,7 +28,7 @@
 // Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
 // along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
 
-let bootstrapVersion = '1.4.2';
+let bootstrapVersion = '1.4.3';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -207,6 +207,11 @@ function continueStartup(aReason) {
 function startup(aData, aReason) {
 	UNLOADED = false;
 	AddonData = aData;
+	
+	// to make sure we get always the most recent files when updating the add-on, see:
+	// https://bugzilla.mozilla.org/show_bug.cgi?id=918033
+	// https://bugzilla.mozilla.org/show_bug.cgi?id=1051238
+	AddonData.initTime = new Date().getTime();
 	
 	// This includes the optionsURL property
 	AddonManager.getAddonByID(AddonData.id, function(addon) {
