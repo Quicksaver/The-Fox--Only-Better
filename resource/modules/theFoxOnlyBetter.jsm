@@ -1,11 +1,10 @@
-moduleAid.VERSION = '1.1.3';
+moduleAid.VERSION = '1.1.4';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
 this.__defineGetter__('overflowList', function() { return $('widget-overflow-list'); });
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
-this.__defineGetter__('CustomizableUI', function() { return window.CustomizableUI; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
 this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
 this.__defineGetter__('fullScreenAutohide', function() { return !DARWIN && prefAid.autohide; });

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.4.2';
+moduleAid.VERSION = '1.4.3';
 moduleAid.UTILS = true;
 
 // keysetAid - handles editable keysets for the add-on
@@ -131,8 +131,8 @@ this.keysetAid = {
 			if(!exists) {
 				this.registered.push(key);
 			} else {
-				for(var o=0; o<this.delayedOtherKeys.length; o++) {
-					if(this.delayedOtherKeys[o](exists)) {
+				for(let other of this.delayedOtherKeys) {
+					if(other(exists)) {
 						aSync(function() {
 							if(typeof(keysetAid) == 'undefined') { return; }
 							keysetAid.register(key);
@@ -203,21 +203,21 @@ this.keysetAid = {
 		
 		// Grab all key elements in the document
 		var keys = aWindow.document.querySelectorAll('key');
-		for(var k=0; k<keys.length; k++) {
-			if(!keys[k].id || !keys[k].parentNode || keys[k].parentNode.nodeName != 'keyset' || trueAttribute(keys[k], 'disabled')) { continue; }
+		for(var k of keys) {
+			if(!k.id || !k.parentNode || k.parentNode.nodeName != 'keyset' || trueAttribute(k, 'disabled')) { continue; }
 			
 			var key = {
-				id: keys[k].id,
-				hasModifiers: keys[k].hasAttribute('modifiers'),
-				self: keys[k].getAttribute('keysetAid') == objName
+				id: k.id,
+				hasModifiers: k.hasAttribute('modifiers'),
+				self: k.getAttribute('keysetAid') == objName
 			};
 			
-			var modifiers = keys[k].getAttribute('modifiers').toLowerCase();
+			var modifiers = k.getAttribute('modifiers').toLowerCase();
 			key.accel = (modifiers.indexOf('accel') > -1 || modifiers.indexOf('control') > -1); // control or command key on mac
 			key.alt = (modifiers.indexOf('alt') > -1); // option key on mac
 			key.shift = (modifiers.indexOf('shift') > -1);
 			
-			key.keycode = keys[k].getAttribute('keycode') || keys[k].getAttribute('key');
+			key.keycode = k.getAttribute('keycode') || k.getAttribute('key');
 			key.keycode = key.keycode.toUpperCase();
 			
 			allSets.push(key);
@@ -226,119 +226,130 @@ this.keysetAid = {
 		// Alt + % will open certain menus, we need to account for these as well, twice with shift as it also works
 		var mainmenu = aWindow.document.getElementById('main-menubar');
 		if(mainmenu) {
-			for(var m=0; m<mainmenu.childNodes.length; m++) {
+			for(var menu of mainmenu.childNodes) {
 				var key = {
-					id: mainmenu.childNodes[m].id,
+					id: menu.id,
 					accel: false,
 					alt: true,
 					shift: false,
-					keycode: mainmenu.childNodes[m].getAttribute('accesskey').toUpperCase()
+					keycode: menu.getAttribute('accesskey').toUpperCase()
 				};
 				allSets.push(key);
 				
 				var key = {
-					id: mainmenu.childNodes[m].id,
+					id: menu.id,
 					accel: false,
 					alt: true,
 					shift: true,
-					keycode: mainmenu.childNodes[m].getAttribute('accesskey').toUpperCase()
+					keycode: menu.getAttribute('accesskey').toUpperCase()
 				};
 				allSets.push(key);
 			}
 		}
 		
-		for(var x=0; x<keysetAid.unusable.length; x++) {
-			allSets.push(keysetAid.unusable[x]);
+		for(var x of keysetAid.unusable) {
+			allSets.push(x);
 		}
 		
 		return allSets;		
 	},
 	
-	getAvailable: function(modifiers, includeSelf) {
-		modifiers.accel = modifiers.accel || false;
-		modifiers.shift = modifiers.shift || false;
-		modifiers.alt = modifiers.alt || false;
+	getAvailable: function(key, moreKeys) {
+		key.accel = key.accel || false;
+		key.shift = key.shift || false;
+		key.alt = key.alt || false;
 		
 		var allSets = this.getAllSets();
 		var available = {};
 		
-		if(modifiers.accel) {
-			for(var c=0; c<this.allCodesAccel.length; c++) {
-				var key = {
-					id: null,
-					keycode: this.allCodesAccel[c],
-					accel: modifiers.accel,
-					shift: modifiers.shift,
-					alt: modifiers.alt
-				};
-				if(this.exists(key, false, allSets)) {
-					if(includeSelf) {
-						for(var r=0; r<this.registered.length; r++) {
-							if(this.compareKeys(this.registered[r], key)) {
-								available[this.allCodesAccel[c]] = key;
-								break;
-							}
-						}
-					}
-					continue;
+		if(key.accel) {
+			codesLoop:
+			for(var code of this.allCodesAccel) {
+				var check = this.isCodeAvailable(code, key, allSets, moreKeys);
+				if(check) {
+					available[code] = check;
 				}
-				
-				available[this.allCodesAccel[c]] = key;
 			}
 		}
 		
-		for(var c=0; c<this.allCodes.length; c++) {
-			var key = {
-				id: null,
-				keycode: this.allCodes[c],
-				accel: modifiers.accel,
-				shift: modifiers.shift,
-				alt: modifiers.alt
-			};
-			if(this.exists(key, false, allSets)) {
-				if(includeSelf) {
-					for(var r=0; r<this.registered.length; r++) {
-						if(this.compareKeys(this.registered[r], key)) {
-							available[this.allCodes[c]] = key;
-							break;
-						}
-					}
-				}
-				continue;
+		for(var code of this.allCodes) {
+			var check = this.isCodeAvailable(code, key, allSets, moreKeys);
+			if(check) {
+				available[code] = check;
 			}
-			
-			available[this.allCodes[c]] = key;
 		}
 		
 		return available;
+	},
+	
+	isCodeAvailable: function(code, key, allSets, moreKeys) {
+		var check = {
+			id: null,
+			keycode: code,
+			accel: key.accel,
+			shift: key.shift,
+			alt: key.alt
+		};
+		
+		if(moreKeys) {
+			for(var more of moreKeys) {
+				if(more.disabled) { continue; }
+				
+				if(this.compareKeys(more, check)) {
+					if(more.id == key.id) {
+						return check;
+					}
+					return null;
+				}
+			}
+		}
+		
+		var exists = this.exists(check, false, allSets);
+		if(exists) {
+			if(moreKeys) {
+				for(var more of moreKeys) {
+					if(more.disabled) { continue; }
+					
+					if(more.id == exists.id) {
+						if(!this.compareKeys(more, exists)) {
+							return check;
+						}
+						break;
+					}
+				}
+			}
+			return null;
+		}
+		
+		return check;
 	},
 	
 	exists: function(key, ignore, allSets) {
 		if(!allSets) { allSets = this.getAllSets(); }
 		if(!allSets) { return null; }
 		
-		for(var k=0; k<allSets.length; k++) {
-			if(ignore && allSets[k].self) {
+		for(var k of allSets) {
+			if(ignore && k.self) {
 				continue;
 			}
 			
-			if(this.compareKeys(allSets[k], key)) {
-				return allSets[k];
+			if(this.compareKeys(k, key)) {
+				return k;
 			}
 		}
 		return false;
 	},
 	
 	isValid: function(key) {
-		for(var k=0; k<this.allCodes.length; k++) {
-			if(this.allCodes[k] == key.keycode) {
+		for(var code of this.allCodes) {
+			if(code == key.keycode) {
 				return true;
 			}
 		}
 		
 		if(key.accel) {
-			for(var k=0; k<this.allCodesAccel.length; k++) {
-				if(this.allCodesAccel[k] == key.keycode) {
+			for(var code of this.allCodesAccel) {
+				if(code == key.keycode) {
 					return true;
 				}
 			}
@@ -348,11 +359,11 @@ this.keysetAid = {
 	},
 	
 	isRegistered: function(key) {
-		for(var k=0; k<this.registered.length; k++) {
-			if(key.id == this.registered[k].id
-			&& key.command == this.registered[k].command
-			&& key.oncommand == this.registered[k].oncommand
-			&& this.compareKeys(this.registered[k], key)) {
+		for(var k of this.registered) {
+			if(key.id == k.id
+			&& key.command == k.command
+			&& key.oncommand == k.oncommand
+			&& this.compareKeys(k, key)) {
 				return true;
 			}
 		}
@@ -384,19 +395,19 @@ this.keysetAid = {
 			var keyset = aWindow.document.createElement('keyset');
 			keyset.id = objName+'-keyset';
 			
-			for(var r=0; r<keysetAid.registered.length; r++) {
+			for(var r of keysetAid.registered) {
 				var key = aWindow.document.createElement('key');
-				key.id = keysetAid.registered[r].id;
+				key.id = r.id;
 				key.setAttribute('keysetAid', objName);
-				key.setAttribute((keysetAid.registered[r].keycode.startsWith('VK_') ? 'keycode' : 'key'), keysetAid.registered[r].keycode);
-				toggleAttribute(key, 'command', keysetAid.registered[r].command, keysetAid.registered[r].command);
-				toggleAttribute(key, 'oncommand', keysetAid.registered[r].oncommand, keysetAid.registered[r].oncommand);
+				key.setAttribute((r.keycode.startsWith('VK_') ? 'keycode' : 'key'), r.keycode);
+				toggleAttribute(key, 'command', r.command, r.command);
+				toggleAttribute(key, 'oncommand', r.oncommand, r.oncommand);
 				
-				if(keysetAid.registered[r].accel || keysetAid.registered[r].shift || keysetAid.registered[r].alt) {
+				if(r.accel || r.shift || r.alt) {
 					var modifiers = [];
-					if(keysetAid.registered[r].accel) { modifiers.push('accel'); }
-					if(keysetAid.registered[r].shift) { modifiers.push('shift'); }
-					if(keysetAid.registered[r].alt) { modifiers.push('alt'); }
+					if(r.accel) { modifiers.push('accel'); }
+					if(r.shift) { modifiers.push('shift'); }
+					if(r.alt) { modifiers.push('alt'); }
 					key.setAttribute('modifiers', modifiers.join(','));
 				}
 				

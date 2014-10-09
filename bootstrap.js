@@ -3,8 +3,9 @@
 //	objName - (string) main object name for the add-on, to be added to window element
 //	objPathString - (string) add-on path name to use in URIs
 //	prefList: (object) { prefName: defaultValue } - add-on preferences
-//	startConditions(aData, aReason) - (method) should return false if any requirements the add-on needs aren't met, otherwise return true or call continueStartup(aData, aReason)
-//	onStartup(aData, aReason) and onShutdown(aData, aReason) - (methods) to be called on startup() and shutdown() to initialize and terminate the add-on respectively
+//	startConditions(aData, aReason) -	(optional) (method) should return false if any requirements the add-on needs aren't met,
+//						otherwise return true or call continueStartup(aData, aReason)
+//	onStartup/onShutdown/onInstall/onUninstall(aData, aReason) - (optional) (methods) to be called on startup() and shutdown() to initialize and terminate the add-on
 //	resource folder in installpath, with modules folder containing moduleAid, sandboxUtils and utils modules
 //	chrome.manifest file with content, locale and skin declarations properly set
 // handleDeadObject(ex) - 	expects [nsIScriptError object] ex. Shows dead object notices as warnings only in the console.
@@ -28,7 +29,7 @@
 // Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
 // along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
 
-let bootstrapVersion = '1.4.4';
+let bootstrapVersion = '1.6.0';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -50,10 +51,15 @@ XPCOMUtils.defineLazyModuleGetter(this, "PluralForm", "resource://gre/modules/Pl
 XPCOMUtils.defineLazyModuleGetter(this, "PrivateBrowsingUtils", "resource://gre/modules/PrivateBrowsingUtils.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Promise", "resource://gre/modules/Promise.jsm");
 
-// Note: defining the localStore lazy getter on the Services object causes a ZC if it's never called.
+// PlacesUIUtils can be removed in FF34 as well (not inside conditional because let only sets it within the conditional)
 let PlacesUIUtils = {};
-XPCOMUtils.defineLazyServiceGetter(PlacesUIUtils, "RDF", "@mozilla.org/rdf/rdf-service;1", "nsIRDFService");
-XPCOMUtils.defineLazyGetter(PlacesUIUtils, "localStore", function() { return PlacesUIUtils.RDF.GetDataSource("rdf:local-store"); });
+if(Services.vc.compare(Services.appinfo.version, "34.0a1") >= 0) {
+	XPCOMUtils.defineLazyServiceGetter(Services, "xulStore", "@mozilla.org/xul/xulstore;1", "nsIXULStore");
+} else {
+	// Note: defining the localStore lazy getter on the Services object causes a ZC if it's never called.
+	XPCOMUtils.defineLazyServiceGetter(PlacesUIUtils, "RDF", "@mozilla.org/rdf/rdf-service;1", "nsIRDFService");
+	XPCOMUtils.defineLazyGetter(PlacesUIUtils, "localStore", function() { return PlacesUIUtils.RDF.GetDataSource("rdf:local-store"); });
+}
 
 XPCOMUtils.defineLazyServiceGetter(Services, "fuel", "@mozilla.org/fuel/application;1", "fuelIApplication");
 XPCOMUtils.defineLazyServiceGetter(Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
@@ -203,7 +209,9 @@ function disable() {
 
 function continueStartup(aReason) {
 	STARTED = aReason;
-	onStartup(aReason);
+	if(typeof(onStartup) == 'function') {
+		onStartup(AddonData, aReason);
+	}
 }
 
 function startup(aData, aReason) {
@@ -228,8 +236,7 @@ function startup(aData, aReason) {
 	// This should come before startConditions() so we can use it in there
 	prefAid.setDefaults(prefList);
 	
-	// In the case of OmnibarPlus, I need the Omnibar add-on enabled for everything to work
-	if(startConditions(aReason)) {
+	if(typeof(startConditions) != 'function' || startConditions(aReason)) {
 		continueStartup(aReason);
 	}
 }
@@ -250,7 +257,9 @@ function shutdown(aData, aReason) {
 	
 	if(STARTED) {
 		closeOptions();
-		onShutdown(aReason);
+		if(typeof(onShutdown) == 'function') {
+			onShutdown(aData, aReason);
+		}
 	}
 	
 	// remove resource://
@@ -258,5 +267,14 @@ function shutdown(aData, aReason) {
 	removeOnceListener();
 }
 
-function install() {}
-function uninstall() {}
+function install(aData, aReason) {
+	if(typeof(onInstall) == 'function') {
+		onInstall(aData, aReason);
+	}
+}
+
+function uninstall(aData, aReason) {
+	if(typeof(onUninstall) == 'function') {
+		onUninstall(aData, aReason);
+	}
+}

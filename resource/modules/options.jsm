@@ -1,9 +1,9 @@
-moduleAid.VERSION = '1.0.3';
+moduleAid.VERSION = '1.1.0';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
 this.isStillAvailable = function(key, list) {
-	if(key.keycode != 'none' && !list[key.keycode]) { return false; }
+	if(!list[key.keycode]) { return false; }
 	return true;
 };
 
@@ -15,7 +15,7 @@ this.fillKeycodes = function() {
 		alt: $('altCheckboxSlimChrome').checked
 	};
 	
-	var slimChromeAvailable = keysetAid.getAvailable(slimChromeKey, true);
+	var slimChromeAvailable = keysetAid.getAvailable(slimChromeKey);
 	if(!isStillAvailable(slimChromeKey, slimChromeAvailable)) {
 		slimChromeKey.keycode = 'none';
 	}
@@ -31,8 +31,7 @@ this.fillKeycodes = function() {
 		$(slimChromePopup.parentNode.getAttribute('preference')).value = 'none';
 	}
 	
-	for(var i=1; i<slimChromePopup.childNodes.length; i++) {
-		var item = slimChromePopup.childNodes[i];
+	for(var item of slimChromePopup.childNodes) {
 		var keycode = item.getAttribute('value');
 		if(!slimChromeAvailable[keycode]) {
 			continue;

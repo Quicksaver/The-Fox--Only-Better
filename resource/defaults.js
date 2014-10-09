@@ -1,4 +1,4 @@
-var defaultsVersion = '1.1.17';
+var defaultsVersion = '1.2.0';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
@@ -24,10 +24,6 @@ var prefList = {
 function startAddon(window) {
 	prepareObject(window);
 	window[objName].moduleAid.load(objName, true);
-}
-
-function startConditions(aReason) {
-	return true;
 }
 
 function startPreferences(window) {

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.3.0';
+moduleAid.VERSION = '1.3.1';
 moduleAid.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -28,43 +28,33 @@ this.dependsOn = {
 		var elements = dependsOn.getAll();
 		var alreadyChanged = [];
 		
-		for(var f = 0; f < fields.length; f++) {
-			if(!fields[f].id) { continue; }
+		for(var field of fields) {
+			if(!field.id) { continue; }
 			
-			elementsInnerChangedLoop:
-			for(var i = 0; i < elements.length; i++) {
-				for(var a = 0; a < alreadyChanged.length; a++) {
-					if(alreadyChanged[a] == i) {
-						continue elementsInnerChangedLoop;
-					}
-				}
+			for(var node of elements) {
+				if(alreadyChanged.indexOf(node) > -1) { continue; }
 				
-				if(elements[i].getAttribute('dependson').indexOf(fields[f].id) > -1) {
-					dependsOn.updateElement(elements[i]);
-					alreadyChanged.push(i);
+				if(node.getAttribute('dependson').indexOf(field.id) > -1) {
+					dependsOn.updateElement(node);
+					alreadyChanged.push(node);
 				}
 			}
 		}
 		
-		elementsOuterChangedLoop:
-		for(var i = 0; i < elements.length; i++) {
-			for(var a = 0; a < alreadyChanged.length; a++) {
-				if(alreadyChanged[a] == i) {
-					continue elementsOuterChangedLoop;
-				}
-			}
+		for(var node of elements) {
+			if(alreadyChanged.indexOf(node) > -1) { continue; }
 			
-			if(elements[i].getAttribute('dependson').indexOf(e.target.id) > -1) {
-				dependsOn.updateElement(elements[i]);
-				alreadyChanged.push(i);
+			if(node.getAttribute('dependson').indexOf(e.target.id) > -1) {
+				dependsOn.updateElement(node);
+				alreadyChanged.push(node);
 			}
 		}
 	},
 	
 	updateAll: function() {
 		var elements = this.getAll();
-		for(var i = 0; i < elements.length; i++) {
-			this.updateElement(elements[i]);
+		for(var node of elements) {
+			this.updateElement(node);
 		}
 	},
 	
@@ -73,8 +63,8 @@ this.dependsOn = {
 		if(!attr) { return; }
 		
 		var dependencies = attr.split(',');
-		for(var i = 0; i < dependencies.length; i++) {
-			var alternates = dependencies[i].split(';');
+		for(var d of dependencies) {
+			var alternates = d.split(';');
 			var a = 0;
 			while(a < alternates.length) {
 				var inverse = false;
@@ -135,8 +125,7 @@ this.dependsOn = {
 // If you want to bypass this you can set onsyncfrompreference attribute on scale
 this.initScales = function() {
 	var scales = $$('scale');
-	for(var x=0; x<scales.length; x++) {
-		var scale = scales[x];
+	for(var scale of scales) {
 		if(!scale.getAttribute('onsyncfrompreference') && scale.getAttribute('preference')) {
 			scale.value = $(scale.getAttribute('preference')).value;
 		}

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.3.1';
+moduleAid.VERSION = '2.3.2';
 moduleAid.UTILS = true;
 moduleAid.CLEAN = false;
 
@@ -27,12 +27,18 @@ this.__defineGetter__('messenger', function() { delete this.messenger; moduleAid
 this.__defineGetter__('observerAid', function() { delete this.observerAid; moduleAid.load('utils/observerAid'); return observerAid; });
 
 // overlayAid - to use overlays in my bootstraped add-ons
-this.__defineGetter__('overlayAid', function() { browserMediator; observerAid; delete this.overlayAid; moduleAid.load('utils/overlayAid'); return overlayAid; });
+this.__defineGetter__('overlayAid', function() { browserMediator; observerAid; CUIAid; delete this.overlayAid; moduleAid.load('utils/overlayAid'); return overlayAid; });
 
 // objectWatcher - This acts as a replacement for the event DOM Attribute Modified, works for both attributes and object properties
 this.__defineGetter__('objectWatcher', function() { delete this.objectWatcher; moduleAid.load('utils/objectWatcher'); return objectWatcher; });
 
+// keysetAid - handles editable keysets for the add-on
 this.__defineGetter__('keysetAid', function() { windowMediator; delete this.keysetAid; moduleAid.load('utils/keysetAid'); return keysetAid; });
+
+// CUIAid - This module gives me access to the CustomizableUI module backstage pass
+this.__defineGetter__('CUIAid', function() { delete this.CUIAid; delete this.CustomizableUI; delete this.CUIBackstage; moduleAid.load('utils/CustomizableUI'); return CUIAid; });
+this.__defineGetter__('CustomizableUI', function() { delete this.CUIAid; delete this.CustomizableUI; delete this.CUIBackstage; moduleAid.load('utils/CustomizableUI'); return CustomizableUI; });
+this.__defineGetter__('CUIBackstage', function() { delete this.CUIAid; delete this.CustomizableUI; delete this.CUIBackstage; moduleAid.load('utils/CustomizableUI'); return CUIBackstage; });
 
 // closeCustomize() - useful for when you want to close the customize tabs for whatever reason
 this.closeCustomize = function() {
