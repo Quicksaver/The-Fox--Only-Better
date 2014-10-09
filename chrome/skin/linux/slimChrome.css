@@ -40,12 +40,14 @@
 		background-color: -moz-dialog;
 	}
 	
-	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
 		background-image: linear-gradient(rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
 	}
 	
-	#navigator-toolbox #RSSTICKERToolbar {
+	#navigator-toolbox > #RSSTICKERToolbar,
+	#navigator-toolbox > #puzzleBars-top-bar {
 		background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
+		background-size: auto auto;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container #nav-bar {

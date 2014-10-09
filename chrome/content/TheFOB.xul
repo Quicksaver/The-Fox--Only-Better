@@ -13,9 +13,10 @@
 	</broadcasterset>
 	
 	<menupopup id="toolbar-context-menu">
-		<menuseparator id="objName-contextSeparator"/>
-		<menuitem id="objName-context-slimChrome" observes="objName-slimChrome-broadcaster"/>
+		<menuseparator id="objName-contextSeparator" insertbefore="puzzleBars-contextSeparator"/>
+		<menuitem id="objName-context-slimChrome" insertbefore="puzzleBars-contextSeparator" observes="objName-slimChrome-broadcaster"/>
 		<menuitem id="objName-context-options"
+			insertbefore="puzzleBars-contextSeparator"
 			label="&theFOB.options.label;"
 			accesskey="&theFOB.options.accesskey;"
 			oncommand="objName.doOpenOptions();"/>

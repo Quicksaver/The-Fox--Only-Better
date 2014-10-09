@@ -55,13 +55,15 @@
 		background: hsl(0,0%,83%) url(chrome://browser/skin/Toolbar-background-noise.png);
 	}
 	
-	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
 		background-image: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,91%) 0px, hsl(0,0%,83%) 36px, hsl(0,0%,83%));
 	}
 	
 	/* all the selector stuff is for specificity... */
-	#navigator-toolbox > toolbar#RSSTICKERToolbar:not(#nav-bar):not(#TabsToolbar):not(:-moz-lwtheme) {
+	#navigator-toolbox > toolbar#RSSTICKERToolbar:not(#nav-bar):not(#TabsToolbar):not(:-moz-lwtheme),
+	#navigator-toolbox > toolbar#puzzleBars-top-bar:not(#nav-bar):not(#TabsToolbar):not(:-moz-lwtheme) {
 		background-image: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,91%), hsl(0,0%,83%));
+		background-size: auto auto;
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container #nav-bar:not(:-moz-lwtheme) {
