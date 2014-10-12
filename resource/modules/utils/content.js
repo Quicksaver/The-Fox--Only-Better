@@ -18,6 +18,10 @@
 // handleDeadObject(ex) - 	expects [nsIScriptError object] ex. Shows dead object notices as warnings only in the console.
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
 //				This should be a copy of the same method in bootstrap.js.
+// DOMContentLoaded.add(aMethod) - use this to listen to DOMContentLoaded events, instead of adding a dedicated listener to Scope, to avoid a very weird ZC
+//	aMethod - (function) normal event listener
+// DOMContentLoaded.remove(aMethod) - undo the above step
+//	see DOMContentLoaded.add
 
 this.Cc = Components.classes;
 this.Ci = Components.interfaces;
@@ -30,13 +34,14 @@ this.theFoxOnlyBetter = {
 	
 	initialized: false,
 	
-	version: '1.1.1',
+	version: '1.2.0',
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
 	$$: function(sel) { return content.document.querySelectorAll(sel); },
 	
 	// some local things
+	AddonData: {},
 	Globals: {},
 	prefAid: {},
 	
@@ -57,6 +62,9 @@ this.theFoxOnlyBetter = {
 		
 		this.webProgress = docShell.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIWebProgress);
 		
+		this.DOMContentLoaded.listener = this.DOMContentLoaded.listener.bind(this.DOMContentLoaded);
+		this.Scope.addEventListener('DOMContentLoaded', this.DOMContentLoaded.listener);
+		
 		// and finally our add-on stuff begins
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/moduleAid.jsm", this);
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
@@ -71,7 +79,8 @@ this.theFoxOnlyBetter = {
 		this.message('init');
 	},
 	
-	finishInit: function() {
+	finishInit: function(m) {
+		this.AddonData = JSON.parse(m.data);
 		this.initialized = true;
 	},
 	
@@ -121,6 +130,31 @@ this.theFoxOnlyBetter = {
 		}
 	},
 	
+	// ZC is we add multiple listeners to Scope for DOMContentLoad, no clue why though...
+	DOMContentLoaded: {
+		handlers: [],
+		add: function(aMethod) {
+			for(var h of this.handlers) {
+				if(h == aMethod) { return; }
+			}
+			
+			this.handlers.push(aMethod);
+		},
+		remove: function(aMethod) {
+			for(var h in this.handlers) {
+				if(this.handlers[h] == aMethod) {
+					this.handlers.splice(h, 1);
+					return;
+				}
+			}
+		},
+		listener: function(e) {
+			for(var h of this.handlers) {
+				try { h(e); } catch(ex) { Cu.reportError(ex); }
+			}
+		}
+	},
+	
 	// some lazily loaded modules
 	
 	handleDeadObject: function(ex) {
@@ -138,6 +172,8 @@ this.theFoxOnlyBetter = {
 	// clean up this object
 	unload: function() {
 		this.moduleAid.clean();
+		
+		this.Scope.removeEventListener('DOMContentLoaded', this.DOMContentLoaded.listener);
 		
 		// remove all listeners, to make sure nothing is left over
 		for(var i=0; i<this.listeners.length; i++) {

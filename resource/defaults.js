@@ -1,4 +1,4 @@
-var defaultsVersion = '1.2.0';
+var defaultsVersion = '1.2.1';
 var objName = 'theFoxOnlyBetter';
 var objPathString = 'thefoxonlybetter';
 var prefList = {
@@ -18,7 +18,11 @@ var prefList = {
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,
 	slimChromeShift: false,
-	slimChromeAlt: false
+	slimChromeAlt: false,
+	
+	// for the what's new tab, it's better they're here so they're automatically carried over to content
+	lastVersionNotify: '0',
+	notifyOnUpdates: true
 };
 
 function startAddon(window) {

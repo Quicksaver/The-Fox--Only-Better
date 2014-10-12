@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.1';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -60,6 +60,16 @@ this.initialShowInOpener = function(style, animation, duration) {
 	}, 150);
 };
 
+this.openReleaseNotes = function(e) {
+	if(window.opener) {
+		window.opener.gBrowser.selectedTab = window.opener.gBrowser.addTab('about:'+objPathString);
+		window.opener.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
+	}
+	
+	e.preventDefault();
+	e.stopPropagation();
+};
+
 moduleAid.LOADMODULE = function() {
 	if(DARWIN) {
 		overlayAid.overlayWindow(window, 'optionsMac');
@@ -67,4 +77,7 @@ moduleAid.LOADMODULE = function() {
 	
 	fillKeycodes();
 	fillVersion($('addonVersion'));
+	
+	listenerAid.add($('releaseNotesLink'), 'keypress', openReleaseNotes, true);
+	listenerAid.add($('releaseNotesLink'), 'click', openReleaseNotes, true);
 };

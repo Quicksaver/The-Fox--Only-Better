@@ -1,0 +1,158 @@
+{
+	"current":"1.1.3",
+	"releases": {
+		"1.1.3":{
+			"date":"August 19, 2014",
+			"notes":[
+				["updated","nl and zh-CN locales"],
+				["bugfix","Mini bar wouldn't appear sometimes when text fields from certain tabs were focused"],
+				["bugfix","Compatibility with HackBar add-on,keep its toolbar visible (move it to the bottom of the window so it doesn't interfere)"],
+				["bugfix","Compatibility with Tree Style Tab add-on, mousing over the tabs on the sides or at the bottom shouldn't show the toolbars"],
+				["bugfix","Compatibility with RequestPolicy add-on, clicking its button in the hiding toolbars wouldn't open its popup menu"],
+				["bugfix","Toolbars style and animation previews weren't correct"]
+			]
+		},
+		"1.1":{
+			"date":"August 1, 2014",
+			"notes":[
+				["new","Preferences dialog accessible through the right click menu in any toolbar at the top of the browser!"],
+				["new","Option to show the mini bar on all input fields"],
+				["new","Option to toggle whether the chrome reacts to mouse movements"],
+				["new","Can toggle Slim Chrome through the toolbars context menu and through a customizable keyboard shortcut (default is F9)"],
+				["new","Tapping Esc in the location bar or search bar will hide the toolbars,only if it won't do anything else,such as closing the suggestions popups or reverting the location bar's value"],
+				["new","Can set sensitivity (delay) to mouse events for showing and hiding the chrome"],
+				["new","Option to keep the navigation bar visible, hiding only the other toolbars like the Bookmarks Toolbar"],
+				["new","Different styles for the hovering toolbars: australis, spacious, compact and full width"],
+				["new","Different animations for showing and hiding the toolbars: no animation, fade in, slide down, roll out and GiT's hinge effect (special thanks to Geek in Training for this one!)"],
+				["new","Sky Lights give you security information about the current webpage while the chrome is hidden"],
+				["new","Other add-ons have the ability to keep their toolbars or buttons visible in the mini bar if they choose to"],
+				["changed","Can disable the mini bar on content location changes"],
+				["removed","Compatibility with Firefox 30 and below"],
+				["bugfix","e10s compatibility"],
+				["bugfix","Compatibility with RSS Ticker add-on, its toolbar placement becomes a bit unpredictable and also inaccessible sometimes"],
+				["bugfix","Compatibility with Roboform and other add-ons that add toolbars after TheFOB is enabled, their toolbars would be covered and couldn't be accessed"],
+				["bugfix","Compatibility with Tab Groups Manager add-on, tabs (and groups toolbar as well) could be inaccessible"],
+				["bugfix","Compatibility with Status-4-evar, when progress bar is shown in the location bar, at least the mini bar should be visible until the page finishes loading"],
+				["bugfix","Compatibility with Status-4-evar, dropdown arrow shouldn't be visible in the mini bar"],
+				["bugfix","Compatibility with LastPass add-on, clicking its toolbar button would make the toolbars jump up a few pixels"],
+				["bugfix","Compatibility with Link Location Bar add-on, the hover link is displayed in the mini bar if the toolbars are hidden"],
+				["bugfix","Panels opened from the mini bar wouldn't keep it open if the website changed while the panels were open"],
+				["bugfix","Opening the submenu popup of the \"Remember password\" panel would cause the toolbars to expand and the panel to appear corrupted (and possibly other similar cases)"],
+				["bugfix","Misaligned chrome top border in the latest nightly builds"],
+				["bugfix","Roll the toolbars from the right side when in RTL locales"],
+				["bugfix","Fix personas support in RTL locales"],
+				["bugfix","Ghostery toolbar button (and maybe others) would not reappear sometimes after closing and re-opening the browser window"],
+				["bugfix","Enhanced compatibility with my other add-ons"],
+				["","Other minor fixes and improvements"]
+			]
+		},
+		"1.0.10":{
+			"date":"May 20, 2014",
+			"notes":[
+				["updated","fr locale"],
+				["bugfix","Drop indicator for when dragging items in the bookmarks toolbar was too high up"]
+			]
+		},
+		"1.0.9":{
+			"date":"May 19, 2014",
+			"notes":[
+				["bugfix","Can't drag tabs to toolbar, such as for bookmarking"]
+			]
+		},
+		"1.0.8":{
+			"date":"May 18, 2014",
+			"notes":[
+				["bugfix","The add-on should be enabled in fullscreen if the native option to hide the toolbars is disabled (always in OS X)"],
+				["bugfix","On rare occasions, the location bar's autocomplete popup would cause the toolbars to be permanently stuck open"],
+				["bugfix","When opening a new window and the homepage is set to about:newtab, the location bar wouldn't have focus, and so it would be hidden"],
+				["bugfix","Search engine selection menu wouldn't hold the toolbars open"],
+				["bugfix","Hovering the \"List all tabs\" menu shouldn't show the toolbars behind it"],
+				["bugfix","Toolbars shouldn't show on HTML5 fullscreen"]
+			]
+		},
+		"1.0.7":{
+			"date":"May 6, 2014",
+			"notes":[
+				["new","fr and zh-CN locales"],
+				["bugfix","Get rid of some annoying (but harmless) messages in the console"],
+				["bugfix","The toolbars wouldn't hide automatically sometimes"],
+				["bugfix","Toolbars wouldn't appear after saving a file for the download completed animation if the downloads widget was placed in the menu panel"],
+				["bugfix","Sometimes when opening the menu panel, it would be nearly collapsed"],
+				["bugfix","Opening sequential panels or menus, while the previous was still open, could sometimes let the toolbars hide before they should"],
+				["bugfix","Ctrl+E/K to focus the search bar would sometimes let the toolbars hide, or would not work at all"],
+				["bugfix","If opening a panel from a keyboard shortcut, and the keys were released too quickly, the toolbars might not show and the panel might be positioned poorly"],
+				["bugfix","The bookmarks toolbar wouldn't over/underflow properly its items"],
+				["bugfix","The location bar would be blank after exiting customize or after enabling/disabling/updating the add-on"],
+				["bugfix","Sometimes the context menu would jump to the top left corner of the screen"],
+				["bugfix","The Bookmarked Item panel (Ctrl+D) would sometimes appear below the window"],
+				["bugfix","After exiting customize mode, the top toolbars could appear when moving the mouse close to them without actually hovering the top chrome area"],
+				["bugfix","The toolbars shouldn't show when hovering menus opened from the menu bar"]
+			]
+		},
+		"1.0.6":{
+			"date":"May 5, 2014",
+			"notes":[
+				["bugfix","F6 not working correctly"]
+			]
+		},
+		"1.0.5":{
+			"date":"May 2, 2014",
+			"notes":[
+				["changed","No big round borders and margins in toolbars of small popup windows"],
+				["bugfix","Toolbars shouldn't hide before the bookmarked item animation finishes"],
+				["bugfix","Toolbars could sometimes begin to hide for a moment when opening a popup, instead of staying open"],
+				["bugfix","Sometimes a popup opened from the toolbars would be invisible"],
+				["bugfix","Compatibility with the Speed Dial add-on: opening the Speed Dial tab and focusing the location bar would make it very hard to hide the toolbars afterwards"],
+				["bugfix","Added a safe-guard against the toolbars getting stuck open sometimes"],
+				["bugfix","Context menu in any of the bookmarks toolbar links would have all its entries disabled"],
+				["bugfix","Sometimes the toolbars would hide with a panel still open in them"]
+			]
+		},
+		"1.0.4":{
+			"date":"April 25, 2014",
+			"notes":[
+				["bugfix","Compatibility fix for latest Nightly build: mini location bar had a slightly broken layout"],
+				["bugfix","Identity-box would jump a little in the mini bar when going back/forward in the tab history"]
+			]
+		},
+		"1.0.3":{
+			"date":"April 22, 2014",
+			"notes":[
+				["bugfix","Tab drop indicator was cut off when dragging links/images to the tab area"],
+				["bugfix","On occasion the chrome could be stuck hidden after dragging tabs"],
+				["bugfix","Enhanced compatibility with opening panels and popups from other add-ons"]
+			]
+		},
+		"1.0.2":{
+			"date":"April 21, 2014",
+			"notes":[
+				["new","nl and pt-PT locales"],
+				["changed","Show the chrome when changes are made to the toolbars"],
+				["changed","Don't hide the mini location bar while the mouse is hovering it"],
+				["bugfix","nav-bar shouldn't over- or underflow when it's hidden, it's useless (it will only revert everything when shown again) and inacurate (its width isn't its real width)"],
+				["bugfix","Don't hide toolbars when opening the edit bookmark panel"],
+				["bugfix","Don't hide toolbars when using keyboard shortcuts to open the panels"],
+				["bugfix","Don't hide toolbars when opening panels from widgets in the overflow panel"],
+				["bugfix","The mini bar shouldn't extend out of bounds on small windows"],
+				["bugfix","Focusing the mini location bar wouldn't hold the toolbars open if the window was too narrow"],
+				["bugfix","The bookmarked and download started/finished widget animations would be hidden behind the toolbars"],
+				["bugfix","The toolbars would be locked open after dragging tabs, now the toolbars always hide when a tab is dragged, since they aren't needed in this case"],
+				["bugfix","The browser UI could collapse when hovering the identity box"],
+				["bugfix","No version information in preferences (about) dialog"],
+				["bugfix","Compatibility with Location Bar Enhancer add-on: breadcrumbs wouldn't appear; the breadcrumbs will still disappear if you disable TheFOB, but there's nothing I can do after the add-on's been disabled; to get them back just disable and re-enable Location Bar Enhancer"]
+			]
+		},
+		"1.0.1":{
+			"date":"April 21, 2014",
+			"notes":[
+				["bugfix","Compatibility with Omnibar add-on: don't hide the navigation bar when the search engine menu is open, don't show the search engine in the mini location bar"]
+			]
+		},
+		"1":{
+			"date":"April 20, 2014",
+			"notes":[
+				["","Initial release"]
+			]
+		}
+	}
+}

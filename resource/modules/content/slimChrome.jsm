@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.miniActive = false;
 
@@ -68,16 +68,16 @@ moduleAid.LOADMODULE = function() {
 	webProgress.addProgressListener(slimChromeProgressListener, Ci.nsIWebProgress.NOTIFY_ALL);
 	
 	// observe when any changes to the webpage are made, so that for instance when a focused input field is removed, the mini bar doesn't stay stuck open
-	listenerAid.add(Scope, 'DOMContentLoaded', focusLoadListener);
+	DOMContentLoaded.add(focusLoadListener);
 	focusLoadListener();
 };
 
 moduleAid.UNLOADMODULE = function() {
 	webProgress.removeProgressListener(slimChromeProgressListener);
+	DOMContentLoaded.remove(focusLoadListener);
 	
 	// these will be removed through listenerAid.clean(), calling them here would just cause an error, as the sandboxTools module wouldn't have been loaded at this point,
 	// and it couldn't be loaded now (it would throw) because the resource handler has been removed already.
 	//listenerAid.remove(Scope, 'focus', focusPasswords, true);
 	//listenerAid.remove(Scope, 'blur', focusPasswords, true);
-	//listenerAid.remove(Scope, 'DOMContentLoaded', focusLoadListener, true);
 };

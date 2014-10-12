@@ -29,7 +29,7 @@
 // Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
 // along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
 
-let bootstrapVersion = '1.6.0';
+let bootstrapVersion = '1.6.1';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -41,7 +41,7 @@ let alwaysRunOnShutdown = [];
 // Globals - lets me use objects that I can share through all the windows
 let Globals = {};
 
-const {classes: Cc, interfaces: Ci, utils: Cu, manager: Cm} = Components;
+const {classes: Cc, interfaces: Ci, utils: Cu, manager: Cm, results: Cr} = Components;
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 

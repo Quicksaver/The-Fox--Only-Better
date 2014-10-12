@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.4';
+moduleAid.VERSION = '1.1.5';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -74,6 +74,7 @@ moduleAid.LOADMODULE = function() {
 	
 	overlayAid.overlayWindow(window, 'TheFOB', null, function() { toggleSlimChrome(); });
 	
+	moduleAid.load('whatsNew');
 	moduleAid.load('compatibilityFix/windowFixes');
 	
 	prefAid.listen('slimChrome', toggleSlimChrome);
@@ -101,6 +102,7 @@ moduleAid.UNLOADMODULE = function() {
 	moduleAid.unload('popups');
 	
 	moduleAid.unload('compatibilityFix/windowFixes');
+	moduleAid.unload('whatsNew');
 	
 	overlayAid.removeOverlayWindow(window, 'TheFOB');
 };

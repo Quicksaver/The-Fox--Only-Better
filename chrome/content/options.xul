@@ -200,6 +200,10 @@
 					tooltiptext="https://github.com/Quicksaver/The-Fox--Only-Better/issues"
 					href="https://github.com/Quicksaver/The-Fox--Only-Better/issues"
 					value="&about.tech;"/>
+			<label	id="releaseNotesLink"
+					class="text-link closer"
+					tooltiptext="about:objPathString"
+					value="&about.notes;"/>
 		</vbox>
 	</prefpane>
 </prefwindow>

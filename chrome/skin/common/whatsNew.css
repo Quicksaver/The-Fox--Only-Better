@@ -1,0 +1,341 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+@-moz-document url-prefix("chrome://thefoxonlybetter/content/whatsnew.xhtml"), url-prefix("about:thefoxonlybetter") {
+	
+	/* main sections, general widths backgrounds fonts */
+	
+	body {
+		background: url("chrome://thefoxonlybetter/skin/bg-gradient-grass.png") repeat-x, url("chrome://thefoxonlybetter/skin/bg-grainy-grass.png") repeat, #eee;
+		font-family: sans-serif;
+		font-size: 14px;
+		line-height: 1.5;
+		color: #333;
+	}
+	
+	#logo {
+		max-height: 90px;
+	}
+	
+	[invisible="true"] { opacity: 0; }
+	
+	h1,h2,h3,h4,h5,p {
+		padding: 0;
+		margin: 0;
+	}
+	
+	#wrapper {
+		padding-top: 10px;
+		padding-bottom: 40px;
+		width: 1000px;
+		margin: 0 auto;
+		position: relative;
+	}
+	
+	@media only screen and (min-width:784px) and (max-width:1024px) {
+		#wrapper { width: 760px; }
+	}
+	
+	@media only screen and (max-width:784px) {
+		#wrapper { width: 320px; }
+	}
+	
+	@media only screen and (min-width:504px) and (max-width:784px) {
+		#wrapper { width: 440px; }
+	}
+	
+	/* links */
+	
+	a {
+		color: #67A7D0;
+		text-decoration: none;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+		color: #4090C4;
+	}
+	
+	/* top area, general information */
+	
+	#general { margin: 0 26px 30px; }
+	
+	h1,h2 {
+		line-height: 100%;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+		color: #484848;
+	}
+	
+	h1 {
+		font-weight: normal;
+		font-size: 2.5em;
+		letter-spacing: -1px;
+		margin-top: 0.4em;
+		margin-bottom: 0.15em;
+	}
+	
+	h2 {
+		font-weight: normal;
+		font-size: 1.428em;
+		letter-spacing: normal;
+		margin-bottom: 0.75em;
+	}
+	
+	p {
+		line-height: 1.4em;
+		font-size: 0.95em;
+		margin-bottom: 1em;
+	}
+	
+	p.signature {
+		text-align: right;
+		font-style: italic;
+		font-size: 1.05em;
+		margin-top: -0.25em;
+	}
+	
+	.main-column {
+		width: 540px;
+		float: left;
+	}
+	
+	@media only screen and (min-width:784px) and (max-width:1024px) {
+		.main-column {
+			width: 400px;
+			float: left;
+		}
+	}
+	
+	@media only screen and (max-width:784px) {
+		.main-column {
+			width: auto;
+			float: none;
+		}
+	}
+	
+	@media only screen and (min-width:504px) and (max-width:784px) {
+		.main-column { width: 400px; }
+	}
+	
+	/* side links */
+	
+	#controller {
+		float: right;
+		margin-top: 6em;
+		-moz-margin-end: 1em;
+	}
+	
+	#divAddonOptions {
+		color: #fff;
+		float: right;
+		padding: 3px;
+		box-shadow: 0 3px 3px rgba(126,137,147,0.5) inset, 0 1px rgba(185,197,204,0.5);
+		border-radius: 9px;
+		background: #b1becc;
+		background: rgba(207,218,230,0.25);
+	}
+	
+	#addonOptions {
+		float: left;
+		color: #fff;
+		padding: 12px 16px;
+		border-radius: 6px 6px;
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		box-shadow: 0 -2px rgba(0,0,0,0.2) inset;
+		background-color: #2e4e99;
+		background-repeat: no-repeat;
+		background-image: linear-gradient(to bottom, #7ef4ac 0, #49c54d 3%, #2e9839 100%);
+		text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+	}
+	
+	#divNotifyOnUpdates {
+		margin-top: 4em;
+	}
+	
+	.checkboxlabel, .checkboxlabel:hover {
+		color: #333;
+		text-decoration: none;
+		cursor: pointer;
+		-moz-margin-start: -7px;
+		-moz-padding-start: 7px;
+		font-size: 0.9em;
+	}
+	
+	#notifyOnUpdates {
+		cursor: pointer;
+	}
+	
+	@media only screen and (max-width:784px) {
+		#controller {
+			float: none;
+			margin: 40px 10px 150px;
+			margin-top: 40px;
+			margin-bottom: 150px;
+		}
+		
+		#divNotifyOnUpdates {
+			float: right;
+			margin-top: 1em;
+		}
+	}
+	
+	@media only screen and (min-width:504px) and (max-width:784px) {
+		#divNotifyOnUpdates {
+			float: left;
+		}
+	}
+	
+	/* release notes section */
+	
+	#releases {
+		margin: 0 26px 40px;
+	}
+	
+	.notes {
+		box-shadow: 0 0 0 1px #fff inset;
+		background: #fff;
+		border-bottom: 1px solid #ddd;
+		margin: 0 -20px 20px;
+		padding: 20px 20px
+	}
+	
+	h3 {
+		font-weight: normal;
+		line-height: 150%;
+		font-size: 1.8em;
+		letter-spacing: -0.5px;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+		color: #484848;
+	}
+	
+	h4 {
+		font-weight: normal;
+		line-height: 100%;
+		font-size: 1.1em;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+		color: #484848;
+	}
+	
+	.notes-items {
+		list-style: outside none none;
+		-moz-padding-start: 0;
+	}
+	
+	.notes-items > li {
+		border-top: 1px solid #D6D6D6;
+		margin: 0px;
+		padding: 0.714rem 0px 0.5rem;
+		position: relative;
+	}
+	
+	.notes-items > li.tagged {
+		padding-left: 160px;
+	}
+	
+	.notes-items > li.tagged > b {
+		background: url("chrome://thefoxonlybetter/skin/tags.png") no-repeat scroll 0px 0px #F3F3F3;
+		border-right: 3px solid #CCC;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05), 0px -1px 0px rgba(0, 0, 0, 0.05) inset;
+		display: inline-block;
+		font-size: 11px;
+		font-style: normal;
+		line-height: 14px;
+		padding: 4px 2px 4px 33px;
+		position: absolute;
+		top: 0.714rem;
+		left: 0px;
+		text-shadow: 1px 1px 0px #FFF;
+		text-transform: uppercase;
+		width: 102px;
+	}
+
+	.notes-items > li.tagged > b.new {
+		background-color: #ffedcf;
+		background-position: 0 -50px;
+		border-color: #f90;
+	}
+	
+	.notes-items > li.tagged > b.changed {
+		background-color: #e9cfff;
+		background-position: 0 -100px;
+		border-color: #8106e0;
+	}
+	
+	.notes-items > li.tagged > b.bugfix {
+		background-color: #f0ffe1;
+		background-position: 0 -150px;
+		border-color: #5ba622;
+	}
+	
+	.notes-items > li.tagged > b.removed {
+		background-color: #f8dfd8;
+		background-position: 0 -200px;
+		border-color: #d85027;
+	}
+	
+	.notes-items > li.tagged > b.updated {
+		background-color: #dcf6ff;
+		background-position: 0 -250px;
+		border-color: #038fc0;
+	}
+	
+	.notes-items > li.tagged > b.unresolved {
+		background-color: #ffc8c8;
+		background-position: 0 -300px;
+		border-color: #c00;
+	}
+	
+	.notes-items > li > p {
+		margin: 0px 0px 0.25em;
+	}
+	
+	#divAllVersions {
+		text-align: center;
+	}
+	
+	/* side sections */
+	
+	#sidebar {
+		float: left;
+		width: 220px;
+		margin: 0 10px 0 170px;
+	}
+	
+	#sidebar > * {
+		border-bottom: 1px dotted #bdbdbd;
+		margin-bottom: 20px;
+	}
+	
+	h5 {
+		line-height: 100%;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.75);
+		color: #484848;
+		letter-spacing: -0.5px;
+		font-size: 22px;
+		margin: 0 0 12px;
+	}
+	
+	#sidebar ul {
+		padding: 0;
+	}
+	
+	#sidebar li {
+		margin: 0 0 0.5em 20px;
+	}
+	
+	@media only screen and (min-width:784px) and (max-width:1024px) {
+		#sidebar {
+			margin: 0 10px 0 70px;
+		}
+	}
+	
+	@media only screen and (max-width:784px) {
+		#sidebar {
+			width: auto;
+			float: none;
+			padding-bottom: 20px;
+			margin: 0 10px;
+		}
+	}
+	
+}

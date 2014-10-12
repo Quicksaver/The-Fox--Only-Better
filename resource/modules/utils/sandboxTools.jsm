@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.4.0';
+moduleAid.VERSION = '2.4.1';
 moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
@@ -11,6 +11,9 @@ this.xmlHttpRequest = function(url, callback, method) {
 	
 	var xmlhttp = Cc["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance(Ci.nsIXMLHttpRequest);
 	xmlhttp.open(method, url);
+	if(url.endsWith('.json')) {
+		xmlhttp.overrideMimeType("application/json");
+	}
 	xmlhttp.onreadystatechange = function(e) { callback(xmlhttp, e); };
 	xmlhttp.send();
 	return xmlhttp;

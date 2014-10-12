@@ -16,7 +16,8 @@ moduleAid.UTILS = true;
 //	see callOnAll()
 // unregister(aHandler, aTopic, aURI, beforeComplete) - unregisters aHandler from being notified of every aTopic
 //	see register()
-// watching(aHandler, aTopic, aURI, beforeComplete) - returns (int) with corresponding watcher index in watchers[] if aHandler has been registered for aTopic, returns (bool) false otherwise
+// watching(aHandler, aTopic, aURI, beforeComplete) -	returns (int) with corresponding watcher index in watchers[] if aHandler has been registered for aTopic,
+//							returns (bool) false otherwise
 //	see register()
 this.browserMediator = {
 	watchers: [],

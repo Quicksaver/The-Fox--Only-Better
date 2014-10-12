@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.2.0';
 moduleAid.UTILS = true;
 
 // messenger - 	Aid object to communicate with browser content scripts (e10s).
@@ -155,7 +155,15 @@ this.messenger = {
 		// if this is a preloaded browser, we don't need to load in it, the content script will still be loaded in the actual tab's browser
 		if(m.target.parentNode.localName == 'window' && m.target.parentNode.id == 'win') { return; }
 		
-		messenger.messageBrowser(m.target, 'init');
+		// can't stringify AddonData directly, because it contains an nsIFile instance (installPath) and an nsIURI instance (resourceURI)
+		var carryData = {
+			id: AddonData.id,
+			initTime: AddonData.initTime,
+			version: AddonData.version,
+			oldVersion: AddonData.oldVersion,
+			newVersion: AddonData.newVersion
+		};	
+		messenger.messageBrowser(m.target, 'init', JSON.stringify(carryData));
 		
 		// carry the preferences current values into content
 		var current = {};
@@ -216,5 +224,6 @@ moduleAid.UNLOADMODULE = function() {
 	
 	windowMediator.callOnAll(messenger.cleanWindow, 'navigator:browser');
 	
+	messenger.globalMM.removeDelayedFrameScript('resource://'+objPathString+'/modules/utils/content.js?'+AddonData.initTime);
 	messenger.messageAll('shutdown');
 };
