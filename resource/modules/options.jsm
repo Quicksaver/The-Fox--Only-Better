@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.1';
+moduleAid.VERSION = '1.1.2';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -50,20 +50,40 @@ this.fillKeycodes = function() {
 	}
 };
 
+this.initialShowInWindow = function(aWindow, style, animation, duration) {
+	if(aWindow[objName] && aWindow[objName].initialShowChrome && aWindow[objName].slimChromeStyle) {
+		aWindow[objName].slimStyle = style;
+		aWindow[objName].slimAnimation = animation;
+		aWindow[objName].initialShowChrome(duration);
+	}
+};
+
 this.initialShowInOpener = function(style, animation, duration) {
 	timerAid.init('initialShowInOpener', function() {
-		if(window.opener && window.opener[objName] && window.opener[objName].initialShowChrome && window.opener[objName].slimChromeStyle) {
-			window.opener[objName].slimStyle = style;
-			window.opener[objName].slimAnimation = animation;
-			window.opener[objName].initialShowChrome(duration);
+		if(window.opener && window.opener instanceof window.opener.ChromeWindow) {
+			initialShowInWindow(window.opener, style, animation, duration);
+		} else {
+			var tempShow = function(aWindow) {
+				initialShowInWindow(aWindow, style, animation, duration);
+			};
+			windowMediator.callOnMostRecent(tempShow, 'navigator:browser');
 		}
 	}, 150);
 };
 
+this.openReleaseNotesTab = function(aWindow) {
+	aWindow.gBrowser.selectedTab = aWindow.gBrowser.addTab('about:'+objPathString);
+	aWindow.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
+};
+
 this.openReleaseNotes = function(e) {
-	if(window.opener) {
-		window.opener.gBrowser.selectedTab = window.opener.gBrowser.addTab('about:'+objPathString);
-		window.opener.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
+	if(e.type == 'click' && e.which != 1) { return; }
+	if(e.type == 'keypress' && e.keycode != e.DOM_VK_RETURN) { return; }
+	
+	if(window.opener && window.opener instanceof window.opener.ChromeWindow) {
+		openReleaseNotesTab(window.opener);
+	} else {
+		windowMediator.callOnMostRecent(openReleaseNotesTab, 'navigator:browser');
 	}
 	
 	e.preventDefault();
