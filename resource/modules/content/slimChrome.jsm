@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 this.miniActive = false;
 
@@ -76,8 +76,11 @@ moduleAid.UNLOADMODULE = function() {
 	webProgress.removeProgressListener(slimChromeProgressListener);
 	DOMContentLoaded.remove(focusLoadListener);
 	
-	// these will be removed through listenerAid.clean(), calling them here would just cause an error, as the sandboxTools module wouldn't have been loaded at this point,
-	// and it couldn't be loaded now (it would throw) because the resource handler has been removed already.
-	//listenerAid.remove(Scope, 'focus', focusPasswords, true);
-	//listenerAid.remove(Scope, 'blur', focusPasswords, true);
+	// when this fails, these will be removed through listenerAid.clean(), calling them here would just cause an error, as the sandboxTools module wouldn't have been loaded
+	// at this point, and it couldn't be loaded now (it would throw) because the resource handler has been removed already.
+	try {
+		listenerAid.remove(Scope, 'focus', focusPasswords, true);
+		listenerAid.remove(Scope, 'blur', focusPasswords, true);
+	}
+	catch(ex) { Cu.reportError(ex); }
 };
