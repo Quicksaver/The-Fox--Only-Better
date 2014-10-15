@@ -43,7 +43,7 @@
 				["bugfix","Fix personas support in RTL locales"],
 				["bugfix","Ghostery toolbar button (and maybe others) would not reappear sometimes after closing and re-opening the browser window"],
 				["bugfix","Enhanced compatibility with my other add-ons"],
-				["","Other minor fixes and improvements"]
+				["updated","Other minor fixes and improvements"]
 			]
 		},
 		"1.0.10":{
