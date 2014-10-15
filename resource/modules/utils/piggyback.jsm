@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
@@ -113,7 +113,7 @@ this.piggyback = {
 		return true;
 	},
 	
-	revert: function(aObj, aName, aMethod) {
+	revert: function(aName, aObj, aMethod) {
 		var aId = '_piggyback_'+objName;
 		var ids = aObj.__piggybackIds ? aObj.__piggybackIds.split(' ') : [];
 		

@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.5.1';
+moduleAid.VERSION = '1.5.2';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -737,39 +737,10 @@ this.slimChromeIncludeNavBar = function(unload) {
 		slimChromeToolbars.insertBefore(gNavBar, slimChromeToolbars.firstChild);
 		
 		// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
-		gNavBar.overflowable.__onLazyResize = gNavBar.overflowable._onLazyResize;
-		gNavBar.overflowable._onLazyResize = function() {
-			if(!trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
-			this.__onLazyResize();
-		};
-		gNavBar.overflowable._onOverflow = gNavBar.overflowable.onOverflow;
-		gNavBar.overflowable.onOverflow = function(e) {
-			if(!trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
-			this._onOverflow(e);
-		};
-		gNavBar.overflowable.__moveItemsBackToTheirOrigin = gNavBar.overflowable._moveItemsBackToTheirOrigin;
-		gNavBar.overflowable._moveItemsBackToTheirOrigin = function(shouldMoveAllItems) {
-			if(!trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
-			this.__moveItemsBackToTheirOrigin(shouldMoveAllItems);
-		};
-		if(gNavBar.overflowable._lazyResizeHandler) {
-			gNavBar.overflowable._lazyResizeHandler.disarm();
-			gNavBar.overflowable._lazyResizeHandler = null;
-		}
+		slimChromeInitOverflowable(gNavBar);
 	}
 	else if((unload || !prefAid.includeNavBar) && isAncestor(gNavBar, slimChromeContainer)) {
-		if(gNavBar.overflowable && gNavBar.overflowable.__onLazyResize) { // when closing windows?
-			gNavBar.overflowable._onLazyResize = gNavBar.overflowable.__onLazyResize;
-			gNavBar.overflowable.onOverflow = gNavBar.overflowable._onOverflow;
-			gNavBar.overflowable._moveItemsBackToTheirOrigin = gNavBar.overflowable.__moveItemsBackToTheirOrigin;
-			delete gNavBar.overflowable.__onLazyResize;
-			delete gNavBar.overflowable._onOverflow;
-			delete gNavBar.overflowable.__moveItemsBackToTheirOrigin;
-			if(gNavBar.overflowable._lazyResizeHandler) {
-				gNavBar.overflowable._lazyResizeHandler.disarm();
-				gNavBar.overflowable._lazyResizeHandler = null;
-			}
-		}
+		slimChromeDeinitOverflowable(gNavBar);
 		
 		// don't trigger a re-register of this toolbar node with CUI when it's not needed
 		if(window.closed || window.willClose) {
@@ -780,6 +751,38 @@ this.slimChromeIncludeNavBar = function(unload) {
 	}
 	
 	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
+};
+
+this.slimChromeInitOverflowable = function(toolbar) {
+	if(!toolbar.overflowable) { return; }
+	
+	piggyback.add('slimChrome', toolbar.overflowable, '_onLazyResize', function() {
+		return trueAttribute(slimChromeContainer, 'fullWidth');
+	}, piggyback.MODE_BEFORE);
+	piggyback.add('slimChrome', toolbar.overflowable, 'onOverflow', function() {
+		return trueAttribute(slimChromeContainer, 'fullWidth');
+	}, piggyback.MODE_BEFORE);
+	piggyback.add('slimChrome', toolbar.overflowable, '_moveItemsBackToTheirOrigin', function() {
+		return trueAttribute(slimChromeContainer, 'fullWidth');
+	}, piggyback.MODE_BEFORE);
+	
+	if(toolbar.overflowable._lazyResizeHandler) {
+		toolbar.overflowable._lazyResizeHandler.disarm();
+		toolbar.overflowable._lazyResizeHandler = null;
+	}
+};
+
+this.slimChromeDeinitOverflowable = function(toolbar) {
+	if(!toolbar.overflowable) { return; }
+	
+	piggyback.revert('slimChrome', toolbar.overflowable, '_onLazyResize');
+	piggyback.revert('slimChrome', toolbar.overflowable, 'onOverflow');
+	piggyback.revert('slimChrome', toolbar.overflowable, '_moveItemsBackToTheirOrigin');
+	
+	if(toolbar.overflowable._lazyResizeHandler) {
+		toolbar.overflowable._lazyResizeHandler.disarm();
+		toolbar.overflowable._lazyResizeHandler = null;
+	}
 };
 
 this.slimChromeAnimation = function() {
@@ -823,6 +826,8 @@ this.loadSlimChrome = function() {
 		var toMove = toolbar;
 		toolbar = toolbar.previousSibling;
 		slimChromeToolbars.appendChild(toMove);
+		
+		slimChromeInitOverflowable(toMove);
 		
 		if(gNavToolbox.externalToolbars.indexOf(toMove) == -1) {
 			gNavToolbox.externalToolbars.push(toMove);
@@ -963,6 +968,8 @@ this.unloadSlimChrome = function() {
 		if(e != -1) {
 			gNavToolbox.externalToolbars.splice(e, 1);
 		}
+		
+		slimChromeDeinitOverflowable(slimChromeToolbars.firstChild);
 		
 		// don't trigger a re-register of this toolbar node with CUI when it's not needed
 		if(window.closed || window.willClose) {
