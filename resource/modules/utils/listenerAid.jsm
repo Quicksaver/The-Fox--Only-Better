@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.2.0';
+moduleAid.VERSION = '2.2.1';
 moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
@@ -16,6 +16,7 @@ moduleAid.BASEUTILS = true;
 //	see add()
 this.listenerAid = {
 	handlers: [],
+	inContent: typeof(Scope) != 'undefined',
 	
 	// Used to be if maxTriggers is set to the boolean false, it acted as a switch to not bind the function to our object,
 	// However this is no longer true, not only did I not use it, due to recent modifications to the method, it would be a very complex system to achieve.
@@ -84,7 +85,11 @@ this.listenerAid = {
 	
 	listening: function(obj, type, capture, listener) {
 		for(var i=0; i<this.handlers.length; i++) {
-			if(this.handlers[i].obj == obj && this.handlers[i].type == type && this.handlers[i].capture == capture && compareFunction(this.handlers[i].listener, listener)) {
+			if(this.handlers[i].obj == obj
+			&& this.handlers[i].type == type
+			&& this.handlers[i].capture == capture
+			// we shouldn't use compareFunction in content, as we may have already unloaded and the resource is invalid now to load that module back
+			&& ((!this.inContent && compareFunction(this.handlers[i].listener, listener)) || (this.inContent && this.handlers[i].listener == listener))) {
 				return i;
 			}
 		}
