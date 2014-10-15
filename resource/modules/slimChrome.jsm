@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.5.0';
+moduleAid.VERSION = '1.5.1';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -472,7 +472,7 @@ this.slimChromeFinishedWidth = function() {
 			catch(ex) { Cu.reportError(ex); }
 		}
 		
-		// update the NavBar, so its items are distributed correclty
+		// update the NavBar, so its items are distributed correctly
 		if(gNavBar.overflowable) {
 			gNavBar.overflowable._onResize();
 			gNavBar.overflowable._lazyResizeHandler.finalize().then(function() {
@@ -796,16 +796,14 @@ this.loadSlimChrome = function() {
 	
 	// prepare PlacesToolbar methods to work in our chrome in case it's there,
 	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width
-	window.PlacesToolbar.prototype.__onOverflow = window.PlacesToolbar.prototype._onOverflow;
-	window.PlacesToolbar.prototype.__onUnderflow = window.PlacesToolbar.prototype._onUnderflow;
-	window.PlacesToolbar.prototype._onOverflow = function() {
-		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
-		this.__onOverflow();
-	};
-	window.PlacesToolbar.prototype._onUnderflow = function() {
-		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
-		this.__onUnderflow();
-	};
+	piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onOverflow', function() {
+		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return false; }
+		return true;
+	}, piggyback.MODE_BEFORE);
+	piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow', function() {
+		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return false; }
+		return true;
+	}, piggyback.MODE_BEFORE);
 	
 	if(PlacesToolbar && PlacesToolbar._placesView) {
 		PlacesToolbar._placesView.uninit();
@@ -950,10 +948,8 @@ this.unloadSlimChrome = function() {
 	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	
 	// reset this before we move the toolbar
-	window.PlacesToolbar.prototype._onOverflow = window.PlacesToolbar.prototype.__onOverflow;
-	window.PlacesToolbar.prototype._onUnderflow = window.PlacesToolbar.prototype.__onUnderflow;
-	delete window.PlacesToolbar.prototype.__onOverflow;
-	delete window.PlacesToolbar.prototype.__onUnderflow;
+	piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onOverflow');
+	piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow');
 	
 	if(PlacesToolbar && PlacesToolbar._placesView) {
 		PlacesToolbar._placesView.uninit();

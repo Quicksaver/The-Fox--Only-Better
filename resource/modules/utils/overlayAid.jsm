@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.12.3';
+moduleAid.VERSION = '2.12.5';
 moduleAid.UTILS = true;
 
 // overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1993,14 +1993,16 @@ this.overlayAid = {
 	
 	// toolbar nodes can't be registered before they're appended to the DOM, otherwise all hell breaks loose
 	registerToolbarNode: function(aToolbar, aExistingChildren) {
-		if(!aToolbar || !aToolbar.id || !aToolbar.ownerDocument.getElementById(aToolbar.id)) {
+		if(!aToolbar || !aToolbar.id) { return; } // is this even possible?
+		
+		if(!aToolbar.ownerDocument.getElementById(aToolbar.id)) {
 			aSync(function() { CustomizableUI.registerToolbarNode(aToolbar, aExistingChildren); }, 250);
 			return;
 		}
 		this._registerToolbarNode(aToolbar, aExistingChildren);
 		
 		// the nodes insertion seems to fall somewhere between oveflow being initialized already but not listening to onOverflow events apparently
-		if(aToolbar.overflowable && aToolbar.customizationTarget.scrollLeftMax > 0 && !trueAttribute(aToolbar, 'overflowing')) {
+		if(aToolbar.overflowable && aToolbar.overflowable.initialized && aToolbar.customizationTarget.scrollLeftMax > 0 && !trueAttribute(aToolbar, 'overflowing')) {
 			aToolbar.overflowable.onOverflow();
 		}
 	}
@@ -2016,7 +2018,7 @@ moduleAid.LOADMODULE = function() {
 	browserMediator.register(overlayAid.closedBrowser, 'SidebarClosed');
 	observerAid.add(overlayAid.observingSchedules, 'window-overlayed');
 	
-	CUIAid.modify('registerToolbarNode', overlayAid.registerToolbarNode);
+	piggyback.add('overlayAid', CUIBackstage.CustomizableUIInternal, 'registerToolbarNode', overlayAid.registerToolbarNode);
 };
 
 moduleAid.UNLOADMODULE = function() {
@@ -2029,7 +2031,7 @@ moduleAid.UNLOADMODULE = function() {
 	windowMediator.callOnAll(overlayAid.unloadAll);
 	browserMediator.callOnAll(overlayAid.unloadBrowser);
 	
-	CUIAid.revert('registerToolbarNode');
+	piggyback.revert('overlayAid', CUIBackstage.CustomizableUIInternal, 'registerToolbarNode');
 	
 	delete Globals.widgets;
 };

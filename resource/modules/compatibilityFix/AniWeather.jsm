@@ -1,12 +1,9 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('AniWeatherBrowserAgent', function() { return window.AniWeatherBrowserAgent; });
 
 moduleAid.LOADMODULE = function() {
-	AniWeatherBrowserAgent._prepareReportById = AniWeatherBrowserAgent.prepareReportById;
-	AniWeatherBrowserAgent.prepareReportById = function(reportId, anchor, disp) {
-		this._prepareReportById(reportId, anchor, disp);
-		
+	piggyback.add('AniWeather', AniWeatherBrowserAgent, 'prepareReportById', function() {
 		// don't let slim chrome hide the top of the animation popups
 		styleAid.unload('aniWeahter_'+_UUID);
 		if(typeof(slimChromeContainer) != 'undefined' && trueAttribute(slimChromeContainer, 'hover')) {
@@ -15,19 +12,15 @@ moduleAid.LOADMODULE = function() {
 			sscode += '#weatherLauncher { margin-top: '+slimChromeContainer.clientHeight+'px !important; }\n';
 			styleAid.load('aniWeahter_'+_UUID, sscode, true);
 		}
-	};
+	}, piggyback.MODE_AFTER);
 	
-	AniWeatherBrowserAgent._cancelReport = AniWeatherBrowserAgent.cancelReport;
-	AniWeatherBrowserAgent.cancelReport = function(event) {
-		this._cancelReport(event);
+	piggyback.add('AniWeather', AniWeatherBrowserAgent, 'cancelReport', function() {
 		styleAid.unload('aniWeahter_'+_UUID);
-	};
+	}, piggyback.MODE_AFTER);
 };
 
 moduleAid.UNLOADMODULE = function() {
-	AniWeatherBrowserAgent.prepareReportById = AniWeatherBrowserAgent._prepareReportById;
-	AniWeatherBrowserAgent.cancelReport = AniWeatherBrowserAgent._cancelReport;
-	delete AniWeatherBrowserAgent._prepareReportById;
-	delete AniWeatherBrowserAgent._cancelReport;
+	piggyback.revert('AniWeather', AniWeatherBrowserAgent, 'prepareReportById');
+	piggyback.revert('AniWeather', AniWeatherBrowserAgent, 'cancelReport');
 	styleAid.unload('aniWeahter_'+_UUID);
 };

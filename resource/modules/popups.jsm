@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.20';
+moduleAid.VERSION = '2.0.21';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -31,30 +31,6 @@ this.holdNotificationPopup = function(e) {
 	}
 };
 
-this.setupHoldDownloadsPanel = function(e) {
-	if(e.target.id == 'downloadsPanel') {
-		listenerAid.remove(window, 'popupshowing', setupHoldDownloadsPanel);
-		listenerAid.add(e.target, 'AskingForNodeOwner', holdDownloadsPanel);
-	}
-};
-
-this.holdDownloadsPanel = function(e) {
-	e.detail = 'downloads-button';
-	e.stopPropagation();
-};
-
-this.setupHoldBookmarkPanel = function(e) {
-	if(e.target.id == 'editBookmarkPanel') {
-		listenerAid.remove(window, 'popupshowing', setupHoldBookmarkPanel);
-		listenerAid.add(e.target, 'AskingForNodeOwner', holdBookmarkPanel);
-	}
-};
-
-this.holdBookmarkPanel = function(e) {
-	e.detail = 'bookmarks-menu-button';
-	e.stopPropagation();
-};
-
 // Keep chrome visible when opening menus within it
 this.blockPopups = ['identity-popup', 'notification-popup'];
 this.blockedPopup = false;
@@ -67,9 +43,8 @@ this.holdPopupMenu = function(e) {
 	var target = e.target;
 	
 	// don't bother with any of this if the opened popup is a child of any currently opened panel
-	if(isAncestor(e.target, blockedPopup)) { return; }
 	for(p of holdPopupNodes) {
-		if(e.target != p && isAncestor(e.target, p)) { return; }
+		if(target != p && isAncestor(target, p)) { return; }
 	}
 	
 	// check if the trigger node is present in our toolbars;
@@ -84,10 +59,10 @@ this.holdPopupMenu = function(e) {
 	if(!hold && !trigger) {
 		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
 		if(target.id == 'customizationui-widget-panel') {
-			hold_loop: for(var t=0; t<slimChromeToolbars.childNodes.length; t++) {
-				if(slimChromeToolbars.childNodes[t].localName != 'toolbar' || !CustomizableUI.getAreaType(slimChromeToolbars.childNodes[t].id)) { continue; }
+			hold_loop: for(var child of slimChromeToolbars.childNodes) {
+				if(child.localName != 'toolbar' || !CustomizableUI.getAreaType(child.id)) { continue; }
 				
-				var widgets = CustomizableUI.getWidgetsInArea(slimChromeToolbars.childNodes[t].id);
+				var widgets = CustomizableUI.getWidgetsInArea(child.id);
 				for(var w=0; w<widgets.length; w++) {
 					var widget = widgets[w].forWindow(window);
 					if(!widget || !widget.node || !widget.node.open) { continue; }
@@ -119,7 +94,8 @@ this.holdPopupMenu = function(e) {
 		}
 	}
 	
-	if(hold) {
+	// some menus, like NoScript's button menu, like to open multiple times (I think), or at least they don't actually open the first time... or something...
+	if(hold && e.target.state == 'open') {
 		// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
 		holdPopupNodes.push(target);
 		
@@ -178,16 +154,16 @@ this.popupsWillSetMini = function(e) {
 this.popupsFinishedWidth = function() {
 	timerAid.cancel('ensureHoldPopupShows');
 	if(holdPopupNodes.length > 0) {
-		for(var i=0; i<holdPopupNodes.length; i++) {
+		for(var popup of holdPopupNodes) {
 			// don't bother if the popup was never hidden to begin with,
 			// it's not needed (the chrome was already expanded when it opened), so the popup is already properly placed,
 			// also this prevents some issues, for example the context menu jumping to the top left corner
-			if(!holdPopupNodes[i].collapsed) { continue; }
+			if(!popup.collapsed) { continue; }
 			
 			// obviously we won't need to move it if it isn't open
-			if(holdPopupNodes[i].open || holdPopupNodes[i].state == 'open') {
-				holdPopupNodes[i].moveTo(-1,-1);
-				hideIt(holdPopupNodes[i], true);
+			if(popup.open || popup.state == 'open') {
+				popup.moveTo(-1,-1);
+				hideIt(popup, true);
 			}
 		}
 		
@@ -229,20 +205,6 @@ moduleAid.LOADMODULE = function() {
 	listenerAid.add($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
 	listenerAid.add($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
 	listenerAid.add($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
-	
-	// the downloadsPanel is only created when first called
-	if($('downloadsPanel')) {
-		listenerAid.add($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
-	} else {
-		listenerAid.add(window, 'popupshowing', setupHoldDownloadsPanel);
-	}
-	
-	// ditto for the editBookmarkPanel
-	if($('editBookmarkPanel')) {
-		listenerAid.add($('editBookmarkPanel'), 'AskingForNodeOwner', holdBookmarkPanel);
-	} else {
-		listenerAid.add(window, 'popupshowing', setupHoldBookmarkPanel);
-	}
 };
 
 moduleAid.UNLOADMODULE = function() {
@@ -251,10 +213,6 @@ moduleAid.UNLOADMODULE = function() {
 	listenerAid.remove($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
 	listenerAid.remove($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
 	listenerAid.remove($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
-	listenerAid.remove($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
-	listenerAid.remove($('editBookmarkPanel'), 'AskingForNodeOwner', holdBookmarkPanel);
-	listenerAid.remove(window, 'popupshowing', setupHoldDownloadsPanel);
-	listenerAid.remove(window, 'popupshowing', setupHoldBookmarkPanel);
 	
 	listenerAid.remove(window, 'LoadedSlimChrome', loadSlimChromePopups);
 	listenerAid.remove(window, 'UnloadingSlimChrome', unloadSlimChromePopups);

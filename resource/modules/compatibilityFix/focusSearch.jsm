@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('BrowserSearch', function() { return window.BrowserSearch; });
 
@@ -15,8 +15,7 @@ this.focusSearchOnWidthFinished = function() {
 moduleAid.LOADMODULE = function() {
 	// Omnibar nukes this method and replaces it with its own, which is flawed in Australis.
 	// So, I have to replace it myself as well, to make sure it works, rather than call _webSearch().
-	BrowserSearch._webSearch = BrowserSearch.webSearch;
-	BrowserSearch.webSearch = function() {
+	piggyback.add('focusSearch', BrowserSearch, 'webSearch', function() {
 		// For Mac, opens a new window or focuses an existing window, if necessary.
 		if(DARWIN) {
 			if(window.location.href != window.getBrowserURL()) {
@@ -91,7 +90,7 @@ moduleAid.LOADMODULE = function() {
 			searchBar.select();
 		}
 		openSearchPageIfFieldIsNotActive(searchBar);
-	};
+	});
 	
 	listenerAid.add(window, 'FinishedSlimChromeWidth', focusSearchOnWidthFinished);
 };
@@ -99,6 +98,5 @@ moduleAid.LOADMODULE = function() {
 moduleAid.UNLOADMODULE = function() {
 	listenerAid.remove(window, 'FinishedSlimChromeWidth', focusSearchOnWidthFinished);
 	
-	BrowserSearch.webSearch = BrowserSearch._webSearch;
-	delete BrowserSearch._webSearch;
+	piggyback.revert('focusSearch', BrowserSearch, 'webSearch');
 };
