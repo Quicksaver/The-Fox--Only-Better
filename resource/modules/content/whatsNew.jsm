@@ -1,7 +1,4 @@
-moduleAid.VERSION = '1.0.0';
-
-// don't forget to change this for each add-on!
-this.addonId = 502644;
+moduleAid.VERSION = '1.1.0';
 
 this.__defineGetter__('whatsNewURL', function() { return 'chrome://'+objPathString+'/content/whatsnew.xhtml'; });
 this.__defineGetter__('whatsNewAbout', function() { return 'about:'+objPathString; });
@@ -27,7 +24,7 @@ this.whatsNewInit = function() {
 	$('notifyOnUpdates').checked = prefAid.notifyOnUpdates;
 	
 	// check to see if there is a more recent version available
-	whatsNewCheckAMO();
+	Addon.findUpdates(whatsNewCheckAMO, AddonManager.UPDATE_WHEN_PERIODIC_UPDATE);
 	
 	// need to get the changelog in order to populate it
 	message('changeLog');
@@ -51,23 +48,13 @@ this.whatsNewNotifyOnUpdates = function() {
 	message('notifyOnUpdates', $('notifyOnUpdates').checked);
 };
 
-this.whatsNewCheckAMO = function() {
-	var path = "https://services.addons.mozilla.org/en-US/firefox/api/1.5/addon/"+addonId;
-	xmlHttpRequest(path, function(xmlhttp) {
-		try {
-			if(xmlhttp.readyState === 4) {
-				var latest = xmlhttp.responseXML.querySelector('version');
-				if(latest) {
-					if(Services.vc.compare(AddonData.version, latest.textContent) >= 0) {
-						$('uptodate').hidden = false;
-					} else {
-						$('needsupdate').hidden = false;
-					}
-				}
-			}
-		}
-		catch(ex) { Cu.reportError(ex); }
-	});
+this.whatsNewCheckAMO = {
+	onUpdateAvailable: function() {
+		$('needsupdate').hidden = false;
+	},
+	onNoUpdateAvailable: function() {
+		$('uptodate').hidden = false;
+	}
 };
 
 this.whatsNewChangeLog = function(m) {

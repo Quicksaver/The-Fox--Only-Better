@@ -29,7 +29,7 @@
 // Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
 // along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
 
-let bootstrapVersion = '1.6.1';
+let bootstrapVersion = '1.6.2';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -50,6 +50,13 @@ XPCOMUtils.defineLazyModuleGetter(this, "PlacesUtils", "resource://gre/modules/P
 XPCOMUtils.defineLazyModuleGetter(this, "PluralForm", "resource://gre/modules/PluralForm.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "PrivateBrowsingUtils", "resource://gre/modules/PrivateBrowsingUtils.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Promise", "resource://gre/modules/Promise.jsm");
+
+// easy and useful helpers for when I'm debugging
+XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/devtools/Console.jsm");
+function LOG(str) {
+	if(!str) { str = typeof(str)+': '+str; }
+	console.log(objName+' '+' :: CHROME :: '+str);
+}
 
 // PlacesUIUtils can be removed in FF34 as well (not inside conditional because let only sets it within the conditional)
 let PlacesUIUtils = {};
