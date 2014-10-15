@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('RSS_TICKER_UI', function() { return window.RSS_TICKER_UI; });
 this.__defineGetter__('RSS_TICKER_UTILS', function() { return window.RSS_TICKER_UTILS; });
@@ -26,10 +26,10 @@ this.RSSTickerStyle = function() {
 moduleAid.LOADMODULE = function() {
 	prefAid.setDefaults({ tickerPlacement: 1 }, 'rssticker');
 	
-	// the ticker toolbar should be added before our elements, not after
 	toCode.modify(RSS_TICKER_UI, 'RSS_TICKER_UI.loadTicker', [
+		// the ticker toolbar should be added before our elements, not after
 		["document.getElementById( 'navigator-toolbox' ).appendChild( RSS_TICKER_UI.toolbar );",
-			"document.getElementById('navigator-toolbox').insertBefore(RSS_TICKER_UI.toolbar, document.getElementById('"+objName+"-slimChrome-container'));"
+			"document.getElementById('navigator-toolbox').insertBefore(RSS_TICKER_UI.toolbar, document.getElementById('theFoxOnlyBetter-slimChrome-container'));"
 		]
 	]);
 	

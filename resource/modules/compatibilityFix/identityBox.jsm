@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
@@ -100,8 +100,9 @@ moduleAid.LOADMODULE = function() {
 	});
 	
 	toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
+		// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
 		['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
-			'this._identityPopup.openPopup(isAncestor(event.target, $("'+objName+'-skyLights-identityBox")) ? $("'+objName+'-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
+			'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
 		]
 	]);
 	

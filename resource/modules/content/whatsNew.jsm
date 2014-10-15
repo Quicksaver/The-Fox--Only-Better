@@ -124,7 +124,7 @@ this.whatsNewFillChangeLog = function(version) {
 				}
 				
 				var p = document.createElement('p');
-				p.innerHTML = note[1];
+				p.innerHTML = note[1]; // just string text, with some <a> tags on occasion; all these can be found in the resource/changelog.json file
 				li.appendChild(p);
 				
 				ul.appendChild(li);
@@ -160,7 +160,7 @@ this.whatsNewFillChangeLog = function(version) {
 					li.appendChild(b);
 					
 					var p = document.createElement('p');
-					p.innerHTML = issue[0];
+					p.innerHTML = issue[0]; // just string text, with some <a> tags on occasion; all these can be found in the resource/changelog.json file
 					li.appendChild(p);
 					
 					ul.appendChild(li);

@@ -14,8 +14,10 @@ moduleAid.BASEUTILS = true;
 //		see modify()
 // Note to self, by using the Function() method to create functions I'm priving them from their original context,
 // that is, while inside a function created by that method in a module loaded by moduleAid I can't call 'subObj' (as in 'mainObj.subObj') by itself as I normally do,
-// I have to either use 'mainObj.subObj' or 'this.subObj'; I try to avoid this as that is how I'm building my modularized add-ons, 
-// so I'm using eval, at least for now until I find a better way to implement this functionality.
+// I have to either use 'mainObj.subObj' or 'this.subObj'; I try to avoid this as that is how I'm building my modularized add-ons, so I'm using eval, at least for now until I find a
+// better way to implement this functionality.
+// Note: try to hardcode everything in the strings to replace, as it's difficult to backtrace variables in them to ensure they are safe to use. This is a big issue for AMO reviewers
+// who are not familiar with the code, so not even objName or objPathString!
 // Don't forget that in bootstraped add-ons, these modified functions take the context of the modifier (sandboxed).
 this.toCode = {
 	_records: [],
