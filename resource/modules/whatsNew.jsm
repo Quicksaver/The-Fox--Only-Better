@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.0';
+moduleAid.VERSION = '1.0.1';
 
 // don't forget to change this for each add-on! See http://www.famkruithof.net/uuid/uuidgen
 this.addonUUID = '9cb2c7a0-5224-11e4-916c-0800200c9a66';
@@ -47,7 +47,9 @@ this.whatsNewOpenWhenReady = function() {
 		return;
 	}
 	
-	window.gBrowser.selectedTab = window.gBrowser.addTab(whatsNewAbout);
+	// this doesn't work in e10s yet
+	//window.gBrowser.selectedTab = window.gBrowser.addTab(whatsNewAbout);
+	window.gBrowser.selectedTab = window.gBrowser.addTab(whatsNewURL);
 	window.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
 };
 

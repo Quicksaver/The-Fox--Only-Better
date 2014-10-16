@@ -202,7 +202,7 @@
 					value="&about.tech;"/>
 			<label	id="releaseNotesLink"
 					class="text-link closer"
-					tooltiptext="about:objPathString"
+					tooltiptext="chrome://objPathString/content/whatsnew.xhtml"
 					value="&about.notes;"/>
 		</vbox>
 	</prefpane>

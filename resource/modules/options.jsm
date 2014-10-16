@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.2';
+moduleAid.VERSION = '1.1.3';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -72,7 +72,9 @@ this.initialShowInOpener = function(style, animation, duration) {
 };
 
 this.openReleaseNotesTab = function(aWindow) {
-	aWindow.gBrowser.selectedTab = aWindow.gBrowser.addTab('about:'+objPathString);
+	// this doesn't work in e10s yet
+	//aWindow.gBrowser.selectedTab = aWindow.gBrowser.addTab('about:'+objPathString);
+	aWindow.gBrowser.selectedTab = aWindow.gBrowser.addTab('chrome://'+objPathString+'/content/whatsnew.xhtml');
 	aWindow.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
 };
 
