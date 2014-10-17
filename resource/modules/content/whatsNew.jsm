@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.0';
+moduleAid.VERSION = '1.1.2';
 
 this.__defineGetter__('whatsNewURL', function() { return 'chrome://'+objPathString+'/content/whatsnew.xhtml'; });
 this.__defineGetter__('whatsNewAbout', function() { return 'about:'+objPathString; });
@@ -7,7 +7,16 @@ this.whatsNewLastVersion = null;
 this.changelog = '';
 
 this.whatsNewInit = function() {
-	// not loaded yet?
+	// content script not finished loading yet
+	if(!Addon) {
+		timerAid.init('whatsNewInit', function() {
+			if(typeof(whatsNewInit) == 'undefined') { return; }
+			whatsNewInit();
+		}, 100);
+		return;
+	}
+	
+	// page not loaded yet?
 	if(!$('currentVersion')) { return; }
 	
 	// needed for all commanders and links and buttons and stuff
@@ -169,6 +178,8 @@ this.whatsNewProgressListener = {
 	QueryInterface: XPCOMUtils.generateQI([Ci.nsIWebProgressListener, Ci.nsISupportsWeakReference]),
 	
 	onLocationChange: function(aProgress, aRequest, aURI) {
+		if(aProgress.DOMWindow != content) { return; }
+		
 		if(aURI.spec.startsWith(whatsNewURL) || aURI.spec.startsWith(whatsNewAbout)) {
 			whatsNewInit();
 		}
@@ -176,6 +187,8 @@ this.whatsNewProgressListener = {
 };
 
 this.whatsNewLoadListener = function(e) {
+	if(e.originalTarget != document) { return; }
+	
 	if(document.baseURI.startsWith(whatsNewURL) || document.baseURI.startsWith(whatsNewAbout)) {
 		whatsNewInit();
 	}
