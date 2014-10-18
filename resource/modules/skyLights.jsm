@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+moduleAid.VERSION = '1.0.3';
 
 this.__defineGetter__('skyLightsContainer', function() { return $(objName+'-skyLights-container'); });
 
@@ -49,8 +49,6 @@ this.skyLights = {
 							isTransparent = parseInt(colorExplode[3]) == 0;
 						}
 					}
-					
-					styleAid.unload('skyLight-'+name+'_'+_UUID);
 					
 					var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 					sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';

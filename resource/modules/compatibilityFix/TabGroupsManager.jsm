@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.tgmGroupBarId = 'TabGroupsManagerToolbar';
 this.__defineGetter__('tgmGroupBar', function() { return $(tgmGroupBarId); });
@@ -17,8 +17,6 @@ this.tgmReplaceBar = function() {
 
 this.tgmOrdinal = function() {
 	var ordinal = Math.max(prefAid.groupBarOrdinal, prefAid.tabBarOrdinal) +1;
-	
-	styleAid.unload('tgmOrdinal_'+_UUID);
 	
 	var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';

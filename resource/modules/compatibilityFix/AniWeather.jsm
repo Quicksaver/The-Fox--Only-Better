@@ -1,11 +1,10 @@
-moduleAid.VERSION = '1.0.1';
+moduleAid.VERSION = '1.0.2';
 
 this.__defineGetter__('AniWeatherBrowserAgent', function() { return window.AniWeatherBrowserAgent; });
 
 moduleAid.LOADMODULE = function() {
 	piggyback.add('AniWeather', AniWeatherBrowserAgent, 'prepareReportById', function() {
 		// don't let slim chrome hide the top of the animation popups
-		styleAid.unload('aniWeahter_'+_UUID);
 		if(typeof(slimChromeContainer) != 'undefined' && trueAttribute(slimChromeContainer, 'hover')) {
 			var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 			sscode += '@namespace url(http://www.w3.org/1999/xhtml);\n';

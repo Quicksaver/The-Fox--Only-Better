@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.5.2';
+moduleAid.VERSION = '1.5.3';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -101,9 +101,6 @@ this.moveSlimChrome = function() {
 	if(!shouldReMoveSlimChrome(moveSlimChromeStyle)) { return; }
 	
 	lastSlimChromeStyle = moveSlimChromeStyle;
-	
-	// Unload current stylesheet if it's been loaded
-	styleAid.unload('slimChromeMove_'+_UUID);
 	
 	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';

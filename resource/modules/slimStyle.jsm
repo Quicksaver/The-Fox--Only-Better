@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.1';
+moduleAid.VERSION = '1.2.2';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathLeft', function() { return $(objName+'-slimChrome-clipPath-toolbars-left-path'); });
@@ -111,9 +111,6 @@ this.slimChromeClipPaths = function() {
 	var toolbarsWidth = toolbarsMargin *2;
 	
 	var navbarMargin = AUSTRALIS_BORDER_NAVBAR_MARGIN + (AUSTRALIS_BORDER_TOOLBAR_MARGIN *slimChromeNumToolbars());
-	
-	// define the DOM nodes sizes first
-	styleAid.unload('slimChromeSVG_'+_UUID);
 	
 	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
@@ -285,7 +282,7 @@ this.stylePersonaSlimChrome = function() {
 		}
 	}
 	
-	// Unload current stylesheet if it's been loaded
+	// Unload current stylesheet if it's been loaded, just in case we're changing personas
 	styleAid.unload('personaSlimChrome_'+_UUID);
 	
 	if(lwtheme.bgImage != '') {

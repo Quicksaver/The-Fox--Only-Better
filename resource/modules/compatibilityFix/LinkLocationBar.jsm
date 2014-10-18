@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.4';
+moduleAid.VERSION = '1.1.5';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 
@@ -29,9 +29,6 @@ this.LLBreapply = function() {
 };
 
 this.LLBresize = function() {
-	// Unload current stylesheet if it's been loaded
-	styleAid.unload('LLBresize_'+_UUID);
-	
 	var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 	sscode += '@-moz-document url("'+document.baseURI+'") {\n';

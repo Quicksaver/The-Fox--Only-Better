@@ -3,7 +3,7 @@ moduleAid.UTILS = true;
 moduleAid.BASEUTILS = true;
 
 // styleAid - handle loading and unloading of stylesheets in a quick and easy way
-// load(aName, aPath, isData) - loads aPath css stylesheet with type AGENT_SHEET
+// load(aName, aPath, isData) - loads aPath css stylesheet with type AGENT_SHEET; if re-loading a stylesheet with the same name, it will only be re-loaded if aPath has changed
 //	aName - (string) to name the stylesheet object in sheets[]
 //	aPath -
 //		(string) absolute chrome:// path to the stylesheet to be loaded
