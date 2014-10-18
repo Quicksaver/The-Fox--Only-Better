@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.2';
+moduleAid.VERSION = '1.1.3';
 
 this.__defineGetter__('whatsNewURL', function() { return 'chrome://'+objPathString+'/content/whatsnew.xhtml'; });
 this.__defineGetter__('whatsNewAbout', function() { return 'about:'+objPathString; });
@@ -37,6 +37,9 @@ this.whatsNewInit = function() {
 	
 	// need to get the changelog in order to populate it
 	message('changeLog');
+	
+	// init AddToAny stuff, this is init'ed in a type="content" iframe, through a data: src attr for running in an unprivileged context
+	whatsNewA2A();
 };
 
 this.whatsNewCommand = function(str) {
@@ -170,6 +173,19 @@ this.whatsNewFillChangeLog = function(version) {
 	// if we're printing all the releases, hide the button to show them as it won't be needed anymore
 	if(Services.vc.compare(version, '0') == 0) {
 		$('allVersions').hidden = true;
+	}
+};
+
+this.whatsNewA2A = function() {
+	// Since I can't use a local iframe to load remote content, I have to include and build the buttons myself.
+	// Build the buttons href's with the link to the add-on and the phrase to be used as default when sharing
+	var linkurl = $('a2a_div').getAttribute('linkurl');
+	var linkname = $('a2a_div').getAttribute('linkname');
+	var as = $$('.a2a_link');
+	for(var a of as) {
+		var href = a.getAttribute('href');
+		href += '?linkurl='+encodeURIComponent(linkurl)+'&linkname='+encodeURIComponent(linkname);
+		setAttribute(a, 'href', href);
 	}
 };
 
