@@ -34,7 +34,7 @@ this.theFoxOnlyBetter = {
 	
 	initialized: false,
 	
-	version: '1.2.3',
+	version: '1.2.4',
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
@@ -47,7 +47,6 @@ this.theFoxOnlyBetter = {
 	},
 	
 	// some local things
-	Addon: null,
 	AddonData: {},
 	Globals: {},
 	Prefs: {},
@@ -64,7 +63,7 @@ this.theFoxOnlyBetter = {
 		this.DARWIN = Services.appinfo.OS == 'Darwin';
 		this.LINUX = Services.appinfo.OS != 'WINNT' && Services.appinfo.OS != 'Darwin';
 		
-		XPCOMUtils.defineLazyModuleGetter(this, "AddonManager", "resource://gre/modules/AddonManager.jsm");
+		// AddonManager can't be used in child processes!
 		XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/devtools/Console.jsm");
 		XPCOMUtils.defineLazyModuleGetter(this.Scope, "PluralForm", "resource://gre/modules/PluralForm.jsm");
 		XPCOMUtils.defineLazyServiceGetter(Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
@@ -90,12 +89,6 @@ this.theFoxOnlyBetter = {
 	
 	finishInit: function(m) {
 		this.AddonData = JSON.parse(m.data);
-		
-		// basic add-on info if needed
-		this.AddonManager.getAddonByID(this.AddonData.id, function(addon) {
-			this.Addon = addon;
-		}.bind(this));
-		
 		this.initialized = true;
 	},
 	

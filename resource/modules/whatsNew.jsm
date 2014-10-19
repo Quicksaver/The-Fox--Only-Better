@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.2';
+Modules.VERSION = '1.0.3';
 
 // don't forget to change this for each add-on! See http://www.famkruithof.net/uuid/uuidgen
 this.addonUUID = '9cb2c7a0-5224-11e4-916c-0800200c9a66';
@@ -53,6 +53,17 @@ this.whatsNewOpenWhenReady = function() {
 	window.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
 };
 
+this.whatsNewCheckUpdates = function(m) {
+	Addon.findUpdates({
+		onUpdateAvailable: function() {
+			Messenger.messageBrowser(m.target, 'checkUpdates', true);
+		},
+		onNoUpdateAvailable: function() {
+			Messenger.messageBrowser(m.target, 'checkUpdates', false);
+		}
+	}, AddonManager.UPDATE_WHEN_PERIODIC_UPDATE);
+};
+
 Modules.LOADMODULE = function() {
 	// register our about: page, only do it once per session
 	if(!Globals.aboutWhatsNew) {
@@ -102,6 +113,7 @@ Modules.LOADMODULE = function() {
 	Messenger.listenWindow(window, 'changeLog', whatsNewChangeLog);
 	Messenger.listenWindow(window, 'addonOptions', doOpenOptions);
 	Messenger.listenWindow(window, 'notifyOnUpdates', whatsNewNotifyOnUpdates);
+	Messenger.listenWindow(window, 'checkUpdates', whatsNewCheckUpdates);
 	
 	// if we're in a dev version, ignore all this
 	if(AddonData.version.contains('a') || AddonData.version.contains('b')) { return; }
@@ -130,6 +142,7 @@ Modules.UNLOADMODULE = function() {
 	Messenger.unlistenWindow(window, 'changeLog', whatsNewChangeLog);
 	Messenger.unlistenWindow(window, 'addonOptions', doOpenOptions);
 	Messenger.unlistenWindow(window, 'notifyOnUpdates', whatsNewNotifyOnUpdates);
+	Messenger.unlistenWindow(window, 'checkUpdates', whatsNewCheckUpdates);
 	
 	for(var tab of window.gBrowser.mTabs) {
 		if(tab.linkedBrowser.currentURI.spec.startsWith(whatsNewURL) || tab.linkedBrowser.currentURI.spec.startsWith(whatsNewAbout)) {

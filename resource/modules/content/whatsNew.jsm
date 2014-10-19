@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.4';
+Modules.VERSION = '1.1.5';
 
 this.__defineGetter__('whatsNewURL', function() { return 'chrome://'+objPathString+'/content/whatsnew.xhtml'; });
 this.__defineGetter__('whatsNewAbout', function() { return 'about:'+objPathString; });
@@ -8,7 +8,7 @@ this.changelog = '';
 
 this.whatsNewInit = function() {
 	// content script not finished loading yet
-	if(!Addon) {
+	if(!AddonData.version) {
 		Timers.init('whatsNewInit', function() {
 			if(typeof(whatsNewInit) == 'undefined') { return; }
 			whatsNewInit();
@@ -33,7 +33,7 @@ this.whatsNewInit = function() {
 	$('notifyOnUpdates').checked = Prefs.notifyOnUpdates;
 	
 	// check to see if there is a more recent version available
-	Addon.findUpdates(whatsNewCheckAMO, AddonManager.UPDATE_WHEN_PERIODIC_UPDATE);
+	message('checkUpdates');
 	
 	// need to get the changelog in order to populate it
 	message('changeLog');
@@ -60,13 +60,8 @@ this.whatsNewNotifyOnUpdates = function() {
 	message('notifyOnUpdates', $('notifyOnUpdates').checked);
 };
 
-this.whatsNewCheckAMO = {
-	onUpdateAvailable: function() {
-		$('needsupdate').hidden = false;
-	},
-	onNoUpdateAvailable: function() {
-		$('uptodate').hidden = false;
-	}
+this.whatsNewCheckAMO = function(m) {
+	$((m.data) ? 'needsupdate' : 'uptodate').hidden = false;
 };
 
 this.whatsNewChangeLog = function(m) {
@@ -215,6 +210,7 @@ Modules.LOADMODULE = function() {
 	DOMContentLoaded.add(whatsNewLoadListener);
 	listen('changeLog', whatsNewChangeLog);
 	listen('notifyLastVersion', whatsNewNotifyLastVersion);
+	listen('checkUpdates', whatsNewCheckAMO);
 };
 
 Modules.UNLOADMODULE = function() {
@@ -222,4 +218,5 @@ Modules.UNLOADMODULE = function() {
 	DOMContentLoaded.remove(whatsNewLoadListener);
 	unlisten('changeLog', whatsNewChangeLog);
 	unlisten('notifyLastVersion', whatsNewNotifyLastVersion);
+	unlisten('checkUpdates', whatsNewCheckAMO);
 };
