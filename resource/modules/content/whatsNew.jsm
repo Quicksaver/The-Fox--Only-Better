@@ -173,7 +173,8 @@ this.whatsNewFillChangeLog = function(version) {
 
 this.whatsNewA2A = function() {
 	// Since I can't use a local iframe to load remote content, I have to include and build the buttons myself.
-	// Build the buttons href's with the link to the add-on and the phrase to be used as default when sharing
+	// Build the buttons href's with the link to the add-on and the phrase to be used as default when sharing.
+	// These values are hardcoded in chrome://addon/content/whatsNew.xhtml
 	var linkurl = $('a2a_div').getAttribute('linkurl');
 	var linkname = $('a2a_div').getAttribute('linkname');
 	var as = $$('.a2a_link');
