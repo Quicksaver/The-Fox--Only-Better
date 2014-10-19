@@ -1,33 +1,33 @@
-moduleAid.VERSION = '1.0.0';
+Modules.VERSION = '1.0.1';
 
 this.slimChromeKey = {
 	id: objName+'-key-slimChrome',
 	oncommand: objName+'.toggleSlimChromePref();',
-	get keycode () { return prefAid.slimChromeKeycode; },
-	get accel () { return prefAid.slimChromeAccel; },
-	get shift () { return prefAid.slimChromeShift; },
-	get alt () { return prefAid.slimChromeAlt; }
+	get keycode () { return Prefs.slimChromeKeycode; },
+	get accel () { return Prefs.slimChromeAccel; },
+	get shift () { return Prefs.slimChromeShift; },
+	get alt () { return Prefs.slimChromeAlt; }
 };
 
 this.setKeys = function() {
-	if(slimChromeKey.keycode != 'none') { keysetAid.register(slimChromeKey); }
-	else { keysetAid.unregister(slimChromeKey); }
+	if(slimChromeKey.keycode != 'none') { Keysets.register(slimChromeKey); }
+	else { Keysets.unregister(slimChromeKey); }
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	setKeys();
 	
-	prefAid.listen('slimChromeKeycode', setKeys);
-	prefAid.listen('slimChromeAccel', setKeys);
-	prefAid.listen('slimChromeShift', setKeys);
-	prefAid.listen('slimChromeAlt', setKeys);
+	Prefs.listen('slimChromeKeycode', setKeys);
+	Prefs.listen('slimChromeAccel', setKeys);
+	Prefs.listen('slimChromeShift', setKeys);
+	Prefs.listen('slimChromeAlt', setKeys);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	prefAid.unlisten('slimChromeKeycode', setKeys);
-	prefAid.unlisten('slimChromeAccel', setKeys);
-	prefAid.unlisten('slimChromeShift', setKeys);
-	prefAid.unlisten('slimChromeAlt', setKeys);
+Modules.UNLOADMODULE = function() {
+	Prefs.unlisten('slimChromeKeycode', setKeys);
+	Prefs.unlisten('slimChromeAccel', setKeys);
+	Prefs.unlisten('slimChromeShift', setKeys);
+	Prefs.unlisten('slimChromeAlt', setKeys);
 	
-	keysetAid.unregister(slimChromeKey);
+	Keysets.unregister(slimChromeKey);
 };

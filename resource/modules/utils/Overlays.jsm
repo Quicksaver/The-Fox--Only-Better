@@ -1,7 +1,7 @@
-moduleAid.VERSION = '2.12.5';
-moduleAid.UTILS = true;
+Modules.VERSION = '2.13.0';
+Modules.UTILS = true;
 
-// overlayAid - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
+// Overlays - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
 // When a window with an overlay is opened, the elements in both the window and the overlay with the same ids are combined together.
 // The children of matching elements are added to the end of the set of children in the window's element.
 // Attributes that are present on the overlay's elements will be applied to the window's elements.
@@ -27,7 +27,7 @@ moduleAid.UTILS = true;
 // or the whole element will be overlayed if not.
 // Elements with a getchildrenof attribute will inherit all the children from the elements specified by the comma-separated list of element ids.
 // Every occurence of (string) objName and (string) objPathString in every attribute in the overlay will be properly replaced with this object's objName and objPathString.
-// I can also overlay other overlays provided they are loaded through the overlayAid object (either from this add-on or another implementing it).
+// I can also overlay other overlays provided they are loaded through the Overlays object (either from this add-on or another implementing it).
 // Calling document.persist() for nodes added through here will not work by itself, it will only work if the node has the "persist" attribute explicitely set in the overlay, with a
 // comma-separated list of the attributes to persist. Normal XUL persistence through the "persist" attribute should work as expected.
 // If the toolbar element in the overlays has the following attributes, the system will add the corresponding customize context menu items:
@@ -57,7 +57,7 @@ moduleAid.UTILS = true;
 //						returns (bool) false otherwise 
 //	(optional) loaded - if true it will only return true if the overlay has been actually loaded into the window, rather than just added to the array. Defaults to false.
 //	see overlayWindow()
-this.overlayAid = {
+this.Overlays = {
 	overlays: [],
 	
 	overlayURI: function(aURI, aWith, beforeload, onload, onunload) {
@@ -81,23 +81,23 @@ this.overlayAid = {
 			if(xmlhttp.readyState === 4) {
 				// We can't get i from the push before because we can be adding and removing overlays at the same time,
 				// which since this is mostly an asynchronous process, would screw up the counter.
-				for(var i=0; i<overlayAid.overlays.length; i++) {
-					if(overlayAid.overlays[i].uri == aURI && overlayAid.overlays[i].overlay == path) { break; }
+				for(var i=0; i<Overlays.overlays.length; i++) {
+					if(Overlays.overlays[i].uri == aURI && Overlays.overlays[i].overlay == path) { break; }
 				}
-				if(!overlayAid.overlays[i]) { return; } // this can happen if switch on and off an overlay too quickly I guess..
+				if(!Overlays.overlays[i]) { return; } // this can happen if switch on and off an overlay too quickly I guess..
 				
-				overlayAid.overlays[i].document = xmlhttp.responseXML;
+				Overlays.overlays[i].document = xmlhttp.responseXML;
 				
-				if(overlayAid.overlays[i].document.querySelector('parsererror')) {
-					Cu.reportError(overlayAid.overlays[i].document.querySelector('parsererror').textContent);
+				if(Overlays.overlays[i].document.querySelector('parsererror')) {
+					Cu.reportError(Overlays.overlays[i].document.querySelector('parsererror').textContent);
 					return;
 				}
 				
-				replaceObjStrings(overlayAid.overlays[i].document);
-				overlayAid.cleanXUL(overlayAid.overlays[i].document, overlayAid.overlays[i]);
-				overlayAid.overlays[i].ready = true;
-				windowMediator.callOnAll(overlayAid.scheduleAll);
-				browserMediator.callOnAll(overlayAid.scheduleBrowser);
+				replaceObjStrings(Overlays.overlays[i].document);
+				Overlays.cleanXUL(Overlays.overlays[i].document, Overlays.overlays[i]);
+				Overlays.overlays[i].ready = true;
+				Windows.callOnAll(Overlays.scheduleAll);
+				Browsers.callOnAll(Overlays.scheduleBrowser);
 			}
 		});
 	},
@@ -109,17 +109,18 @@ this.overlayAid = {
 		var i = this.loadedURI(aURI, path);
 		if(i === false) { return; }
 		
-		// I sometimes call removeOverlayURI() when unloading modules, but these functions are also called when shutting down the add-on, preventing me from unloading the overlays.
+		// I sometimes call removeOverlayURI() when unloading modules, but these functions are also called when shutting down the add-on,
+		// preventing me from unloading the overlays.
 		// This makes it so it keeps the reference to the overlay when shutting down so it's properly removed in unloadAll() if it hasn't been done so already.
 		if(!UNLOADED) {
 			this.overlays.splice(i, 1);
 		}
 		
-		windowMediator.callOnAll(function(aWindow) {
-			overlayAid.scheduleUnOverlay(aWindow, path);
+		Windows.callOnAll(function(aWindow) {
+			Overlays.scheduleUnOverlay(aWindow, path);
 		});
-		browserMediator.callOnAll(function(aWindow) {
-			overlayAid.unscheduleBrowser(aWindow, path);
+		Browsers.callOnAll(function(aWindow) {
+			Overlays.unscheduleBrowser(aWindow, path);
 		});
 	},
 	
@@ -130,7 +131,7 @@ this.overlayAid = {
 		var newOverlay = {
 			uri: path,
 			traceBack: [],
-			removeMe: function() { overlayAid.removeOverlay(aWindow, this); },
+			removeMe: function() { Overlays.removeOverlay(aWindow, this); },
 			time: 0,
 			beforeload: beforeload || null,
 			onload: onload || null,
@@ -166,9 +167,9 @@ this.overlayAid = {
 				}
 				
 				replaceObjStrings(aWindow['_OVERLAYS_'+objName][i].document);
-				overlayAid.cleanXUL(aWindow['_OVERLAYS_'+objName][i].document, aWindow['_OVERLAYS_'+objName][i]);
+				Overlays.cleanXUL(aWindow['_OVERLAYS_'+objName][i].document, aWindow['_OVERLAYS_'+objName][i]);
 				aWindow['_OVERLAYS_'+objName][i].ready = true;
-				overlayAid.scheduleAll(aWindow);
+				Overlays.scheduleAll(aWindow);
 			}
 		});
 	},
@@ -191,7 +192,7 @@ this.overlayAid = {
 			return;
 		}
 		
-		overlayAid.scheduleUnOverlay(aWindow, path);
+		Overlays.scheduleUnOverlay(aWindow, path);
 	},
 	
 	loadedURI: function(aURI, aWith) {
@@ -366,7 +367,7 @@ this.overlayAid = {
 	observingSchedules: function(aSubject, aTopic) {
 		if(UNLOADED) { return; }
 		
-		overlayAid.scheduleAll(aSubject);
+		Overlays.scheduleAll(aSubject);
 	},
 	
 	scheduleAll: function(aWindow) {
@@ -374,14 +375,14 @@ this.overlayAid = {
 		if(UNLOADED) { return; }
 		
 		if(aWindow.document.readyState != 'complete') {
-			callOnLoad(aWindow, overlayAid.scheduleAll);
+			callOnLoad(aWindow, Overlays.scheduleAll);
 			return;
 		}
 		
 		aSync(function() {
 			// This still happens sometimes I have no idea why
-			if(typeof(overlayAid) == 'undefined') { return; }
-			overlayAid.overlayAll(aWindow);
+			if(typeof(Overlays) == 'undefined') { return; }
+			Overlays.overlayAll(aWindow);
 		});
 	},
 	
@@ -402,12 +403,12 @@ this.overlayAid = {
 	
 	scheduleBrowser: function(aWindow) {
 		if(!(aWindow.document instanceof aWindow.XULDocument)) { return; } // at least for now I'm only overlaying xul documents
-		overlayAid.scheduleAll(aWindow);
+		Overlays.scheduleAll(aWindow);
 	},
 	
 	unscheduleBrowser: function(aWindow, aWith) {
 		if(!(aWindow.document instanceof aWindow.XULDocument)) { return; } // at least for now I'm only overlaying xul documents
-		overlayAid.scheduleUnOverlay(aWindow, aWith);
+		Overlays.scheduleUnOverlay(aWindow, aWith);
 	},
 	
 	unloadSome: function(aWindow, aWith) {
@@ -424,30 +425,30 @@ this.overlayAid = {
 		if(typeof(aWindow['_OVERLAYS_'+objName]) != 'undefined') {
 			if(aWindow['_OVERLAYS_'+objName].length > 0) {
 				// only need to check for the first entry from this array, all subsequent will be unloaded before this one and reloaded afterwards if needed
-				overlayAid.removeInOrder(aWindow, aWindow['_OVERLAYS_'+objName][0], true);
+				Overlays.removeInOrder(aWindow, aWindow['_OVERLAYS_'+objName][0], true);
 			}
 					
 			delete aWindow['_OVERLAYS_'+objName];
 			delete aWindow._BEING_OVERLAYED;
-			overlayAid.removeFromAttr(aWindow);
+			Overlays.removeFromAttr(aWindow);
 			aWindow._RESCHEDULE_OVERLAY = true;
 		}
 		
 		if(aWindow._RESCHEDULE_OVERLAY && !aWindow.closed && !aWindow.willClose) {
 			delete aWindow._RESCHEDULE_OVERLAY;
-			observerAid.notify('window-overlayed', aWindow);
+			Observers.notify('window-overlayed', aWindow);
 		}
 	},
 	
 	unloadBrowser: function(aWindow) {
 		if(!(aWindow.document instanceof aWindow.XULDocument)) { return; } // at least for now I'm only overlaying xul documents
-		overlayAid.unloadAll(aWindow);
+		Overlays.unloadAll(aWindow);
 	},
 	
 	closedBrowser: function(aWindow) {
 		if(!(aWindow.document instanceof aWindow.XULDocument)) { return; } // at least for now I'm only overlaying xul documents
 		aWindow.willClose = true;
-		overlayAid.unloadAll(aWindow);
+		Overlays.unloadAll(aWindow);
 	},
 	
 	traceBack: function(aWindow, traceback, unshift) {
@@ -903,7 +904,7 @@ this.overlayAid = {
 			
 			data.onWidgetDestroyed = function(aId) {
 				if(aId == this.id) {
-					windowMediator.callOnAll(function(aWindow) {
+					Windows.callOnAll(function(aWindow) {
 						var node = data.onBuild(aWindow.document, true);
 						if(node) { node.remove(); }
 					}, 'navigator:browser');
@@ -925,7 +926,7 @@ this.overlayAid = {
 				&& (aWindow.document.baseURI.indexOf(this.overlays[i].uri) == 0 || this.loadedWindow(aWindow, this.overlays[i].uri, true) !== false)) {
 					// Ensure the window is rescheduled if needed
 					if(aWindow._BEING_OVERLAYED == undefined) {
-						observerAid.notify('window-overlayed', aWindow);
+						Observers.notify('window-overlayed', aWindow);
 					} else {
 						aWindow._RESCHEDULE_OVERLAY = true;
 					}
@@ -988,7 +989,7 @@ this.overlayAid = {
 					uri: this.overlays[i].overlay,
 					overlayingUri: this.overlays[i].uri,
 					traceBack: [],
-					removeMe: function() { overlayAid.removeOverlay(aWindow, this); },
+					removeMe: function() { Overlays.removeOverlay(aWindow, this); },
 					time: 0,
 					loaded: false,
 					onunload: this.overlays[i].onunload
@@ -1010,7 +1011,7 @@ this.overlayAid = {
 		// Re-schedule overlaying the window to load overlays over newly loaded overlays if necessary
 		if(rescheduleOverlay || aWindow._UNLOAD_OVERLAYS || aWindow._RESCHEDULE_OVERLAY) {
 			delete aWindow._RESCHEDULE_OVERLAY;
-			observerAid.notify('window-overlayed', aWindow);
+			Observers.notify('window-overlayed', aWindow);
 		}
 		return;
 	},
@@ -1240,18 +1241,18 @@ this.overlayAid = {
 	},
 	
 	tempAppendAllToolbars: function(aWindow, aToolbarId) {
-		windowMediator.callOnAll(function(bWindow) {
+		Windows.callOnAll(function(bWindow) {
 			var wToolbar = bWindow.document.getElementById(aToolbarId);
 			if(wToolbar && !wToolbar._init) {
-				overlayAid.tempAppendToolbar(bWindow, wToolbar);
+				Overlays.tempAppendToolbar(bWindow, wToolbar);
 			}
 		}, aWindow.document.documentElement.getAttribute('windowtype'));
 	},
 	tempRestoreAllToolbars: function(aWindow, aToolbarId) {
-		windowMediator.callOnAll(function(bWindow) {
+		Windows.callOnAll(function(bWindow) {
 			var wToolbar = bWindow.document.getElementById(aToolbarId);
 			if(wToolbar) {
-				overlayAid.tempRestoreToolbar(wToolbar);
+				Overlays.tempRestoreToolbar(wToolbar);
 			}
 		}, aWindow.document.documentElement.getAttribute('windowtype'));
 	},
@@ -1632,25 +1633,25 @@ this.overlayAid = {
 		if(!node.parentNode) { return null; }
 		
 		// find all browser child nodes of node if it isn't a browser itself
-		var browsers = [];
-		if(node.tagName == 'browser') { browsers.push(node); }
+		var bNodes = [];
+		if(node.tagName == 'browser') { bNodes.push(node); }
 		else {
 			var els = node.getElementsByTagName('browser');
-			for(var ee=0; ee<els.length; ee++) {
-				browsers.push(els[ee]);
+			for(var ee of els) {
+				bNodes.push(ee);
 			}
 		}
 		
-		if(browsers.length > 0) {
+		if(bNodes.length > 0) {
 			temps = [];
-			tempBrowsersLoop: for(var b=0; b<browsers.length; b++) {
-				if(!browsers[b].swapDocShells) { continue; } // happens when it isn't loaded yet, so it's unnecessary
-				var browserType = browsers[b].getAttribute('type') || 'chrome';
+			tempBrowsersLoop: for(var browser of bNodes) {
+				if(!browser.swapDocShells) { continue; } // happens when it isn't loaded yet, so it's unnecessary
+				var browserType = browser.getAttribute('type') || 'chrome';
 				
 				// we also need to blur() and then focus() the focusedElement if it belongs in this browser element,
 				// otherwise we can't type in it if it's an input box and we swap its docShell;
 				// note that just blur()'ing the focusedElement doesn't actually work, we have to shift the focus between browser elements for this to work
-				if(aWindow.document.commandDispatcher.focusedElement && isAncestor(aWindow.document.commandDispatcher.focusedElement, browsers[b])) {
+				if(aWindow.document.commandDispatcher.focusedElement && isAncestor(aWindow.document.commandDispatcher.focusedElement, browser)) {
 					temps.unshift({ // unshift instead of push so we undo in the reverse order
 						focusedElement: aWindow.document.commandDispatcher.focusedElement
 					});
@@ -1661,29 +1662,29 @@ this.overlayAid = {
 				var innerDone = [];
 				var inners = [];
 				
-				if(browsers[b].contentDocument) {
-					var els = browsers[b].contentDocument.getElementsByTagName('browser');
-					for(var ee=0; ee<els.length; ee++) {
-						inners.push(els[ee]);
+				if(browser.contentDocument) {
+					var els = browser.contentDocument.getElementsByTagName('browser');
+					for(var ee of els) {
+						inners.push(ee);
 					}
 				}
 				
 				if(inners.length > 0) {
-					for(var i=0; i<inners.length; i++) {
-						if(!inners[i].swapDocShells) { continue; } // happens when it isn't loaded yet, so it's unnecessary
+					for(var inner of inners) {
+						if(!inner.swapDocShells) { continue; } // happens when it isn't loaded yet, so it's unnecessary
 						
 						// if the browsers are of the same time, the swap can proceed as normal
-						var innerType = inners[i].getAttribute('type');
+						var innerType = inner.getAttribute('type');
 						if(!innerType || innerType == browserType) { continue; }
 						
 						var newTemp = this.createBlankTempBrowser(aWindow, innerType);
 						
 						try {
-							this.setTempBrowsersListeners(inners[i]);
-							inners[i].swapDocShells(newTemp);
+							this.setTempBrowsersListeners(inner);
+							inner.swapDocShells(newTemp);
 						}
 						catch(ex) { // undo everything and just let the browser element reload
-							//Cu.reportError('Failed to swap inner browser in '+browsers[b].tagName+' '+browsers[b].id);
+							//Cu.reportError('Failed to swap inner browser in '+browser.tagName+' '+browser.id);
 							//Cu.reportError(ex);
 							this.cleanTempBrowsers(innerDone);
 							newTemp.remove();
@@ -1691,9 +1692,9 @@ this.overlayAid = {
 						}
 						
 						innerDone.unshift({ // unshift instead of push so we undo in the reverse order
-							sibling: inners[i].nextSibling,
-							parent: inners[i].parentNode,
-							browser: inners[i].remove(),
+							sibling: inner.nextSibling,
+							parent: inner.parentNode,
+							browser: inner.remove(),
 							temp: newTemp
 						});
 					}
@@ -1703,23 +1704,23 @@ this.overlayAid = {
 				var iframesDone = [];
 				var iframes = [];
 				
-				if(browsers[b].contentDocument) {
-					var els = browsers[b].contentDocument.getElementsByTagName('iframe');
-					for(var ee=0; ee<els.length; ee++) {
-						iframes.push(els[ee]);
+				if(browser.contentDocument) {
+					var els = browser.contentDocument.getElementsByTagName('iframe');
+					for(var ee of els) {
+						iframes.push(ee);
 					}
 				}
 				
 				if(iframes.length > 0) {
-					for(var i=0; i<iframes.length; i++) {
-						var frameType = iframes[i].getAttribute('type');
+					for(var iframe of iframes) {
+						var frameType = iframe.getAttribute('type');
 						if(!frameType || frameType == browserType) { continue; }
 						
 						var newTemp = this.createBlankTempBrowser(aWindow, frameType, 'iframe');
 						
-						try { iframes[i].QueryInterface(Ci.nsIFrameLoaderOwner).swapFrameLoaders(newTemp); }
+						try { iframe.QueryInterface(Ci.nsIFrameLoaderOwner).swapFrameLoaders(newTemp); }
 						catch(ex) { // undo everything and just let the browser element reload
-							//Cu.reportError('Failed to swap iframe in '+browsers[b].tagName+' '+browsers[b].id);
+							//Cu.reportError('Failed to swap iframe in '+browser.tagName+' '+browser.id);
 							//Cu.reportError(ex);
 							this.cleanTempBrowsers(iframesDone);
 							newTemp.remove();
@@ -1727,9 +1728,9 @@ this.overlayAid = {
 						}
 						
 						iframesDone.unshift({ // unshift instead of push so we undo in the reverse order
-							sibling: iframes[i].nextSibling,
-							parent: iframes[i].parentNode,
-							browser: iframes[i].remove(),
+							sibling: iframe.nextSibling,
+							parent: iframe.parentNode,
+							browser: iframe.remove(),
 							iframe: true,
 							temp: newTemp
 						});
@@ -1739,11 +1740,11 @@ this.overlayAid = {
 				var newTemp = this.createBlankTempBrowser(aWindow, browserType);
 				
 				try {
-					this.setTempBrowsersListeners(browsers[b]);
-					browsers[b].swapDocShells(newTemp);
+					this.setTempBrowsersListeners(browser);
+					browser.swapDocShells(newTemp);
 				}
 				catch(ex) { // undo everything and just let the browser element reload
-					//Cu.reportError('Failed to swap '+browsers[b].tagName+' '+browsers[b].id);
+					//Cu.reportError('Failed to swap '+browser.tagName+' '+browser.id);
 					//Cu.reportError(ex);
 					this.cleanTempBrowsers(innerDone);
 					newTemp.remove();
@@ -1752,7 +1753,7 @@ this.overlayAid = {
 					
 				temps = iframesDone.concat(innerDone).concat(temps);
 				temps.unshift({ // unshift instead of push so we undo in the reverse order
-					browser: browsers[b],
+					browser: browser,
 					temp: newTemp
 				});
 			}
@@ -1869,26 +1870,25 @@ this.overlayAid = {
 		var prefPane = aWindow.document.getElementById(node.parentNode.id);
 		if(!prefPane) { return; }
 		
-		var prefElements = prefPane.getElementsByTagName('preferences');
-		if(prefElements.length == 0) {
+		var preferences = prefPane.getElementsByTagName('preferences');
+		if(preferences.length == 0) {
 			try {
-				var prefs = aWindow.document.importNode(node, true);
-				prefPane.appendChild(prefs);
+				var prefsNode = aWindow.document.importNode(node, true);
+				prefPane.appendChild(preferences);
 			} catch(ex) {}
 			this.traceBack(aWindow, {
 				action: 'addPreferencesElement',
-				prefs: prefs
+				prefs: preferences
 			});
 			return;
 		}
 		
-		var prefs = prefElements[0];
-		for(var p = 0; p < node.childNodes.length; p++) {
-			if(!node.childNodes[p].id) { continue; }
+		for(var p of node.childNodes) {
+			if(!p.id) { continue; }
 			
 			try {
-				var pref = aWindow.document.importNode(node.childNodes[p], true);
-				prefs.appendChild(pref);
+				var pref = aWindow.document.importNode(p, true);
+				preferences[0].appendChild(pref);
 			} catch(ex) {}
 			this.traceBack(aWindow, {
 				action: 'addPreference',
@@ -1898,13 +1898,13 @@ this.overlayAid = {
 	},
 	
 	startPreferences: function(aWindow) {
-		var prefs = aWindow.document.getElementsByTagName('preference');
-		for(var i = 0; i < prefs.length; i++) {
+		var preferences = aWindow.document.getElementsByTagName('preference');
+		for(var pref of preferences) {
 			// Overlayed preferences have a null value, like they haven't been initialized for some reason, this takes care of that
-			if(prefs[i].value === null) {
-				prefs[i].value = prefs[i].valueFromPreferences;
+			if(pref.value === null) {
+				pref.value = pref.valueFromPreferences;
 			}
-			try { prefs[i].updateElements(); } catch(ex) {}
+			try { pref.updateElements(); } catch(ex) {}
 		}
 	},
 	
@@ -2008,30 +2008,30 @@ this.overlayAid = {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	Globals.widgets = {};
 	
-	windowMediator.register(overlayAid.scheduleAll, 'domwindowopened');
-	browserMediator.register(overlayAid.scheduleBrowser, 'pageshow');
-	browserMediator.register(overlayAid.scheduleBrowser, 'SidebarFocused');
-	browserMediator.register(overlayAid.closedBrowser, 'pagehide');
-	browserMediator.register(overlayAid.closedBrowser, 'SidebarClosed');
-	observerAid.add(overlayAid.observingSchedules, 'window-overlayed');
+	Windows.register(Overlays.scheduleAll, 'domwindowopened');
+	Browsers.register(Overlays.scheduleBrowser, 'pageshow');
+	Browsers.register(Overlays.scheduleBrowser, 'SidebarFocused');
+	Browsers.register(Overlays.closedBrowser, 'pagehide');
+	Browsers.register(Overlays.closedBrowser, 'SidebarClosed');
+	Observers.add(Overlays.observingSchedules, 'window-overlayed');
 	
-	piggyback.add('overlayAid', CUIBackstage.CustomizableUIInternal, 'registerToolbarNode', overlayAid.registerToolbarNode);
+	Piggyback.add('Overlays', CUIBackstage.CustomizableUIInternal, 'registerToolbarNode', Overlays.registerToolbarNode);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	observerAid.remove(overlayAid.observingSchedules, 'window-overlayed');
-	windowMediator.unregister(overlayAid.scheduleAll, 'domwindowopened');
-	browserMediator.unregister(overlayAid.scheduleBrowser, 'pageshow');
-	browserMediator.unregister(overlayAid.scheduleBrowser, 'SidebarFocused');
-	browserMediator.unregister(overlayAid.closedBrowser, 'pagehide');
-	browserMediator.unregister(overlayAid.closedBrowser, 'SidebarClosed');
-	windowMediator.callOnAll(overlayAid.unloadAll);
-	browserMediator.callOnAll(overlayAid.unloadBrowser);
+Modules.UNLOADMODULE = function() {
+	Observers.remove(Overlays.observingSchedules, 'window-overlayed');
+	Windows.unregister(Overlays.scheduleAll, 'domwindowopened');
+	Browsers.unregister(Overlays.scheduleBrowser, 'pageshow');
+	Browsers.unregister(Overlays.scheduleBrowser, 'SidebarFocused');
+	Browsers.unregister(Overlays.closedBrowser, 'pagehide');
+	Browsers.unregister(Overlays.closedBrowser, 'SidebarClosed');
+	Windows.callOnAll(Overlays.unloadAll);
+	Browsers.callOnAll(Overlays.unloadBrowser);
 	
-	piggyback.revert('overlayAid', CUIBackstage.CustomizableUIInternal, 'registerToolbarNode');
+	Piggyback.revert('Overlays', CUIBackstage.CustomizableUIInternal, 'registerToolbarNode');
 	
 	delete Globals.widgets;
 };

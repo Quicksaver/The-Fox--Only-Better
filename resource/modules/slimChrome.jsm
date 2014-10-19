@@ -1,14 +1,14 @@
-moduleAid.VERSION = '1.5.3';
+Modules.VERSION = '1.5.4';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
 this.__defineGetter__('slimChromeToolbars', function() { return $(objName+'-slimChrome-toolbars'); });
 
 this._slimAnimation = null;
-this.__defineGetter__('slimAnimation', function() { return this._slimAnimation || prefAid.slimAnimation; });
+this.__defineGetter__('slimAnimation', function() { return this._slimAnimation || Prefs.slimAnimation; });
 this.__defineSetter__('slimAnimation', function(v) {
 	if(v) {
-		timerAid.init('resetSlimAnimation', function() {
+		Timers.init('resetSlimAnimation', function() {
 			slimAnimation = null;
 		}, 2250);
 	}
@@ -40,7 +40,7 @@ this.moveSlimChromeStyle = {};
 this.lastSlimChromeStyle = null;
 
 this.delayMoveSlimChrome = function() {
-	timerAid.init('delayMoveSlimChrome', moveSlimChrome, 0);
+	Timers.init('delayMoveSlimChrome', moveSlimChrome, 0);
 };
 
 this.shouldReMoveSlimChrome = function(newStyle) {
@@ -129,7 +129,7 @@ this.moveSlimChrome = function() {
 	sscode += '	}\n';
 	sscode += '}';
 	
-	styleAid.load('slimChromeMove_'+_UUID, sscode, true);
+	Styles.load('slimChromeMove_'+_UUID, sscode, true);
 	
 	dispatch(slimChromeContainer, { type: 'MovedSlimChrome', cancelable: false });
 };
@@ -170,8 +170,8 @@ this.onMouseOutBrowser = function(e) {
 	onMouseOver();
 	
 	// don't keep listening to mouseout, otherwise the toolbox would get stuck open
-	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
-	listenerAid.add(browserPanel, 'mouseover', onMouseReEnterBrowser);
+	Listeners.remove(browserPanel, 'mouseout', onMouseOutBrowser);
+	Listeners.add(browserPanel, 'mouseover', onMouseReEnterBrowser);
 };
 
 this.onMouseReEnterBrowser = function(e) {
@@ -179,8 +179,8 @@ this.onMouseReEnterBrowser = function(e) {
 	onMouseOut();
 	
 	// stop this listener, or the toolbox would be stuck close otherwise, and start listening for mouseout again
-	listenerAid.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
-	listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
+	Listeners.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
+	Listeners.add(browserPanel, 'mouseout', onMouseOutBrowser);
 };
 
 this.isMenuBarPopup = function(e) {
@@ -190,7 +190,7 @@ this.isMenuBarPopup = function(e) {
 	var toolbars = [MenuBar, TabsToolbar];
 	
 	// if we're not including the nav-bar in the container, might as well apply the same rule to it
-	if(!prefAid.includeNavBar) {
+	if(!Prefs.includeNavBar) {
 		toolbars.push(gNavBar);
 	}
 	
@@ -242,10 +242,10 @@ this.onMouseOutToolbox = function(e) {
 };
 
 this.onDragStart = function() {
-	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
-	listenerAid.add(gBrowser, "dragenter", onDragExitAll);
-	listenerAid.add(window, "drop", onDragExitAll);
-	listenerAid.add(window, "dragend", onDragExitAll);
+	Listeners.remove(gNavToolbox, 'dragenter', onDragEnter);
+	Listeners.add(gBrowser, "dragenter", onDragExitAll);
+	Listeners.add(window, "drop", onDragExitAll);
+	Listeners.add(window, "dragend", onDragExitAll);
 };
 
 this.onDragEnter = function() {
@@ -258,10 +258,10 @@ this.onDragExit = function() {
 };
 
 this.onDragExitAll = function() {
-	listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
-	listenerAid.remove(gBrowser, "dragenter", onDragExitAll);
-	listenerAid.remove(window, "drop", onDragExitAll);
-	listenerAid.remove(window, "dragend", onDragExitAll);
+	Listeners.add(gNavToolbox, 'dragenter', onDragEnter);
+	Listeners.remove(gBrowser, "dragenter", onDragExitAll);
+	Listeners.remove(window, "drop", onDragExitAll);
+	Listeners.remove(window, "dragend", onDragExitAll);
 	setHover(false);
 };
 
@@ -270,11 +270,11 @@ this.setHover = function(hover, now, force) {
 		slimChromeContainer.hovers++;
 		
 		if(!now) {
-			timerAid.init('setHover', function() {
+			Timers.init('setHover', function() {
 				hoverTrue();
-			}, prefAid.delayIn);
+			}, Prefs.delayIn);
 		} else {
-			timerAid.cancel('setHover');
+			Timers.cancel('setHover');
 			hoverTrue();
 		}
 		
@@ -290,14 +290,14 @@ this.setHover = function(hover, now, force) {
 		}
 		
 		if(slimChromeContainer.hovers == 0) {
-			timerAid.init('setHover', function() {
+			Timers.init('setHover', function() {
 				slimChromeOut();
 				removeAttribute(slimChromeContainer, 'fullWidth');
 				removeAttribute(slimChromeContainer, 'hover');
 				ensureSlimChromeFinishedOpacity();
-				listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
+				Listeners.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
 				contentAreaMovedReset();
-			}, (!now) ? prefAid.delayOut : 0);
+			}, (!now) ? Prefs.delayOut : 0);
 		}
 	}
 };
@@ -310,12 +310,12 @@ this.hoverTrue = function() {
 	
 	// safeguard against the chrome getting stuck sometimes when I can't control it
 	contentAreaMovedReset();
-	listenerAid.add(contentArea, 'mousemove', contentAreaOnMouseMove);
+	Listeners.add(contentArea, 'mousemove', contentAreaOnMouseMove);
 };
 
 this.contentAreaMouseMoved = false;
 this.contentAreaMovedReset = function() {
-	timerAid.cancel('contentAreaMouseMoved');
+	Timers.cancel('contentAreaMouseMoved');
 	contentAreaMouseMoved = false;
 };
 
@@ -323,7 +323,7 @@ this.contentAreaOnMouseMove = function() {
 	// no need to keep doing all the routine on each event and lag the browser, it will happen when it happens
 	if(contentAreaMouseMoved) { return; }
 	contentAreaMouseMoved = true;
-	timerAid.init('contentAreaMouseMoved', function() {
+	Timers.init('contentAreaMouseMoved', function() {
 		// sometimes a popup can close or hide without triggering a popuphidden, or without being removed from the array. No idea why or exactly what happens...
 		// I've seen this with PopupAutoCompleteRichResult.
 		for(var p=0; p<holdPopupNodes.length; p++) {
@@ -337,7 +337,7 @@ this.contentAreaOnMouseMove = function() {
 		&& initialShowings.length == 0 // don't hide if timers are active
 		&& !isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) // make sure the top chrome isn't focused
 		&& holdPopupNodes.length == 0 // a popup could be holding it open
-		&& (!prefAid.useMouse || !$$('#navigator-toolbox:hover')[0]) // trick to find out if the mouse is hovering the chrome
+		&& (!Prefs.useMouse || !$$('#navigator-toolbox:hover')[0]) // trick to find out if the mouse is hovering the chrome
 		) {
 			// if we get here, nothing is holding the chrome open, so it's likely that it should be hidden, but wasn't for some reason
 			setHover(false, true, 0);
@@ -349,20 +349,20 @@ this.contentAreaOnMouseMove = function() {
 };
 
 this.setMini = function(mini) {
-	if(!prefAid.includeNavBar) { return; }
+	if(!Prefs.includeNavBar) { return; }
 	
 	dispatch(slimChromeContainer, { type: 'willSetMiniChrome', cancelable: false, detail: mini });
 	
 	if(mini) {
-		timerAid.cancel('onlyURLBar');
-		timerAid.cancel('setMini');
+		Timers.cancel('onlyURLBar');
+		Timers.cancel('setMini');
 		slimChromeIn();
 		setAttribute(slimChromeContainer, 'mini', 'true');
 		setAttribute(slimChromeContainer, 'onlyURLBar', 'true');
 		setAttribute(gNavToolbox, 'slimChromeVisible', 'true');
 	} else {
 		// aSync so the toolbox focus handler knows what it's doing
-		timerAid.init('setMini', function() {
+		Timers.init('setMini', function() {
 			slimChromeOut();
 			removeAttribute(slimChromeContainer, 'mini');
 			
@@ -375,7 +375,7 @@ this.setMini = function(mini) {
 			}
 			
 			// let chrome hide completely before showing the rest of the UI
-			timerAid.init('onlyURLBar', function() {
+			Timers.init('onlyURLBar', function() {
 				removeAttribute(slimChromeContainer, 'onlyURLBar');
 				toggleAttribute(gNavToolbox, 'slimChromeVisible', trueAttribute(slimChromeContainer, 'hover'));
 			}, slimAnimation == 'hinge' ? 500 : 300);
@@ -392,7 +392,7 @@ this.contentFocusPasswords = function(m) {
 };
 
 this.focusPasswords = function() {
-	if(prefAid.includeNavBar && (typeof(blockedPopup) == 'undefined' || !blockedPopup)) {
+	if(Prefs.includeNavBar && (typeof(blockedPopup) == 'undefined' || !blockedPopup)) {
 		setMini(gBrowser.mCurrentBrowser._showMiniBar);
 		return gBrowser.mCurrentBrowser._showMiniBar;
 	}
@@ -446,7 +446,7 @@ this.slimChromeTransitioned = function(e) {
 };
 
 this.slimChromeFinishedWidth = function() {
-	timerAid.cancel('ensureSlimChromeFinishedWidth');
+	Timers.cancel('ensureSlimChromeFinishedWidth');
 	
 	if(trueAttribute(slimChromeContainer, 'hover')) {
 		// make sure it doesn't get stuck open
@@ -493,7 +493,7 @@ this.ensureSlimChromeFinishedWidth = function() {
 		slimChromeFinishedWidth();
 	} else {
 		// for the extremelly rare cases where neither the above condition is true or when the animation doesn't need to take place (e.g. extremelly well placed clicks)
-		timerAid.init('ensureSlimChromeFinishedWidth', slimChromeFinishedWidth, 400);
+		Timers.init('ensureSlimChromeFinishedWidth', slimChromeFinishedWidth, 400);
 	}
 };
 
@@ -522,8 +522,8 @@ this.slimChromeOnTabSelect = {
 	last: null,
 	
 	handler: function() {
-		if(prefAid.includeNavBar // if the nav bar isn't in our container, all this is useless
-		&& prefAid.miniOnTabSelect // and of course only if the pref is enabled
+		if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
+		&& Prefs.miniOnTabSelect // and of course only if the pref is enabled
 		&& !focusPasswords() // focusPasswords will always show mini if a password field is focused
 		&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
@@ -532,7 +532,7 @@ this.slimChromeOnTabSelect = {
 		&& window.XULBrowserWindow.inContentWhitelist.indexOf(gBrowser.mCurrentBrowser._currentSpec) == -1 // and if the current address is not whitelisted
 		) {
 			setMini(true);
-			timerAid.init('setMini', hideMiniInABit, 2000);
+			Timers.init('setMini', hideMiniInABit, 2000);
 			slimChromeOnTabSelect.last = gBrowser.mCurrentBrowser._currentHost;
 			return true;
 		}
@@ -543,11 +543,11 @@ this.slimChromeOnTabSelect = {
 };
 
 this.hideMiniInABit = function() {
-	if(!prefAid.includeNavBar) { return; }
+	if(!Prefs.includeNavBar) { return; }
 	
 	// don't hide mini if we're hovering it
 	if(slimChromeContainer.hoversQueued > 0 && !trueAttribute(slimChromeContainer, 'hover')) {
-		timerAid.init('setMini', hideMiniInABit, 1000);
+		Timers.init('setMini', hideMiniInABit, 1000);
 		return;
 	};
 	
@@ -634,7 +634,7 @@ this.initialShowChrome = function(delay) {
 	setHover(true);
 	
 	// Taking this from TPP, making the same assumptions.
-	// don't use timerAid, because if we use multiple initialShowChrome()'s it could get stuck open
+	// don't use Timers, because if we use multiple initialShowChrome()'s it could get stuck open
 	// we keep a reference to the timer, because otherwise sometimes it would not trigger (go figure...), hopefully this helps with that
 	var thisShowing = aSync(function() {
 		if(typeof(setHover) != 'undefined') {
@@ -694,7 +694,7 @@ this.slimChromeChildListener = {
 };
 
 this.setSlimChromeTabDropIndicatorWatcher = function() {
-	objectWatcher.addAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
+	Watchers.addAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 };
 
 this.slimChromeTabDropIndicatorWatcher = function() {
@@ -709,59 +709,59 @@ this.getParentWithId = function(node) {
 };
 
 this.slimChromeUseMouse = function() {
-	if(prefAid.useMouse) {
+	if(Prefs.useMouse) {
 		// keep the toolbox when hovering it
-		listenerAid.add(gNavToolbox, 'dragstart', onDragStart);
-		listenerAid.add(gNavToolbox, 'dragenter', onDragEnter);
-		listenerAid.add(gNavToolbox, 'mouseover', onMouseOverToolbox);
-		listenerAid.add(gNavToolbox, 'mouseout', onMouseOutToolbox);
+		Listeners.add(gNavToolbox, 'dragstart', onDragStart);
+		Listeners.add(gNavToolbox, 'dragenter', onDragEnter);
+		Listeners.add(gNavToolbox, 'mouseover', onMouseOverToolbox);
+		Listeners.add(gNavToolbox, 'mouseout', onMouseOutToolbox);
 		
 		// the empty area of the tabs toolbar doesn't respond to mouse events, so we need to use mouseout from the browser-panel instead
-		listenerAid.add(browserPanel, 'mouseout', onMouseOutBrowser);
+		Listeners.add(browserPanel, 'mouseout', onMouseOutBrowser);
 	} else {
-		listenerAid.remove(gNavToolbox, 'dragstart', onDragStart);
-		listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
-		listenerAid.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
-		listenerAid.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
-		listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
+		Listeners.remove(gNavToolbox, 'dragstart', onDragStart);
+		Listeners.remove(gNavToolbox, 'dragenter', onDragEnter);
+		Listeners.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
+		Listeners.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
+		Listeners.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	}
 };
 
 this.slimChromeIncludeNavBar = function(unload) {
 	if(unload !== true) { unload = false; }
 	
-	if(!unload && prefAid.includeNavBar && !isAncestor(gNavBar, slimChromeContainer)) {
+	if(!unload && Prefs.includeNavBar && !isAncestor(gNavBar, slimChromeContainer)) {
 		slimChromeToolbars.insertBefore(gNavBar, slimChromeToolbars.firstChild);
 		
 		// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
 		slimChromeInitOverflowable(gNavBar);
 	}
-	else if((unload || !prefAid.includeNavBar) && isAncestor(gNavBar, slimChromeContainer)) {
+	else if((unload || !Prefs.includeNavBar) && isAncestor(gNavBar, slimChromeContainer)) {
 		slimChromeDeinitOverflowable(gNavBar);
 		
 		// don't trigger a re-register of this toolbar node with CUI when it's not needed
 		if(window.closed || window.willClose) {
-			overlayAid.safeMoveToolbar(gNavBar, gNavToolbox, slimChromeSlimmer || customToolbars);
+			Overlays.safeMoveToolbar(gNavBar, gNavToolbox, slimChromeSlimmer || customToolbars);
 		} else {
 			gNavToolbox.insertBefore(gNavBar, slimChromeSlimmer || customToolbars);
 		}
 	}
 	
-	hideIt(slimChromeSlimmer, prefAid.includeNavBar);
+	hideIt(slimChromeSlimmer, Prefs.includeNavBar);
 };
 
 this.slimChromeInitOverflowable = function(toolbar) {
 	if(!toolbar.overflowable) { return; }
 	
-	piggyback.add('slimChrome', toolbar.overflowable, '_onLazyResize', function() {
+	Piggyback.add('slimChrome', toolbar.overflowable, '_onLazyResize', function() {
 		return trueAttribute(slimChromeContainer, 'fullWidth');
-	}, piggyback.MODE_BEFORE);
-	piggyback.add('slimChrome', toolbar.overflowable, 'onOverflow', function() {
+	}, Piggyback.MODE_BEFORE);
+	Piggyback.add('slimChrome', toolbar.overflowable, 'onOverflow', function() {
 		return trueAttribute(slimChromeContainer, 'fullWidth');
-	}, piggyback.MODE_BEFORE);
-	piggyback.add('slimChrome', toolbar.overflowable, '_moveItemsBackToTheirOrigin', function() {
+	}, Piggyback.MODE_BEFORE);
+	Piggyback.add('slimChrome', toolbar.overflowable, '_moveItemsBackToTheirOrigin', function() {
 		return trueAttribute(slimChromeContainer, 'fullWidth');
-	}, piggyback.MODE_BEFORE);
+	}, Piggyback.MODE_BEFORE);
 	
 	if(toolbar.overflowable._lazyResizeHandler) {
 		toolbar.overflowable._lazyResizeHandler.disarm();
@@ -772,9 +772,9 @@ this.slimChromeInitOverflowable = function(toolbar) {
 this.slimChromeDeinitOverflowable = function(toolbar) {
 	if(!toolbar.overflowable) { return; }
 	
-	piggyback.revert('slimChrome', toolbar.overflowable, '_onLazyResize');
-	piggyback.revert('slimChrome', toolbar.overflowable, 'onOverflow');
-	piggyback.revert('slimChrome', toolbar.overflowable, '_moveItemsBackToTheirOrigin');
+	Piggyback.revert('slimChrome', toolbar.overflowable, '_onLazyResize');
+	Piggyback.revert('slimChrome', toolbar.overflowable, 'onOverflow');
+	Piggyback.revert('slimChrome', toolbar.overflowable, '_moveItemsBackToTheirOrigin');
 	
 	if(toolbar.overflowable._lazyResizeHandler) {
 		toolbar.overflowable._lazyResizeHandler.disarm();
@@ -796,21 +796,21 @@ this.loadSlimChrome = function() {
 	
 	// prepare PlacesToolbar methods to work in our chrome in case it's there,
 	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width
-	piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onOverflow', function() {
+	Piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onOverflow', function() {
 		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return false; }
 		return true;
-	}, piggyback.MODE_BEFORE);
-	piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow', function() {
+	}, Piggyback.MODE_BEFORE);
+	Piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow', function() {
 		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return false; }
 		return true;
-	}, piggyback.MODE_BEFORE);
+	}, Piggyback.MODE_BEFORE);
 	
 	if(PlacesToolbar && PlacesToolbar._placesView) {
 		PlacesToolbar._placesView.uninit();
 	}
 	
 	// should we append the nav-bar?
-	prefAid.listen('includeNavBar', slimChromeIncludeNavBar);
+	Prefs.listen('includeNavBar', slimChromeIncludeNavBar);
 	slimChromeIncludeNavBar();
 	
 	// also append all other custom toolbars
@@ -838,39 +838,39 @@ this.loadSlimChrome = function() {
 	window.URLBarSetURI();
 	
 	// should the toolbars react to mouse events
-	prefAid.listen('useMouse', slimChromeUseMouse);
+	Prefs.listen('useMouse', slimChromeUseMouse);
 	slimChromeUseMouse();
 	
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
-	listenerAid.add(browserPanel, 'resize', delayMoveSlimChrome);
+	Listeners.add(browserPanel, 'resize', delayMoveSlimChrome);
 	
 	// also keep the toolbox visible if it has focus of course
-	listenerAid.add(gNavToolbox, 'focus', onFocus, true);
-	listenerAid.add(gNavToolbox, 'blur', onMouseOut, true);
+	Listeners.add(gNavToolbox, 'focus', onFocus, true);
+	Listeners.add(gNavToolbox, 'blur', onMouseOut, true);
 	
 	// show mini when the current tab changes host
-	messenger.listenWindow(window, 'locationChange', slimChromeOnLocationChange);
+	Messenger.listenWindow(window, 'locationChange', slimChromeOnLocationChange);
 	
 	// show mini chrome when focusing password fields
-	messenger.listenWindow(window, 'focusPasswords', contentFocusPasswords);
-	listenerAid.add(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
+	Messenger.listenWindow(window, 'focusPasswords', contentFocusPasswords);
+	Listeners.add(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
 	
 	// hide chrome when typing in content
-	listenerAid.add(gBrowser, 'keydown', slimChromeKeydown, true);
-	listenerAid.add(gBrowser, 'keyup', slimChromeKeyup, true);
+	Listeners.add(gBrowser, 'keydown', slimChromeKeydown, true);
+	Listeners.add(gBrowser, 'keyup', slimChromeKeyup, true);
 	
 	// hide chrome when hitting esc key in the location bar or search bar,
 	// can't set the listener directly on the target node because the search bar may not exist yet when the document is created (depends on its placement),
 	// also other add-ons can add textboxes, and in theory we want the same behavior with them as well.
-	listenerAid.add(window, 'keydown', slimChromeEsc, true);
+	Listeners.add(window, 'keydown', slimChromeEsc, true);
 	
 	// re-do widgets positions after resizing
-	listenerAid.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
+	Listeners.add(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	
 	// make the drop indicator visible on windows with aero enabled;
 	// the indicator comes from the binding, and if for some reason it's removed/re-applied, we would lose this watcher, so we need to make sure it stays
 	if(WINNT) {
-		listenerAid.add($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
+		Listeners.add($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	}
 	
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
@@ -881,12 +881,12 @@ this.loadSlimChrome = function() {
 	slimChromeChildListener.observer.observe(gNavToolbox, { childList: true });
 	
 	// set the animation style
-	prefAid.listen('slimAnimation', slimChromeAnimation);
+	Prefs.listen('slimAnimation', slimChromeAnimation);
 	slimChromeAnimation();
 	
 	// no point in showing on customization changes if it's still finishing initializing, there's a lot of these events here
 	// 5 second should be enough
-	timerAid.init('waitCUI', function() {
+	Timers.init('waitCUI', function() {
 		initialLoading = false;
 	}, 5000);
 	
@@ -904,60 +904,60 @@ this.loadSlimChrome = function() {
 
 this.unloadSlimChrome = function() {
 	// kill all the timers first, so they don't cause any (harmless) messages in the console
-	timerAid.cancel('waitCUI');
-	timerAid.cancel('setHover');
-	timerAid.cancel('setMini');
-	timerAid.cancel('onlyURLBar');
-	timerAid.cancel('contentAreaMouseMoved');
-	timerAid.cancel('delayMoveSlimChrome');
-	timerAid.cancel('ensureSlimChromeFinishedWidth');
+	Timers.cancel('waitCUI');
+	Timers.cancel('setHover');
+	Timers.cancel('setMini');
+	Timers.cancel('onlyURLBar');
+	Timers.cancel('contentAreaMouseMoved');
+	Timers.cancel('delayMoveSlimChrome');
+	Timers.cancel('ensureSlimChromeFinishedWidth');
 	
 	dispatch(slimChromeContainer, { type: 'UnloadingSlimChrome', cancelable: false });
 	
 	var focused = isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) && getParentWithId(document.commandDispatcher.focusedElement);
 	
-	listenerAid.remove(browserPanel, 'resize', delayMoveSlimChrome);
-	listenerAid.remove(browserPanel, 'mouseout', onMouseOutBrowser);
-	listenerAid.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
-	listenerAid.remove(gNavToolbox, 'dragstart', onDragStart);
-	listenerAid.remove(gNavToolbox, 'dragenter', onDragEnter);
-	listenerAid.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
-	listenerAid.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
-	listenerAid.remove(gBrowser, "dragenter", onDragExitAll);
-	listenerAid.remove(window, "drop", onDragExitAll);
-	listenerAid.remove(window, "dragend", onDragExitAll);
-	listenerAid.remove(gNavToolbox, 'focus', onFocus, true);
-	listenerAid.remove(gNavToolbox, 'blur', onMouseOut, true);
-	listenerAid.remove(gBrowser, 'keydown', slimChromeKeydown, true);
-	listenerAid.remove(gBrowser, 'keyup', slimChromeKeyup, true);
-	listenerAid.remove(window, 'keydown', slimChromeEsc, true);
-	listenerAid.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
-	listenerAid.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
-	listenerAid.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
-	listenerAid.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
-	messenger.unlistenWindow(window, 'locationChange', slimChromeOnLocationChange);
-	messenger.unlistenWindow(window, 'focusPasswords', contentFocusPasswords);
+	Listeners.remove(browserPanel, 'resize', delayMoveSlimChrome);
+	Listeners.remove(browserPanel, 'mouseout', onMouseOutBrowser);
+	Listeners.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
+	Listeners.remove(gNavToolbox, 'dragstart', onDragStart);
+	Listeners.remove(gNavToolbox, 'dragenter', onDragEnter);
+	Listeners.remove(gNavToolbox, 'mouseover', onMouseOverToolbox);
+	Listeners.remove(gNavToolbox, 'mouseout', onMouseOutToolbox);
+	Listeners.remove(gBrowser, "dragenter", onDragExitAll);
+	Listeners.remove(window, "drop", onDragExitAll);
+	Listeners.remove(window, "dragend", onDragExitAll);
+	Listeners.remove(gNavToolbox, 'focus', onFocus, true);
+	Listeners.remove(gNavToolbox, 'blur', onMouseOut, true);
+	Listeners.remove(gBrowser, 'keydown', slimChromeKeydown, true);
+	Listeners.remove(gBrowser, 'keyup', slimChromeKeyup, true);
+	Listeners.remove(window, 'keydown', slimChromeEsc, true);
+	Listeners.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
+	Listeners.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
+	Listeners.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
+	Listeners.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
+	Messenger.unlistenWindow(window, 'locationChange', slimChromeOnLocationChange);
+	Messenger.unlistenWindow(window, 'focusPasswords', contentFocusPasswords);
 	CustomizableUI.removeListener(slimChromeCUIListener);
 	slimChromeChildListener.observer.disconnect();
 	
-	prefAid.unlisten('useMouse', slimChromeUseMouse);
-	prefAid.unlisten('slimAnimation', slimChromeAnimation);
+	Prefs.unlisten('useMouse', slimChromeUseMouse);
+	Prefs.unlisten('slimAnimation', slimChromeAnimation);
 	
 	initialLoading = true;
 	
 	removeAttribute(gNavToolbox, 'slimAnimation');
 	removeAttribute(gNavToolbox, 'dropIndicatorFix');
-	objectWatcher.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
+	Watchers.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	
 	// reset this before we move the toolbar
-	piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onOverflow');
-	piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow');
+	Piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onOverflow');
+	Piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow');
 	
 	if(PlacesToolbar && PlacesToolbar._placesView) {
 		PlacesToolbar._placesView.uninit();
 	}
 	
-	prefAid.unlisten('includeNavBar', slimChromeIncludeNavBar);
+	Prefs.unlisten('includeNavBar', slimChromeIncludeNavBar);
 	slimChromeIncludeNavBar(true);
 	
 	while(slimChromeToolbars.firstChild) {
@@ -970,7 +970,7 @@ this.unloadSlimChrome = function() {
 		
 		// don't trigger a re-register of this toolbar node with CUI when it's not needed
 		if(window.closed || window.willClose) {
-			overlayAid.safeMoveToolbar(slimChromeToolbars.firstChild, gNavToolbox);
+			Overlays.safeMoveToolbar(slimChromeToolbars.firstChild, gNavToolbox);
 		} else {
 			gNavToolbox.appendChild(slimChromeToolbars.firstChild);
 		}
@@ -985,30 +985,30 @@ this.unloadSlimChrome = function() {
 };
 
 this.toggleSkyLights = function() {
-	moduleAid.loadIf('skyLights', prefAid.skyLights && prefAid.includeNavBar);
+	Modules.loadIf('skyLights', Prefs.skyLights && Prefs.includeNavBar);
 };
 
-moduleAid.LOADMODULE = function() {
-	messenger.loadInWindow(window, 'slimChrome');
+Modules.LOADMODULE = function() {
+	Messenger.loadInWindow(window, 'slimChrome');
 	
-	overlayAid.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
+	Overlays.overlayWindow(window, 'slimChrome', null, loadSlimChrome, unloadSlimChrome);
 	
-	prefAid.listen('skyLights', toggleSkyLights);
-	prefAid.listen('includeNavBar', toggleSkyLights);
+	Prefs.listen('skyLights', toggleSkyLights);
+	Prefs.listen('includeNavBar', toggleSkyLights);
 	
-	moduleAid.load('slimStyle');
+	Modules.load('slimStyle');
 	toggleSkyLights();
 };
 
-moduleAid.UNLOADMODULE = function() {
-	prefAid.unlisten('skyLights', toggleSkyLights);
-	prefAid.unlisten('includeNavBar', toggleSkyLights);
+Modules.UNLOADMODULE = function() {
+	Prefs.unlisten('skyLights', toggleSkyLights);
+	Prefs.unlisten('includeNavBar', toggleSkyLights);
 	
-	moduleAid.unload('skyLights');
-	moduleAid.unload('slimStyle');
+	Modules.unload('skyLights');
+	Modules.unload('slimStyle');
 	
-	styleAid.unload('personaSlimChrome_'+_UUID);
-	overlayAid.removeOverlayWindow(window, 'slimChrome');
+	Styles.unload('personaSlimChrome_'+_UUID);
+	Overlays.removeOverlayWindow(window, 'slimChrome');
 	
 	// send this here so the nodes don't exist anymore when handling the event
 	dispatch(gNavToolbox, { type: 'UnloadedSlimChrome', cancelable: false });
@@ -1020,5 +1020,5 @@ moduleAid.UNLOADMODULE = function() {
 		delete aBrowser._currentSpec;
 	}
 	
-	messenger.unloadFromWindow(window, 'slimChrome');
+	Messenger.unloadFromWindow(window, 'slimChrome');
 };

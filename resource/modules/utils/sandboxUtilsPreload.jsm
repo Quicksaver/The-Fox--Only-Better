@@ -1,7 +1,7 @@
-// VERSION = '1.0.0'
+// VERSION = '1.0.1'
 
-// stringsAid - use for getting strings out of bundles from .properties locale files
-this.__defineGetter__('stringsAid', function() { delete this.stringsAid; moduleAid.load('utils/stringsAid'); return stringsAid; });
+// Strings - use for getting strings out of bundles from .properties locale files
+this.__defineGetter__('Strings', function() { delete this.Strings; Modules.load('utils/Strings'); return Strings; });
 
 // xmlHttpRequest() - aid for quickly using the nsIXMLHttpRequest interface
 this.xmlHttpRequest = function(url, callback, method, async) { loadSandboxTools(); return xmlHttpRequest(url, callback, method, async); };
@@ -52,7 +52,7 @@ this.loadSandboxTools = function() {
 	delete this.trim;
 	delete this.replaceObjStrings;
 	delete this.loadSandboxTools;
-	moduleAid.load('utils/sandboxTools');
+	Modules.load('utils/sandboxTools');
 };
 
 this.loadAttributesTools = function() {
@@ -61,11 +61,11 @@ this.loadAttributesTools = function() {
 	delete this.toggleAttribute;
 	delete this.trueAttribute;
 	delete this.loadAttributesTools;
-	moduleAid.load('utils/attributes');
+	Modules.load('utils/attributes');
 };
 
 this.loadHTMLElementsTools = function() {
 	delete this.innerText;
 	delete this.loadHTMLElementsTools;
-	moduleAid.load('utils/HTMLElements');
+	Modules.load('utils/HTMLElements');
 };

@@ -1,5 +1,5 @@
-moduleAid.VERSION = '1.3.1';
-moduleAid.UTILS = true;
+Modules.VERSION = '1.3.2';
+Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
 // Just add the attribute to the desired xul element and let the script do its thing. dependson accepts comma-separated or semicolon-separated strings in the following format:
@@ -170,9 +170,9 @@ this.sizeProperly = function() {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	dependsOn.updateAll();
-	listenerAid.add(window, "change", dependsOn.changed, false);
+	Listeners.add(window, "change", dependsOn.changed, false);
 	
 	initScales();
 	
@@ -185,11 +185,11 @@ moduleAid.LOADMODULE = function() {
 	sizeProperly();
 };
 
-moduleAid.UNLOADMODULE = function() {
+Modules.UNLOADMODULE = function() {
 	window.sizeToContent = window._sizeToContent;
 	delete window._sizeToContent;
 	
-	listenerAid.remove(window, "change", dependsOn.changed, false);
+	Listeners.remove(window, "change", dependsOn.changed, false);
 	
 	if(UNLOADED) {
 		window.close();

@@ -2,7 +2,7 @@
 // I can use 'self' from within functions, timers and listeners easily and to bind those functions to it as well
 this.self = this;
 
-// moduleAid - Helper to load subscripts into the context of "this"
+// Modules - Helper to load subscripts into the context of "this"
 // load(aModule, delayed) - loads aModule onto the context of self
 //	aModule - (string) can be either module name which loads resource://objPathString/modules/aModule.jsm or full module path
 //	(optional) delayed - true loads module 500ms later in an asychronous process, false loads immediatelly synchronously, defaults to false
@@ -13,17 +13,17 @@ this.self = this;
 //	see load()
 // loaded(aModule) - returns (int) with corresponding module index in modules[] if aModule has been loaded, returns (bool) false otherwise
 //	see load()
-// subscript modules are run in the context of self, all objects should be set using this.whateverObject so they can be deleted on unload, moduleAid optionally expects these:
-//	moduleAid.VERSION - (string) module version
-//	moduleAid.VARSLIST - (array) list with all the objects the module inserts into the object when loaded, for easy unloading. If not set, it will be automatically compiled.
-//	moduleAid.LOADMODULE - (function) to be executed on module loading
-//	moduleAid.UNLOADMODULE - (function) to be executed on module unloading
-//	moduleAid.UTILS - (bool) vital modules that should be the last ones to be unloaded (like the utils) should have this set to true; should only be used in backbone modules
-//	moduleAid.BASEUTILS - 	(bool) some modules may depend on others even on unload, this should be set on modules that don't depend on any others,
+// subscript modules are run in the context of self, all objects should be set using this.whateverObject so they can be deleted on unload, Modules optionally expects these:
+//	Modules.VERSION - (string) module version
+//	Modules.VARSLIST - (array) list with all the objects the module inserts into the object when loaded, for easy unloading. If not set, it will be automatically compiled.
+//	Modules.LOADMODULE - (function) to be executed on module loading
+//	Modules.UNLOADMODULE - (function) to be executed on module unloading
+//	Modules.UTILS - (bool) vital modules that should be the last ones to be unloaded (like the utils) should have this set to true; should only be used in backbone modules
+//	Modules.BASEUTILS - 	(bool) some modules may depend on others even on unload, this should be set on modules that don't depend on any others,
 //				so that they only unload on the very end; like above, should only be used in backbone modules
-//	moduleAid.CLEAN - (bool) if false, this module won't be removed by clean(); defaults to true
-this.moduleAid = {
-	version: '2.3.1',
+//	Modules.CLEAN - (bool) if false, this module won't be removed by clean(); defaults to true
+this.Modules = {
+	version: '2.4.0',
 	modules: [],
 	moduleVars: {},
 	
@@ -77,7 +77,7 @@ this.moduleAid = {
 		if(!this.modules[i].vars) {
 			if(!Globals.moduleCache[aModule]) {
 				var tempScope = {
-					moduleAid: {},
+					Modules: {},
 					$: function(a) { return null; },
 					$$: function(a) { return null; }
 				};
@@ -86,7 +86,7 @@ this.moduleAid = {
 					Cu.reportError(ex);
 					return false;
 				}
-				delete tempScope.moduleAid;
+				delete tempScope.Modules;
 				delete tempScope.$;
 				delete tempScope.$$;
 				
@@ -117,18 +117,18 @@ this.moduleAid = {
 				this.modules[i].loaded = true;
 			} else {
 				this.modules[i].aSync = aSync(function() {
-					if(typeof(moduleAid) == 'undefined') { return; } // when disabling the add-on before it's had time to perform the load call
+					if(typeof(Modules) == 'undefined') { return; } // when disabling the add-on before it's had time to perform the load call
 					
 					try {
-						moduleAid.modules[i].load();
+						Modules.modules[i].load();
 					}
 					catch(ex) {
 						Cu.reportError(ex);
-						moduleAid.unload(aModule, true);
+						Modules.unload(aModule, true);
 						return;
 					}
-					delete moduleAid.modules[i].aSync;
-					moduleAid.modules[i].loaded = true; 
+					delete Modules.modules[i].aSync;
+					Modules.modules[i].loaded = true; 
 				}, 250);
 			}
 		}
@@ -178,13 +178,13 @@ this.moduleAid = {
 		var done = false;
 		
 		while(!done) {
-			var i = moduleAid.modules.length -1;
+			var i = Modules.modules.length -1;
 			
 			while(i >= 0) {
-				if(moduleAid.modules[i].clean
-				&& moduleAid.modules[i].utils == utils
-				&& moduleAid.modules[i].baseutils == baseutils) {
-					moduleAid.unload(moduleAid.modules[i].name);
+				if(Modules.modules[i].clean
+				&& Modules.modules[i].utils == utils
+				&& Modules.modules[i].baseutils == baseutils) {
+					Modules.unload(Modules.modules[i].name);
 				}
 				i--;
 			}

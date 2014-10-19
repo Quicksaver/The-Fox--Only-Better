@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.3';
+Modules.VERSION = '1.1.4';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -15,7 +15,7 @@ this.fillKeycodes = function() {
 		alt: $('altCheckboxSlimChrome').checked
 	};
 	
-	var slimChromeAvailable = keysetAid.getAvailable(slimChromeKey);
+	var slimChromeAvailable = Keysets.getAvailable(slimChromeKey);
 	if(!isStillAvailable(slimChromeKey, slimChromeAvailable)) {
 		slimChromeKey.keycode = 'none';
 	}
@@ -59,14 +59,14 @@ this.initialShowInWindow = function(aWindow, style, animation, duration) {
 };
 
 this.initialShowInOpener = function(style, animation, duration) {
-	timerAid.init('initialShowInOpener', function() {
+	Timers.init('initialShowInOpener', function() {
 		if(window.opener && window.opener instanceof window.opener.ChromeWindow) {
 			initialShowInWindow(window.opener, style, animation, duration);
 		} else {
 			var tempShow = function(aWindow) {
 				initialShowInWindow(aWindow, style, animation, duration);
 			};
-			windowMediator.callOnMostRecent(tempShow, 'navigator:browser');
+			Windows.callOnMostRecent(tempShow, 'navigator:browser');
 		}
 	}, 150);
 };
@@ -85,21 +85,21 @@ this.openReleaseNotes = function(e) {
 	if(window.opener && window.opener instanceof window.opener.ChromeWindow) {
 		openReleaseNotesTab(window.opener);
 	} else {
-		windowMediator.callOnMostRecent(openReleaseNotesTab, 'navigator:browser');
+		Windows.callOnMostRecent(openReleaseNotesTab, 'navigator:browser');
 	}
 	
 	e.preventDefault();
 	e.stopPropagation();
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	if(DARWIN) {
-		overlayAid.overlayWindow(window, 'optionsMac');
+		Overlays.overlayWindow(window, 'optionsMac');
 	}
 	
 	fillKeycodes();
 	fillVersion($('addonVersion'));
 	
-	listenerAid.add($('releaseNotesLink'), 'keypress', openReleaseNotes, true);
-	listenerAid.add($('releaseNotesLink'), 'click', openReleaseNotes, true);
+	Listeners.add($('releaseNotesLink'), 'keypress', openReleaseNotes, true);
+	Listeners.add($('releaseNotesLink'), 'click', openReleaseNotes, true);
 };

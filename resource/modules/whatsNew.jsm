@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+Modules.VERSION = '1.0.2';
 
 // don't forget to change this for each add-on! See http://www.famkruithof.net/uuid/uuidgen
 this.addonUUID = '9cb2c7a0-5224-11e4-916c-0800200c9a66';
@@ -15,12 +15,12 @@ this.whatsNewAboutAddons = function() {
 
 this.whatsNewChangeLog = function(m) {
 	if(whatsNewLastVersion) {
-		messenger.messageBrowser(m.target, 'notifyLastVersion', whatsNewLastVersion);
+		Messenger.messageBrowser(m.target, 'notifyLastVersion', whatsNewLastVersion);
 		whatsNewLastVersion = null;
 	}
 	
 	if(changelog) {
-		messenger.messageBrowser(m.target, 'changeLog', changelog);
+		Messenger.messageBrowser(m.target, 'changeLog', changelog);
 		return;
 	}
 	
@@ -33,7 +33,7 @@ this.whatsNewChangeLog = function(m) {
 };
 
 this.whatsNewNotifyOnUpdates = function(m) {
-	prefAid.notifyOnUpdates = m.data;
+	Prefs.notifyOnUpdates = m.data;
 };
 
 // we have to wait for Session Store to finish, otherwise our tab will be overriden by a session-restored tab
@@ -53,7 +53,7 @@ this.whatsNewOpenWhenReady = function() {
 	window.gBrowser.selectedTab.loadOnStartup = true; // for Tab Mix Plus
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	// register our about: page, only do it once per session
 	if(!Globals.aboutWhatsNew) {
 		try {
@@ -96,40 +96,40 @@ moduleAid.LOADMODULE = function() {
 		}
 	}
 	
-	messenger.loadInWindow(window, 'whatsNew');
+	Messenger.loadInWindow(window, 'whatsNew');
 	
-	messenger.listenWindow(window, 'aboutAddons', whatsNewAboutAddons);
-	messenger.listenWindow(window, 'changeLog', whatsNewChangeLog);
-	messenger.listenWindow(window, 'addonOptions', doOpenOptions);
-	messenger.listenWindow(window, 'notifyOnUpdates', whatsNewNotifyOnUpdates);
+	Messenger.listenWindow(window, 'aboutAddons', whatsNewAboutAddons);
+	Messenger.listenWindow(window, 'changeLog', whatsNewChangeLog);
+	Messenger.listenWindow(window, 'addonOptions', doOpenOptions);
+	Messenger.listenWindow(window, 'notifyOnUpdates', whatsNewNotifyOnUpdates);
 	
 	// if we're in a dev version, ignore all this
 	if(AddonData.version.contains('a') || AddonData.version.contains('b')) { return; }
 	
 	// if we're updating from a version without this module, try to figure out the last version
-	if(prefAid.lastVersionNotify == '0' && STARTED == ADDON_UPGRADE && AddonData.oldVersion) {
-		prefAid.lastVersionNotify = AddonData.oldVersion;
+	if(Prefs.lastVersionNotify == '0' && STARTED == ADDON_UPGRADE && AddonData.oldVersion) {
+		Prefs.lastVersionNotify = AddonData.oldVersion;
 	}
 	
 	// now make sure we notify the user when updating only, when installing for the first time do nothing
-	if(prefAid.notifyOnUpdates && prefAid.lastVersionNotify != '0' && Services.vc.compare(prefAid.lastVersionNotify, AddonData.version) < 0) {
-		whatsNewLastVersion = prefAid.lastVersionNotify;
+	if(Prefs.notifyOnUpdates && Prefs.lastVersionNotify != '0' && Services.vc.compare(Prefs.lastVersionNotify, AddonData.version) < 0) {
+		whatsNewLastVersion = Prefs.lastVersionNotify;
 		whatsNewOpenWhenReady();
 	}
 	
 	// always set the pref to the current version, this also ensures only one notification tab will open per firefox session (and not one per window)
-	if(prefAid.lastVersionNotify != AddonData.version) {
-		prefAid.lastVersionNotify = AddonData.version;
+	if(Prefs.lastVersionNotify != AddonData.version) {
+		Prefs.lastVersionNotify = AddonData.version;
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
-	messenger.unloadFromWindow(window, 'whatsNew');
+Modules.UNLOADMODULE = function() {
+	Messenger.unloadFromWindow(window, 'whatsNew');
 	
-	messenger.unlistenWindow(window, 'aboutAddons', whatsNewAboutAddons);
-	messenger.unlistenWindow(window, 'changeLog', whatsNewChangeLog);
-	messenger.unlistenWindow(window, 'addonOptions', doOpenOptions);
-	messenger.unlistenWindow(window, 'notifyOnUpdates', whatsNewNotifyOnUpdates);
+	Messenger.unlistenWindow(window, 'aboutAddons', whatsNewAboutAddons);
+	Messenger.unlistenWindow(window, 'changeLog', whatsNewChangeLog);
+	Messenger.unlistenWindow(window, 'addonOptions', doOpenOptions);
+	Messenger.unlistenWindow(window, 'notifyOnUpdates', whatsNewNotifyOnUpdates);
 	
 	for(var tab of window.gBrowser.mTabs) {
 		if(tab.linkedBrowser.currentURI.spec.startsWith(whatsNewURL) || tab.linkedBrowser.currentURI.spec.startsWith(whatsNewAbout)) {

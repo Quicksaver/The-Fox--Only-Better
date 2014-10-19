@@ -1,7 +1,7 @@
-moduleAid.VERSION = '1.4.3';
-moduleAid.UTILS = true;
+Modules.VERSION = '1.5.0';
+Modules.UTILS = true;
 
-// keysetAid - handles editable keysets for the add-on
+// Keysets - handles editable keysets for the add-on
 //	register(key) - registers a keyset from object key
 //		key - (obj):
 //			id - (string) id for the key element
@@ -22,7 +22,7 @@ moduleAid.UTILS = true;
 //		(optional) ignore - if true, keysets registered by this object are ignored, defaults to false
 //		see register()
 //	translateToConstantCode(input) - returns equivalent DOM_VK_INPUT string name
-this.keysetAid = {
+this.Keysets = {
 	registered: [],
 	queued: [],
 	
@@ -121,7 +121,7 @@ this.keysetAid = {
 			return false;
 		}
 		
-		if(!windowMediator.callOnMostRecent(function(aWindow) { return true; }, 'navigator:browser')) {
+		if(!Windows.callOnMostRecent(function(aWindow) { return true; }, 'navigator:browser')) {
 			this.queued.push(key);
 			return true;
 		}
@@ -134,8 +134,8 @@ this.keysetAid = {
 				for(let other of this.delayedOtherKeys) {
 					if(other(exists)) {
 						aSync(function() {
-							if(typeof(keysetAid) == 'undefined') { return; }
-							keysetAid.register(key);
+							if(typeof(Keysets) == 'undefined') { return; }
+							Keysets.register(key);
 						}, 500);
 						return;
 					}
@@ -196,7 +196,7 @@ this.keysetAid = {
 	
 	getAllSets: function(aWindow) {
 		if(!aWindow) {
-			return windowMediator.callOnMostRecent(this.getAllSets, 'navigator:browser');
+			return Windows.callOnMostRecent(this.getAllSets, 'navigator:browser');
 		}
 		
 		var allSets = [];
@@ -209,7 +209,7 @@ this.keysetAid = {
 			var key = {
 				id: k.id,
 				hasModifiers: k.hasAttribute('modifiers'),
-				self: k.getAttribute('keysetAid') == objName
+				self: k.getAttribute('Keysets') == objName
 			};
 			
 			var modifiers = k.getAttribute('modifiers').toLowerCase();
@@ -247,7 +247,7 @@ this.keysetAid = {
 			}
 		}
 		
-		for(var x of keysetAid.unusable) {
+		for(var x of Keysets.unusable) {
 			allSets.push(x);
 		}
 		
@@ -371,16 +371,16 @@ this.keysetAid = {
 	},
 	
 	setAllWindows: function() {
-		windowMediator.callOnAll(this.setWindow, 'navigator:browser');
+		Windows.callOnAll(this.setWindow, 'navigator:browser');
 	},
 	
 	setWindow: function(aWindow) {
-		if(keysetAid.queued.length > 0) {
-			while(keysetAid.queued.length > 0) {
-				var key = keysetAid.queued.shift();
-				keysetAid.register(key, true);
+		if(Keysets.queued.length > 0) {
+			while(Keysets.queued.length > 0) {
+				var key = Keysets.queued.shift();
+				Keysets.register(key, true);
 			}
-			keysetAid.setAllWindows();
+			Keysets.setAllWindows();
 			return;
 		}
 			
@@ -391,14 +391,14 @@ this.keysetAid = {
 		
 		if(UNLOADED) { return; }
 		
-		if(keysetAid.registered.length > 0) {
+		if(Keysets.registered.length > 0) {
 			var keyset = aWindow.document.createElement('keyset');
 			keyset.id = objName+'-keyset';
 			
-			for(var r of keysetAid.registered) {
+			for(var r of Keysets.registered) {
 				var key = aWindow.document.createElement('key');
 				key.id = r.id;
-				key.setAttribute('keysetAid', objName);
+				key.setAttribute('Keysets', objName);
 				key.setAttribute((r.keycode.startsWith('VK_') ? 'keycode' : 'key'), r.keycode);
 				toggleAttribute(key, 'command', r.command, r.command);
 				toggleAttribute(key, 'oncommand', r.oncommand, r.oncommand);
@@ -419,11 +419,11 @@ this.keysetAid = {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	windowMediator.register(keysetAid.setWindow, 'domwindowopened', 'navigator:browser');
+Modules.LOADMODULE = function() {
+	Windows.register(Keysets.setWindow, 'domwindowopened', 'navigator:browser');
 };
 
-moduleAid.UNLOADMODULE = function() {
-	windowMediator.unregister(keysetAid.setWindow, 'domwindowopened', 'navigator:browser');
-	keysetAid.setAllWindows(); // removes the keyset object if the add-on has been unloaded
+Modules.UNLOADMODULE = function() {
+	Windows.unregister(Keysets.setWindow, 'domwindowopened', 'navigator:browser');
+	Keysets.setAllWindows(); // removes the keyset object if the add-on has been unloaded
 };

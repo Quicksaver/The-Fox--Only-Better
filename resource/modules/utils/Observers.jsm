@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.1.0';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.2.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// observerAid - Helper for adding and removing observers
+// Observers - Helper for adding and removing observers
 // add(anObserver, aTopic, ownsWeak) - Create the observer object from a function if that is what is provided and registers it
 //	anObserver - (nsIObserver) to be registered, (function) creates a (nsIObserver){ observe: anObserver } and registers it
 //	aTopic - (string) notification to be observed by anObserver
@@ -15,7 +15,7 @@ moduleAid.BASEUTILS = true;
 //	aTopic - (string) The notification topic
 //	(optional) aSubject - (object) usually where the notification originated from, can be (bool) null; if undefined, it is set to self
 //	(optional) aData - (object) varies with the notification topic as needed
-this.observerAid = {
+this.Observers = {
 	observers: [],
 	hasQuit: false,
 	
@@ -83,13 +83,13 @@ this.observerAid = {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	// This is so the observers aren't called twice on quitting sometimes
-	observerAid.add(function() { observerAid.hasQuit = true; }, 'quit-application');
+	Observers.add(function() { Observers.hasQuit = true; }, 'quit-application');
 	
 	observerLOADED = true;
 };
 
-moduleAid.UNLOADMODULE = function() {
-	observerAid.clean();
+Modules.UNLOADMODULE = function() {
+	Observers.clean();
 };

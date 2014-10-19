@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.2.1';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.3.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// prefAid -	Object to contain and manage all preferences related to the add-on (and others if necessary)
+// Prefs -	Object to contain and manage all preferences related to the add-on (and others if necessary)
 // 		All default preferences of the add-on ('extensions.objPathString.*') are sync'ed by Firefox Sync by default,
 //		to prevent a specific preference "pref" from sync'ing, add in prefList a property "NoSync_pref" set to (bool) true.
 // setDefaults(prefList, branch, trunk) - sets the add-on's preferences default values
@@ -18,7 +18,7 @@ moduleAid.BASEUTILS = true;
 //	see listen()
 // reset(pref) - resets pref to default value
 //	see listen()
-this.prefAid = {
+this.Prefs = {
 	_prefObjects: {},
 	_onChange: {},
 	length: 0,
@@ -146,7 +146,7 @@ this.prefAid = {
 	
 	prefChanged: function(e) {
 		var pref = e.data;
-		while(!prefAid._onChange[pref]) {
+		while(!Prefs._onChange[pref]) {
 			if(pref.indexOf('.') == -1) {
 				Cu.reportError("Couldn't find listener handlers for preference "+e.data);
 				return;
@@ -154,8 +154,8 @@ this.prefAid = {
 			pref = pref.substr(pref.indexOf('.')+1);
 		}
 		
-		for(var i = 0; i < prefAid._onChange[pref].length; i++) {
-			prefAid._onChange[pref][i](pref, prefAid[pref]);
+		for(var i = 0; i < Prefs._onChange[pref].length; i++) {
+			Prefs._onChange[pref][i](pref, Prefs[pref]);
 		}
 	},
 	
@@ -166,6 +166,6 @@ this.prefAid = {
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
-	prefAid.clean();
+Modules.UNLOADMODULE = function() {
+	Prefs.clean();
 };

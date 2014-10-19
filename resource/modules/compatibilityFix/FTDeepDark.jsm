@@ -1,8 +1,8 @@
-moduleAid.VERSION = '1.0.0';
+Modules.VERSION = '1.0.1';
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	// change the default style and animation for the FT DeepDark theme, because it looks awesome there
-	prefAid.setDefaults({
+	Prefs.setDefaults({
 		slimStyle: 'compact',
 		slimAnimation: 'slidedown'
 	});

@@ -1,22 +1,22 @@
-moduleAid.VERSION = '2.3.1';
-moduleAid.UTILS = true;
-moduleAid.CLEAN = false;
+Modules.VERSION = '2.3.2';
+Modules.UTILS = true;
+Modules.CLEAN = false;
 
-// privateBrowsingAid - Private browsing mode aid
-this.__defineGetter__('privateBrowsingAid', function() { observerAid; delete this.privateBrowsingAid; moduleAid.load('utils/privateBrowsingAid'); return privateBrowsingAid; });
+// PrivateBrowsing - Private browsing mode aid
+this.__defineGetter__('PrivateBrowsing', function() { Observers; delete this.PrivateBrowsing; Modules.load('utils/PrivateBrowsing'); return PrivateBrowsing; });
 
 // toCode - allows me to modify a function quickly and safely from within my scripts
-this.__defineGetter__('toCode', function() { delete this.toCode; moduleAid.load('utils/toCode'); return toCode; });
+this.__defineGetter__('toCode', function() { delete this.toCode; Modules.load('utils/toCode'); return toCode; });
 
 // keydownPanel - Panel elements don't support keyboard navigation by default; this object fixes that.
-this.__defineGetter__('keydownPanel', function() { delete this.keydownPanel; moduleAid.load('utils/keydownPanel'); return keydownPanel; });
+this.__defineGetter__('keydownPanel', function() { delete this.keydownPanel; Modules.load('utils/keydownPanel'); return keydownPanel; });
 
 // alwaysRunOnClose[] - array of methods to be called when a window is unloaded. Each entry expects function(aWindow) where
 // 	aWindow - (object) the window that has been unloaded
 this.alwaysRunOnClose = [];
 
-moduleAid.LOADMODULE = function() {
-	// overlayAid stuff, no need to load the whole module if it's not needed.
+Modules.LOADMODULE = function() {
+	// Overlays stuff, no need to load the whole module if it's not needed.
 	// This will be run after removeObject(), so this is just to prevent any leftovers
 	alwaysRunOnClose.push(function(aWindow) {
 		delete aWindow['_OVERLAYS_'+objName];
@@ -37,7 +37,7 @@ moduleAid.LOADMODULE = function() {
 	alwaysRunOnClose.push(removeObject);
 	
 	// This will not happen when quitting the application (on a restart for example), it's not needed in this case
-	listenerAid.add(window, 'unload', function(e) {
+	Listeners.add(window, 'unload', function(e) {
 		window.willClose = true; // window.closed is not reliable in some cases
 		
 		// We don't use alwaysRunOnClose directly because removeObject() destroys it
@@ -54,6 +54,6 @@ moduleAid.LOADMODULE = function() {
 	}, false, true);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	moduleAid.clean();
+Modules.UNLOADMODULE = function() {
+	Modules.clean();
 };

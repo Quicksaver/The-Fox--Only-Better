@@ -1,4 +1,4 @@
-moduleAid.VERSION = '2.0.21';
+Modules.VERSION = '2.0.22';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -106,13 +106,13 @@ this.holdPopupMenu = function(e) {
 		}
 		
 		// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
-		if(prefAid.includeNavBar && trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(target.id) > -1) {
+		if(Prefs.includeNavBar && trueAttribute(slimChromeContainer, 'mini') && slimChromeContainer.hovers == 0 && blockPopups.indexOf(target.id) > -1) {
 			setMini(true);
 			blockedPopup = true;
 		} else {
 			if(!trueAttribute(slimChromeContainer, 'fullWidth')) {
 				hideIt(target);
-				timerAid.init('ensureHoldPopupShows', popupsFinishedWidth, 200);
+				Timers.init('ensureHoldPopupShows', popupsFinishedWidth, 200);
 			}
 			
 			setHover(true, true);
@@ -120,7 +120,7 @@ this.holdPopupMenu = function(e) {
 		
 		var selfRemover = function(ee) {
 			if(ee.originalTarget != e.originalTarget) { return; } //submenus
-			listenerAid.remove(target, 'popuphidden', selfRemover);
+			Listeners.remove(target, 'popuphidden', selfRemover);
 			
 			// making sure we don't collapse it permanently
 			hideIt(target, true);
@@ -142,7 +142,7 @@ this.holdPopupMenu = function(e) {
 				}
 			}, 150);
 		}
-		listenerAid.add(target, 'popuphidden', selfRemover);
+		Listeners.add(target, 'popuphidden', selfRemover);
 	}
 };
 
@@ -152,7 +152,7 @@ this.popupsWillSetMini = function(e) {
 };
 
 this.popupsFinishedWidth = function() {
-	timerAid.cancel('ensureHoldPopupShows');
+	Timers.cancel('ensureHoldPopupShows');
 	if(holdPopupNodes.length > 0) {
 		for(var popup of holdPopupNodes) {
 			// don't bother if the popup was never hidden to begin with,
@@ -169,7 +169,7 @@ this.popupsFinishedWidth = function() {
 		
 		// in case opening the popup triggered the chrome to show, and the mouse just so happens to be in that area, we need to make sure the mouse leaving
 		// won't hide the chrome with the popup still shown
-		if(slimChromeContainer.hovers === 1 && prefAid.useMouse && $$('#'+objName+'-slimChrome-container:hover')[0]) {
+		if(slimChromeContainer.hovers === 1 && Prefs.useMouse && $$('#'+objName+'-slimChrome-container:hover')[0]) {
 			setHover(true);
 		}
 	}
@@ -177,22 +177,22 @@ this.popupsFinishedWidth = function() {
 
 this.loadSlimChromePopups = function() {
 	// if a menu or a panel is opened from the toolbox, keep it shown
-	listenerAid.add(window, 'popupshown', holdPopupMenu);
-	listenerAid.add(slimChromeContainer, 'willSetMiniChrome', popupsWillSetMini);
-	listenerAid.add(slimChromeContainer, 'FinishedSlimChromeWidth', popupsFinishedWidth);
+	Listeners.add(window, 'popupshown', holdPopupMenu);
+	Listeners.add(slimChromeContainer, 'willSetMiniChrome', popupsWillSetMini);
+	Listeners.add(slimChromeContainer, 'FinishedSlimChromeWidth', popupsFinishedWidth);
 };
 
 this.unloadSlimChromePopups = function() {
-	timerAid.cancel('ensureHoldPopupShows');
+	Timers.cancel('ensureHoldPopupShows');
 	
-	listenerAid.remove(window, 'popupshown', holdPopupMenu);
-	listenerAid.remove(slimChromeContainer, 'willSetMiniChrome', popupsWillSetMini);
-	listenerAid.remove(slimChromeContainer, 'FinishedSlimChromeWidth', popupsFinishedWidth);
+	Listeners.remove(window, 'popupshown', holdPopupMenu);
+	Listeners.remove(slimChromeContainer, 'willSetMiniChrome', popupsWillSetMini);
+	Listeners.remove(slimChromeContainer, 'FinishedSlimChromeWidth', popupsFinishedWidth);
 };
 
-moduleAid.LOADMODULE = function() {
-	listenerAid.add(window, 'LoadedSlimChrome', loadSlimChromePopups);
-	listenerAid.add(window, 'UnloadingSlimChrome', unloadSlimChromePopups);
+Modules.LOADMODULE = function() {
+	Listeners.add(window, 'LoadedSlimChrome', loadSlimChromePopups);
+	Listeners.add(window, 'UnloadingSlimChrome', unloadSlimChromePopups);
 	
 	// in case slimChrome loads before popups
 	if(typeof(slimChromeContainer) != 'undefined' && slimChromeContainer) {
@@ -200,22 +200,22 @@ moduleAid.LOADMODULE = function() {
 	}
 	
 	// make sure we know about all these panels so we can hold the chrome open with them
-	listenerAid.add($('PanelUI-popup'), 'AskingForNodeOwner', holdPanelUI);
-	listenerAid.add($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
-	listenerAid.add($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
-	listenerAid.add($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
-	listenerAid.add($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
+	Listeners.add($('PanelUI-popup'), 'AskingForNodeOwner', holdPanelUI);
+	Listeners.add($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
+	Listeners.add($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
+	Listeners.add($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
+	Listeners.add($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.remove($('PanelUI-popup'), 'AskingForNodeOwner', holdPanelUI);
-	listenerAid.remove($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
-	listenerAid.remove($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
-	listenerAid.remove($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
-	listenerAid.remove($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
+Modules.UNLOADMODULE = function() {
+	Listeners.remove($('PanelUI-popup'), 'AskingForNodeOwner', holdPanelUI);
+	Listeners.remove($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
+	Listeners.remove($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
+	Listeners.remove($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
+	Listeners.remove($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
 	
-	listenerAid.remove(window, 'LoadedSlimChrome', loadSlimChromePopups);
-	listenerAid.remove(window, 'UnloadingSlimChrome', unloadSlimChromePopups);
+	Listeners.remove(window, 'LoadedSlimChrome', loadSlimChromePopups);
+	Listeners.remove(window, 'UnloadingSlimChrome', unloadSlimChromePopups);
 	
 	if(typeof(slimChromeContainer) != 'undefined' && slimChromeContainer) {
 		unloadSlimChromePopups();

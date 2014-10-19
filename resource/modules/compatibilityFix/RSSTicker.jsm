@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+Modules.VERSION = '1.0.3';
 
 this.__defineGetter__('RSS_TICKER_UI', function() { return window.RSS_TICKER_UI; });
 this.__defineGetter__('RSS_TICKER_UTILS', function() { return window.RSS_TICKER_UTILS; });
@@ -19,12 +19,12 @@ this.RSSTickerReload = function() {
 
 this.RSSTickerStyle = function() {
 	if(typeof(slimChromeContainer) != 'undefined') {
-		toggleAttribute(slimChromeContainer, 'RSSTicker', prefAid.tickerPlacement == 2);
+		toggleAttribute(slimChromeContainer, 'RSSTicker', Prefs.tickerPlacement == 2);
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	prefAid.setDefaults({ tickerPlacement: 1 }, 'rssticker');
+Modules.LOADMODULE = function() {
+	Prefs.setDefaults({ tickerPlacement: 1 }, 'rssticker');
 	
 	toCode.modify(RSS_TICKER_UI, 'RSS_TICKER_UI.loadTicker', [
 		// the ticker toolbar should be added before our elements, not after
@@ -33,21 +33,21 @@ moduleAid.LOADMODULE = function() {
 		]
 	]);
 	
-	prefAid.listen('tickerPlacement', RSSTickerStyle);
+	Prefs.listen('tickerPlacement', RSSTickerStyle);
 	
-	listenerAid.add(window, 'LoadedSlimChrome', RSSTickerReload);
-	listenerAid.add(window, 'UnloadedSlimChrome', RSSTickerReload);
+	Listeners.add(window, 'LoadedSlimChrome', RSSTickerReload);
+	Listeners.add(window, 'UnloadedSlimChrome', RSSTickerReload);
 	
 	if(typeof(slimChromeContainer) != 'undefined' && slimChromeContainer) {
 		RSSTickerReload();
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.remove(window, 'LoadedSlimChrome', RSSTickerReload);
-	listenerAid.remove(window, 'UnloadedSlimChrome', RSSTickerReload);
+Modules.UNLOADMODULE = function() {
+	Listeners.remove(window, 'LoadedSlimChrome', RSSTickerReload);
+	Listeners.remove(window, 'UnloadedSlimChrome', RSSTickerReload);
 	
-	prefAid.unlisten('tickerPlacement', RSSTickerStyle);
+	Prefs.unlisten('tickerPlacement', RSSTickerStyle);
 	
 	toCode.revert(RSS_TICKER_UI, 'RSS_TICKER_UI.loadTicker');
 	

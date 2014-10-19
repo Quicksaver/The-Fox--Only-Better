@@ -1,11 +1,11 @@
-moduleAid.VERSION = '1.0.4';
+Modules.VERSION = '1.0.5';
 
 this.__defineGetter__('S4Eprogress', function() { return $('urlbar-progress-alt'); });
 
 this.S4Estate = false;
 
 this.S4Elistener = function() {
-	if(!prefAid.includeNavBar) { return; }
+	if(!Prefs.includeNavBar) { return; }
 	
 	var current = S4Eprogress && !S4Eprogress.hidden && !S4Eprogress.collapsed;
 	S4Estate = current;
@@ -15,25 +15,25 @@ this.S4Elistener = function() {
 			setMini(true);
 		} else if(!slimChromeOnTabSelect.handler()) {
 			// don't hide immediately when page load ends
-			timerAid.init('setMini', hideMiniInABit, 2000);
+			Timers.init('setMini', hideMiniInABit, 2000);
 		}
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	styleAid.load('S4E', 'S4E');
+Modules.LOADMODULE = function() {
+	Styles.load('S4E', 'S4E');
 	
-	objectWatcher.addAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
-	objectWatcher.addAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
-	objectWatcher.addAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
+	Watchers.addAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
+	Watchers.addAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
+	Watchers.addAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	objectWatcher.removeAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
-	objectWatcher.removeAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
-	objectWatcher.removeAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
+Modules.UNLOADMODULE = function() {
+	Watchers.removeAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
+	Watchers.removeAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
+	Watchers.removeAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
 	
 	if(UNLOADED) {
-		styleAid.unload('S4E');
+		Styles.unload('S4E');
 	}
 };

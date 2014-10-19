@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.1.0';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.2.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// styleAid - handle loading and unloading of stylesheets in a quick and easy way
+// Styles - handle loading and unloading of stylesheets in a quick and easy way
 // load(aName, aPath, isData) - loads aPath css stylesheet with type AGENT_SHEET; if re-loading a stylesheet with the same name, it will only be re-loaded if aPath has changed
 //	aName - (string) to name the stylesheet object in sheets[]
 //	aPath -
@@ -20,7 +20,7 @@ moduleAid.BASEUTILS = true;
 //	see load()
 // loaded(aName, aPath) - returns (int) with corresponding sheet index in sheets[] if aName or aPath has been loaded, returns (bool) false otherwise
 //	see unload()
-this.styleAid = {
+this.Styles = {
 	sheets: [],
 	
 	load: function(aName, aPath, isData) {

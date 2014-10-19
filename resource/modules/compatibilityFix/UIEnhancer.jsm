@@ -1,20 +1,20 @@
-moduleAid.VERSION = '1.0.0';
+Modules.VERSION = '1.0.1';
 
 this.toggleUIEnhancerURLBar = function() {
 	// force a reload of this feature, so the breadcrumbs are added back after the nav-bar moves and the location bar binding removes them
-	if(prefAid.enhanceURLBar) {
-		prefAid.enhanceURLBar = false;
-		aSync(function() { prefAid.enhanceURLBar = true; });
+	if(Prefs.enhanceURLBar) {
+		Prefs.enhanceURLBar = false;
+		aSync(function() { Prefs.enhanceURLBar = true; });
 	}
 };
 
 this.UIEnhancerFixer = function(aEnabled) {
 	if(aEnabled) {
-		prefAid.setDefaults({ enhanceURLBar: true }, 'UIEnhancer');
+		Prefs.setDefaults({ enhanceURLBar: true }, 'UIEnhancer');
 		
-		listenerAid.add(window, 'LoadedSlimChrome', toggleUIEnhancerURLBar);
+		Listeners.add(window, 'LoadedSlimChrome', toggleUIEnhancerURLBar);
 	} else {
-		listenerAid.remove(window, 'LoadedSlimChrome', toggleUIEnhancerURLBar);
+		Listeners.remove(window, 'LoadedSlimChrome', toggleUIEnhancerURLBar);
 	}
 };
 
@@ -28,7 +28,7 @@ this.UIEnhancerListener = {
 };
 
 this.toggleUIEnhancerListener = function(unloaded) {
-	if(!UNLOADED && !unloaded && prefAid.slimChrome) {
+	if(!UNLOADED && !unloaded && Prefs.slimChrome) {
 		AddonManager.addAddonListener(UIEnhancerListener);
 		AddonManager.getAddonByID('UIEnhancer@girishsharma', function(addon) {
 			if(addon && addon.isActive) { UIEnhancerFixer(true); }
@@ -39,14 +39,14 @@ this.toggleUIEnhancerListener = function(unloaded) {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	prefAid.listen('slimChrome', toggleUIEnhancerListener);
+Modules.LOADMODULE = function() {
+	Prefs.listen('slimChrome', toggleUIEnhancerListener);
 	
 	toggleUIEnhancerListener();
 };
 
-moduleAid.UNLOADMODULE = function() {
+Modules.UNLOADMODULE = function() {
 	toggleUIEnhancerListener(true);
 	
-	prefAid.unlisten('slimChrome', toggleUIEnhancerListener);
+	Prefs.unlisten('slimChrome', toggleUIEnhancerListener);
 };

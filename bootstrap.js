@@ -6,7 +6,7 @@
 //	startConditions(aData, aReason) -	(optional) (method) should return false if any requirements the add-on needs aren't met,
 //						otherwise return true or call continueStartup(aData, aReason)
 //	onStartup/onShutdown/onInstall/onUninstall(aData, aReason) - (optional) (methods) to be called on startup() and shutdown() to initialize and terminate the add-on
-//	resource folder in installpath, with modules folder containing moduleAid, sandboxUtils and utils modules
+//	resource folder in installpath, with modules folder containing Modules, sandboxUtils and utils modules
 //	chrome.manifest file with content, locale and skin declarations properly set
 // handleDeadObject(ex) - 	expects [nsIScriptError object] ex. Shows dead object notices as warnings only in the console.
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
@@ -27,9 +27,9 @@
 //	aCallback - (function(aSubject)) to be called on aSubject
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
 // Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
-// along with a minor assumption in overlayAid about a small change introduced to CustomizableUI in FF30.
+// along with a minor assumption in Overlays about a small change introduced to CustomizableUI in FF30.
 
-let bootstrapVersion = '1.6.2';
+let bootstrapVersion = '1.7.0';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -111,9 +111,9 @@ function prepareObject(window, aName) {
 		$$: function(sel) { return window.document.querySelectorAll(sel); }
 	};
 	
-	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/moduleAid.jsm", window[objectName]);
+	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/Modules.jsm", window[objectName]);
 	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/windowUtilsPreload.jsm", window[objectName]);
-	window[objectName].moduleAid.load("utils/windowUtils");
+	window[objectName].Modules.load("utils/windowUtils");
 	
 	setAttribute(window.document.documentElement, objectName+'_UUID', window[objectName]._UUID);
 	setAttribute(window.document.documentElement, objectName+'_Version', AddonData.version);
@@ -125,7 +125,7 @@ function removeObject(window, aName) {
 	if(window[objectName]) {
 		removeAttribute(window.document.documentElement, objectName+'_UUID');
 		removeAttribute(window.document.documentElement, objectName+'_Version');
-		window[objectName].moduleAid.unload("utils/windowUtils");
+		window[objectName].Modules.unload("utils/windowUtils");
 		delete window[objectName];
 	}
 }
@@ -136,7 +136,7 @@ function preparePreferences(window, aName) {
 	if(!window[objectName]) {
 		prepareObject(window, objectName);
 	}
-	window[objectName].moduleAid.load("utils/preferencesUtils");
+	window[objectName].Modules.load("utils/preferencesUtils");
 }
 
 function removeOnceListener(oncer) {
@@ -196,13 +196,13 @@ function setResourceHandler() {
 	resource.setSubstitution(objPathString, alias);
 	
 	// Get the utils.jsm module into our sandbox
-	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/moduleAid.jsm", this);
+	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/Modules.jsm", this);
 	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
-	moduleAid.load("utils/sandboxUtils");
+	Modules.load("utils/sandboxUtils");
 }
 
 function removeResourceHandler() {
-	moduleAid.unload("utils/sandboxUtils");
+	Modules.unload("utils/sandboxUtils");
 	
 	let resource = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
 	resource.setSubstitution(objPathString, null);
@@ -241,7 +241,7 @@ function startup(aData, aReason) {
 	
 	// set add-on preferences defaults
 	// This should come before startConditions() so we can use it in there
-	prefAid.setDefaults(prefList);
+	Prefs.setDefaults(prefList);
 	
 	if(typeof(startConditions) != 'function' || startConditions(aReason)) {
 		continueStartup(aReason);
@@ -257,7 +257,7 @@ function shutdown(aData, aReason) {
 			alwaysRunOnShutdown.pop()();
 		}
 		
-		if(observerLOADED) { observerAid.callQuits(); }
+		if(observerLOADED) { Observers.callQuits(); }
 		removeOnceListener();
 		return;
 	}

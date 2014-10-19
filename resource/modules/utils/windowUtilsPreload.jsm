@@ -1,10 +1,10 @@
-// VERSION = '1.0.0'
+// VERSION = '1.0.1'
 
-// listenerAid - Object to aid in setting and removing all kinds of event listeners to an object;
-this.__defineGetter__('listenerAid', function() { delete this.listenerAid; moduleAid.load('utils/listenerAid'); return listenerAid; });
+// Listeners - Object to aid in setting and removing all kinds of event listeners to an object;
+this.__defineGetter__('Listeners', function() { delete this.Listeners; Modules.load('utils/Listeners'); return Listeners; });
 
-// timerAid - Object to aid in setting, initializing and cancelling timers
-this.__defineGetter__('timerAid', function() { delete this.timerAid; moduleAid.load('utils/timerAid'); return timerAid; });
+// Timers - Object to aid in setting, initializing and cancelling timers
+this.__defineGetter__('Timers', function() { delete this.Timers; Modules.load('utils/Timers'); return Timers; });
 
 // aSync() - lets me run aFunc asynchronously, basically it's a one shot timer with a delay of aDelay msec
 this.aSync = function(aFunc, aDelay) { loadWindowTools(); return aSync(aFunc, aDelay); };
@@ -12,5 +12,5 @@ this.aSync = function(aFunc, aDelay) { loadWindowTools(); return aSync(aFunc, aD
 this.loadWindowTools = function() {
 	delete this.aSync;
 	delete this.loadWindowTools;
-	moduleAid.load('utils/windowTools');
+	Modules.load('utils/windowTools');
 };

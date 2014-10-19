@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.2.0';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.3.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// windowMediator - Aid object to help with window tasks involving window-mediator and window-watcher
+// Windows - Aid object to help with window tasks involving window-mediator and window-watcher
 // getEnumerator(aType) - returns an nsISimpleEnumerator object with all windows of aType
 //	(optional) aType - (string) window type to get, defaults to null (all)
 // callOnMostRecent(aCallback, aType, aURI) - calls aCallback passing it the most recent window of aType as an argument. If successful it returns the return value of aCallback.
@@ -24,7 +24,7 @@ moduleAid.BASEUTILS = true;
 // watching(aHandler, aTopic, aType, aURI, beforeComplete) - 	returns (int) with corresponding watcher index in watchers[] if aHandler has been registered for aTopic
 //								returns (bool) false otherwise
 //	see register()
-this.windowMediator = {
+this.Windows = {
 	watchers: [],
 	
 	getEnumerator: function(aType) {
@@ -82,39 +82,39 @@ this.windowMediator = {
 	
 	callHandlers: function(aSubject, aTopic, noBefore) {
 		var scheduleOnLoad = false;
-		for(var i = 0; i < windowMediator.watchers.length; i++) {
+		for(var i = 0; i < Windows.watchers.length; i++) {
 			// windowtype is undefined until the window loads
-			if(!noBefore && aSubject.document.readyState != 'complete' && windowMediator.watchers[i].type) {
+			if(!noBefore && aSubject.document.readyState != 'complete' && Windows.watchers[i].type) {
 				scheduleOnLoad = true;
 			}
 			
-			if(windowMediator.watchers[i].topic == aTopic
-			&& (!windowMediator.watchers[i].type || aSubject.document.documentElement.getAttribute('windowtype') == windowMediator.watchers[i].type)
-			&& (!windowMediator.watchers[i].uri || aSubject.document.documentURI == windowMediator.watchers[i].uri)) {
+			if(Windows.watchers[i].topic == aTopic
+			&& (!Windows.watchers[i].type || aSubject.document.documentElement.getAttribute('windowtype') == Windows.watchers[i].type)
+			&& (!Windows.watchers[i].uri || aSubject.document.documentURI == Windows.watchers[i].uri)) {
 				if(noBefore) {
-					if(!windowMediator.watchers[i].beforeComplete) {
-						windowMediator.watchers[i].handler(aSubject);
+					if(!Windows.watchers[i].beforeComplete) {
+						Windows.watchers[i].handler(aSubject);
 					}
 					continue;
 				}
 				
-				if(aSubject.document.readyState == 'complete' || windowMediator.watchers[i].beforeComplete) {
-					windowMediator.watchers[i].handler(aSubject);
+				if(aSubject.document.readyState == 'complete' || Windows.watchers[i].beforeComplete) {
+					Windows.watchers[i].handler(aSubject);
 				}
 			}
 			
 			if(scheduleOnLoad) {
-				callOnLoad(aSubject, windowMediator.callLoadedHandlers, aTopic);
+				callOnLoad(aSubject, Windows.callLoadedHandlers, aTopic);
 			}
 		}
 	},
 	
 	callWatchers: function(aSubject, aTopic) {
-		windowMediator.callHandlers(aSubject, aTopic, false);
+		Windows.callHandlers(aSubject, aTopic, false);
 	},
 	
 	callLoadedHandlers: function(aSubject, aTopic) {
-		windowMediator.callHandlers(aSubject, aTopic, true);
+		Windows.callHandlers(aSubject, aTopic, true);
 	},
 	
 	watching: function(aHandler, aTopic, aType, aURI, beforeComplete) {
@@ -135,10 +135,10 @@ this.windowMediator = {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	Services.ww.registerNotification(windowMediator.callWatchers);
+Modules.LOADMODULE = function() {
+	Services.ww.registerNotification(Windows.callWatchers);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	Services.ww.unregisterNotification(windowMediator.callWatchers);
+Modules.UNLOADMODULE = function() {
+	Services.ww.unregisterNotification(Windows.callWatchers);
 };

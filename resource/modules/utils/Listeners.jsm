@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.2.1';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.3.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// listenerAid - Object to aid in setting and removing all kinds of event listeners to an object;
+// Listeners - Object to aid in setting and removing all kinds of event listeners to an object;
 // add(obj, type, listener, capture, maxTriggers) - attaches listener to obj
 //	obj - (object) to attach the listener to
 //	type - (string) event type to listen for
@@ -14,7 +14,7 @@ moduleAid.BASEUTILS = true;
 //		defaults to undefined
 // remove(obj, type, listener, capture, maxTriggers) - removes listener from obj
 //	see add()
-this.listenerAid = {
+this.Listeners = {
 	handlers: [],
 	inContent: typeof(Scope) != 'undefined',
 	
@@ -53,7 +53,7 @@ this.listenerAid = {
 			if(this.maxTriggers) {
 				this.triggerCount++;
 				if(this.triggerCount == this.maxTriggers) {
-					listenerAid.remove(this.obj, this.type, this.listener, this.capture);
+					Listeners.remove(this.obj, this.type, this.listener, this.capture);
 				}
 			}
 			
@@ -112,6 +112,6 @@ this.listenerAid = {
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.clean();
+Modules.UNLOADMODULE = function() {
+	Listeners.clean();
 };

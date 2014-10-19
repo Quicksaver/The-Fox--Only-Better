@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.1.0';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.2.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// timerAid - Object to aid in setting, initializing and cancelling timers
+// Timers - Object to aid in setting, initializing and cancelling timers
 // init(aName, aFunc, aDelay, aType) - initializes a named timer to be kept in the timers object
 //	aName - (string) to name the timer
 //	aFunc - (function) to be fired by the timer, it will be bound to self
@@ -16,7 +16,7 @@ moduleAid.BASEUTILS = true;
 // create(aFunc, aDelay, aType, toBind) - creates a timer object and returns it
 //	toBind - (object) to bind aFunc to, if unset aFunc will be bound to self
 //	see init()
-this.timerAid = {
+this.Timers = {
 	timers: {},
 	
 	init: function(aName, aFunc, aDelay, aType) {
@@ -28,9 +28,9 @@ this.timerAid = {
 			handler: aFunc
 		};
 		this.timers[aName].timer.init(function(aSubject, aTopic, aData) {
-			var handler = timerAid.timers[aName].handler;
-			if(typeof(timerAid) != 'undefined' && aSubject.type == Ci.nsITimer.TYPE_ONE_SHOT) {
-				timerAid.cancel(aName);
+			var handler = Timers.timers[aName].handler;
+			if(typeof(Timers) != 'undefined' && aSubject.type == Ci.nsITimer.TYPE_ONE_SHOT) {
+				Timers.cancel(aName);
 			}
 			handler.call(self, aSubject, aTopic, aData);
 		}, aDelay, type);
@@ -102,6 +102,6 @@ this.timerAid = {
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
-	timerAid.clean();
+Modules.UNLOADMODULE = function() {
+	Timers.clean();
 };

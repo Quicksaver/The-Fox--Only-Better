@@ -1,6 +1,6 @@
-moduleAid.VERSION = '2.4.1';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.4.2';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
 // xmlHttpRequest(url, callback, method) - aid for quickly using the nsIXMLHttpRequest interface
 //	url - (string) to send the request
@@ -95,15 +95,15 @@ this.isAncestor = function(aNode, aParent, aWindow) {
 	if(ownDocument && ownDocument == aParent) { return true; }
 	if(aNode.compareDocumentPosition && (aNode.compareDocumentPosition(aParent) & aNode.DOCUMENT_POSITION_CONTAINS)) { return true; }
 	
-	var browsers = (aParent.tagName == 'browser') ? [aParent] : aParent.getElementsByTagName('browser');
-	for(var i=0; i<browsers.length; i++) {
-		try { if(isAncestor(aNode, browsers[i].contentDocument, browsers[i].contentWindow)) { return true; } }
+	var browserNodes = (aParent.tagName == 'browser') ? [aParent] : aParent.getElementsByTagName('browser');
+	for(var browser of browserNodes) {
+		try { if(isAncestor(aNode, browser.contentDocument, browser.contentWindow)) { return true; } }
 		catch(ex) { /* this will fail in e10s */ }
 	}
 	
 	if(!aWindow) { return false; }
-	for(var i=0; i<aWindow.frames.length; i++) {
-		if(isAncestor(aNode, aWindow.frames[i].document, aWindow.frames[i])) { return true; }
+	for(var frame of aWindow.frames) {
+		if(isAncestor(aNode, frame.document, frame)) { return true; }
 	}
 	return false;
 };

@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.2.1';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.3.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// stringsAid - use for getting strings out of bundles from .properties locale files
+// Strings - use for getting strings out of bundles from .properties locale files
 // get(bundle, string, replace, aNumber) - returns the desired string
 //	bundle - (string) name of the bundle to retrieve the string from, just aBundle in chrome://objPathString/locale/aBundle.properties
 //	string - (string) name of the string to retrieve from bundle
@@ -12,7 +12,7 @@ moduleAid.BASEUTILS = true;
 //				See https://developer.mozilla.org/en-US/docs/Localization_and_Plurals
 //	(dont set) alt - don't set this variable, it is for internal use so the method know it needs to look in a special location for en locales, like in the case of
 //			 untranslated strings, this should be set in chrome.manifest as objPathString-en to the en-US locale.
-this.stringsAid = {
+this.Strings = {
 	bundles: {},
 	
 	getPath: function(aPath, alt) {

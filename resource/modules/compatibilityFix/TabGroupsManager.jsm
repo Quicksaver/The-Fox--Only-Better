@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.2';
+Modules.VERSION = '1.0.3';
 
 this.tgmGroupBarId = 'TabGroupsManagerToolbar';
 this.__defineGetter__('tgmGroupBar', function() { return $(tgmGroupBarId); });
@@ -16,7 +16,7 @@ this.tgmReplaceBar = function() {
 };
 
 this.tgmOrdinal = function() {
-	var ordinal = Math.max(prefAid.groupBarOrdinal, prefAid.tabBarOrdinal) +1;
+	var ordinal = Math.max(Prefs.groupBarOrdinal, Prefs.tabBarOrdinal) +1;
 	
 	var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
 	sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
@@ -27,17 +27,17 @@ this.tgmOrdinal = function() {
 	sscode += '	}\n';
 	sscode += '}';
 	
-	styleAid.load('tgmOrdinal_'+_UUID, sscode, true);
+	Styles.load('tgmOrdinal_'+_UUID, sscode, true);
 };
 
-moduleAid.LOADMODULE = function() {
-	prefAid.setDefaults({ groupBarOrdinal: 100, tabBarOrdinal:101 }, 'tabgroupsmanager');
+Modules.LOADMODULE = function() {
+	Prefs.setDefaults({ groupBarOrdinal: 100, tabBarOrdinal:101 }, 'tabgroupsmanager');
 	slimChromeExceptions.push(tgmGroupBarId);
 	
-	prefAid.listen('groupBarOrdinal', tgmOrdinal);
-	prefAid.listen('tabBarOrdinal', tgmOrdinal);
+	Prefs.listen('groupBarOrdinal', tgmOrdinal);
+	Prefs.listen('tabBarOrdinal', tgmOrdinal);
 	
-	listenerAid.add(window, 'LoadedSlimChrome', tgmReplaceBar);
+	Listeners.add(window, 'LoadedSlimChrome', tgmReplaceBar);
 	
 	tgmOrdinal();
 	if(typeof(slimChromeContainer) != 'undefined' && slimChromeContainer) {
@@ -45,13 +45,13 @@ moduleAid.LOADMODULE = function() {
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.remove(window, 'LoadedSlimChrome', tgmReplaceBar);
+Modules.UNLOADMODULE = function() {
+	Listeners.remove(window, 'LoadedSlimChrome', tgmReplaceBar);
 	
-	prefAid.unlisten('groupBarOrdinal', tgmOrdinal);
-	prefAid.unlisten('tabBarOrdinal', tgmOrdinal);
+	Prefs.unlisten('groupBarOrdinal', tgmOrdinal);
+	Prefs.unlisten('tabBarOrdinal', tgmOrdinal);
 	
 	slimChromeExceptions.splice(slimChromeExceptions.indexOf(tgmGroupBarId), 1);
 	
-	styleAid.unload('tgmOrdinal_'+_UUID);
+	Styles.unload('tgmOrdinal_'+_UUID);
 };

@@ -1,8 +1,8 @@
-moduleAid.VERSION = '2.3.0';
-moduleAid.UTILS = true;
-moduleAid.BASEUTILS = true;
+Modules.VERSION = '2.4.0';
+Modules.UTILS = true;
+Modules.BASEUTILS = true;
 
-// objectWatcher - This acts as a replacement for the event DOM Attribute Modified, works for both attributes and object properties
+// Watchers - This acts as a replacement for the event DOM Attribute Modified, works for both attributes and object properties
 //	addPropertyWatcher(obj, prop, handler, capture) - registers handler as a watcher for obj property prop changes
 //		obj - (xul element or object) to watch for changes
 //		prop - (string) property name in obj to watch
@@ -26,7 +26,7 @@ moduleAid.BASEUTILS = true;
 //	oldVal - the current value of prop
 //	newVal - the new value of prop
 // Note: deleting a watched property does not trigger the watchers, so don't do it! Set it to undefined instead if you wish to delete it after removing the watchers.
-this.objectWatcher = {
+this.Watchers = {
 	// Properties part, works by replacing the get and set accessor methods of a property with custom ones
 	addPropertyWatcher: function(obj, prop, handler, capture) {
 		if(!this.setWatchers(obj)) { return false; }

@@ -1,7 +1,7 @@
-moduleAid.VERSION = '1.1.0';
+Modules.VERSION = '1.1.1';
 
 this.listenForTreeStyleTab = function() {
-	if(prefAid.slimChrome && typeof(moveSlimChrome) != 'undefined') {
+	if(Prefs.slimChrome && typeof(moveSlimChrome) != 'undefined') {
 		moveSlimChrome();
 	}
 };
@@ -21,16 +21,16 @@ this.extendActiveAreaOnTreeStyleTab = function(e) {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	listenerAid.add(window, 'nsDOMTreeStyleTabTabbarPositionChanged', listenForTreeStyleTab);
-	listenerAid.add(window, 'nsDOMTreeStyleTabAutoHideStateChange', listenForTreeStyleTab);
-	listenerAid.add(window, 'WillShowSlimChrome', noShowOnTreeStyleTab, true);
-	listenerAid.add(window, 'SlimChromeNormalActiveArea', extendActiveAreaOnTreeStyleTab, true);
+Modules.LOADMODULE = function() {
+	Listeners.add(window, 'nsDOMTreeStyleTabTabbarPositionChanged', listenForTreeStyleTab);
+	Listeners.add(window, 'nsDOMTreeStyleTabAutoHideStateChange', listenForTreeStyleTab);
+	Listeners.add(window, 'WillShowSlimChrome', noShowOnTreeStyleTab, true);
+	Listeners.add(window, 'SlimChromeNormalActiveArea', extendActiveAreaOnTreeStyleTab, true);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.remove(window, 'nsDOMTreeStyleTabTabbarPositionChanged', listenForTreeStyleTab);
-	listenerAid.remove(window, 'nsDOMTreeStyleTabAutoHideStateChange', listenForTreeStyleTab);
-	listenerAid.remove(window, 'WillShowSlimChrome', noShowOnTreeStyleTab, true);
-	listenerAid.remove(window, 'SlimChromeNormalActiveArea', extendActiveAreaOnTreeStyleTab, true);
+Modules.UNLOADMODULE = function() {
+	Listeners.remove(window, 'nsDOMTreeStyleTabTabbarPositionChanged', listenForTreeStyleTab);
+	Listeners.remove(window, 'nsDOMTreeStyleTabAutoHideStateChange', listenForTreeStyleTab);
+	Listeners.remove(window, 'WillShowSlimChrome', noShowOnTreeStyleTab, true);
+	Listeners.remove(window, 'SlimChromeNormalActiveArea', extendActiveAreaOnTreeStyleTab, true);
 };

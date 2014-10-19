@@ -1,13 +1,13 @@
-moduleAid.VERSION = '2.2.2';
-moduleAid.UTILS = true;
+Modules.VERSION = '2.3.0';
+Modules.UTILS = true;
 
-// browserMediator - Aid object to track and perform tasks on all document browsers across the windows.
+// Browsers - Aid object to track and perform tasks on all document browsers across the windows.
 // callOnAll(aCallback, aURI, beforeComplete, onlyTabs) - goes through every opened browser (tabs and sidebar) and executes aCallback on it
 //	Important note: this method will no-op in remote browsers (e10s, anything not about: or chrome://).
 //	aCallback - (function(aBrowser)) to be called on aBrowser
 //	(optional) aURI - (string) when defined, checks the documentURI property against the aURI value and only executes aCallback when true, defaults to null
 //	(optional) beforeComplete - 	true calls aCallback immediatelly regardless of readyState, false fires aCallback when window loads if readyState != complete, defaults to false
-//					see notes on windowMediator.register()
+//					see notes on Windows.register()
 //	(optional) onlyTabs - (bool) true only executes aCallback on actual tabs, not sidebars or others, defaults to (bool) false
 // register(aHandler, aTopic, aURI, beforeComplete) - registers aHandler to be notified of every aTopic
 //	Important note: handlers will no-op in remote browsers (e10s).
@@ -19,7 +19,7 @@ moduleAid.UTILS = true;
 // watching(aHandler, aTopic, aURI, beforeComplete) -	returns (int) with corresponding watcher index in watchers[] if aHandler has been registered for aTopic,
 //							returns (bool) false otherwise
 //	see register()
-this.browserMediator = {
+this.Browsers = {
 	watchers: [],
 	
 	// expects aCallback() and sets its this as the window
@@ -90,13 +90,13 @@ this.browserMediator = {
 		if(aDoc.nodeName != '#document') { return; }
 		
 		var aSubject = aDoc.defaultView;
-		for(var i = 0; i < browserMediator.watchers.length; i++) {
-			if(browserMediator.watchers[i].topic == e.type
-			&& (!browserMediator.watchers[i].uri || aSubject.document.documentURI == browserMediator.watchers[i].uri)) {
-				if(aSubject.document.readyState == 'complete' || browserMediator.watchers[i].beforeComplete) {
-					browserMediator.watchers[i].handler(aSubject);
+		for(var i = 0; i < Browsers.watchers.length; i++) {
+			if(Browsers.watchers[i].topic == e.type
+			&& (!Browsers.watchers[i].uri || aSubject.document.documentURI == Browsers.watchers[i].uri)) {
+				if(aSubject.document.readyState == 'complete' || Browsers.watchers[i].beforeComplete) {
+					Browsers.watchers[i].handler(aSubject);
 				} else {
-					callOnLoad(aSubject, browserMediator.watchers[i].handler);
+					callOnLoad(aSubject, Browsers.watchers[i].handler);
 				}
 			}
 		}
@@ -122,14 +122,14 @@ this.browserMediator = {
 		// e10s fix, we don't check remote tabs, we only check about: and chrome:// tabs
 		if(trueAttribute(e.target.linkedBrowser, 'remote')) { return; }
 		
-		browserMediator.callWatchers({
+		Browsers.callWatchers({
 			type: 'pagehide',
 			originalTarget: e.target.linkedBrowser.contentDocument
 		});
 	},
 	
 	sidebarLoaded: function(e) {
-		browserMediator.callWatchers({
+		Browsers.callWatchers({
 			type: e.type,
 			originalTarget: e.target.document
 		});
@@ -137,42 +137,42 @@ this.browserMediator = {
 	
 	prepareWindow: function(aWindow) {
 		if(aWindow.document.readyState != 'complete') {
-			callOnLoad(aWindow, function() { browserMediator.prepareWindow(aWindow); });
+			callOnLoad(aWindow, function() { Browsers.prepareWindow(aWindow); });
 			return;
 		}
 		
 		if(aWindow.gBrowser) {
 			// The event can be DOMContentLoaded, pageshow, pagehide, load or unload.
 			// These seem to be enough
-			aWindow.gBrowser.addEventListener('pageshow', browserMediator.callWatchers, true);
-			aWindow.gBrowser.addEventListener('pagehide', browserMediator.callWatchers, true);
+			aWindow.gBrowser.addEventListener('pageshow', Browsers.callWatchers, true);
+			aWindow.gBrowser.addEventListener('pagehide', Browsers.callWatchers, true);
 			// The event can be TabOpen, TabClose, TabSelect, TabShow, TabHide, TabPinned, TabUnpinned and possibly more.
-			aWindow.gBrowser.tabContainer.addEventListener('TabClose', browserMediator.tabClosed, true);
+			aWindow.gBrowser.tabContainer.addEventListener('TabClose', Browsers.tabClosed, true);
 			// Also listen for the sidebars
-			aWindow.addEventListener('SidebarFocused', browserMediator.sidebarLoaded, true);
-			aWindow.addEventListener('SidebarClosed', browserMediator.sidebarLoaded, true);
+			aWindow.addEventListener('SidebarFocused', Browsers.sidebarLoaded, true);
+			aWindow.addEventListener('SidebarClosed', Browsers.sidebarLoaded, true);
 		}
 	},
 	
 	forgetWindow: function(aWindow) {
 		if(aWindow.document.readyState == 'complete' && aWindow.gBrowser) {
-			aWindow.gBrowser.removeEventListener('pageshow', browserMediator.callWatchers, true);
-			aWindow.gBrowser.removeEventListener('pagehide', browserMediator.callWatchers, true);
-			aWindow.gBrowser.tabContainer.removeEventListener('TabClose', browserMediator.tabClosed, true);
-			aWindow.removeEventListener('SidebarFocused', browserMediator.sidebarLoaded, true);
-			aWindow.removeEventListener('SidebarClosed', browserMediator.sidebarLoaded, true);
+			aWindow.gBrowser.removeEventListener('pageshow', Browsers.callWatchers, true);
+			aWindow.gBrowser.removeEventListener('pagehide', Browsers.callWatchers, true);
+			aWindow.gBrowser.tabContainer.removeEventListener('TabClose', Browsers.tabClosed, true);
+			aWindow.removeEventListener('SidebarFocused', Browsers.sidebarLoaded, true);
+			aWindow.removeEventListener('SidebarClosed', Browsers.sidebarLoaded, true);
 		}
 	}
 };
 
-moduleAid.LOADMODULE = function() {
-	windowMediator.callOnAll(browserMediator.prepareWindow, 'navigator:browser');
-	windowMediator.register(browserMediator.prepareWindow, 'domwindowopened', 'navigator:browser');
-	windowMediator.register(browserMediator.forgetWindow, 'domwindowclosed', 'navigator:browser');
+Modules.LOADMODULE = function() {
+	Windows.callOnAll(Browsers.prepareWindow, 'navigator:browser');
+	Windows.register(Browsers.prepareWindow, 'domwindowopened', 'navigator:browser');
+	Windows.register(Browsers.forgetWindow, 'domwindowclosed', 'navigator:browser');
 };
 
-moduleAid.UNLOADMODULE = function() {
-	windowMediator.unregister(browserMediator.prepareWindow, 'domwindowopened', 'navigator:browser');
-	windowMediator.unregister(browserMediator.forgetWindow, 'domwindowclosed', 'navigator:browser');
-	windowMediator.callOnAll(browserMediator.forgetWindow, 'navigator:browser', null, true);
+Modules.UNLOADMODULE = function() {
+	Windows.unregister(Browsers.prepareWindow, 'domwindowopened', 'navigator:browser');
+	Windows.unregister(Browsers.forgetWindow, 'domwindowclosed', 'navigator:browser');
+	Windows.callOnAll(Browsers.forgetWindow, 'navigator:browser', null, true);
 };

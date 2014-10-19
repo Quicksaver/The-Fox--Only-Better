@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.1.3';
+Modules.VERSION = '1.1.4';
 
 this.__defineGetter__('whatsNewURL', function() { return 'chrome://'+objPathString+'/content/whatsnew.xhtml'; });
 this.__defineGetter__('whatsNewAbout', function() { return 'about:'+objPathString; });
@@ -9,7 +9,7 @@ this.changelog = '';
 this.whatsNewInit = function() {
 	// content script not finished loading yet
 	if(!Addon) {
-		timerAid.init('whatsNewInit', function() {
+		Timers.init('whatsNewInit', function() {
 			if(typeof(whatsNewInit) == 'undefined') { return; }
 			whatsNewInit();
 		}, 100);
@@ -30,7 +30,7 @@ this.whatsNewInit = function() {
 	
 	// carry the preference to chrome process
 	$('notifyOnUpdates').addEventListener('change', whatsNewNotifyOnUpdates);
-	$('notifyOnUpdates').checked = prefAid.notifyOnUpdates;
+	$('notifyOnUpdates').checked = Prefs.notifyOnUpdates;
 	
 	// check to see if there is a more recent version available
 	Addon.findUpdates(whatsNewCheckAMO, AddonManager.UPDATE_WHEN_PERIODIC_UPDATE);
@@ -210,14 +210,14 @@ this.whatsNewLoadListener = function(e) {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	webProgress.addProgressListener(whatsNewProgressListener, Ci.nsIWebProgress.NOTIFY_ALL);
 	DOMContentLoaded.add(whatsNewLoadListener);
 	listen('changeLog', whatsNewChangeLog);
 	listen('notifyLastVersion', whatsNewNotifyLastVersion);
 };
 
-moduleAid.UNLOADMODULE = function() {
+Modules.UNLOADMODULE = function() {
 	webProgress.removeProgressListener(whatsNewProgressListener);
 	DOMContentLoaded.remove(whatsNewLoadListener);
 	unlisten('changeLog', whatsNewChangeLog);

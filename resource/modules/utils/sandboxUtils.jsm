@@ -1,48 +1,48 @@
-moduleAid.VERSION = '2.3.3';
-moduleAid.UTILS = true;
-moduleAid.CLEAN = false;
+Modules.VERSION = '2.3.4';
+Modules.UTILS = true;
+Modules.CLEAN = false;
 
-// window - Similarly to windowMediator.callOnMostRecent, the window property returns the most recent navigator:browser window object
+// window - Similarly to Windows.callOnMostRecent, the window property returns the most recent navigator:browser window object
 this.__defineGetter__('window', function() { return Services.wm.getMostRecentWindow('navigator:browser'); });
 
 // document - Returns the document object associated with the most recent window object
 this.__defineGetter__('document', function() { return window.document; });
 
-// prefAid - Object to contain and manage all preferences related to the add-on (and others if necessary)
-this.__defineGetter__('prefAid', function() { delete this.prefAid; moduleAid.load('utils/prefAid'); return prefAid; });
+// Prefs - Object to contain and manage all preferences related to the add-on (and others if necessary)
+this.__defineGetter__('Prefs', function() { delete this.Prefs; Modules.load('utils/Prefs'); return Prefs; });
 
-// styleAid - handle loading and unloading of stylesheets in a quick and easy way
-this.__defineGetter__('styleAid', function() { delete this.styleAid; moduleAid.load('utils/styleAid'); return styleAid; });
+// Styles - handle loading and unloading of stylesheets in a quick and easy way
+this.__defineGetter__('Styles', function() { delete this.Styles; Modules.load('utils/Styles'); return Styles; });
 
-// windowMediator - Aid object to help with window tasks involving window-mediator and window-watcher
-this.__defineGetter__('windowMediator', function() { delete this.windowMediator; moduleAid.load('utils/windowMediator'); return windowMediator; });
+// Windows - Aid object to help with window tasks involving window-mediator and window-watcher
+this.__defineGetter__('Windows', function() { delete this.Windows; Modules.load('utils/Windows'); return Windows; });
 
-// browserMediator - Aid object to track and perform tasks on all document browsers across the windows
-this.__defineGetter__('browserMediator', function() { windowMediator; delete this.browserMediator; moduleAid.load('utils/browserMediator'); return browserMediator; });
+// Browsers - Aid object to track and perform tasks on all document browsers across the windows
+this.__defineGetter__('Browsers', function() { Windows; delete this.Browsers; Modules.load('utils/Browsers'); return Browsers; });
 
-// messenger - Aid object to communicate with browser content scripts (e10s).
-this.__defineGetter__('messenger', function() { delete this.messenger; moduleAid.load('utils/messenger'); return messenger; });
+// Messenger - Aid object to communicate with browser content scripts (e10s).
+this.__defineGetter__('Messenger', function() { delete this.Messenger; Modules.load('utils/Messenger'); return Messenger; });
 
-// observerAid - Helper for adding and removing observers
-this.__defineGetter__('observerAid', function() { delete this.observerAid; moduleAid.load('utils/observerAid'); return observerAid; });
+// Observers - Helper for adding and removing observers
+this.__defineGetter__('Observers', function() { delete this.Observers; Modules.load('utils/Observers'); return Observers; });
 
-// overlayAid - to use overlays in my bootstraped add-ons
-this.__defineGetter__('overlayAid', function() { browserMediator; observerAid; piggyback; delete this.overlayAid; moduleAid.load('utils/overlayAid'); return overlayAid; });
+// Overlays - to use overlays in my bootstraped add-ons
+this.__defineGetter__('Overlays', function() { Browsers; Observers; Piggyback; delete this.Overlays; Modules.load('utils/Overlays'); return Overlays; });
 
-// objectWatcher - This acts as a replacement for the event DOM Attribute Modified, works for both attributes and object properties
-this.__defineGetter__('objectWatcher', function() { delete this.objectWatcher; moduleAid.load('utils/objectWatcher'); return objectWatcher; });
+// Watchers - This acts as a replacement for the event DOM Attribute Modified, works for both attributes and object properties
+this.__defineGetter__('Watchers', function() { delete this.Watchers; Modules.load('utils/Watchers'); return Watchers; });
 
-// keysetAid - handles editable keysets for the add-on
-this.__defineGetter__('keysetAid', function() { windowMediator; delete this.keysetAid; moduleAid.load('utils/keysetAid'); return keysetAid; });
+// Keysets - handles editable keysets for the add-on
+this.__defineGetter__('Keysets', function() { Windows; delete this.Keysets; Modules.load('utils/Keysets'); return Keysets; });
 
-// piggyback - This module allows me to piggyback methods of any object. It also gives me access to the CustomizableUI module backstage pass, so I can do the same to it.
-this.__defineGetter__('piggyback', function() { delete this.piggyback; delete this.CustomizableUI; delete this.CUIBackstage; moduleAid.load('utils/piggyback'); return piggyback; });
-this.__defineGetter__('CustomizableUI', function() { delete this.piggyback; delete this.CustomizableUI; delete this.CUIBackstage; moduleAid.load('utils/piggyback'); return CustomizableUI; });
-this.__defineGetter__('CUIBackstage', function() { delete this.piggyback; delete this.CustomizableUI; delete this.CUIBackstage; moduleAid.load('utils/piggyback'); return CUIBackstage; });
+// Piggyback - This module allows me to Piggyback methods of any object. It also gives me access to the CustomizableUI module backstage pass, so I can do the same to it.
+this.__defineGetter__('Piggyback', function() { delete this.Piggyback; delete this.CustomizableUI; delete this.CUIBackstage; Modules.load('utils/Piggyback'); return Piggyback; });
+this.__defineGetter__('CustomizableUI', function() { delete this.Piggyback; delete this.CustomizableUI; delete this.CUIBackstage; Modules.load('utils/Piggyback'); return CustomizableUI; });
+this.__defineGetter__('CUIBackstage', function() { delete this.Piggyback; delete this.CustomizableUI; delete this.CUIBackstage; Modules.load('utils/Piggyback'); return CUIBackstage; });
 
 // closeCustomize() - useful for when you want to close the customize tabs for whatever reason
 this.closeCustomize = function() {
-	windowMediator.callOnAll(function(aWindow) {
+	Windows.callOnAll(function(aWindow) {
 		if(aWindow.gCustomizeMode) {
 			aWindow.gCustomizeMode.exit();
 		}
@@ -54,13 +54,13 @@ this.closeCustomize = function() {
 // so this way it won't load the module when disabling the add-on if it hand't been loaded yet.
 this.openOptions = function() {
 	if(UNLOADED || !Addon.optionsURL) { return; }
-	if(!windowMediator.callOnMostRecent(function(aWindow) { aWindow.focus(); return true; }, null, Addon.optionsURL)) {
+	if(!Windows.callOnMostRecent(function(aWindow) { aWindow.focus(); return true; }, null, Addon.optionsURL)) {
 		window.openDialog(Addon.optionsURL, '', 'chrome,toolbar,resizable=false');
 	}
 };
 this.closeOptions = function() {
 	if(!Addon.optionsURL) { return; }
-	windowMediator.callOnAll(function(aWindow) { try { aWindow.close(); } catch(ex) {} }, null, Addon.optionsURL);
+	Windows.callOnAll(function(aWindow) { try { aWindow.close(); } catch(ex) {} }, null, Addon.optionsURL);
 };
 
 // fillVersion() - to automatically fill in the version information in the about tab of the preferences dialog
@@ -72,6 +72,6 @@ this.fillVersion = function(box) {
 	box.hidden = false;
 };
 
-moduleAid.UNLOADMODULE = function() {
-	moduleAid.clean();
+Modules.UNLOADMODULE = function() {
+	Modules.clean();
 };

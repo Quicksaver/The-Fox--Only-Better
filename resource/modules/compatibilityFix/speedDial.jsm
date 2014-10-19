@@ -1,9 +1,9 @@
-moduleAid.VERSION = '1.0.0';
+Modules.VERSION = '1.0.1';
 
-moduleAid.LOADMODULE = function() {
-	styleAid.load('speedDial', 'speedDial');
+Modules.LOADMODULE = function() {
+	Styles.load('speedDial', 'speedDial');
 };
 
-moduleAid.UNLOADMODULE = function() {
-	styleAid.unload('speedDial');
+Modules.UNLOADMODULE = function() {
+	Styles.unload('speedDial');
 };

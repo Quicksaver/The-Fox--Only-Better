@@ -1,7 +1,7 @@
-moduleAid.VERSION = '3.1.0';
-moduleAid.UTILS = true;
+Modules.VERSION = '3.2.0';
+Modules.UTILS = true;
 
-// privateBrowsingAid - Aid object for private browsing mode
+// PrivateBrowsing - Aid object for private browsing mode
 // get autoStarted - returns (bool) pb permanentPrivateBrowsing
 // get inPrivateBrowing - returns (bool) isWindowPrivate(window) for this window
 // addWatcher(aWatcher) - 	prepares aWatcher to be used as a PB handler
@@ -15,7 +15,7 @@ moduleAid.UTILS = true;
 //		if it doesn't have an observe method it is created
 // removeWatcher(aWatcher) - removes aWatcher from handling PB sessions
 //	see addWatcher()
-this.privateBrowsingAid = {
+this.PrivateBrowsing = {
 	get autoStarted () { return PrivateBrowsingUtils.permanentPrivateBrowsing; },
 	get inPrivateBrowsing () { return PrivateBrowsingUtils.isWindowPrivate(window); },
 	
@@ -43,7 +43,7 @@ this.privateBrowsingAid = {
 	addWatcher: function(aWatcher) {
 		var watcher = this.prepare(aWatcher);
 		
-		observerAid.add(watcher, "quit-application");
+		Observers.add(watcher, "quit-application");
 		
 		if(watcher.init) {
 			try { watcher.init(); }
@@ -69,6 +69,6 @@ this.privateBrowsingAid = {
 			catch(ex) { aSync(function() { Cu.reportError(ex); }); }
 		}
 		
-		observerAid.remove(watcher, "quit-application");
+		Observers.remove(watcher, "quit-application");
 	}
 };

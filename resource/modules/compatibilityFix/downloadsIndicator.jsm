@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.4';
+Modules.VERSION = '1.0.5';
 
 this.__defineGetter__('DownloadsIndicatorView', function() { return window.DownloadsIndicatorView; });
 this.__defineGetter__('DownloadsCommon', function() { return window.DownloadsCommon; });
@@ -14,8 +14,8 @@ this.downloadsFinishedWidth = function() {
 
 this.setupHoldDownloadsPanel = function(e) {
 	if(e.target.id == 'downloadsPanel') {
-		listenerAid.remove(window, 'popupshowing', setupHoldDownloadsPanel);
-		listenerAid.add(e.target, 'AskingForNodeOwner', holdDownloadsPanel);
+		Listeners.remove(window, 'popupshowing', setupHoldDownloadsPanel);
+		Listeners.add(e.target, 'AskingForNodeOwner', holdDownloadsPanel);
 	}
 };
 
@@ -24,8 +24,8 @@ this.holdDownloadsPanel = function(e) {
 	e.stopPropagation();
 };
 
-moduleAid.LOADMODULE = function() {
-	piggyback.add('downloadsIndicator', DownloadsIndicatorView, 'showEventNotification', function(aType) {
+Modules.LOADMODULE = function() {
+	Piggyback.add('downloadsIndicator', DownloadsIndicatorView, 'showEventNotification', function(aType) {
 		// we're already opening to animate, so don't animate again, just replace the previous animation type
 		if(reDoDownloadsNotifications) {
 			reDoDownloadsNotifications = aType;
@@ -52,22 +52,22 @@ moduleAid.LOADMODULE = function() {
 		}
 		
 		return true;
-	}, piggyback.MODE_BEFORE);
+	}, Piggyback.MODE_BEFORE);
 	
 	// the downloadsPanel is only created when first called
 	if($('downloadsPanel')) {
-		listenerAid.add($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
+		Listeners.add($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
 	} else {
-		listenerAid.add(window, 'popupshowing', setupHoldDownloadsPanel);
+		Listeners.add(window, 'popupshowing', setupHoldDownloadsPanel);
 	}
 	
-	listenerAid.add(window, 'FinishedSlimChromeWidth', downloadsFinishedWidth);
+	Listeners.add(window, 'FinishedSlimChromeWidth', downloadsFinishedWidth);
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.remove(window, 'FinishedSlimChromeWidth', downloadsFinishedWidth);
-	listenerAid.remove($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
-	listenerAid.remove(window, 'popupshowing', setupHoldDownloadsPanel);
+Modules.UNLOADMODULE = function() {
+	Listeners.remove(window, 'FinishedSlimChromeWidth', downloadsFinishedWidth);
+	Listeners.remove($('downloadsPanel'), 'AskingForNodeOwner', holdDownloadsPanel);
+	Listeners.remove(window, 'popupshowing', setupHoldDownloadsPanel);
 	
-	piggyback.revert('downloadsIndicator', DownloadsIndicatorView, 'showEventNotification');
+	Piggyback.revert('downloadsIndicator', DownloadsIndicatorView, 'showEventNotification');
 };

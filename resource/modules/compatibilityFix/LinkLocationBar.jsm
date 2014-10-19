@@ -1,15 +1,15 @@
-moduleAid.VERSION = '1.1.5';
+Modules.VERSION = '1.1.6';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 
 this.LLBlistener = function() {
-	if(!prefAid.includeNavBar) { return; }
+	if(!Prefs.includeNavBar) { return; }
 	if(typeof(setMini) == 'undefined') { return; }
 	if(typeof(blockedPopup) != 'undefined' && blockedPopup) { return; }
 	
 	// show the link hover state immediately
 	if(window.gURLBar.getAttribute('overlinkstate') == 'showing') {
-		timerAid.cancel('LBBlistener');
+		Timers.cancel('LBBlistener');
 		setAttribute(slimChromeContainer, 'overlinkstate', 'true');
 		setMini(true);
 	// see if a password field is focused, if yes remove the attr immediately so the url is shown
@@ -17,7 +17,7 @@ this.LLBlistener = function() {
 		removeAttribute(slimChromeContainer, 'overlinkstate');
 	// if not remove the overlinkstate attr only after the mini bar is hidden
 	} else {
-		timerAid.init('LBBlistener', function() {
+		Timers.init('LBBlistener', function() {
 			removeAttribute(slimChromeContainer, 'overlinkstate');
 		}, 400);
 	}
@@ -40,17 +40,17 @@ this.LLBresize = function() {
 	sscode += '	}\n';
 	sscode += '}';
 	
-	styleAid.load('LLBresize_'+_UUID, sscode, true);
+	Styles.load('LLBresize_'+_UUID, sscode, true);
 };
 
-moduleAid.LOADMODULE = function() {
-	styleAid.load('LinkLocationBar', 'LinkLocationBar');
+Modules.LOADMODULE = function() {
+	Styles.load('LinkLocationBar', 'LinkLocationBar');
 	
-	listenerAid.add(window, 'LoadedSlimChrome', LLBreapply);
-	listenerAid.add(window, 'UnloadedSlimChrome', LLBreapply);
-	listenerAid.add(window, 'MovedSlimChrome', LLBresize);
+	Listeners.add(window, 'LoadedSlimChrome', LLBreapply);
+	Listeners.add(window, 'UnloadedSlimChrome', LLBreapply);
+	Listeners.add(window, 'MovedSlimChrome', LLBresize);
 	
-	objectWatcher.addAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
+	Watchers.addAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
 	
 	if(typeof(lastSlimChromeStyle) != 'undefined' && lastSlimChromeStyle) {
 		LLBresize();
@@ -59,18 +59,18 @@ moduleAid.LOADMODULE = function() {
 	LLBreapply();
 };
 
-moduleAid.UNLOADMODULE = function() {
-	objectWatcher.removeAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
+Modules.UNLOADMODULE = function() {
+	Watchers.removeAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
 	
-	listenerAid.remove(window, 'LoadedSlimChrome', LLBreapply);
-	listenerAid.remove(window, 'UnloadedSlimChrome', LLBreapply);
-	listenerAid.remove(window, 'MovedSlimChrome', LLBresize);
+	Listeners.remove(window, 'LoadedSlimChrome', LLBreapply);
+	Listeners.remove(window, 'UnloadedSlimChrome', LLBreapply);
+	Listeners.remove(window, 'MovedSlimChrome', LLBresize);
 	
-	styleAid.unload('LLBresize_'+_UUID);
+	Styles.unload('LLBresize_'+_UUID);
 	
 	LLBreapply();
 	
 	if(UNLOADED) {
-		styleAid.unload('LinkLocationBar');
+		Styles.unload('LinkLocationBar');
 	}
 };

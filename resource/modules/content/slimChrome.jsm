@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.4';
+Modules.VERSION = '1.0.5';
 
 this.miniActive = false;
 
@@ -10,7 +10,7 @@ this.focusPasswords = function(e) {
 	&& e.target.nodeName
 	&& e.target.nodeName.toLowerCase() == 'input'
 	&& !e.target.disabled
-	&& (prefAid.miniOnAllInput || e.target.type == 'password')) {
+	&& (Prefs.miniOnAllInput || e.target.type == 'password')) {
 		active = true;
 	}
 	
@@ -59,10 +59,10 @@ this.focusLoadListener = function() {
 	catch(ex) {}
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	// show mini chrome when focusing password fields
-	listenerAid.add(Scope, 'focus', focusPasswords, true);
-	listenerAid.add(Scope, 'blur', focusPasswords, true);
+	Listeners.add(Scope, 'focus', focusPasswords, true);
+	Listeners.add(Scope, 'blur', focusPasswords, true);
 	
 	// show mini when the current tab changes host
 	webProgress.addProgressListener(slimChromeProgressListener, Ci.nsIWebProgress.NOTIFY_ALL);
@@ -72,9 +72,9 @@ moduleAid.LOADMODULE = function() {
 	focusLoadListener();
 };
 
-moduleAid.UNLOADMODULE = function() {
+Modules.UNLOADMODULE = function() {
 	webProgress.removeProgressListener(slimChromeProgressListener);
 	DOMContentLoaded.remove(focusLoadListener);
-	listenerAid.remove(Scope, 'focus', focusPasswords, true);
-	listenerAid.remove(Scope, 'blur', focusPasswords, true);
+	Listeners.remove(Scope, 'focus', focusPasswords, true);
+	Listeners.remove(Scope, 'blur', focusPasswords, true);
 };

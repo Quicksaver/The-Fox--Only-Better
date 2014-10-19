@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.2.2';
+Modules.VERSION = '1.2.3';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathLeft', function() { return $(objName+'-slimChrome-clipPath-toolbars-left-path'); });
@@ -7,10 +7,10 @@ this.__defineGetter__('slimChromeSVGLeft', function() { return $(objName+'-slimC
 this.__defineGetter__('slimChromeSVGRight', function() { return $(objName+'-slimChrome-svg-'+(RTL ? 'before' : 'after')+'-path'); });
 
 this._slimStyle = null;
-this.__defineGetter__('slimStyle', function() { return this._slimStyle || prefAid.slimStyle; });
+this.__defineGetter__('slimStyle', function() { return this._slimStyle || Prefs.slimStyle; });
 this.__defineSetter__('slimStyle', function(v) {
 	if(v) {
-		timerAid.init('resetSlimStyle', function() {
+		Timers.init('resetSlimStyle', function() {
 			slimStyle = null;
 		}, 2250);
 	}
@@ -134,7 +134,7 @@ this.slimChromeClipPaths = function() {
 	sscode += '	}\n';
 	sscode += '}';
 	
-	styleAid.load('slimChromeSVG_'+_UUID, sscode, true);
+	Styles.load('slimChromeSVG_'+_UUID, sscode, true);
 	
 	// the left border
 	var d = "M "+AUSTRALIS_BORDER_COORD_X1+","+AUSTRALIS_BORDER_COORD_Y1;
@@ -283,7 +283,7 @@ this.stylePersonaSlimChrome = function() {
 	}
 	
 	// Unload current stylesheet if it's been loaded, just in case we're changing personas
-	styleAid.unload('personaSlimChrome_'+_UUID);
+	Styles.unload('personaSlimChrome_'+_UUID);
 	
 	if(lwtheme.bgImage != '') {
 		var windowStyle = getComputedStyle(document.documentElement);
@@ -361,7 +361,7 @@ this.stylePersonaSlimChrome = function() {
 		sscode += '	}\n';
 		sscode += '}';
 		
-		styleAid.load('personaSlimChrome_'+_UUID, sscode, true);
+		Styles.load('personaSlimChrome_'+_UUID, sscode, true);
 	}
 };
 
@@ -389,30 +389,30 @@ this.slimChromeStyleOnUnload = function() {
 	removeAttribute(gNavToolbox, 'slimStyle');
 };
 
-moduleAid.LOADMODULE = function() {
-	prefAid.listen('slimStyle', slimChromeStyle);
+Modules.LOADMODULE = function() {
+	Prefs.listen('slimStyle', slimChromeStyle);
 	
-	listenerAid.add(window, 'LoadedSlimChrome', slimChromeStyleOnLoad);
-	listenerAid.add(window, 'UnloadingSlimChrome', slimChromeStyleOnUnload);
-	listenerAid.add(window, 'MovedSlimChrome', slimChromeClipPaths);
-	listenerAid.add(window, 'EnsureSlimChrome', slimChromeStyleOnEnsure);
+	Listeners.add(window, 'LoadedSlimChrome', slimChromeStyleOnLoad);
+	Listeners.add(window, 'UnloadingSlimChrome', slimChromeStyleOnUnload);
+	Listeners.add(window, 'MovedSlimChrome', slimChromeClipPaths);
+	Listeners.add(window, 'EnsureSlimChrome', slimChromeStyleOnEnsure);
 	
 	// support personas in hovering toolbox
-	observerAid.add(personaChanged, "lightweight-theme-styling-update");
+	Observers.add(personaChanged, "lightweight-theme-styling-update");
 	
 	slimChromeStyle();
 };
 
-moduleAid.UNLOADMODULE = function() {
-	listenerAid.remove(window, 'LoadedSlimChrome', slimChromeStyleOnLoad);
-	listenerAid.remove(window, 'UnloadingSlimChrome', slimChromeStyleOnUnload);
-	listenerAid.remove(window, 'MovedSlimChrome', slimChromeClipPaths);
-	listenerAid.remove(window, 'EnsureSlimChrome', slimChromeStyleOnEnsure);
-	observerAid.remove(personaChanged, "lightweight-theme-styling-update");
+Modules.UNLOADMODULE = function() {
+	Listeners.remove(window, 'LoadedSlimChrome', slimChromeStyleOnLoad);
+	Listeners.remove(window, 'UnloadingSlimChrome', slimChromeStyleOnUnload);
+	Listeners.remove(window, 'MovedSlimChrome', slimChromeClipPaths);
+	Listeners.remove(window, 'EnsureSlimChrome', slimChromeStyleOnEnsure);
+	Observers.remove(personaChanged, "lightweight-theme-styling-update");
 	
-	prefAid.unlisten('slimStyle', slimChromeStyle);
+	Prefs.unlisten('slimStyle', slimChromeStyle);
 	
-	styleAid.unload('slimChromeSVG_'+_UUID);
+	Styles.unload('slimChromeSVG_'+_UUID);
 	
 	if(slimChromeStyleChildListener.observer) {
 		slimChromeStyleChildListener.observer.disconnect();

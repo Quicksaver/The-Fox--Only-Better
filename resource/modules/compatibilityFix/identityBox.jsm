@@ -1,4 +1,4 @@
-moduleAid.VERSION = '1.0.1';
+Modules.VERSION = '1.0.2';
 
 this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
@@ -66,7 +66,7 @@ this.identityBoxAction = function(e) {
 		PopupNotifications._showPanel([mixedBlocked], skyLights.get('identityBox'));
 		skyLights.update('identityBox', { active: true });
 		
-		listenerAid.add($('notification-popup'), 'popuphiding', function() { skyLights.update('identityBox', { active: false }); }, false, true);
+		Listeners.add($('notification-popup'), 'popuphiding', function() { skyLights.update('identityBox', { active: false }); }, false, true);
 		return;
 	}
 	
@@ -89,7 +89,7 @@ this.identityBoxUnload = function() {
 	}
 };
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	gIdentityHandler.__mode = gIdentityHandler._mode;
 	delete gIdentityHandler._mode;
 	gIdentityHandler.__defineGetter__('_mode', function() { return this.__mode; });
@@ -106,29 +106,29 @@ moduleAid.LOADMODULE = function() {
 		]
 	]);
 	
-	listenerAid.add(gIdentityPopup, 'AskingForNodeOwner', holdIdentityPopup);
-	listenerAid.add(gIdentityPopup, 'popupshowing', identityBoxAnchoredToLight);
-	listenerAid.add(gIdentityPopup, 'popuphiding', identityBoxAnchoredToLight);
-	listenerAid.add(window, 'LoadedSkyLights', identityBoxLoad);
-	listenerAid.add(window, 'UnloadingSkyLights', identityBoxUnload);
+	Listeners.add(gIdentityPopup, 'AskingForNodeOwner', holdIdentityPopup);
+	Listeners.add(gIdentityPopup, 'popupshowing', identityBoxAnchoredToLight);
+	Listeners.add(gIdentityPopup, 'popuphiding', identityBoxAnchoredToLight);
+	Listeners.add(window, 'LoadedSkyLights', identityBoxLoad);
+	Listeners.add(window, 'UnloadingSkyLights', identityBoxUnload);
 	
 	if(typeof(skyLights) != 'undefined') {
 		identityBoxLoad(true);
 	}
 };
 
-moduleAid.UNLOADMODULE = function() {
+Modules.UNLOADMODULE = function() {
 	delete gIdentityHandler._mode;
 	gIdentityHandler._mode = gIdentityHandler.__mode;
 	delete gIdentityHandler.__mode;
 	
 	toCode.revert(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent');
 	
-	listenerAid.remove(gIdentityPopup, 'AskingForNodeOwner', holdIdentityPopup);
-	listenerAid.remove(gIdentityPopup, 'popupshowing', identityBoxAnchoredToLight);
-	listenerAid.remove(gIdentityPopup, 'popuphiding', identityBoxAnchoredToLight);
-	listenerAid.remove(window, 'LoadedSkyLights', identityBoxLoad);
-	listenerAid.remove(window, 'UnloadingSkyLights', identityBoxUnload);
+	Listeners.remove(gIdentityPopup, 'AskingForNodeOwner', holdIdentityPopup);
+	Listeners.remove(gIdentityPopup, 'popupshowing', identityBoxAnchoredToLight);
+	Listeners.remove(gIdentityPopup, 'popuphiding', identityBoxAnchoredToLight);
+	Listeners.remove(window, 'LoadedSkyLights', identityBoxLoad);
+	Listeners.remove(window, 'UnloadingSkyLights', identityBoxUnload);
 	
 	if(typeof(skyLights) != 'undefined') {
 		identityBoxUnload();

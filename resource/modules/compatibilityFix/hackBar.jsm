@@ -1,13 +1,13 @@
-moduleAid.VERSION = '1.0.0';
+Modules.VERSION = '1.0.1';
 
-moduleAid.LOADMODULE = function() {
+Modules.LOADMODULE = function() {
 	slimChromeExceptions.push('hackBarToolbar');
 	
 	// we move the hackBar to a place where it won't be sent into our hiding container
 	$('browser-bottombox').appendChild($('hackBarToolbar'));
 };
 
-moduleAid.UNLOADMODULE = function() {
+Modules.UNLOADMODULE = function() {
 	slimChromeExceptions.splice(slimChromeExceptions.indexOf('hackBarToolbar'), 1);
 	
 	gNavToolbox.appendChild($('hackBarToolbar'));

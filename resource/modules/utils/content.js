@@ -3,17 +3,17 @@
 // We have to redefine objName and objPathString here, because there's no easy way to fetch them automatically from defaults.js.
 // Important: Do not change anything else other than the name of the object (and again at the bottom) and the objName and objPathString properties!
 //
-// Use the messenger object to send message safely to this object without conflicting with other add-ons.
-// To load or unload modules in the modules/content/ folder into this object, use messenger's loadIn* methods.
-// Reserved messages for the messenger system: load, unload, init, reinit, pref, shutdown
+// Use the Messenger object to send message safely to this object without conflicting with other add-ons.
+// To load or unload modules in the modules/content/ folder into this object, use Messenger's loadIn* methods.
+// Reserved messages for the Messenger system: load, unload, init, reinit, pref, shutdown
 //
 // Methods that can be used inside content modules:
-// listen(aMessage, aListener) - adds aListener as a receiver for when aMessage is passed from chrome to content through the messenger object.
+// listen(aMessage, aListener) - adds aListener as a receiver for when aMessage is passed from chrome to content through the Messenger object.
 //	aMessage - (string) message to listen to
 //	aListener - (function) the listener that will respond to the message. Expects (message) as its only argument; see https://developer.mozilla.org/en-US/docs/The_message_manager
 // unlisten(aMessage, aListener) - stops aListener from responding to aMessage.
 //	see listen()
-// message(aMessage, aListener) - sends a message to chrome to be handled through messenger
+// message(aMessage, aListener) - sends a message to chrome to be handled through Messenger
 //	see listen()
 // handleDeadObject(ex) - 	expects [nsIScriptError object] ex. Shows dead object notices as warnings only in the console.
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
@@ -34,7 +34,7 @@ this.theFoxOnlyBetter = {
 	
 	initialized: false,
 	
-	version: '1.2.2',
+	version: '1.2.3',
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
@@ -50,7 +50,7 @@ this.theFoxOnlyBetter = {
 	Addon: null,
 	AddonData: {},
 	Globals: {},
-	prefAid: {},
+	Prefs: {},
 	
 	WINNT: false,
 	DARWIN: false,
@@ -75,7 +75,7 @@ this.theFoxOnlyBetter = {
 		this.Scope.addEventListener('DOMContentLoaded', this.DOMContentLoaded.listener);
 		
 		// and finally our add-on stuff begins
-		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/moduleAid.jsm", this);
+		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/Modules.jsm", this);
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/windowUtilsPreload.jsm", this);
 		
@@ -130,18 +130,18 @@ this.theFoxOnlyBetter = {
 		sendAsyncMessage(this.objName+':'+aMessage, aData, aCPOW);
 	},
 	
-	// load modules into this object through moduleAid
+	// load modules into this object through Modules
 	loadModule: function(m) {
-		this.moduleAid.load('content/'+m.data);
+		this.Modules.load('content/'+m.data);
 	},
 	unloadModule: function(m) {
-		this.moduleAid.unload('content/'+m.data);
+		this.Modules.unload('content/'+m.data);
 	},
 	
-	// we can't access AddonManager (thus FUEL) from content processes, so we simulate it, by syncing this object to the sandbox's prefAid (chrome -> content, one way only)
+	// we can't access AddonManager (thus FUEL) from content processes, so we simulate it, by syncing this object to the sandbox's Prefs (chrome -> content, one way only)
 	carriedPref: function(m) {
 		for(var pref in m.data) {
-			this.prefAid[pref] = m.data[pref];
+			this.Prefs[pref] = m.data[pref];
 		}
 	},
 	
@@ -186,7 +186,7 @@ this.theFoxOnlyBetter = {
 	
 	// clean up this object
 	unload: function() {
-		this.moduleAid.clean();
+		this.Modules.clean();
 		
 		this.Scope.removeEventListener('DOMContentLoaded', this.DOMContentLoaded.listener);
 		
