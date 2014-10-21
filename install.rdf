@@ -7,6 +7,7 @@
 		<em:creator>Quicksaver</em:creator>
 		<em:iconURL>chrome://thefoxonlybetter/skin/icon.png</em:iconURL>
 		<em:optionsURL>chrome://thefoxonlybetter/content/options.xul</em:optionsURL>
+		<em:homepageURL>https://addons.mozilla.org/firefox/addon/the-fox-only-better/</em:homepageURL>
 		<em:name>The Fox, Only Better</em:name>
 		<em:bootstrap>true</em:bootstrap>
 		<em:multiprocessCompatible>true</em:multiprocessCompatible>
@@ -24,7 +25,6 @@
 				<em:locale>en-US</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>Australis, the new Firefox theme, made a great browser look awesome. And now it will also feel awesome using it!</em:description>
-				<em:homepageURL>https://addons.mozilla.org/en-US/firefox/addon/the-fox-only-better/</em:homepageURL>
 			</Description>
 		</em:localized>
 		<em:localized>
@@ -32,7 +32,6 @@
 				<em:locale>fr</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>La nouvelle interface « Australis » pour Firefox rend votre navigateur plus élégant, cette extension le rendra encore meilleur !</em:description>
-				<em:homepageURL>https://addons.mozilla.org/fr/firefox/addon/the-fox-only-better/</em:homepageURL>
 				<em:translator>Goofy, squeeze - Babelzilla, ZanzaO - Babelzilla</em:translator>
 			</Description>
 		</em:localized>
@@ -41,7 +40,6 @@
 				<em:locale>nl</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>Australis, het nieuwe Firefox-thema, laat een prima browser er geweldig uitzien. En nu voelt het gebruik ook geweldig!</em:description>
-				<em:homepageURL>https://addons.mozilla.org/nl/firefox/addon/the-fox-only-better/</em:homepageURL>
 				<em:translator>markh van BabelZilla.org</em:translator>
 			</Description>
 		</em:localized>
@@ -50,7 +48,6 @@
 				<em:locale>pt-PT</em:locale>
 				<em:name>O Fox, Só Que Melhor</em:name>
 				<em:description>O Australis, o novo tema do Firefox, deu uma aparência espectacular ao navegador. E agora também se vai sentir espectacular ao utiliza-lo!</em:description>
-				<em:homepageURL>https://addons.mozilla.org/pt-PT/firefox/addon/the-fox-only-better/</em:homepageURL>
 				<em:translator>Quicksaver</em:translator>
 			</Description>
 		</em:localized>
@@ -59,7 +56,6 @@
 				<em:locale>zh-CN</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>全新的 Australis 主题让 Firefox 浏览器看起来棒极了，而这个附加组件使它更加相得益彰！</em:description>
-				<em:homepageURL>https://addons.mozilla.org/zh-CN/firefox/addon/the-fox-only-better/</em:homepageURL>
 				<em:translator>fang5566 - Babelzilla, YFdyh000</em:translator>
 			</Description>
 		</em:localized>
