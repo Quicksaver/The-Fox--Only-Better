@@ -1,6 +1,30 @@
 {
-	"current":"1.1.3",
+	"current":"1.1.4",
 	"releases": {
+		"1.1.4":{
+			"date":"October 21, 2014",
+			"notes":[
+				["new","Support &lt; (less than) and &gt; (greater than) characters in the keyboard shortcut"],
+				["new","Added version information to the top of the window DOM tree, for better compatibility with themes"],
+				["new","Show the release notes tab when the add-on updates"],
+				["changed","When using <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/ft-deepdark/\">FT DeepDark</a>, the default style is \"Compact\" and the default animation is \"Slide Down\""],
+				["removed","Compatibility with Firefox 31"],
+				["bugfix","Enhanced compatibility for the FT DeepDark theme"],
+				["bugfix","Toolbars wouldn't be properly styled when previewing themes (personas)"],
+				["bugfix","Add-on was not deinitializing properly (because of this <b>you may need to restart your browser</b> if you're updating from a previous version, for the update to fully take effect)"],
+				["bugfix","The mini bar could get stuck open on certain websites (e.g. 4chan.org) that physically remove the input fields from the DOM"],
+				["bugfix","Right-clicking the toolbar placeholder strip when Slim Chrome is enabled should open the toolbar context menu"],
+				["bugfix","Toolbars would be hidden behind media elements, such as flash videos, java applets, adobe reader, tabs opened through the FireIE add-on, maybe others... (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/53\">issue 53</a>)"],
+				["bugfix","Possible fix for add-on requiring a browser restart to fully update sometimes"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/aniweather/\">AniWeather</a>, weather animation popups would be hidden behind the toolbars"],
+				["bugfix","Compatibility with Puzzle Toolbars (formerly The Puzzle Piece) add-on"],
+				["bugfix","Style and animation preview wouldn't work if options were opened from the add-on manager"],
+				["bugfix","The add-on would fail to completely deinitialize on some tabs when entering customize mode"],
+				["bugfix","Correctly handle overflowable toolbars"],
+				["updated","Code clean-up"],
+				["general","Small code change to address an AMO reviewer comment"]
+			]
+		},
 		"1.1.3":{
 			"date":"August 19, 2014",
 			"notes":[
