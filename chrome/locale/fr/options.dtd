@@ -64,3 +64,4 @@
 <!ENTITY about.desc "Toutes les informations sur l'extension et son développeur peuvent être trouvées sur la page de Mozilla Add-ons dédiée à ce module. Si vous aimez l'extension, vous pouvez laisser un commentaire ou aider au développement en réalisant un don. Les rapports de bugs et suggestions peuvent être faits sur la page web de support technique.">
 <!ENTITY about.home "Page d'accueil de l'extension">
 <!ENTITY about.tech "Assistance technique">
+<!ENTITY about.notes "Notes de versions">

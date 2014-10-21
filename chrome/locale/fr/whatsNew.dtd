@@ -1,0 +1,24 @@
+<!ENTITY whatsNew.title "The Fox, Only Better - Notes de Version">
+<!ENTITY whatsNew.name "The Fox, Only Better">
+<!ENTITY whatsNew.version "Version {v}">
+<!ENTITY whatsNew.versionDivider " - ">
+<!ENTITY whatsNew.uptodate "A jour, félicitations !">
+<!ENTITY whatsNew.needsupdate "Mise à jour disponible !">
+<!ENTITY whatsNew.description "Lire les &quot;Notes de versions&quot; et les &quot;Problèmes connus&quot; de la version ci-dessus. Prévenez moi de tout problème que vous pourriez rencontrer, ou si vous avez des idées pour de futures mise-à-jour.">
+<!ENTITY whatsNew.message "Plus d'information sur cette extension peuvent être trouvé sur sa page d'extension Mozilla. Si vous aimez cette extension, merci d'y laisser une bonne évaluation, ou de faire une petite contributions pour soutenir son développement. Même la plus petite action est appréciée !">
+<!ENTITY whatsNew.allVersions "Montrer les notes de toutes les versions précédentes">
+<!ENTITY whatsNew.options "Option de l'extension">
+<!ENTITY whatsNew.notifyOnUpdates "Montre moi cet onglet à la prochaine mise-à-jour">
+<!ENTITY whatsNew.information "Plus d'information">
+<!ENTITY whatsNew.home "Page d’accueil de l'extension">
+<!ENTITY whatsNew.fullchangelog "Changelog complet">
+<!ENTITY whatsNew.problems "Un problèmes">
+<!ENTITY whatsNew.tech "Ouvrir un sujet sur la page de support, décrivant votre problème">
+<!ENTITY whatsNew.email "Ou envoie moi un e-mail à ce sujet">
+<!ENTITY whatsNew.author "Plus d'information sur l'auteur">
+<!ENTITY whatsNew.trymore "Essaye une de mes autres extensions pour une expérience encore meilleure de Firefox">
+<!ENTITY whatsNew.profile "Trouve les dans mon profil">
+<!ENTITY whatsNew.share "Partage!">
+<!ENTITY whatsNew.friends "Ne soit pas le seul avec un bon navigateur. Partage le meilleur avec tes amis !">
+<!ENTITY whatsNew.moreshare "Autres services...">
+<!ENTITY whatsNew.tryit "Essaye cette extension qui rendra Firefox génial à utiliser - The Fox, Only Better!">

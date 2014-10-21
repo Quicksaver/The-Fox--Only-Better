@@ -8,7 +8,7 @@
 <!ENTITY opt.includeNavBar.label "同时隐藏导航栏和其他工具栏">
 <!ENTITY opt.includeNavBar.tooltip "将导航栏连同其他工具栏一并隐藏。如果禁用该项，则导航栏将像之前一样仍始终显示在顶部。">
 <!ENTITY opt.miniOnAllInput.label "定位到输入框时显示迷你栏">
-<!ENTITY opt.miniOnAllInput.tooltip "如果启用此项，当您在任何类型的的输入框键入内容时都将显示迷你栏，而不仅只是密码框。">
+<!ENTITY opt.miniOnAllInput.tooltip "如果启用此项，当您在任何类型的的输入框键入内容时都将显示迷你栏，而不仅仅是密码框。">
 <!ENTITY opt.miniOnTabSelect.label "变更到另一个网站时显示迷你栏">
 <!ENTITY opt.miniOnTabSelect.tooltip "强烈推荐！无论是您从当前网页打开到另一个网站（不同域名），还是您选择在后台标签页打开另一个网站之时，这都将显示一个迷你栏。">
 <!ENTITY opt.skyLights.label "启用天窗">
@@ -64,3 +64,4 @@
 <!ENTITY about.desc "有关附加组件和开发者的所有信息都可以在 Mozilla 附加组件主页中找到。如果本附加组件有幸得到您的喜欢，请考虑给我们一个高的评价或一点捐助以支持我们继续开发。您还可以在技术支持页面进行 Bug 报告和建议。">
 <!ENTITY about.home "附加组件主页">
 <!ENTITY about.tech "技术支持">
+<!ENTITY about.notes "发行说明">

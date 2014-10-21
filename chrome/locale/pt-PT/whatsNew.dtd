@@ -1,0 +1,24 @@
+<!ENTITY whatsNew.title "O Fox, Só Que Melhor - Notas de Lançamento">
+<!ENTITY whatsNew.name "O Fox, Só Que Melhor">
+<!ENTITY whatsNew.version "Versão {v}">
+<!ENTITY whatsNew.versionDivider " - ">
+<!ENTITY whatsNew.uptodate "actualizado, parabéns!">
+<!ENTITY whatsNew.needsupdate "actualização disponível!">
+<!ENTITY whatsNew.description "Vê abaixo as &quot;Notas de Lançamento&quot; e os &quot;Problemas Conhecidos&quot; para esta versão. Avisa-me de quaisquer problemas que encontres, ou de qualquer sugestão que tenhas para uma versão futura.">
+<!ENTITY whatsNew.message "Podes encontras mais informações sobre o extra na sua página nos Extras do Mozilla. Se gostas do extra, por favor considera lá deixar uma boa avaliação, ou fazer uma pequena contribuição para o seu desenvolvimento. Qualquer ajuda é muito bem-vinda!">
+<!ENTITY whatsNew.allVersions "Mostrar notas de todas as versões anteriores">
+<!ENTITY whatsNew.options "Opções do Extra">
+<!ENTITY whatsNew.notifyOnUpdates "Mostrar-me este separador na próxima actualização">
+<!ENTITY whatsNew.information "Mais informações">
+<!ENTITY whatsNew.home "Página Principal do Extra">
+<!ENTITY whatsNew.fullchangelog "Lista de Alterações Completa">
+<!ENTITY whatsNew.problems "Com Problemas?">
+<!ENTITY whatsNew.tech "Abre um tópico na página de suporte a descrever o problema">
+<!ENTITY whatsNew.email "Ou envia-me um e-mail">
+<!ENTITY whatsNew.author "Mais do autor">
+<!ENTITY whatsNew.trymore "Tenta um dos meus outros extras para uma experiência firefox ainda melhor!">
+<!ENTITY whatsNew.profile "Encontra-os no meu perfil">
+<!ENTITY whatsNew.share "Partilha!">
+<!ENTITY whatsNew.friends "Não sejas o único com um navegador espectacular. Mostra aos teus amigos!">
+<!ENTITY whatsNew.moreshare "Outros serviços...">
+<!ENTITY whatsNew.tryit "Experimenta este extra que te dá uma sensação de usar o firefox espectacular - O Fox, Só Que Melhor!">

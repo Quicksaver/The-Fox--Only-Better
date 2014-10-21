@@ -1,0 +1,24 @@
+<!ENTITY whatsNew.title "The Fox, Only Better - 发行说明">
+<!ENTITY whatsNew.name "The Fox, Only Better">
+<!ENTITY whatsNew.version "版本 {v}">
+<!ENTITY whatsNew.versionDivider "　-　">
+<!ENTITY whatsNew.uptodate "已是最新！">
+<!ENTITY whatsNew.needsupdate "有更新可用！">
+<!ENTITY whatsNew.description "在下面查看此版本的“发行说明”和“已知问题”。如果您发现了任何问题，或者您对未来的版本有任何建议，让我们知道。">
+<!ENTITY whatsNew.message "更多有关此附加组件的信息可以在其 Mozilla 附加组件的主页上找到。如果您喜欢本附加组件，请考虑留下一个优良的评论，或者做一点捐助，以支持其持续发展。每一点鼓励都非常令人赞赏！">
+<!ENTITY whatsNew.allVersions "显示此前所有版本的发行说明">
+<!ENTITY whatsNew.options "附加组件选项">
+<!ENTITY whatsNew.notifyOnUpdates "在下次更新后显示此标签页">
+<!ENTITY whatsNew.information "更多信息">
+<!ENTITY whatsNew.home "附加组件主页">
+<!ENTITY whatsNew.fullchangelog "完整的变更日志">
+<!ENTITY whatsNew.problems "遇到问题？">
+<!ENTITY whatsNew.tech "在支持页面中打开一个 issue，描述您的问题">
+<!ENTITY whatsNew.email "或者给我发电子邮件">
+<!ENTITY whatsNew.author "作者的一点话">
+<!ENTITY whatsNew.trymore "试试我其他的附加组件，获得一个更美好的 Firefox 体验！">
+<!ENTITY whatsNew.profile "在我的个人概要中找到它们">
+<!ENTITY whatsNew.share "分享！">
+<!ENTITY whatsNew.friends "不要独享一个绝佳的浏览器。与你的朋友分享它们！">
+<!ENTITY whatsNew.moreshare "其他服务...">
+<!ENTITY whatsNew.tryit "试试这个附加组件，它能让你的 Firefox 感觉更好用 - The Fox, Only Better!">
