@@ -1,6 +1,13 @@
 {
-	"current":"1.1.4",
+	"current":"1.1.5",
 	"releases": {
+		"1.1.5":{
+			"date":"October 26, 2014",
+			"notes":[
+				["bugfix","Fix an issue introduced in the last version, for compatibility with my other add-ons"],
+				["updated","Minor improvement to the themes (personas) code"]
+			]
+		},
 		"1.1.4":{
 			"date":"October 21, 2014",
 			"notes":[
