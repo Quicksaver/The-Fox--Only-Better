@@ -1,4 +1,4 @@
-Modules.VERSION = '2.13.0';
+Modules.VERSION = '2.13.1';
 Modules.UTILS = true;
 
 // Overlays - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1467,12 +1467,11 @@ this.Overlays = {
 				contextMenu.insertBefore(node._menuEntries.main.context, contextMenu.firstChild);
 			}
 			
-			var palette = toolbox.palette;
 			this.traceBack(aWindow, {
 				action: 'addToolbar',
 				node: node,
-				toolboxid: node.getAttribute('toolboxid'),
-				palette: palette
+				toolboxid: (toolbox) ? toolbox.id : null,
+				palette: (toolbox) ? toolbox.palette : null
 			});
 		}
 		

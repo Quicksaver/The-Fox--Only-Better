@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.0';
+Modules.VERSION = '1.1.1';
 Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
@@ -183,7 +183,9 @@ Modules.LOADMODULE = function() {
 				if(objs) {
 					for(var id in objs) {
 						for(var name in objs[id]) {
+							if(name == 'length') { continue; }
 							for(var method in objs[id][name]) {
+								if(method == 'length') { continue; }
 								Piggyback.add(
 									name,
 									CUIBackstage.CustomizableUIInternal,
@@ -243,7 +245,7 @@ Modules.UNLOADMODULE = function() {
 			
 			// if another add-on is still initialized, make sure it redoes this
 			for(var id of ids) {
-				CUIBackstage[id].replaceInternal(internalObjs);
+				CUIBackstage['_Piggyback_'+id].replaceInternal(internalObjs);
 			}
 		}
 	}
