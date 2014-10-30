@@ -119,6 +119,8 @@
 	
 	#controller {
 		float: right;
+		text-align: center;
+		max-width: 380px;
 		margin-top: 6em;
 		-moz-margin-end: 1em;
 	}
@@ -165,9 +167,16 @@
 		cursor: pointer;
 	}
 	
+	@media only screen and (min-width:784px) and (max-width:1024px) {
+		#controller {
+			max-width: 280px;
+		}
+	}
+	
 	@media only screen and (max-width:784px) {
 		#controller {
 			float: none;
+			max-width: none;
 			margin: 40px 10px 150px;
 			margin-top: 40px;
 			margin-bottom: 150px;
