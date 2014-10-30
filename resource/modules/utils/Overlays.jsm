@@ -1,4 +1,4 @@
-Modules.VERSION = '2.13.1';
+Modules.VERSION = '2.13.3';
 Modules.UTILS = true;
 
 // Overlays - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -58,6 +58,7 @@ Modules.UTILS = true;
 //	(optional) loaded - if true it will only return true if the overlay has been actually loaded into the window, rather than just added to the array. Defaults to false.
 //	see overlayWindow()
 this.Overlays = {
+	_obj: '_OVERLAYS_'+objName,
 	overlays: [],
 	
 	overlayURI: function(aURI, aWith, beforeload, onload, onunload) {
@@ -143,32 +144,32 @@ this.Overlays = {
 			persist: {}
 		};
 		
-		if(typeof(aWindow['_OVERLAYS_'+objName]) == 'undefined') {
-			aWindow['_OVERLAYS_'+objName] = [];
+		if(!aWindow[this._obj]) {
+			aWindow[this._obj] = [];
 			this.addToAttr(aWindow);
 		}
-		aWindow['_OVERLAYS_'+objName].push(newOverlay);
+		aWindow[this._obj].push(newOverlay);
 		
 		xmlHttpRequest(path, function(xmlhttp) {
 			if(xmlhttp.readyState === 4) {
 				// We can't get i from the push before because we can be adding and removing overlays at the same time,
 				// which since this is mostly an asynchronous process, would screw up the counter.
-				if(!aWindow['_OVERLAYS_'+objName]) { return; } // just a failsafe, this shouldn't happen if everything is properly built
-				for(var i=0; i<aWindow['_OVERLAYS_'+objName].length; i++) {
-					if(aWindow['_OVERLAYS_'+objName][i].uri == path) { break; }
+				if(!aWindow[Overlays._obj]) { return; } // just a failsafe, this shouldn't happen if everything is properly built
+				for(var i=0; i<aWindow[Overlays._obj].length; i++) {
+					if(aWindow[Overlays._obj][i].uri == path) { break; }
 				}
-				if(!aWindow['_OVERLAYS_'+objName][i]) { return; } // this can happen if switch on and off an overlay too quickly I guess..
+				if(!aWindow[Overlays._obj][i]) { return; } // this can happen if switch on and off an overlay too quickly I guess..
 				
-				aWindow['_OVERLAYS_'+objName][i].document = xmlhttp.responseXML;
+				aWindow[Overlays._obj][i].document = xmlhttp.responseXML;
 				
-				if(aWindow['_OVERLAYS_'+objName][i].document.querySelector('parsererror')) {
-					Cu.reportError(aWindow['_OVERLAYS_'+objName][i].document.querySelector('parsererror').textContent);
+				if(aWindow[Overlays._obj][i].document.querySelector('parsererror')) {
+					Cu.reportError(aWindow[Overlays._obj][i].document.querySelector('parsererror').textContent);
 					return;
 				}
 				
-				replaceObjStrings(aWindow['_OVERLAYS_'+objName][i].document);
-				Overlays.cleanXUL(aWindow['_OVERLAYS_'+objName][i].document, aWindow['_OVERLAYS_'+objName][i]);
-				aWindow['_OVERLAYS_'+objName][i].ready = true;
+				replaceObjStrings(aWindow[Overlays._obj][i].document);
+				Overlays.cleanXUL(aWindow[Overlays._obj][i].document, aWindow[Overlays._obj][i]);
+				aWindow[Overlays._obj][i].ready = true;
 				Overlays.scheduleAll(aWindow);
 			}
 		});
@@ -181,13 +182,13 @@ this.Overlays = {
 		var i = this.loadedWindow(aWindow, path);
 		if(i === false) { return; }
 		
-		aWindow['_OVERLAYS_'+objName][i].remove = true;
+		aWindow[this._obj][i].remove = true;
 		
 		// could have already been unloaded by another add-on's overlay
-		if(!aWindow['_OVERLAYS_'+objName][i].loaded) {
-			aWindow['_OVERLAYS_'+objName].splice(i, 1);
-			if(aWindow['_OVERLAYS_'+objName].length == 0) {
-				delete aWindow['_OVERLAYS_'+objName];
+		if(!aWindow[this._obj][i].loaded) {
+			aWindow[this._obj].splice(i, 1);
+			if(aWindow[this._obj].length == 0) {
+				delete aWindow[this._obj];
 			}
 			return;
 		}
@@ -414,7 +415,7 @@ this.Overlays = {
 	unloadSome: function(aWindow, aWith) {
 		var i = this.loadedWindow(aWindow, aWith);
 		if(i !== false) {
-			this.removeInOrder(aWindow, aWindow['_OVERLAYS_'+objName][i]);
+			this.removeInOrder(aWindow, aWindow[this._obj][i]);
 			if(!aWindow.closed && !aWindow.willClose) {
 				aWindow._RESCHEDULE_OVERLAY = true;
 			}
@@ -422,13 +423,13 @@ this.Overlays = {
 	},
 		
 	unloadAll: function(aWindow) {
-		if(typeof(aWindow['_OVERLAYS_'+objName]) != 'undefined') {
-			if(aWindow['_OVERLAYS_'+objName].length > 0) {
+		if(typeof(aWindow[Overlays._obj]) != 'undefined') {
+			if(aWindow[Overlays._obj].length > 0) {
 				// only need to check for the first entry from this array, all subsequent will be unloaded before this one and reloaded afterwards if needed
-				Overlays.removeInOrder(aWindow, aWindow['_OVERLAYS_'+objName][0], true);
+				Overlays.removeInOrder(aWindow, aWindow[Overlays._obj][0], true);
 			}
 					
-			delete aWindow['_OVERLAYS_'+objName];
+			delete aWindow[Overlays._obj];
 			delete aWindow._BEING_OVERLAYED;
 			Overlays.removeFromAttr(aWindow);
 			aWindow._RESCHEDULE_OVERLAY = true;
@@ -460,36 +461,22 @@ this.Overlays = {
 		}
 		
 		if(!unshift) {
-			aWindow['_OVERLAYS_'+objName][aWindow._BEING_OVERLAYED].traceBack.push(traceback);
+			aWindow[this._obj][aWindow._BEING_OVERLAYED].traceBack.push(traceback);
 		} else {
-			aWindow['_OVERLAYS_'+objName][aWindow._BEING_OVERLAYED].traceBack.unshift(traceback);
+			aWindow[this._obj][aWindow._BEING_OVERLAYED].traceBack.unshift(traceback);
 		}
-	},
-	
-	tracedAction: function(aWindow, action, node) {
-		var i = aWindow._BEING_OVERLAYED;
-		
-		for(var j = aWindow['_OVERLAYS_'+objName][i].traceBack.length -1; j >= 0; j--) {
-			if(aWindow['_OVERLAYS_'+objName][i].traceBack[j].action == action) {
-				var compareNode = aWindow['_OVERLAYS_'+objName][i].traceBack[j].node || aWindow.document.getElementById(aWindow['_OVERLAYS_'+objName][i].traceBack[j].nodeID);
-				if(isAncestor(node, compareNode)) {
-					return true;
-				}
-			}
-		}
-		return false;
 	},
 	
 	getNewOrder: function(aWindow) {
 		var time = new Date().getTime();
 		var allAttr = this.getAllInAttr(aWindow);
-		for(var y=0; y<allAttr.length; y++) {
-			var x = '_OVERLAYS_'+allAttr[y];
+		for(var y of allAttr) {
+			var x = '_OVERLAYS_'+y;
 			if(!aWindow[x]) { continue; }
 			
-			for(var i=0; i<aWindow[x].length; i++) {
-				if(aWindow[x][i].time > time) {
-					time = aWindow[x][i].time +1;
+			for(var o of aWindow[x]) {
+				if(o.time > time) {
+					time = o.time +1;
 				}
 			}
 		}
@@ -510,8 +497,8 @@ this.Overlays = {
 		// sort the list so we unload the most recent overlays first, going back to the one we want to unload
 		overlayList.sort(function(a,b) { return b.time-a.time; });
 		
-		for(var u=0; u<overlayList.length; u++) {
-			aWindow[overlayList[u].x][overlayList[u].i].removeMe();
+		for(var u of overlayList) {
+			aWindow[u.x][u.i].removeMe();
 		}
 		
 		// I need to check, in the off-chance another add-on started overlaying at roughly the same time, setting this var first
@@ -522,14 +509,14 @@ this.Overlays = {
 	
 	removeMoreRecent: function(aWindow, toUnload, overlayList, allFromHere) {
 		var allAttr = this.getAllInAttr(aWindow);
-		for(var y=0; y<allAttr.length; y++) {
-			var x = '_OVERLAYS_'+allAttr[y];
+		for(var y of allAttr) {
+			var x = '_OVERLAYS_'+y;
 			if(!aWindow[x]) { continue; }
 			
 			main_overlayLoop: for(var i=0; i<aWindow[x].length; i++) {
 				// we already checked this overlay
-				for(var l=0; l<overlayList.length; l++) {
-					if(overlayList[l].x == x && overlayList[l].i == i) { continue main_overlayLoop; }
+				for(var l of overlayList) {
+					if(l.x == x && l.i == i) { continue main_overlayLoop; }
 				}
 				
 				// obviously, if the overlay we're checking is the overlay we want to remove, it should be removed
@@ -543,7 +530,7 @@ this.Overlays = {
 					// we add this overlay to the list in case:
 					//   a) it's from the same add-on and we want to unload all of its overlays
 					//   b) it's from another add-on and it will conflict with our target overlay to unload
-					if((allFromHere && x == '_OVERLAYS_'+objName)
+					if((allFromHere && x == this._obj)
 					|| this.unloadConflicts(aWindow, toUnload, aWindow[x][i])) {
 						overlayList.push({ x: x, i: i, time: aWindow[x][i].time });
 						
@@ -938,8 +925,8 @@ this.Overlays = {
 		aWindow._BEING_OVERLAYED = true;
 		var rescheduleOverlay = false;
 		
-		if(typeof(aWindow['_OVERLAYS_'+objName]) == 'undefined') {
-			aWindow['_OVERLAYS_'+objName] = [];
+		if(typeof(aWindow[this._obj]) == 'undefined') {
+			aWindow[this._obj] = [];
 			this.addToAttr(aWindow);
 		}
 		
@@ -963,47 +950,47 @@ this.Overlays = {
 		}
 		
 		if(aWindow.closed || aWindow.willClose) {
-			if(aWindow['_OVERLAYS_'+objName].length == 0) {
-				delete aWindow['_OVERLAYS_'+objName];
+			if(aWindow[this._obj].length == 0) {
+				delete aWindow[this._obj];
 				this.removeFromAttr(aWindow);
 			}
 			delete aWindow._BEING_OVERLAYED;
 			return;
 		}
 		
-		for(var i=0; i<aWindow['_OVERLAYS_'+objName].length; i++) {
-			if(aWindow['_OVERLAYS_'+objName][i].ready && !aWindow['_OVERLAYS_'+objName][i].loaded) {
+		for(var i=0; i<aWindow[this._obj].length; i++) {
+			if(aWindow[this._obj][i].ready && !aWindow[this._obj][i].loaded) {
 				aWindow._BEING_OVERLAYED = i;
-				this.overlayDocument(aWindow, aWindow['_OVERLAYS_'+objName][i]);
-				aWindow['_OVERLAYS_'+objName][i].loaded = true;
-				aWindow['_OVERLAYS_'+objName][i].time = this.getNewOrder(aWindow);
+				this.overlayDocument(aWindow, aWindow[this._obj][i]);
+				aWindow[this._obj][i].loaded = true;
+				aWindow[this._obj][i].time = this.getNewOrder(aWindow);
 				rescheduleOverlay = true;
 			}
 		}
 		
-		for(var i=0; i<this.overlays.length; i++) {
-			if(this.overlays[i].ready
-			&& this.loadedWindow(aWindow, this.overlays[i].overlay) === false
-			&& (aWindow.document.baseURI.indexOf(this.overlays[i].uri) == 0 || this.loadedWindow(aWindow, this.overlays[i].uri, true) !== false)) {
-				aWindow._BEING_OVERLAYED = aWindow['_OVERLAYS_'+objName].push({
-					uri: this.overlays[i].overlay,
-					overlayingUri: this.overlays[i].uri,
+		for(var i of this.overlays) {
+			if(i.ready
+			&& this.loadedWindow(aWindow, i.overlay) === false
+			&& (aWindow.document.baseURI.indexOf(i.uri) == 0 || this.loadedWindow(aWindow, i.uri, true) !== false)) {
+				aWindow._BEING_OVERLAYED = aWindow[this._obj].push({
+					uri: i.overlay,
+					overlayingUri: i.uri,
 					traceBack: [],
 					removeMe: function() { Overlays.removeOverlay(aWindow, this); },
 					time: 0,
 					loaded: false,
-					onunload: this.overlays[i].onunload
+					onunload: i.onunload
 				}) -1;
 				
-				this.overlayDocument(aWindow, this.overlays[i]);
-				aWindow['_OVERLAYS_'+objName][aWindow._BEING_OVERLAYED].loaded = true;
-				aWindow['_OVERLAYS_'+objName][aWindow._BEING_OVERLAYED].time = this.getNewOrder(aWindow);
+				this.overlayDocument(aWindow, i);
+				aWindow[this._obj][aWindow._BEING_OVERLAYED].loaded = true;
+				aWindow[this._obj][aWindow._BEING_OVERLAYED].time = this.getNewOrder(aWindow);
 				rescheduleOverlay = true;
 			}
 		}
 		
-		if(aWindow['_OVERLAYS_'+objName].length == 0) {
-			delete aWindow['_OVERLAYS_'+objName];
+		if(aWindow[this._obj].length == 0) {
+			delete aWindow[this._obj];
 			this.removeFromAttr(aWindow);
 		}
 		delete aWindow._BEING_OVERLAYED;
@@ -1693,9 +1680,10 @@ this.Overlays = {
 						innerDone.unshift({ // unshift instead of push so we undo in the reverse order
 							sibling: inner.nextSibling,
 							parent: inner.parentNode,
-							browser: inner.remove(),
+							browser: inner,
 							temp: newTemp
 						});
+						inner.remove();
 					}
 				}
 				
@@ -1729,10 +1717,11 @@ this.Overlays = {
 						iframesDone.unshift({ // unshift instead of push so we undo in the reverse order
 							sibling: iframe.nextSibling,
 							parent: iframe.parentNode,
-							browser: iframe.remove(),
+							browser: iframe,
 							iframe: true,
 							temp: newTemp
 						});
+						iframe.remove();
 					}
 				}
 				
@@ -1777,26 +1766,26 @@ this.Overlays = {
 	// remove all traces of all of these swaps
 	cleanTempBrowsers: function(list) {
 		if(!list) { return; }
-		for(var l=0; l<list.length; l++) {
-			if(list[l].focusedElement) {
-				list[l].focusedElement.focus();
+		for(var l of list) {
+			if(l.focusedElement) {
+				l.focusedElement.focus();
 				continue;
 			}
 			
-			if(list[l].parent) {
-				list[l].parent.insertBefore(list[l].browser, list[l].sibling);
+			if(l.parent) {
+				l.parent.insertBefore(l.browser, l.sibling);
 			}
 			
 			try {
-				if(!list[l].iframe) {
-					this.setTempBrowsersListeners(list[l].temp);
-					list[l].browser.swapDocShells(list[l].temp);
+				if(!l.iframe) {
+					this.setTempBrowsersListeners(l.temp);
+					l.browser.swapDocShells(l.temp);
 				}
-				else { list[l].browser.QueryInterface(Ci.nsIFrameLoaderOwner).swapFrameLoaders(list[l].temp); }
+				else { l.browser.QueryInterface(Ci.nsIFrameLoaderOwner).swapFrameLoaders(l.temp); }
 			}
 			catch(ex) { /* nothing we can do at this point */  }
 			
-			list[l].temp.remove();
+			l.temp.remove();
 		}
 	},
 	
