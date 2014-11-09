@@ -55,7 +55,7 @@ XPCOMUtils.defineLazyModuleGetter(this, "Promise", "resource://gre/modules/Promi
 XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/devtools/Console.jsm");
 function LOG(str) {
 	if(!str) { str = typeof(str)+': '+str; }
-	console.log(objName+' '+' :: CHROME :: '+str);
+	console.log(objName+' :: CHROME :: '+str);
 }
 
 // PlacesUIUtils can be removed in FF34 as well (not inside conditional because let only sets it within the conditional)

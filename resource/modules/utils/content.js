@@ -43,7 +43,7 @@ this.theFoxOnlyBetter = {
 	// easy and useful helpers for when I'm debugging
 	LOG: function(str) {
 		if(!str) { str = typeof(str)+': '+str; }
-		this.console.log(this.objName+' '+' :: CONTENT :: '+str);
+		this.console.log(this.objName+' :: CONTENT :: '+str);
 	},
 	
 	// some local things
