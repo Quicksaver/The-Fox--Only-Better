@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.4';
+Modules.VERSION = '1.5.5';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -114,12 +114,25 @@ this.moveSlimChrome = function() {
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
 	sscode += '		width: ' + moveSlimChromeStyle.width + 'px;\n';
 	sscode += '	}\n';
+	
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(ltr) {\n';
 	sscode += '		left: ' + moveSlimChromeStyle.fullLeft + 'px;\n';
 	sscode += '	}\n';
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(rtl) {\n';
 	sscode += '		right: ' + moveSlimChromeStyle.fullRight + 'px;\n';
 	sscode += '	}\n';
+	
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(ltr):not([miniSideSwitch]),\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(rtl)[miniSideSwitch] {\n';
+	sscode += '		left: ' + moveSlimChromeStyle.left + 'px;\n';
+	sscode += '		right: auto;\n';
+	sscode += '	}\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(rtl):not([miniSideSwitch]),\n';
+	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(ltr)[miniSideSwitch] {\n';
+	sscode += '		left: auto;\n';
+	sscode += '		right: ' + moveSlimChromeStyle.right + 'px;\n';
+	sscode += '	}\n';
+	
 	sscode += '	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {\n';
 	sscode += '		width: ' + moveSlimChromeStyle.fullWidth + 'px;\n';
 	sscode += '	}\n';
@@ -132,6 +145,10 @@ this.moveSlimChrome = function() {
 	Styles.load('slimChromeMove_'+_UUID, sscode, true);
 	
 	dispatch(slimChromeContainer, { type: 'MovedSlimChrome', cancelable: false });
+};
+
+this.miniSideSwitch = function(v) {
+	toggleAttribute(slimChromeContainer, 'miniSideSwitch', v);
 };
 
 this.onMouseOver = function(e) {
