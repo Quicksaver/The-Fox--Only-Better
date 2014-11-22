@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.6';
+Modules.VERSION = '1.1.7';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -8,18 +8,6 @@ this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
 this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
 this.__defineGetter__('fullScreenAutohide', function() { return !DARWIN && Prefs.autohide; });
-this.__defineGetter__('customizing', function() {
-	if(trueAttribute(document.documentElement, 'customizing')) { return true; }
-	
-	// this means that the window is still opening and the first tab will open customize mode
-	if(gBrowser.mCurrentBrowser
-	&& gBrowser.mCurrentBrowser.__SS_restore_data
-	&& gBrowser.mCurrentBrowser.__SS_restore_data.url == 'about:customizing') {
-		return true;
-	}
-	
-	return false;
-});
 
 // set this here, so I can modify it through other modules without reseting it when slimChrome un/loads
 this.slimChromeExceptions = ['addon-bar'];
@@ -82,8 +70,8 @@ Modules.LOADMODULE = function() {
 	Prefs.listen('autohide', fullScreenAutohideListener);
 	
 	Listeners.add(window, 'fullscreen', fullScreenListener);
-	Listeners.add(window, 'beforecustomization', customizeListener, true);
-	Listeners.add(window, 'aftercustomization', customizeListener, true);
+	Listeners.add(window, 'beforecustomization', customizeListener);
+	Listeners.add(window, 'aftercustomization', customizeListener);
 	
 	togglePopups();
 	toggleSlimChrome();
@@ -91,8 +79,8 @@ Modules.LOADMODULE = function() {
 
 Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'fullscreen', fullScreenListener);
-	Listeners.remove(window, 'beforecustomization', customizeListener, true);
-	Listeners.remove(window, 'aftercustomization', customizeListener, true);
+	Listeners.remove(window, 'beforecustomization', customizeListener);
+	Listeners.remove(window, 'aftercustomization', customizeListener);
 	
 	Prefs.unlisten('slimChrome', toggleSlimChrome);
 	Prefs.unlisten('slimChrome', togglePopups);

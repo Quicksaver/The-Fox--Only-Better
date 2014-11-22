@@ -1,4 +1,4 @@
-Modules.VERSION = '2.3.2';
+Modules.VERSION = '2.4.0';
 Modules.UTILS = true;
 Modules.CLEAN = false;
 
@@ -10,6 +10,23 @@ this.__defineGetter__('toCode', function() { delete this.toCode; Modules.load('u
 
 // keydownPanel - Panel elements don't support keyboard navigation by default; this object fixes that.
 this.__defineGetter__('keydownPanel', function() { delete this.keydownPanel; Modules.load('utils/keydownPanel'); return keydownPanel; });
+
+// customizing - quick access to whether the window is (or will be) in customize mode or not
+this.__defineGetter__('customizing', function() {
+	// duh
+	if(!window.gCustomizeMode) { return false; }
+	
+	if(window.gCustomizeMode._handler.isCustomizing() || window.gCustomizeMode._handler.isEnteringCustomizeMode) { return true; }
+	
+	// this means that the window is still opening and the first tab will open customize mode
+	if(window.gBrowser.mCurrentBrowser
+	&& window.gBrowser.mCurrentBrowser.__SS_restore_data
+	&& window.gBrowser.mCurrentBrowser.__SS_restore_data.url == 'about:customizing') {
+		return true;
+	}
+	
+	return false;
+});
 
 // alwaysRunOnClose[] - array of methods to be called when a window is unloaded. Each entry expects function(aWindow) where
 // 	aWindow - (object) the window that has been unloaded

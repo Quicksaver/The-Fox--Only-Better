@@ -1,16 +1,18 @@
-Modules.VERSION = '2.13.3';
+Modules.VERSION = '2.14.1';
 Modules.UTILS = true;
 
 // Overlays - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
 // When a window with an overlay is opened, the elements in both the window and the overlay with the same ids are combined together.
 // The children of matching elements are added to the end of the set of children in the window's element.
 // Attributes that are present on the overlay's elements will be applied to the window's elements.
+// 
 // Overlays can also have their own:
 //	stylesheets by placing at the top of the overlay: <?xml-stylesheet href="chrome://addon/skin/sheet.css" type="text/css"?>
 //	DTD's by the usual method: <!DOCTYPE window [ <!ENTITY % nameDTD SYSTEM "chrome://addon/locale/file.dtd"> %nameDTD; ]>
 //	scripts using the script tag when as a direct child of the overlay element (effects of these won't be undone when unloading the overlay, I have to 
 //		undo it in the onunload function passed to overlayURI() ). Any script that changes the DOM structure might produce unpredictable results!
 //		To avoid using eval unnecessarily, only scripts with src will be imported for now.
+// 
 // The overlay element surrounds the overlay content. It uses the same namespace as XUL window files. The id of these items should exist in the window's content.
 // Its content will be added to the window where a similar element exists with the same id value. If such an element does not exist, that part of the overlay is ignored.
 // If there is content inside both the XUL window and in the overlay, the window's content will be used as is and the overlay's content will be appended to the end.
@@ -23,13 +25,17 @@ Modules.UTILS = true;
 // Attention: this won't work in customizable elements, such as toolbars or palette items!
 // To move an already existant node to another place, add a newparent attribute with the id of the new parent element. If it exists, it will be moved there. This can be used
 //	together with insertafter, insertbefore and position attributes, which will be relative to the new parent and consequently new siblings.
+// 
 // For overlaying preferences dialogs, you can add new preferences in an unnamed <preferences> element. They will be added to an already existing <preferences> element if present,
 // or the whole element will be overlayed if not.
 // Elements with a getchildrenof attribute will inherit all the children from the elements specified by the comma-separated list of element ids.
+// 
 // Every occurence of (string) objName and (string) objPathString in every attribute in the overlay will be properly replaced with this object's objName and objPathString.
 // I can also overlay other overlays provided they are loaded through the Overlays object (either from this add-on or another implementing it).
+// 
 // Calling document.persist() for nodes added through here will not work by itself, it will only work if the node has the "persist" attribute explicitely set in the overlay, with a
 // comma-separated list of the attributes to persist. Normal XUL persistence through the "persist" attribute should work as expected.
+// 
 // If the toolbar element in the overlays has the following attributes, the system will add the corresponding customize context menu items:
 //	menuAdd : "Add to X" context menu entries
 //	menuMove : "Move to X" context menu entries
@@ -37,6 +43,10 @@ Modules.UTILS = true;
 //	menuMain : "Move to Toolbar" context menu entries, that will move widgets to the nav-bar
 // All of these attributes above can be complemented with the corresponding menuXXXAccesskey attribute.
 // If a toolbar element has a ignoreCUI=true attribute, it won't be registered in the CustomizableUI module.
+// 
+// In case an element shouldn't be visible until a certain stylesheet is loaded (referenced in an xml-stylesheet element in any overlay; to prevent visual glitches and jumping around
+// in the window during startup/load), you can set attribute "waitForSS" with space-separated list of stylesheet URIs for which the element should wait. The element will be collapsed
+// until all the stylesheets in the attribute are loaded.
 // 
 // overlayURI(aURI, aWith, beforeload, onload, onunload) - overlays aWith in all windows with aURI
 //	aURI - (string) uri to be overlayed
@@ -57,6 +67,9 @@ Modules.UTILS = true;
 //						returns (bool) false otherwise 
 //	(optional) loaded - if true it will only return true if the overlay has been actually loaded into the window, rather than just added to the array. Defaults to false.
 //	see overlayWindow()
+// runWhenSheetsLoaded(aMethod) -	will wait until any stylesheets referenced in overlays are actually loaded before calling aMethod;
+//					will call imediatelly if all stylesheets are already loaded
+//	aMethod - (function) to be called
 this.Overlays = {
 	_obj: '_OVERLAYS_'+objName,
 	overlays: [],
@@ -1846,6 +1859,7 @@ this.Overlays = {
 			node = aWindow.document.importNode(node, true);
 			// these have to come before the actual window element
 			aWindow.document.insertBefore(node, aWindow.document.documentElement);
+			this.waitForSSLoaded(aWindow, node);
 		} catch(ex) {}
 		this.traceBack(aWindow, {
 			action: 'appendXMLSS',
@@ -1979,9 +1993,56 @@ this.Overlays = {
 		toggleAttribute(aWindow.document.documentElement, 'Bootstrapped_Overlays', attr.length > 0, attr.join(' '));
 	},
 	
+	// some nodes shouldn't be made visible until the appended stylesheets have loaded, to prevent lots of jumping around and distorted elements by being unstyled for a moment
+	waitForSSLoaded: function(aWindow, aNode) {
+		var sheet = aNode.sheet.href;
+		
+		if(!aWindow[this._obj+'_wait']) {
+			aWindow[this._obj+'_wait'] = {
+				sheets: [],
+				queued: []
+			};
+		}
+		aWindow[this._obj+'_wait'].sheets.push(sheet);
+		
+		var sscode = '/*OmniSidebar CSS declarations of variable values*/\n';
+		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
+		sscode += '[waitForSS~="'+sheet+'"] { visibility: collapse; }';
+		Styles.load('waitfor:'+sheet, sscode, true);
+		
+		var waitSSLoaded = function() {
+			aNode.removeEventListener('load', waitSSLoaded);
+			Styles.unload('waitfor:'+sheet);
+			aWindow[Overlays._obj+'_wait'].sheets.splice(aWindow[Overlays._obj+'_wait'].sheets.indexOf(sheet), 1);
+			
+			if(aWindow[Overlays._obj+'_wait'].sheets.length == 0) {
+				// run the queued methods that were waiting for the SS's to laod
+				for(var method in aWindow[Overlays._obj+'_wait'].queued) {
+					try { method(); }
+					catch(ex) { Cu.reportError(ex); }
+				}
+				
+				delete aWindow[Overlays._obj+'_wait'];
+			}
+		};
+		aNode.addEventListener('load', waitSSLoaded);
+	},
+	
+	// if all the appended stylesheets aren't loaded yet, these methods will be postponed until they are, otherwise they will run immediatelly
+	runWhenSheetsLoaded: function(aMethod) {
+		if(!aWindow[this._obj+'_wait']) {
+			aMethod();
+			return;
+		}
+		aWindow[this._obj+'_wait'].queued.push(aWindow[this._obj+'_wait']);
+	},
+	
 	// toolbar nodes can't be registered before they're appended to the DOM, otherwise all hell breaks loose
 	registerToolbarNode: function(aToolbar, aExistingChildren) {
 		if(!aToolbar || !aToolbar.id) { return; } // is this even possible?
+		
+		// attempt at improving multi-window support, as sometimes the toolbars would force a re-register of a second window with CUI when it's closed, no clue why though...
+		if(aToolbar.ownerDocument.defaultView.closed || aToolbar.ownerDocument.defaultView.willClose) { return; }
 		
 		if(!aToolbar.ownerDocument.getElementById(aToolbar.id)) {
 			aSync(function() { CustomizableUI.registerToolbarNode(aToolbar, aExistingChildren); }, 250);

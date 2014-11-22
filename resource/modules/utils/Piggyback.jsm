@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.1';
+Modules.VERSION = '1.2.0';
 Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
@@ -21,6 +21,7 @@ Modules.BASEUTILS = true;
 //	see add()
 
 this.Piggyback = {
+	_obj: '_Piggyback_'+objName,
 	MODE_REPLACE: 0,
 	MODE_BEFORE: 1,
 	MODE_AFTER: 2,
@@ -39,51 +40,41 @@ this.Piggyback = {
 		var aId = '_Piggyback_'+aMaster;
 		var ids = aObj.__PiggybackIds ? aObj.__PiggybackIds.split(' ') : [];
 		
+		// the same method can't be replaced more than once by the same aName (module)
+		if(aObj[aId] && aObj[aId][aName] && aObj[aId][aName][aMethod]) { return; }
+		
 		var commander = aKeep || {
 			master: aMaster,
 			method: aWith,
 			mode: aMode,
-			active: false,
-			
-			createId: function(bObj) {
-				bObj[aId] = { length: 0 }
-			},
-			createName: function(bObj) {
-				bObj[aId][aName] = { length: 0 }
-			}
-		}
+			active: false
+		};
 		
 		if(!aObj[aId]) {
 			if(ids.indexOf(aMaster) == -1) {
 				ids.push(aMaster);
 				aObj.__PiggybackIds = ids.join(' ');
 			}
-			commander.createId(aObj);
+			aObj[aId] = new Map();
 		}
-		if(!aObj[aId][aName]) {
-			commander.createName(aObj);
-			aObj[aId].length++;
+		if(!aObj[aId].has(aName)) {
+			aObj[aId].set(aName, new Map());
 		}
 		
-		// the same method can't be replaced more than once by the same aName (module)
-		if(aObj[aId][aName][aMethod]) { return; }
-		
-		aObj[aId][aName][aMethod] = commander;
-		aObj[aId][aName].length++;
+		aObj[aId].get(aName).set(aMethod, commander)
 		
 		// if we're not replacing the method, we create our Piggybacker that will call the method before/after the original method
 		if(aMode != this.MODE_REPLACE && !aKeep) {
-			aObj[aId][aName][aMethod].Piggybacker = function() {
+			commander.Piggybacker = function() {
 				// it's not like I can use a not-live reference to this, and I also can't use an array directly or it'll leave a ZC
 				var ex = aObj.__PiggybackIds.split(' ');
 				
-				var proceed = true;
 				for(var id of ex) {
 					var bId = '_Piggyback_'+id;
-					for(var name in aObj[bId]) {
-						if(aObj[bId][name][aMethod] && aObj[bId][name][aMethod].mode == Piggyback.MODE_BEFORE) {
-							proceed = aObj[bId][name][aMethod].method.apply(aObj, arguments);
-							if(!proceed) { return; }
+					for(var bName of aObj[bId].values()) {
+						var bMethod = bName.get(aMethod);
+						if(bMethod && bMethod.mode == Piggyback.MODE_BEFORE) {
+							if(!bMethod.method.apply(aObj, arguments)) { return; }
 						}
 					}
 				}
@@ -91,10 +82,10 @@ this.Piggyback = {
 				aObj['_'+aMethod].apply(aObj, arguments);
 				
 				for(var id of ex) {
-					var bId = '_Piggyback_'+id;
-					for(var name in aObj[bId]) {
-						if(aObj[bId][name][aMethod] && aObj[bId][name][aMethod].mode == Piggyback.MODE_AFTER) {
-							aObj[bId][name][aMethod].method.apply(aObj, arguments);
+					for(var bName of aObj[bId].values()) {
+						var bMethod = bName.get(aMethod);
+						if(bMethod && bMethod.mode == Piggyback.MODE_AFTER) {
+							bMethod.method.apply(aObj, arguments);
 						}
 					}
 				}
@@ -102,48 +93,48 @@ this.Piggyback = {
 		}
 		
 		for(var id of ids) {
-			for(var name in aObj['_Piggyback_'+id]) {
-				if(aObj['_Piggyback_'+id][name][aMethod] && aObj['_Piggyback_'+id][name][aMethod].active) { return false; }
+			for(var bName of aObj['_Piggyback_'+id].values()) {
+				if(bName.has(aMethod) && bName.get(aMethod).active) { return false; }
 			}
 		}
 		
 		aObj['_'+aMethod] = aObj[aMethod];
-		aObj[aMethod] = (aMode == this.MODE_REPLACE) ? aObj[aId][aName][aMethod].method : aObj[aId][aName][aMethod].Piggybacker;
-		aObj[aId][aName][aMethod].active = true;
+		aObj[aMethod] = (aMode == this.MODE_REPLACE) ? commander.method : commander.Piggybacker;
+		commander.active = true;
 		return true;
 	},
 	
 	revert: function(aName, aObj, aMethod) {
-		var aId = '_Piggyback_'+objName;
+		var aId = this._obj;
 		var ids = aObj.__PiggybackIds ? aObj.__PiggybackIds.split(' ') : [];
 		
-		if(!aObj[aId] || !aObj[aId][aName] || !aObj[aId][aName][aMethod]) { return false; }
+		if(!aObj[aId] || !aObj[aId].has(aName) || !aObj[aId].get(aName).has(aMethod)) { return false; }
 		
-		if(aObj[aId][aName][aMethod].active) {
+		if(aObj[aId].get(aName).get(aMethod).active) {
 			aObj[aMethod] = aObj['_'+aMethod];
 			delete aObj['_'+aMethod];
 			
 			// if another add-on wants to modify the same method, let it now
 			for(var id of ids) {
 				var bId = '_Piggyback_'+id;
-				for(var name in aObj[bId]) {
-					if(aObj[bId][name][aMethod] && !aObj[bId][name][aMethod].active) {
+				for(var bName of aObj[bId].values()) {
+					var bMethod = bName.get(aMethod);
+					if(bMethod && !bMethod.active) {
 						aObj['_'+aMethod] = aObj[aMethod];
-						aObj[aMethod] = (aObj[bId][name][aMethod] == this.MODE_REPLACE) ? aObj[bId][name][aMethod].method : aObj[bId][name][aMethod].Piggybacker;
-						aObj[bId][name][aMethod].active = true;
+						aObj[aMethod] = (bMethod.mode == this.MODE_REPLACE) ? bMethod.method : bMethod.Piggybacker;
+						bMethod.active = true;
+						break;
 					}
 				}
 			}
 		}
 		
-		delete aObj[aId][aName][aMethod];
-		aObj[aId][aName].length--;
+		aObj[aId].get(aName).delete(aMethod);
 		
-		if(aObj[aId][aName].length == 0) {
-			delete aObj[aId][aName];
-			aObj[aId].length--;
+		if(aObj[aId].get(aName).size == 0) {
+			aObj[aId].delete(aName);
 			
-			if(aObj[aId].length == 0) {
+			if(aObj[aId].size == 0) {
 				delete aObj[aId];
 				ids.splice(ids.indexOf(objName), 1);
 				
@@ -160,7 +151,7 @@ this.Piggyback = {
 Modules.LOADMODULE = function() {
 	// CustomizableUI is a special case, as CustomizableUIInternal is frozen and not exported
 	self.CUIBackstage = Cu.import("resource:///modules/CustomizableUI.jsm", self);
-	CUIBackstage['_Piggyback_'+objName] = {
+	CUIBackstage[Piggyback._obj] = {
 		replaceInternal: function(objs) {
 			if(!CUIBackstage.__CustomizableUIInternal) {
 				CUIBackstage.__CustomizableUIInternal = CUIBackstage.CustomizableUIInternal;
@@ -177,23 +168,14 @@ Modules.LOADMODULE = function() {
 					}
 				}
 				CUIBackstage.CustomizableUIInternal = CUIInternalNew;
-				CUIBackstage['_Piggyback_'+objName].active = true;
+				CUIBackstage[Piggyback._obj].active = true;
 				
 				// we have to make sure any other modifications from other add-ons stay in place if we're re-replacing CUIInternal
 				if(objs) {
 					for(var id in objs) {
-						for(var name in objs[id]) {
-							if(name == 'length') { continue; }
-							for(var method in objs[id][name]) {
-								if(method == 'length') { continue; }
-								Piggyback.add(
-									name,
-									CUIBackstage.CustomizableUIInternal,
-									method,
-									objs[id][name][method].method,
-									objs[id][name][method].mode,
-									objs[id][name][method]
-								);
+						for(var [aName, bName] of objs[id]) {
+							for(var [aMethod, bMethod] of bName) {
+								Piggyback.add(aName, CUIBackstage.CustomizableUIInternal, aMethod, bMethod.method, bMethod.mode, bMethod);
 							}
 						}
 					}
@@ -203,7 +185,7 @@ Modules.LOADMODULE = function() {
 		active: false
 	};
 	
-	CUIBackstage['_Piggyback_'+objName].replaceInternal();
+	CUIBackstage[Piggyback._obj].replaceInternal();
 	
 	if(!CUIBackstage.__PiggybackIds) {
 		CUIBackstage.__PiggybackIds = objName;
@@ -219,9 +201,9 @@ Modules.UNLOADMODULE = function() {
 	
 	// we really need to put everything back as it was!
 	if(ids.indexOf(objName) > -1) {
-		var active = CUIBackstage['_Piggyback_'+objName].active;
+		var active = CUIBackstage[Piggyback._obj].active;
 		
-		delete CUIBackstage['_Piggyback_'+objName];
+		delete CUIBackstage[Piggyback._obj];
 		ids.splice(ids.indexOf(objName), 1);
 		if(ids.length > 0) {
 			CUIBackstage.__PiggybackIds = ids.join(' ');
