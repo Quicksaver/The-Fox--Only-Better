@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="chrome://thefoxonlybetter/skin/slimChrome.css" type="text/css"?>
-<?xml-stylesheet href="chrome://thefoxonlybetter-os/skin/slimChrome.css" type="text/css"?>
+<?xml-stylesheet href="chrome://objPathString/skin/slimChrome.css" type="text/css"?>
+<?xml-stylesheet href="chrome://objPathString-os/skin/slimChrome.css" type="text/css"?>
 <overlay id="slimChrome-overlay"
 	xmlns:svg="http://www.w3.org/2000/svg"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
@@ -8,12 +8,18 @@
 	<toolbox id="navigator-toolbox" slimChrome="true">
 		<toolbar id="objName-slimChrome-slimmer"
 			class="toolbar-primary"
+			waitForSS="chrome://objPathString/skin/slimChrome.css chrome://objPathString-os/skin/slimChrome.css"
 			fullscreentoolbar="true"
 			context="toolbar-context-menu"
 			insertbefore="customToolbars"
 			customizable="false"
 			ignoreCUI="true"/>
-		<hbox id="objName-slimChrome-container" insertafter="objName-slimChrome-slimmer" noPointerEvents="true">
+			
+		<hbox id="objName-slimChrome-container"
+			waitForSS="chrome://objPathString/skin/slimChrome.css chrome://objPathString-os/skin/slimChrome.css"
+			insertafter="objName-slimChrome-slimmer"
+			noPointerEvents="true">
+			
 			<box id="objName-slimChrome-toolbars-before" context="toolbar-context-menu">
 				<svg:svg id="objName-slimChrome-svg-before"
 					width="100%"

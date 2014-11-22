@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="chrome://thefoxonlybetter/skin/skyLights.css" type="text/css"?>
-<?xml-stylesheet href="chrome://thefoxonlybetter-os/skin/skyLights.css" type="text/css"?>
+<?xml-stylesheet href="chrome://objPathString/skin/skyLights.css" type="text/css"?>
+<?xml-stylesheet href="chrome://objPathString-os/skin/skyLights.css" type="text/css"?>
 <overlay id="skyLights-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	
 	<toolbox id="navigator-toolbox">
 		<toolbar id="objName-skyLights-container"
 			class="toolbar-primary"
+			waitForSS="chrome://objPathString/skin/skyLights.css chrome://objPathString-os/skin/skyLights.css"
 			fullscreentoolbar="true"
 			insertafter="objName-slimChrome-slimmer"
 			customizable="false"
