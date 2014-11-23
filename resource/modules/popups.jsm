@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.22';
+Modules.VERSION = '2.0.23';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -59,12 +59,13 @@ this.holdPopupMenu = function(e) {
 	if(!hold && !trigger) {
 		// CUI panel doesn't carry a triggerNode, we have to find it ourselves
 		if(target.id == 'customizationui-widget-panel') {
-			hold_loop: for(var child of slimChromeToolbars.childNodes) {
+			hold_loop:
+			for(var child of slimChromeToolbars.childNodes) {
 				if(child.localName != 'toolbar' || !CustomizableUI.getAreaType(child.id)) { continue; }
 				
 				var widgets = CustomizableUI.getWidgetsInArea(child.id);
 				for(var w=0; w<widgets.length; w++) {
-					var widget = widgets[w].forWindow(window);
+					var widget = widgets[w] && widgets[w].forWindow(window);
 					if(!widget || !widget.node || !widget.node.open) { continue; }
 					
 					hold = true;
@@ -86,7 +87,7 @@ this.holdPopupMenu = function(e) {
 	
 	// nothing "native" is opening this popup, so let's see if someone claims it
 	if(!hold) {
-		trigger = askForOwner(target);
+		trigger = dispatch(target, { type: 'AskingForNodeOwner', asking: true });
 		if(trigger && typeof(trigger) == 'string') {
 			trigger = $(trigger);
 			// trigger could be either in the toolbars themselves or in the overflow panel

@@ -1,4 +1,4 @@
-Modules.VERSION = '2.4.2';
+Modules.VERSION = '2.5.0';
 Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
@@ -35,40 +35,33 @@ this.aSync = function(aFunc, aDelay) {
 };
 
 // dispatch(obj, properties) - creates and dispatches an event and returns (bool) whether preventDefault was not called on it
-//	obj - (xul element) object to dispatch the event from, it will be e.target
-//	properties - (obj) expecting the following sub properties defining the following event characteristics:
+//	aNode - (xul element) object to dispatch the event from, it will be e.target
+//	props - (obj) expecting the following sub properties defining the following event characteristics:
 //		type - (str) the event type
 //		(optional) bubbles - (bool) defaults to true
 //		(optional) cancelable - (bool) defaults to true
 //		(optional) detail - to be passed to the event
-this.dispatch = function(obj, properties) {
-	if(!obj || !obj.dispatchEvent
-	|| (!obj.ownerDocument && !obj.document && (!obj.content || !obj.content.document))
-	|| !properties || !properties.type) { return false; }
+//		(optional) asking - (bool) if true, will return the .detail property of the event, which can be modified by listeners; defaults to false, .detail defaults to undefined
+this.dispatch = function(aNode, props) {
+	if(!aNode || !aNode.dispatchEvent
+	|| (!aNode.ownerDocument && !aNode.document && (!aNode.content || !aNode.content.document))
+	|| !props || !props.type) { return false; }
 	
-	var bubbles = properties.bubbles || true;
-	var cancelable = properties.cancelable || true;
-	var detail = properties.detail || undefined;
+	var bubbles = props.bubbles || true;
+	var cancelable = props.cancelable || !props.asking;
+	var detail = props.detail || undefined;
 	
-	var doc = (obj.ownerDocument) ? obj.ownerDocument : (obj.document) ? obj.document : obj.content.document; // last one's for content processes
+	var doc = (aNode.ownerDocument) ? aNode.ownerDocument : (aNode.document) ? aNode.document : aNode.content.document; // last one's for content processes
 	var event = doc.createEvent('CustomEvent');
-	event.initCustomEvent(properties.type, bubbles, cancelable, detail);
-	return obj.dispatchEvent(event);
-};
-
-// askForOwner(aNode) - dispatches an event to node, where anyone can set event.detail to any value
-// for example, to get the id of the trigger node that opened a popup or panel programmatically
-//	aNode - (xul element) the object node to ask about
-this.askForOwner = function(aNode) {
-	if(!aNode || (!aNode.ownerDocument && !aNode.document) || !aNode.dispatchEvent) { return null; }
 	
-	var owner = null;
-	var event = (aNode.ownerDocument) ? aNode.ownerDocument.createEvent('CustomEvent') : aNode.document.createEvent('CustomEvent');
-	event.__defineGetter__('detail', function() { return owner; });
-	event.__defineSetter__('detail', function(v) { return owner = v; });
-	event.initCustomEvent('AskingForNodeOwner', true, false, owner);
-	aNode.dispatchEvent(event);
-	return owner;
+	if(props.asking) {
+		event.__defineGetter__('detail', function() { return detail; });
+		event.__defineSetter__('detail', function(v) { return detail = v; });
+	}
+	
+	event.initCustomEvent(props.type, bubbles, cancelable, detail);
+	var ret = aNode.dispatchEvent(event);
+	return (props.asking) ? detail : ret;
 };
 
 // compareFunction(a, b, strict) - returns (bool) if a === b
