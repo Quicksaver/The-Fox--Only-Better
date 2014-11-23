@@ -238,7 +238,14 @@ this.isMenuBarPopup = function(e) {
 };
 
 this.onMouseOverToolbox = function(e) {
+	// don't show chrome when hovering popups in the menu bar as it's unnecessary and will only look weird
 	if(isMenuBarPopup(e)) { return; }
+	
+	// don't show chrome if hovering a widget panel, this will always be a child of nav-bar even if the trigger widget isn't, and the popup code will keep it open in that case;
+	// unfortunately I can't actually do this, if the panel opens while the nav-bar is hidden away, it won't be responsive since technically the panel will also be hidden away
+	//if(isAncestor(e.target, $('customizationui-widget-panel'))) { return; }
+	
+	// don't show chrome if something doesn't want it to be shown
 	if(!dispatch(slimChromeContainer, { type: 'WillShowSlimChrome', detail: e })) { return; }
 	
 	if(trueAttribute(slimChromeContainer, 'mini') && !trueAttribute(slimChromeContainer, 'hover') && isAncestor(e.target, slimChromeContainer)) {
