@@ -26,10 +26,10 @@
 //	aSubject - (xul object) to execute aCallback on
 //	aCallback - (function(aSubject)) to be called on aSubject
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
-// Note: Firefox 30 is the minimum version supported as the modules assume we're in a version with Australis already,
-// along with a minor assumption in Overlays about a small change introduced to CustomizableUI in FF30.
+// Note: Firefox 34 is the minimum version supported as the modules assume we're in a version with Australis already,
+// along with xulStore already implemented, in detriment of localstore.rdf.
 
-let bootstrapVersion = '1.7.0';
+let bootstrapVersion = '1.7.1';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -58,16 +58,7 @@ function LOG(str) {
 	console.log(objName+' :: CHROME :: '+str);
 }
 
-// PlacesUIUtils can be removed in FF34 as well (not inside conditional because let only sets it within the conditional)
-let PlacesUIUtils = {};
-if(Services.vc.compare(Services.appinfo.version, "34.0a1") >= 0) {
-	XPCOMUtils.defineLazyServiceGetter(Services, "xulStore", "@mozilla.org/xul/xulstore;1", "nsIXULStore");
-} else {
-	// Note: defining the localStore lazy getter on the Services object causes a ZC if it's never called.
-	XPCOMUtils.defineLazyServiceGetter(PlacesUIUtils, "RDF", "@mozilla.org/rdf/rdf-service;1", "nsIRDFService");
-	XPCOMUtils.defineLazyGetter(PlacesUIUtils, "localStore", function() { return PlacesUIUtils.RDF.GetDataSource("rdf:local-store"); });
-}
-
+XPCOMUtils.defineLazyServiceGetter(Services, "xulStore", "@mozilla.org/xul/xulstore;1", "nsIXULStore");
 XPCOMUtils.defineLazyServiceGetter(Services, "fuel", "@mozilla.org/fuel/application;1", "fuelIApplication");
 XPCOMUtils.defineLazyServiceGetter(Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
 XPCOMUtils.defineLazyServiceGetter(Services, "stylesheet", "@mozilla.org/content/style-sheet-service;1", "nsIStyleSheetService");

@@ -1,4 +1,4 @@
-Modules.VERSION = '2.14.1';
+Modules.VERSION = '2.14.2';
 Modules.UTILS = true;
 
 // Overlays - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -271,108 +271,13 @@ this.Overlays = {
 		}
 	},
 	
-	// not needed anymore in FF34
-	isPersist: function(overlay, id, attr) {
-		if(!id && !attr) {
-			for(var x in overlay.persist) {
-				return true;
-			}
-			return true;
-		}
-		
-		if(overlay.persist[id]) {
-			if(attr && !overlay.persist[id][attr]) {
-				return false;
-			}
-			return true;
-		}
-		return false;
-	},
-	
 	persistOverlay: function(aWindow, overlay) {
-		// Firefox 34 introduces a new persistence system, through xulStore.
-		if(Services.vc.compare(Services.appinfo.version, "34.0a1") >= 0) {
-			for(var id in overlay.persist) {
-				for(var attr in overlay.persist[id]) {
-					var stored = Services.xulStore.getValue(aWindow.document.baseURI, id, attr);
-					if(stored) {
-						var node = aWindow.document.getElementById(id);
-						setAttribute(node, attr, stored);
-					}
-				}
-			}
-			return;
-		}
-			
-		if(!this.isPersist(overlay)) {
-			return;
-		}
-		
-		var allRes = {};
-		function showArcs(res, arcs) {
-			while(arcs.hasMoreElements()) {
-				var curArc = arcs.getNext().QueryInterface(Ci.nsIRDFResource);
-				var arcTargets = PlacesUIUtils.localStore.GetTargets(res, curArc, true);
-				while(arcTargets.hasMoreElements()) {
-					var curTarget = arcTargets.getNext();
-					try {
-						curTarget.QueryInterface(Ci.nsIRDFLiteral);
-						
-						var sources = res.Value.split('#');
-						if(!allRes[sources[0]]) { allRes[sources[0]] = {}; }
-						if(sources[1]) {
-							if(!allRes[sources[0]][sources[1]]) { allRes[sources[0]][sources[1]] = {}; }
-							allRes[sources[0]][sources[1]][curArc.Value] = curTarget.Value;
-						} else {
-							allRes[sources[0]][curArc.Value] = curTarget.Value;
-						}
-					}
-					catch(e) {
-						if(curTarget.Value) {
-							showArcs(curTarget, PlacesUIUtils.localStore.ArcLabelsOut(curTarget));
-						}
-					}
-				}
-			}
-		}
-		
-		var allResources = PlacesUIUtils.localStore.GetAllResources();
-		while(allResources.hasMoreElements()) {
-			var curResource = allResources.getNext().QueryInterface(Ci.nsIRDFResource);
-			showArcs(curResource, PlacesUIUtils.localStore.ArcLabelsOut(curResource));
-		}
-		
-		var uri = aWindow.document.baseURI;
-		if(!allRes[uri]) { return; }
-		var toolboxes = aWindow.document.querySelectorAll('toolbox');
-		
-		for(var id in allRes[uri]) {
-			var node = aWindow.document.getElementById(id);
-			
-			if(this.isPersist(overlay, id)) {
-				if(!node) {
-					toolboxes_loop: for(var t=0; t<toolboxes.length; t++) {
-						if(!toolboxes[t].palette) { continue; }
-						
-						for(var c=0; c<toolboxes[t].palette.childNodes.length; c++) {
-							if(toolboxes[t].palette.childNodes[c].id == id) {
-								node = toolboxes[t].palette.childNodes[c];
-								break toolboxes_loop;
-							}
-						}
-					}
-				}
-				
-				if(!node) { continue; }
-				
-				for(var attr in allRes[uri][id]) {
-					if(this.isPersist(overlay, id, attr)) {
-						if(allRes[uri][id][attr] == '__empty') {
-							setAttribute(node, attr, '');
-						} else {
-							toggleAttribute(node, attr, allRes[uri][id][attr], allRes[uri][id][attr]);
-						}
-					}
+		for(var id in overlay.persist) {
+			for(var attr in overlay.persist[id]) {
+				var stored = Services.xulStore.getValue(aWindow.document.baseURI, id, attr);
+				if(stored) {
+					var node = aWindow.document.getElementById(id);
+					setAttribute(node, attr, stored);
 				}
 			}
 		}
