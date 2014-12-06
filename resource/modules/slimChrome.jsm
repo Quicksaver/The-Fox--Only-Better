@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.5';
+Modules.VERSION = '1.5.6';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -538,32 +538,28 @@ this.slimChromeOnLocationChange = function(m) {
 	m.target._currentSpec = m.data.spec;
 	
 	if(m.target == gBrowser.mCurrentBrowser) {
-		slimChromeOnTabSelect.handler();
+		slimChromeOnTabSelect();
 	}
 };
 
-this.slimChromeOnTabSelect = {
-	last: null,
-	
-	handler: function() {
-		if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
-		&& Prefs.miniOnTabSelect // and of course only if the pref is enabled
-		&& !focusPasswords() // focusPasswords will always show mini if a password field is focused
-		&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
-		&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
-		&& slimChromeOnTabSelect.last != gBrowser.mCurrentBrowser._currentHost // only show mini when the webhost has changed
-		&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
-		&& window.XULBrowserWindow.inContentWhitelist.indexOf(gBrowser.mCurrentBrowser._currentSpec) == -1 // and if the current address is not whitelisted
-		) {
-			setMini(true);
-			Timers.init('setMini', hideMiniInABit, 2000);
-			slimChromeOnTabSelect.last = gBrowser.mCurrentBrowser._currentHost;
-			return true;
-		}
-		
-		slimChromeOnTabSelect.last = gBrowser.mCurrentBrowser._currentHost;
-		return false;
+this.slimChromeOnTabSelect = function() {
+	if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
+	&& Prefs.miniOnTabSelect // and of course only if the pref is enabled
+	&& !focusPasswords() // focusPasswords will always show mini if a password field is focused
+	&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
+	&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
+	&& gBrowser.mCurrentBrowser._lastHost != gBrowser.mCurrentBrowser._currentHost // only show mini when the webhost has changed
+	&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
+	&& window.XULBrowserWindow.inContentWhitelist.indexOf(gBrowser.mCurrentBrowser._currentSpec) == -1 // and if the current address is not whitelisted
+	) {
+		setMini(true);
+		Timers.init('setMini', hideMiniInABit, 2000);
+		gBrowser.mCurrentBrowser._lastHost = gBrowser.mCurrentBrowser._currentHost;
+		return true;
 	}
+	
+	gBrowser.mCurrentBrowser._lastHost = gBrowser.mCurrentBrowser._currentHost;
+	return false;
 };
 
 this.hideMiniInABit = function() {
@@ -877,7 +873,7 @@ this.loadSlimChrome = function() {
 	
 	// show mini chrome when focusing password fields
 	Messenger.listenWindow(window, 'focusPasswords', contentFocusPasswords);
-	Listeners.add(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
+	Listeners.add(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect);
 	
 	// hide chrome when typing in content
 	Listeners.add(gBrowser, 'keydown', slimChromeKeydown, true);
@@ -958,7 +954,7 @@ this.unloadSlimChrome = function() {
 	Listeners.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
 	Listeners.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	Listeners.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
-	Listeners.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect.handler);
+	Listeners.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect);
 	Messenger.unlistenWindow(window, 'locationChange', slimChromeOnLocationChange);
 	Messenger.unlistenWindow(window, 'focusPasswords', contentFocusPasswords);
 	CustomizableUI.removeListener(slimChromeCUIListener);
@@ -1042,6 +1038,7 @@ Modules.UNLOADMODULE = function() {
 		delete aBrowser._showMiniBar;
 		delete aBrowser._currentHost;
 		delete aBrowser._currentSpec;
+		delete aBrowser._lastHost;
 	}
 	
 	Messenger.unloadFromWindow(window, 'slimChrome');

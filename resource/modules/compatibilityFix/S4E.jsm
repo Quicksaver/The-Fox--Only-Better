@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.5';
+Modules.VERSION = '1.0.6';
 
 this.__defineGetter__('S4Eprogress', function() { return $('urlbar-progress-alt'); });
 
@@ -13,7 +13,7 @@ this.S4Elistener = function() {
 		if(S4Estate) {
 			// show immediately when progress bar becomes visible
 			setMini(true);
-		} else if(!slimChromeOnTabSelect.handler()) {
+		} else if(!slimChromeOnTabSelect()) {
 			// don't hide immediately when page load ends
 			Timers.init('setMini', hideMiniInABit, 2000);
 		}
