@@ -1912,7 +1912,7 @@ this.Overlays = {
 		
 		var sscode = '/*OmniSidebar CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
-		sscode += '[waitForSS~="'+sheet+'"] { visibility: collapse; }';
+		sscode += '[waitForSS~="'+sheet+'"] { visibility: collapse !important; transition: none !important; }';
 		Styles.load('waitfor:'+sheet, sscode, true);
 		
 		var waitSSLoaded = function() {
