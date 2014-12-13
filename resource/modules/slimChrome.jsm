@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.6';
+Modules.VERSION = '1.5.7';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -815,15 +815,18 @@ this.loadSlimChrome = function() {
 	slimChromeContainer.hoversQueued = 0;
 	
 	// prepare PlacesToolbar methods to work in our chrome in case it's there,
-	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width
-	Piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onOverflow', function() {
-		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return false; }
-		return true;
-	}, Piggyback.MODE_BEFORE);
-	Piggyback.add('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow', function() {
-		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return false; }
-		return true;
-	}, Piggyback.MODE_BEFORE);
+	// we don't want it to over/underflow while the bar isn't maximized because that's not its real width.
+	// Can't use Piggyback here, it won't work (for some reason...): https://github.com/Quicksaver/The-Fox--Only-Better/issues/83
+	window.PlacesToolbar.prototype.__onOverflow = window.PlacesToolbar.prototype._onOverflow;
+	window.PlacesToolbar.prototype.__onUnderflow = window.PlacesToolbar.prototype._onUnderflow;
+	window.PlacesToolbar.prototype._onOverflow = function() {
+		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
+		this.__onOverflow();
+	};
+	window.PlacesToolbar.prototype._onUnderflow = function() {
+		if(typeof(slimChromeContainer) != 'undefined' && isAncestor(PlacesToolbar, slimChromeContainer) && !trueAttribute(slimChromeContainer, 'fullWidth')) { return; }
+		this.__onUnderflow();
+	};
 	
 	if(PlacesToolbar && PlacesToolbar._placesView) {
 		PlacesToolbar._placesView.uninit();
@@ -862,7 +865,7 @@ this.loadSlimChrome = function() {
 	slimChromeUseMouse();
 	
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
-	Listeners.add(browserPanel, 'resize', delayMoveSlimChrome);
+	Listeners.add(window, 'resize', delayMoveSlimChrome);
 	
 	// also keep the toolbox visible if it has focus of course
 	Listeners.add(gNavToolbox, 'focus', onFocus, true);
@@ -936,7 +939,7 @@ this.unloadSlimChrome = function() {
 	
 	var focused = isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) && getParentWithId(document.commandDispatcher.focusedElement);
 	
-	Listeners.remove(browserPanel, 'resize', delayMoveSlimChrome);
+	Listeners.remove(window, 'resize', delayMoveSlimChrome);
 	Listeners.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	Listeners.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
 	Listeners.remove(gNavToolbox, 'dragstart', onDragStart);
@@ -970,8 +973,10 @@ this.unloadSlimChrome = function() {
 	Watchers.removeAttributeWatcher(tabDropIndicator, 'collapsed', slimChromeTabDropIndicatorWatcher, false, false);
 	
 	// reset this before we move the toolbar
-	Piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onOverflow');
-	Piggyback.revert('slimChrome', window.PlacesToolbar.prototype, '_onUnderflow');
+	window.PlacesToolbar.prototype._onOverflow = window.PlacesToolbar.prototype.__onOverflow;
+	window.PlacesToolbar.prototype._onUnderflow = window.PlacesToolbar.prototype.__onUnderflow;
+	delete window.PlacesToolbar.prototype.__onOverflow;
+	delete window.PlacesToolbar.prototype.__onUnderflow;
 	
 	if(PlacesToolbar && PlacesToolbar._placesView) {
 		PlacesToolbar._placesView.uninit();

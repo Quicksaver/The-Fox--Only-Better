@@ -3,7 +3,9 @@ Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
 // There are a few things in CUI that need to be overriden, e.g. the toolbars would register before they were appended to the DOM tree, which is really bad...
-// Piggyback - This module allows me to Piggyback methods of any object. It also gives me access to the CustomizableUI module backstage pass, so I can do the same to it.
+// Piggyback -	This module allows me to Piggyback methods of any object. It also gives me access to the CustomizableUI module backstage pass, so I can do the same to it.
+// 		Don't use this in method.prototype, it apparently doesn't work, although I can't figure out the exact reason why.
+//		See https://github.com/Quicksaver/The-Fox--Only-Better/issues/83
 // add(aName, aObj, aMethod, aWith, aMode) - Modify aMethod within aObj with another aWith. The original aObj.aMethod will be available as aObj._aMethod.
 //	aName - (string) just a name for this operation, usually the name of the module will suffice
 //	aObj - (obj) which we want to alter
