@@ -1,4 +1,4 @@
-// VERSION = '1.0.1'
+// VERSION = '1.0.2'
 
 // Strings - use for getting strings out of bundles from .properties locale files
 this.__defineGetter__('Strings', function() { delete this.Strings; Modules.load('utils/Strings'); return Strings; });
@@ -23,6 +23,9 @@ this.hideIt = function(aNode, show) { loadSandboxTools(); return hideIt(aNode, s
 
 // trim() - trims whitespaces from a string
 this.trim = function(str) { loadSandboxTools(); return trim(str); };
+
+// getComputedStyle() - returns the resulting object from calling the equivalent window.getComputedStyle() on it
+this.getComputedStyle = function(aNode, pseudo) { loadSandboxTools(); return getComputedStyle(aNode, pseudo); };
 
 // replaceObjStrings() - replace all objName and objPathString references in the node attributes and its children with the proper names
 this.replaceObjStrings = function(node) { loadSandboxTools(); return replaceObjStrings(node); };
@@ -51,6 +54,7 @@ this.loadSandboxTools = function() {
 	delete this.hideIt;
 	delete this.trim;
 	delete this.replaceObjStrings;
+	delete this.getComputedStyle;
 	delete this.loadSandboxTools;
 	Modules.load('utils/sandboxTools');
 };

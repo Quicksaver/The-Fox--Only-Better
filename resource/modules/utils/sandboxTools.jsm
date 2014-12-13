@@ -1,4 +1,4 @@
-Modules.VERSION = '2.5.0';
+Modules.VERSION = '2.6.0';
 Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
@@ -153,4 +153,11 @@ this.replaceObjStrings = function(node, prop) {
 		replaceObjStrings(curChild);
 		curChild = curChild.nextSibling;
 	}
+};
+
+// getComputedStyle(aNode, pseudo) - returns the resulting object from calling the equivalent window.getComputedStyle() on it
+//	aNode - (element) of which to return the computed style object
+//	(optional) pseudo -(string) specifying the pseudo-element to match, see https://developer.mozilla.org/en-US/docs/Web/API/Window.getComputedStyle
+this.getComputedStyle = function(aNode, pseudo) {
+	return aNode.ownerGlobal.getComputedStyle(aNode, pseudo);
 };

@@ -1,4 +1,4 @@
-Modules.VERSION = '1.3.2';
+Modules.VERSION = '1.3.3';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -142,8 +142,8 @@ this.sizeProperly = function() {
 		// Bugfix: if the first pane isn't the biggest, it will incorrectly set its height to be larger than it should as well (for some reason...)
 		var paneDeckContainer = document.getAnonymousElementByAttribute(document.documentElement, 'class', 'paneDeckContainer');
 		var contentBox = document.getAnonymousElementByAttribute(document.documentElement.currentPane, 'class', 'content-box');
-		var paneStyle = window.getComputedStyle(document.documentElement.currentPane);
-		var paneHeight = contentBox.clientHeight + parseInt(paneStyle.getPropertyValue('padding-top')) + parseInt(paneStyle.getPropertyValue('padding-bottom'));
+		var paneStyle = getComputedStyle(document.documentElement.currentPane);
+		var paneHeight = contentBox.clientHeight + parseInt(paneStyle.paddingTop) + parseInt(paneStyle.paddingBottom);
 		if(paneDeckContainer.clientHeight != paneHeight) {
 			window.resizeBy(0, paneHeight - paneDeckContainer.clientHeight);
 		}
@@ -162,8 +162,8 @@ this.sizeProperly = function() {
 		}
 		
 		var paneDeckContainer = document.getAnonymousElementByAttribute(document.documentElement, 'class', 'paneDeckContainer');
-		var paneStyle = window.getComputedStyle(largestPane);
-		var paneHeight = contentBox.clientHeight + parseInt(paneStyle.getPropertyValue('padding-top')) + parseInt(paneStyle.getPropertyValue('padding-bottom'));
+		var paneStyle = getComputedStyle(largestPane);
+		var paneHeight = contentBox.clientHeight + parseInt(paneStyle.paddingTop) + parseInt(paneStyle.paddingBottom);
 		if(paneDeckContainer.clientHeight != paneHeight) {
 			window.resizeBy(0, paneHeight - paneDeckContainer.clientHeight);
 		}

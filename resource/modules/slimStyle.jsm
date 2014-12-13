@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.4';
+Modules.VERSION = '1.2.5';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathLeft', function() { return $(objName+'-slimChrome-clipPath-toolbars-left-path'); });
@@ -275,10 +275,10 @@ this.stylePersonaSlimChrome = function() {
 	}
 	else {
 		var windowStyle = getComputedStyle(document.documentElement);
-		if(lwtheme.bgImage != windowStyle.getPropertyValue('background-image') && windowStyle.getPropertyValue('background-image') != 'none') {
-			lwtheme.bgImage = windowStyle.getPropertyValue('background-image');
-			lwtheme.color = windowStyle.getPropertyValue('color');
-			lwtheme.bgColor = windowStyle.getPropertyValue('background-color');
+		if(lwtheme.bgImage != windowStyle.backgroundImage && windowStyle.backgroundImage != 'none') {
+			lwtheme.bgImage = windowStyle.backgroundImage;
+			lwtheme.color = windowStyle.color;
+			lwtheme.bgColor = windowStyle.backgroundColor;
 		}
 	}
 	
@@ -293,17 +293,17 @@ this.stylePersonaSlimChrome = function() {
 	var containerStyle = getComputedStyle(slimChromeContainer);
 	
 	// Another personas in OSX tweak
-	var offsetWindowPadding = windowStyle.getPropertyValue('background-position');
+	var offsetWindowPadding = windowStyle.backgroundPosition;
 	var offsetY = -containerBox.top;
-	offsetY += parseInt(containerStyle.getPropertyValue('margin-top'));
+	offsetY += parseInt(containerStyle.marginTop);
 	if(offsetWindowPadding.indexOf(' ') > -1 && offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1) > -1) {
 		offsetY += parseInt(offsetWindowPadding.substr(offsetWindowPadding.indexOf(' ') +1, offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1)));
 	}
 	
-	if(containerStyle.getPropertyValue('direction') == 'ltr') {
-		var borderStart = parseInt(containerStyle.getPropertyValue('border-left-width'));
+	if(containerStyle.direction == 'ltr') {
+		var borderStart = parseInt(containerStyle.borderLeftWidth);
 	} else {
-		var borderStart = parseInt(containerStyle.getPropertyValue('border-right-width'));
+		var borderStart = parseInt(containerStyle.borderRightWidth);
 	}
 	
 	// +1/-1 compensates for borders misplacement in CSS

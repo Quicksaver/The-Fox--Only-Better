@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.7';
+Modules.VERSION = '1.5.8';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -26,7 +26,6 @@ this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
-this.getComputedStyle = function(el) { return window.getComputedStyle(el); };
 
 // until I find a better way of finding out on which side of the browser is the scrollbar, I'm setting equal margins
 this.MIN_LEFT = 22;

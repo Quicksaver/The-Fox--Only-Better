@@ -29,7 +29,7 @@
 // Note: Firefox 34 is the minimum version supported as the modules assume we're in a version with Australis already,
 // along with xulStore already implemented, in detriment of localstore.rdf.
 
-let bootstrapVersion = '1.7.1';
+let bootstrapVersion = '1.7.2';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -85,7 +85,7 @@ function prepareObject(window, aName) {
 	let objectName = aName || objName;
 	if(window[objectName]) { return; }
 	
-	var rtl = window.getComputedStyle(window.document.documentElement).getPropertyValue('direction') == 'rtl';
+	var rtl = getComputedStyle(window.document.documentElement).direction == 'rtl';
 	
 	window[objectName] = {
 		objName: objectName,
