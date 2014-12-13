@@ -53,10 +53,26 @@
 		</em:localized>
 		<em:localized>
 			<Description>
+				<em:locale>ru</em:locale>
+				<em:name>The Fox, Only Better</em:name>
+				<em:description>С Australis, новой темой для Firefox, отличный браузер выглядит классно. И теперь им можно также классно пользоваться!</em:description>
+				<em:translator>Alexander Gvaramiya, RunTwo - Babelzilla</em:translator>
+			</Description>
+		</em:localized>
+		<em:localized>
+			<Description>
 				<em:locale>zh-CN</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>全新的 Australis 主题让 Firefox 浏览器看起来棒极了，而这个附加组件使它更加相得益彰！</em:description>
 				<em:translator>fang5566 - Babelzilla, YFdyh000</em:translator>
+			</Description>
+		</em:localized>
+		<em:localized>
+			<Description>
+				<em:locale>zh-TW</em:locale>
+				<em:name>The Fox, Only Better</em:name>
+				<em:description>Australis, 這新的Firefox介面風格不僅讓瀏覽器在視覺上變得更炫，使用體驗上也更棒！</em:description>
+				<em:translator>franlobster - Babelzilla</em:translator>
 			</Description>
 		</em:localized>
 		

@@ -1,0 +1,67 @@
+<!ENTITY Optwindow.style "width:30em;">
+<!ENTITY options.title "The Fox, Only Better">
+<!ENTITY pane.slimChrome.label "精簡介面">
+<!ENTITY pane.about.label "關於">
+<!ENTITY cat.general.label "一般設定">
+<!ENTITY opt.slimChrome.label "啟用精簡介面">
+<!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
+<!ENTITY opt.includeNavBar.label "隱藏瀏覽工具列">
+<!ENTITY opt.includeNavBar.tooltip "將瀏覽工具列連同其他工具列一起隱藏。若否，則瀏覽工具列同預設顯示於視窗上端。">
+<!ENTITY opt.miniOnAllInput.label "在隱藏工具列之外輸入時以迷你工具列方式顯示網址列">
+<!ENTITY opt.miniOnAllInput.tooltip "啟用此選項則在任何地方進行輸入都將以迷你工具列顯示">
+<!ENTITY opt.miniOnTabSelect.label "進入新網址時顯示迷你工具列">
+<!ENTITY opt.miniOnTabSelect.tooltip "(建議啟用)迷你工具列會在當前分頁改變網址時或移往不同網址之背景分頁時出現">
+<!ENTITY opt.skyLights.label "啟用曙光(Sky Lights)特效">
+<!ENTITY opt.skyLights.tooltip "曙光(Sky Lights)特效">
+<!ENTITY opt.skyLightsHide.label "當工具列顯示時隱藏曙光(Sky Lights)特效">
+<!ENTITY opt.skyLightsHide.tooltip "當工具列或迷你工具列顯示時，由於資訊已顯示於工具列的某處，曙光特效將自動消除">
+<!ENTITY opt.useMouse.label "當滑鼠移到頂端，工具列顯示">
+<!ENTITY opt.useMouse.tooltip "工具列會因應游標的位置，當游標在上面時顯示，離開時則隱藏。若取消此選項，則僅能透過敲擊&lt;F6&gt;來使用位址列">
+<!ENTITY opt.delayIn.label "展開延遲">
+<!ENTITY opt.delayIn.tooltip "調整游標移近分頁列下緣至視窗出現的反應時間長短">
+<!ENTITY opt.delayOut.label "收藏延遲">
+<!ENTITY opt.delayOut.tooltip "調整游標離開分頁列下緣至視窗隱藏的反應時間長短">
+<!ENTITY opt.delayLow.label "慢">
+<!ENTITY opt.delayHigh.label "快">
+<!ENTITY cat.appearance.label "外觀風格">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "使工具列外型更加融入Firefox的介面風格">
+<!ENTITY opt.style.round.label "寬闊">
+<!ENTITY opt.style.round.tooltip "擴大工具列內部空間，採大圓滑之外型，亦契合Firefox的原始介面設計">
+<!ENTITY opt.style.compact.label "緊密">
+<!ENTITY opt.style.compact.tooltip "在保有顯示所有按鈕、文字框等前提下，壓縮工具列佔據空間，使工具列對於網頁範圍的影響最小化。">
+<!ENTITY opt.style.full.label "預設">
+<!ENTITY opt.style.full.tooltip "維持與預設相同樣式。">
+<!ENTITY cat.animation.label "特效">
+<!ENTITY opt.animation.none.label "無">
+<!ENTITY opt.animation.none.tooltip "瀏覽工具列以彈出方式出現於視窗">
+<!ENTITY opt.animation.fadein.label "淡入">
+<!ENTITY opt.animation.fadein.tooltip "瀏覽工具列以淡入方式出現於視窗">
+<!ENTITY opt.animation.slidedown.label "滑入">
+<!ENTITY opt.animation.slidedown.tooltip "瀏覽工具列自分頁下緣滑入出現於視窗">
+<!ENTITY opt.animation.rollout.label "展開">
+<!ENTITY opt.animation.rollout.tooltip "瀏覽工具列以卷軸展開方式出現於視窗">
+<!ENTITY opt.animation.hinge.label "GiT轉板特效">
+<!ENTITY opt.animation.hinge.tooltip "瀏覽工具列以門板旋轉方式出現於視窗(感謝Geek in Training提供)">
+<!ENTITY cat.slimChromeKeyset.label "功能啟用/關閉快捷鍵">
+<!ENTITY opt.keyset.control "Ctrl">
+<!ENTITY opt.keyset.shift "Shift">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Cmd">
+<!ENTITY opt.keyset.option "選項">
+<!ENTITY opt.keyset.none "無">
+<!ENTITY opt.keyset.spacebar "空白鍵">
+<!ENTITY opt.keyset.pageup "「Page Up」鍵">
+<!ENTITY opt.keyset.pagedown "「Page Down」鍵">
+<!ENTITY opt.keyset.end "「End」鍵">
+<!ENTITY opt.keyset.home "「Home」鍵">
+<!ENTITY opt.keyset.left "左方向鍵">
+<!ENTITY opt.keyset.up "上方向鍵">
+<!ENTITY opt.keyset.right "右方向鍵">
+<!ENTITY opt.keyset.down "下方向鍵">
+<!ENTITY about.name "The Fox, Only Better">
+<!ENTITY about.by "by Quicksaver">
+<!ENTITY about.desc "所有關於此附加元件及開發者之資訊請見Mozilla附加元件頁。如果你喜歡這個附加元件，請不吝留下正面評語或提供協助持續開發。錯誤回報和建議管道請見技術支援頁。">
+<!ENTITY about.home "附加元件頁">
+<!ENTITY about.tech "技術支援">
+<!ENTITY about.notes "版本資訊">

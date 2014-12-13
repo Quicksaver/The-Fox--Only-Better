@@ -1,0 +1,67 @@
+<!ENTITY Optwindow.style "width:40.5em;">
+<!ENTITY options.title "The Fox, Only Better">
+<!ENTITY pane.slimChrome.label "Slim Chrome">
+<!ENTITY pane.about.label "О расширении">
+<!ENTITY cat.general.label "Основное">
+<!ENTITY opt.slimChrome.label "Включить Slim Chrome">
+<!ENTITY opt.slimChrome.tooltip "Упрощает интерфейс и увеличивает рабочее пространство, скрывая верхнюю панель инструментов, пока она не используется.">
+<!ENTITY opt.includeNavBar.label "Включить панель навигации в спрятанные панели">
+<!ENTITY opt.includeNavBar.tooltip "Прячет панель навигации вместе с остальными панелями инструментов. Если эта функция отключена, панель навигации всегда будет видна, как и раньше.">
+<!ENTITY opt.miniOnAllInput.label "Показать мини-адресную строку при выборе любого поля ввода">
+<!ENTITY opt.miniOnAllInput.tooltip "Включите эту опцию, если хотите видеть мини-адресную строку при наборе текста в любое поле ввода, а не только в поле ввода пароля.">
+<!ENTITY opt.miniOnTabSelect.label "Показать мини-адресную строку при переходе на другой адрес">
+<!ENTITY opt.miniOnTabSelect.tooltip "Рекомендуется! Мини-адресная строка будет появляться при изменении в текущей вкладке адреса (переход на другой веб-сервер), или всякий раз, когда вы выбираете фоновую вкладку, которая тем временем изменила свой адрес.">
+<!ENTITY opt.skyLights.label "Включить Sky Lights">
+<!ENTITY opt.skyLights.tooltip "Sky Lights сообщает информацию о текущей веб-странице при помощи ненавязчивой визуальной кнопки расположенной в верхней панели. Это поможет Вам всегда быть уверенным, где вы находитесь и что здесь можно безопасно делать!">
+<!ENTITY opt.skyLightsHide.label "Скрывать Sky Lights когда панели видны">
+<!ENTITY opt.skyLightsHide.tooltip "Кнопка Sky Lights будет скрыта когда видны все панели или мини-адресная строка, для предотвращения дублирования информации.">
+<!ENTITY opt.useMouse.label "Показывать панели при наведении на них указателя мыши">
+<!ENTITY opt.useMouse.tooltip "Панели реагируют на движение указателя мыши, они будут появляться когда указатель над ними и скрываться когда указатель покидает зону панелей. Если отключить эту опцию, то доступ к панелям можно получить нажав на F6 для перевода фокуса на адресную строку, либо активировав одну из скрытых панелей.">
+<!ENTITY opt.delayIn.label "Чувствительность при наведении">
+<!ENTITY opt.delayIn.tooltip "Определяет временную задержку при наведении указателя мыши на панели, после которой они появятся.">
+<!ENTITY opt.delayOut.label "Чувствительность при покидании">
+<!ENTITY opt.delayOut.tooltip "Определяет временную задержку, после которой панели будут скрываться, когда курсор мыши покидает их.">
+<!ENTITY opt.delayLow.label "Низкая">
+<!ENTITY opt.delayHigh.label "Высокая">
+<!ENTITY cat.appearance.label "Стиль">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Разработан, чтобы максимально соответствовать теме по умолчанию в Firefox.">
+<!ENTITY opt.style.round.label "Вместительный">
+<!ENTITY opt.style.round.tooltip "Показывает панели в широком контейнере с большими закругленными формами. Хорошо подходит к теме по умолчанию.">
+<!ENTITY opt.style.compact.label "Компактный">
+<!ENTITY opt.style.compact.tooltip "Минималистичный стиль - максимум функциональных элементов при минимуме занимаемого места.">
+<!ENTITY opt.style.full.label "Широкий">
+<!ENTITY opt.style.full.tooltip "Панели растягиваются на всю возможную ширину окна.">
+<!ENTITY cat.animation.label "Анимация">
+<!ENTITY opt.animation.none.label "Без анимации">
+<!ENTITY opt.animation.none.tooltip "Панель инструментов появляется без каких-либо эффектов.">
+<!ENTITY opt.animation.fadein.label "Исчезание">
+<!ENTITY opt.animation.fadein.tooltip "Простой эффект, панель плавно появляется и исчезает.">
+<!ENTITY opt.animation.slidedown.label "Скольжение">
+<!ENTITY opt.animation.slidedown.tooltip "Простой эффект скольжения, панель плавно выезжает сверху.">
+<!ENTITY opt.animation.rollout.label "Выкатывание">
+<!ENTITY opt.animation.rollout.tooltip "Эффект, при котором панель инструментов выкатывается сбоку.">
+<!ENTITY opt.animation.hinge.label "Эффект петель от GiT'а">
+<!ENTITY opt.animation.hinge.tooltip "Специальный эффект, созданный Geek in Training. Если Вам нравится, благодарите его!">
+<!ENTITY cat.slimChromeKeyset.label "Комбинация клавиш для включения/выключения">
+<!ENTITY opt.keyset.control "Ctrl">
+<!ENTITY opt.keyset.shift "Shift">
+<!ENTITY opt.keyset.alt "Alt">
+<!ENTITY opt.keyset.command "Command">
+<!ENTITY opt.keyset.option "Option">
+<!ENTITY opt.keyset.none "Нет">
+<!ENTITY opt.keyset.spacebar "Пробел">
+<!ENTITY opt.keyset.pageup "Page Up">
+<!ENTITY opt.keyset.pagedown "Page Down">
+<!ENTITY opt.keyset.end "End">
+<!ENTITY opt.keyset.home "Home">
+<!ENTITY opt.keyset.left "Left">
+<!ENTITY opt.keyset.up "Up">
+<!ENTITY opt.keyset.right "Right">
+<!ENTITY opt.keyset.down "Down">
+<!ENTITY about.name "The Fox, Only Better">
+<!ENTITY about.by "by Quicksaver">
+<!ENTITY about.desc "Больше информации о дополнении вы можете найти на АМО. Если оно вам понравилось, оставьте, пожалуйста, там хороший отзыв или сделайте небольшое пожертвование для поддержки дальнейшего развития. Сообщения об ошибках и предложения могут быть сделаны на странице Технической поддержки.">
+<!ENTITY about.home "Домашняя страница дополнения">
+<!ENTITY about.tech "Техническая поддержка">
+<!ENTITY about.notes "Примечания к выпуску">
