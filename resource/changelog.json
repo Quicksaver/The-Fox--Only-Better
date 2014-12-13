@@ -1,6 +1,21 @@
 {
-	"current":"1.1.6",
+	"current":"1.1.7",
 	"releases": {
+		"1.1.7":{
+			"date":"December 13, 2014",
+			"notes":[
+				["new","ru and zh-TW locales"],
+				["changed","The mini bar will only appear when switching to a background tab that has changed location (webhost) since it was last visible; this was the intended behavior from the start (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/80\">issue #80</a>)"],
+				["removed","Compatibility with Firefox 33 and below"],
+				["bugfix","Prevent some visual glitches during startup"],
+				["bugfix","Improved compatibility with my other add-ons, if you use any of them make sure they are also updated and restart your browser afterwards!"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/link-location-bar/\">Link Location Bar</a>, when previewing links in the mini bar and the mouse moves over it, the mini bar will jump to the other side of the window so that any links under it can still be accessed (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/77\">issue #77</a>)"],
+				["bugfix","A few issues with the bookmarks toolbar introduced in the last version (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/83\">issue #83</a>)"],
+				["bugfix","Integrate better with Firefox Developer Edition's theme (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/82\">issue #82</a>)"],
+				["bugfix","Add-on would forget the keyboard shortcut when opening the preferences dialog"],
+				["","Other minor improvements"]
+			]
+		},
 		"1.1.6":{
 			"date":"October 30, 2014",
 			"notes":[
@@ -28,7 +43,7 @@
 				["bugfix","Add-on was not deinitializing properly (because of this <b>you may need to restart your browser</b> if you're updating from a previous version, for the update to fully take effect)"],
 				["bugfix","The mini bar could get stuck open on certain websites (e.g. 4chan.org) that physically remove the input fields from the DOM"],
 				["bugfix","Right-clicking the toolbar placeholder strip when Slim Chrome is enabled should open the toolbar context menu"],
-				["bugfix","Toolbars would be hidden behind media elements, such as flash videos, java applets, adobe reader, tabs opened through the FireIE add-on, maybe others... (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/53\">issue 53</a>)"],
+				["bugfix","Toolbars would be hidden behind media elements, such as flash videos, java applets, adobe reader, tabs opened through the FireIE add-on, maybe others... (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/53\">issue #53</a>)"],
 				["bugfix","Possible fix for add-on requiring a browser restart to fully update sometimes"],
 				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/aniweather/\">AniWeather</a>, weather animation popups would be hidden behind the toolbars"],
 				["bugfix","Compatibility with Puzzle Toolbars (formerly The Puzzle Piece) add-on"],
