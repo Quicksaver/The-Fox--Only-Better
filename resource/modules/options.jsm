@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.4';
+Modules.VERSION = '1.1.5';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -15,7 +15,7 @@ this.fillKeycodes = function() {
 		alt: $('altCheckboxSlimChrome').checked
 	};
 	
-	var slimChromeAvailable = Keysets.getAvailable(slimChromeKey);
+	var slimChromeAvailable = Keysets.getAvailable(slimChromeKey, [slimChromeKey]);
 	if(!isStillAvailable(slimChromeKey, slimChromeAvailable)) {
 		slimChromeKey.keycode = 'none';
 	}
