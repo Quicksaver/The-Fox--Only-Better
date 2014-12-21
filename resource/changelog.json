@@ -1,6 +1,13 @@
 {
-	"current":"1.1.7",
+	"current":"1.1.8",
 	"releases": {
+		"1.1.8":{
+			"date":"December 21, 2014",
+			"notes":[
+				["changed","Show the toolbars for a few seconds when previewing themes"],
+				["bugfix","Sometimes the location bar wouldn't have focus on startup when it should"]
+			]
+		},
 		"1.1.7":{
 			"date":"December 13, 2014",
 			"notes":[
