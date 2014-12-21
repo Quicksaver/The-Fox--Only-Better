@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.5';
+Modules.VERSION = '1.2.6';
 
 this.__defineGetter__('slimChromeClipPathURLBarWrapper', function() { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); });
 this.__defineGetter__('slimChromeClipPathLeft', function() { return $(objName+'-slimChrome-clipPath-toolbars-left-path'); });
@@ -390,6 +390,10 @@ this.slimChromeStyleOnUnload = function() {
 	removeAttribute(gNavToolbox, 'slimStyle');
 };
 
+this.personaPreview = function() {
+	initialShowChrome();
+};
+
 Modules.LOADMODULE = function() {
 	Prefs.listen('slimStyle', slimChromeStyle);
 	
@@ -400,6 +404,7 @@ Modules.LOADMODULE = function() {
 	
 	// support personas in hovering toolbox
 	Observers.add(personaChanged, "lightweight-theme-styling-update");
+	Observers.add(personaPreview, "lightweight-theme-preview-requested");
 	
 	slimChromeStyle();
 };
@@ -410,6 +415,7 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'MovedSlimChrome', slimChromeClipPaths);
 	Listeners.remove(window, 'EnsureSlimChrome', slimChromeStyleOnEnsure);
 	Observers.remove(personaChanged, "lightweight-theme-styling-update");
+	Observers.remove(personaPreview, "lightweight-theme-preview-requested");
 	
 	Prefs.unlisten('slimStyle', slimChromeStyle);
 	
