@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.8';
+Modules.VERSION = '1.5.9';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -805,10 +805,28 @@ this.slimChromeAnimation = function() {
 	setAttribute(gNavToolbox, 'slimAnimation', slimAnimation);
 };
 
+// make sure the currently focused element stays focused after initializing
+this._focusedElement = null;
+this.refocusElement = function() {
+	// do async because sometimes it wouldn't resize the chrome properly, so let it animate everything as it normally would
+	aSync(function() {
+		if(_focusedElement && !isAncestor(document.commandDispatcher.focusedElement, _focusedElement) && isAncestor(_focusedElement, slimChromeContainer)) {
+			_focusedElement.focus();
+			
+			// sometimes it won't focus the location bar during startup, so just keep trying until it does
+			if(!isAncestor(document.commandDispatcher.focusedElement, _focusedElement)) {
+				refocusElement();
+				return;
+			}
+			
+			_focusedElement = null;
+		}
+	}, 50);
+};
+
 this.loadSlimChrome = function() {
-	// make sure the currently focused element stays focused after this.
 	// we get only a node with an id so that for example if the location bar is focused (most common case), we don't get its anonymous nodes that get destroyed in this process.
-	var focused = getParentWithId(document.commandDispatcher.focusedElement);
+	_focusedElement = getParentWithId(document.commandDispatcher.focusedElement);
 	
 	slimChromeContainer.hovers = 0;
 	slimChromeContainer.hoversQueued = 0;
@@ -912,12 +930,7 @@ this.loadSlimChrome = function() {
 		initialLoading = false;
 	}, 5000);
 	
-	// do async because sometimes it wouldn't resize the chrome properly, so let it animate everything as it normally would
-	aSync(function() {
-		if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused) && isAncestor(focused, slimChromeContainer)) {
-			focused.focus();
-		}
-	});
+	refocusElement();
 	
 	dispatch(slimChromeContainer, { type: 'LoadedSlimChrome', cancelable: false });
 	
