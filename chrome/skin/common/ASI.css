@@ -1,0 +1,27 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@-moz-document url("chrome://browser/content/browser.xul") {
+	
+	/* Australis Small Icons add-on specifies some of its rules considering #nav-bar is a direct child of #navigator-toolbox, which isn't the case with this add-on */
+	
+	#navigator-toolbox #nav-bar #back-button .toolbarbutton-icon { padding: 4px !important; }
+	
+	#navigator-toolbox #nav-bar .toolbarbutton-1:not(#back-button):not(#forward-button) {
+		padding-left: 1px !important;
+		padding-right: 1px !important;
+	}
+	
+	#navigator-toolbox #nav-bar .toolbarbutton-1 {
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
+	
+	#navigator-toolbox #nav-bar .toolbarbutton-1:not([type=menu]):not(#back-button):not(#forward-button) > .toolbarbutton-icon,
+	#navigator-toolbox #nav-bar .toolbarbutton-1[type=menu]:not(#back-button):not(#forward-button):not(#feed-button),
+	#navigator-toolbox #nav-bar #feed-button > .toolbarbutton-icon,
+	#navigator-toolbox #nav-bar #bookmarks-menu-button > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
+	#navigator-toolbox #nav-bar #bookmarks-menu-button > .toolbarbutton-menubutton-dropmarker > .dropmarker-icon {
+		padding-left: 1px !important;
+		padding-right: 1px !important;
+	}
+	
+}
