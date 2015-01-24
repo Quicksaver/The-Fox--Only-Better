@@ -2,23 +2,23 @@
 <!ENTITY whatsNew.name "The Fox, Only Better">
 <!ENTITY whatsNew.version "版本{v}">
 <!ENTITY whatsNew.versionDivider " - ">
-<!ENTITY whatsNew.uptodate "恭喜您，此為最新版">
-<!ENTITY whatsNew.needsupdate "有更新版本">
-<!ENTITY whatsNew.description "Check out &quot;Release Notes&quot; and &quot;Known Issues&quot; for this version below. Let me know of any issues you find, or if you have any suggestions for future releases.">
-<!ENTITY whatsNew.message "More information about the add-on can be found in its Mozilla Add-ons Homepage. If you enjoy the add-on, please consider leaving there a nice review, or making a small contribution to help support its continued development. Every little bit is very appreciated!">
-<!ENTITY whatsNew.allVersions "Show notes from all previous versions">
+<!ENTITY whatsNew.uptodate "恭喜，您正在使用最新版本!">
+<!ENTITY whatsNew.needsupdate "有更新版本!">
+<!ENTITY whatsNew.description "欲瞭解此版本之&quot;版本資訊&quot;和&quot;已知問題&quot;，請查看下方。若有任何運作上的問題或對未來版本功能上的建議，歡迎回報。">
+<!ENTITY whatsNew.message "在Mozilla附加元件首頁可瞭解更多有關本元件之資訊。如果您喜愛這個附加元件，請不吝在網頁上留下您的正面迴響，或考慮贊助本元件的開發。任何一點幫助都十分感謝!">
+<!ENTITY whatsNew.allVersions "顯示所有先前版本資訊">
 <!ENTITY whatsNew.options "附加元件設定">
 <!ENTITY whatsNew.notifyOnUpdates "在下次更新時顯示此分頁">
 <!ENTITY whatsNew.information "更多訊息">
 <!ENTITY whatsNew.home "附加元件頁">
 <!ENTITY whatsNew.fullchangelog "完整變更紀錄">
 <!ENTITY whatsNew.problems "有疑問？">
-<!ENTITY whatsNew.tech "Open an issue in the support page describing your problem">
+<!ENTITY whatsNew.tech "在技術支援網頁開啟一個關於您的問題的issue">
 <!ENTITY whatsNew.email "或者以電子郵件方式告知">
 <!ENTITY whatsNew.author "更多關於作者">
-<!ENTITY whatsNew.trymore "Try one of my other add-ons for an even better firefox experience!">
-<!ENTITY whatsNew.profile "Find them in my profile">
+<!ENTITY whatsNew.trymore "歡迎嘗試其他我所製作的附加元件，體驗更佳的firefox!">
+<!ENTITY whatsNew.profile "那些可在我的個人資訊中找到">
 <!ENTITY whatsNew.share "分享到">
-<!ENTITY whatsNew.friends "Don't be the only one with a great browser. Let your friends in on the awesome!">
-<!ENTITY whatsNew.moreshare "Other services...">
-<!ENTITY whatsNew.tryit "Try this add-on that makes your firefox feel awesome to use - The Fox, Only Better!">
+<!ENTITY whatsNew.friends "拉入更多朋友一起體驗最棒的瀏覽器">
+<!ENTITY whatsNew.moreshare "其他服務...">
+<!ENTITY whatsNew.tryit "讓你的firefox變得更棒-The Fox, Only Better!">
