@@ -9,8 +9,8 @@
 <!ENTITY opt.includeNavBar.tooltip "将导航栏连同其他工具栏一并隐藏。如果禁用该项，则导航栏将像之前一样仍始终显示在顶部。">
 <!ENTITY opt.miniOnAllInput.label "定位到输入框时显示迷你栏">
 <!ENTITY opt.miniOnAllInput.tooltip "如果启用此项，当您在任何类型的的输入框键入内容时都将显示迷你栏，而不仅仅是密码框。">
-<!ENTITY opt.miniOnTabSelect.label "变更到另一个网站时显示迷你栏">
-<!ENTITY opt.miniOnTabSelect.tooltip "强烈推荐！无论是您从当前网页打开到另一个网站（不同域名），还是您选择在后台标签页打开另一个网站之时，这都将显示一个迷你栏。">
+<!ENTITY opt.miniOnChangeLocation.label "变更到另一个网站时显示迷你栏">
+<!ENTITY opt.miniOnChangeLocation.tooltip "强烈推荐！无论是您从当前网页打开到另一个网站（不同域名），还是您选择在后台标签页打开另一个网站之时，这都将显示一个迷你栏。">
 <!ENTITY opt.skyLights.label "启用天窗">
 <!ENTITY opt.skyLights.tooltip "天窗通过在标签栏下方添加一个不太显眼的小长方块来告诉您有关当前网页的信息，用来代替地址栏左侧的网页标识框。这样就能够帮助您始终确认所在的网页是否安全！">
 <!ENTITY opt.skyLightsHide.label "工具栏可见时隐藏天窗">

@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.7';
+Modules.VERSION = '1.1.8';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -34,9 +34,9 @@ this.toggleSlimChromePref = function() {
 };
 
 this.ensureNotAllDisabled = function() {
-	if(Prefs.includeNavBar && !Prefs.skyLights && !Prefs.miniOnTabSelect) {
+	if(Prefs.includeNavBar && !Prefs.skyLights && !Prefs.miniOnChangeLocation) {
 		Prefs.skyLights = true;
-		Prefs.miniOnTabSelect = true;
+		Prefs.miniOnChangeLocation = true;
 	}
 };
 
@@ -57,7 +57,7 @@ this.togglePopups = function() {
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ autohide: true }, 'fullscreen', 'browser');
 	
-	// for security reasons, we don't let both skyLights and miniOnTabSelect be disabled at the same time
+	// for security reasons, we don't let both skyLights and miniOnChangeLocation be disabled at the same time
 	ensureNotAllDisabled();
 	
 	Overlays.overlayWindow(window, 'TheFOB', null, function() { toggleSlimChrome(); });

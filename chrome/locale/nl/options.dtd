@@ -9,8 +9,8 @@
 <!ENTITY opt.includeNavBar.tooltip "Verbergt de navigatiebalk met de overige werkbalken. Als dit is uitgeschakeld zal de navigatiebalk net als voorheen altijd zichtbaar zijn.">
 <!ENTITY opt.miniOnAllInput.label "Minibalk weergeven bij focus op een invoerveld.">
 <!ENTITY opt.miniOnAllInput.tooltip "Schakel dit in als u de mini-locatiebalk wilt weergeven bij invoer in elk type invoerveld, en niet alleen wachtwoordvelden.">
-<!ENTITY opt.miniOnTabSelect.label "Minibalk weergeven bij wijzigen locatie">
-<!ENTITY opt.miniOnTabSelect.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
+<!ENTITY opt.miniOnChangeLocation.label "Minibalk weergeven bij wijzigen locatie">
+<!ENTITY opt.miniOnChangeLocation.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
 <!ENTITY opt.skyLights.label "Daklichten inschakelen">
 <!ENTITY opt.skyLights.tooltip "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm. Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
 <!ENTITY opt.skyLightsHide.label "Daklichten verbergen als chrome zichtbaar is">
