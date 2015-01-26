@@ -24,4 +24,8 @@
 		padding-right: 1px !important;
 	}
 	
+	/* prevent the toolbars-not-tall-enough glitch */
+	#navigator-toolbox[slimStyle="compact"] #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #theFoxOnlyBetter-slimChrome-toolbars { min-height: 28px; }
+	#navigator-toolbox:-moz-any([slimStyle="round"],[slimStyle="full"]) #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #theFoxOnlyBetter-slimChrome-toolbars { min-height: 31px; }
+
 }
