@@ -1,0 +1,17 @@
+@import url(chrome://thefoxonlybetter-os/skin/CTRbackForward.css);
+
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@-moz-document url("chrome://browser/content/browser.xul") {
+	
+	/* make sure CTR's movable back/forward buttons don't appear in the mini bar, its stylesheet sets visibility:visible with !important that I can't override */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #ctraddon_back-forward-button {
+		display: none;
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #urlbar-container,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #search-container {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+	}
+
+}

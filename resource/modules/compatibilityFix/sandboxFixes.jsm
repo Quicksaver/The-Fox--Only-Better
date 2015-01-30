@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.3';
+Modules.VERSION = '1.0.4';
 
 Modules.LOADMODULE = function() {
 	AddonManager.getAddonByID('{64161300-e22b-11db-8314-0800200c9a66}', function(addon) {
@@ -9,11 +9,16 @@ Modules.LOADMODULE = function() {
 		Modules.loadIf('compatibilityFix/FTDeepDark', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID('ClassicThemeRestorer@ArisT2Noia4dev', function(addon) {
+		Modules.loadIf('compatibilityFix/CTR', (addon && addon.isActive));
+	});
+	
 	Modules.load('compatibilityFix/ASI');
 };
 
 Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/speedDial');
 	Modules.unload('compatibilityFix/FTDeepDark');
+	Modules.unload('compatibilityFix/CTR');
 	Modules.unload('compatibilityFix/ASI');
 };
