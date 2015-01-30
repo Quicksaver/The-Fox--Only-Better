@@ -5,11 +5,8 @@
 <!ENTITY cat.general.label "Geral">
 <!ENTITY opt.slimChrome.label "Activar a Interface Reduzida">
 <!ENTITY opt.slimChrome.tooltip "Simplifica a interface do navegador e maximiza o espaço de visualização de conteúdo, escondendo convenientemente as barras de ferramentas do topo quando não são necessárias.">
-<!ENTITY opt.includeNavBar.label "Esconder também a barra de navegação">
 <!ENTITY opt.includeNavBar.tooltip "A barra de navegação também é escondida com as outras barras de ferramentas. Se desactivar esta opção, a barra de navegação estará sempre visível no topo como sempre.">
-<!ENTITY opt.miniOnAllInput.label "Mostrar a mini barra quando o cursor se encontra em qualquer tipo de caixa de texto">
 <!ENTITY opt.miniOnAllInput.tooltip "Actie esta opção se desejar que a mini barra de endereço seja mostrada ao inserir texto em qualquer tipo de caixa de texto, e não apenas em campos de palavra-passe.">
-<!ENTITY opt.miniOnChangeLocation.label "Mostrar a mini barra ao mudar de endereço">
 <!ENTITY opt.miniOnChangeLocation.tooltip "Altamente recomendado! A mini barra irá aparecer sempre que o separador actual mudar de endereço (com um anfitrião diferente), ou sempre que selecionar um separador que tenha mudado de endereço entretanto.">
 <!ENTITY opt.skyLights.label "Activar as Luzes no Céu">
 <!ENTITY opt.skyLights.tooltip "As Luzes no Céu fornecem informação acerca da página actual, através de um sistema visual não intrusivo no topo do navegador. Elas permitem-lhe ter sempre a certeza de onde se encontra e o quão seguro é lá se encontrar!">

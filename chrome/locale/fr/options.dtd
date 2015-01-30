@@ -5,11 +5,8 @@
 <!ENTITY cat.general.label "Général">
 <!ENTITY opt.slimChrome.label "Activer l'Interface Réduite">
 <!ENTITY opt.slimChrome.tooltip "Simplifie l'interface et maximise l'espace d'affichage du contenu, en cachant les barres d'outils supérieures lorsque vous n'en avez pas besoin.">
-<!ENTITY opt.includeNavBar.label "Inclure la barre de navigation dans les barres d'outils cachées.">
 <!ENTITY opt.includeNavBar.tooltip "Cache la barre d'adresse avec les autres barres d'outils. Si cette option est désactivée, la barre d'adresse sera toujours visible en haut de l'interface comme auparavant.">
-<!ENTITY opt.miniOnAllInput.label "Afficher la mini-barre quand le focus est sur n'importe quel type de boîte d'entrée.">
 <!ENTITY opt.miniOnAllInput.tooltip "Activez cette option si vous voulez que la mini-barre s'affiche quand vous tapez dans n'importe quel champs de texte, et pas seulement un de mot de passe.">
-<!ENTITY opt.miniOnChangeLocation.label "Montrer la mini-barre lorsque l'on change de site">
 <!ENTITY opt.miniOnChangeLocation.tooltip "Hautement recommandé! La mini-barre apparaîtra lorsque dans l'onglet courant, l'adresse change pour une autre (nom de domaine différent), ou quand vous basculez vers un onglet jusque là en arrière plan, et qui aurait changé d'adresse pendant ce temps.">
 <!ENTITY opt.skyLights.label "Activer les Sky Lights">
 <!ENTITY opt.skyLights.tooltip "Les Sky Lights vous donnent des informations sur la page web que vous êtes actuellement en train de visiter à travers une aide alternative et non-intrusive en haut de l'interface. Ils vous aident à être sûr de l'endroit où vous êtes et ce qu'il est possible de faire sans danger!">

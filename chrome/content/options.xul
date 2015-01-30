@@ -11,6 +11,7 @@
 			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
 			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
 			<preference id="pref-miniOnChangeLocation" name="extensions.thefoxonlybetter.miniOnChangeLocation" type="bool"/>
+			<preference id="pref-miniOnTabSelect" name="extensions.thefoxonlybetter.miniOnTabSelect" type="bool"/>
 			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
 			<preference id="pref-includeNavBar" name="extensions.thefoxonlybetter.includeNavBar" type="bool"/>
 			<preference id="pref-skyLights" name="extensions.thefoxonlybetter.skyLights" type="bool"/>
@@ -27,14 +28,38 @@
 		
 		<checkbox label="&opt.slimChrome.label;" tooltiptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
 		
-		<groupbox align="start">
-			<caption label="&cat.general.label;"/>
-			<checkbox label="&opt.includeNavBar.label;" tooltiptext="&opt.includeNavBar.tooltip;" dependson="pref-slimChrome" preference="pref-includeNavBar"/>
-			<checkbox label="&opt.miniOnAllInput.label;" tooltiptext="&opt.miniOnAllInput.tooltip;" dependson="pref-slimChrome,pref-includeNavBar" preference="pref-miniOnAllInput"/>
-			<checkbox label="&opt.miniOnChangeLocation.label;" tooltiptext="&opt.miniOnChangeLocation.tooltip;" dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights" preference="pref-miniOnChangeLocation"/>
-			<checkbox label="&opt.skyLights.label;" tooltiptext="&opt.skyLights.tooltip;" dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation" preference="pref-skyLights"/>
-			<checkbox label="&opt.skyLightsHide.label;" tooltiptext="&opt.skyLightsHide.tooltip;" dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights" preference="pref-skyLightsHide"/>
-		</groupbox>
+		<hbox>
+			<groupbox align="start">
+				<caption label="&cat.general.label;"/>
+				<checkbox label="&opt.includeNavBar.label;"
+					tooltiptext="&opt.includeNavBar.tooltip;"
+					dependson="pref-slimChrome"
+					preference="pref-includeNavBar"/>
+				<checkbox label="&opt.skyLights.label;"
+					tooltiptext="&opt.skyLights.tooltip;"
+					dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation"
+					preference="pref-skyLights"/>
+				<checkbox label="&opt.skyLightsHide.label;"
+					tooltiptext="&opt.skyLightsHide.tooltip;"
+					dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
+					preference="pref-skyLightsHide"/>
+			</groupbox>
+			<groupbox align="start">
+				<caption label="&cat.mini.label;"/>
+				<checkbox label="&opt.miniOnAllInput.label;"
+					tooltiptext="&opt.miniOnAllInput.tooltip;"
+					dependson="pref-slimChrome,pref-includeNavBar"
+					preference="pref-miniOnAllInput"/>
+				<checkbox label="&opt.miniOnChangeLocation.label;"
+					tooltiptext="&opt.miniOnChangeLocation.tooltip;"
+					dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
+					preference="pref-miniOnChangeLocation"/>
+				<checkbox label="&opt.miniOnTabSelect.label;"
+					tooltiptext="&opt.miniOnTabSelect.tooltip;"
+					dependson="pref-slimChrome,pref-includeNavBar"
+					preference="pref-miniOnTabSelect"/>
+			</groupbox>
+		</hbox>
 		
 		<groupbox>
 			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
@@ -44,7 +69,7 @@
 				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				<scale id="delayInScale" dependson="pref-slimChrome,pref-useMouse"
 					dir="reverse"
-					width="150"
+					width="175"
 					min="75"
 					max="1000"
 					value="75"
@@ -59,7 +84,7 @@
 				<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				<scale id="delayOutScale" dependson="pref-slimChrome,pref-useMouse"
 					dir="reverse"
-					width="150"
+					width="175"
 					min="75"
 					max="1000"
 					value="75"

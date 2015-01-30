@@ -5,11 +5,8 @@
 <!ENTITY cat.general.label "一般設定">
 <!ENTITY opt.slimChrome.label "啟用精簡介面">
 <!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
-<!ENTITY opt.includeNavBar.label "隱藏瀏覽工具列">
 <!ENTITY opt.includeNavBar.tooltip "將瀏覽工具列連同其他工具列一起隱藏。若否，則瀏覽工具列同預設顯示於視窗上端。">
-<!ENTITY opt.miniOnAllInput.label "在隱藏工具列之外輸入時以迷你工具列方式顯示網址列">
 <!ENTITY opt.miniOnAllInput.tooltip "啟用此選項則在任何地方進行輸入都將以迷你工具列顯示">
-<!ENTITY opt.miniOnChangeLocation.label "進入新網址時顯示迷你工具列">
 <!ENTITY opt.miniOnChangeLocation.tooltip "(建議啟用)迷你工具列會在當前分頁改變網址時或移往不同網址之背景分頁時出現">
 <!ENTITY opt.skyLights.label "啟用曙光(Sky Lights)特效">
 <!ENTITY opt.skyLights.tooltip "曙光(Sky Lights)特效">

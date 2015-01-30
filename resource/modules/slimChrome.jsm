@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.10';
+Modules.VERSION = '1.5.11';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -541,13 +541,13 @@ this.slimChromeOnLocationChange = function(m) {
 	}
 };
 
-this.slimChromeOnTabSelect = function() {
+this.slimChromeOnTabSelect = function(e) {
 	if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
-	&& Prefs.miniOnChangeLocation // and of course only if the pref is enabled
+	&& (	(Prefs.miniOnChangeLocation && gBrowser.mCurrentBrowser._lastHost != gBrowser.mCurrentBrowser._currentHost) // only if miniOnChangeLocation and the webhost has changed
+		|| (e && Prefs.miniOnTabSelect) ) // or when supposed to show on every tab select (and this is actually a TabSelect event)
 	&& !focusPasswords() // focusPasswords will always show mini if a password field is focused
 	&& (typeof(blockedPopup) == 'undefined' || !blockedPopup) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 	&& !trueAttribute(slimChromeContainer, 'hover') // also no point in showing mini if chrome is already shown
-	&& gBrowser.mCurrentBrowser._lastHost != gBrowser.mCurrentBrowser._currentHost // only show mini when the webhost has changed
 	&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
 	&& window.XULBrowserWindow.inContentWhitelist.indexOf(gBrowser.mCurrentBrowser._currentSpec) == -1 // and if the current address is not whitelisted
 	) {
