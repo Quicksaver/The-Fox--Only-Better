@@ -5,13 +5,19 @@
 <!ENTITY cat.general.label "常规">
 <!ENTITY opt.slimChrome.label "启用精简界面功能">
 <!ENTITY opt.slimChrome.tooltip "在您不需要的时候隐藏顶部工具栏，使得用户界面更具流线型，同时最大化网页显示面积。">
+<!ENTITY opt.includeNavBar.label "隐藏导航栏">
 <!ENTITY opt.includeNavBar.tooltip "将导航栏连同其他工具栏一并隐藏。如果禁用该项，则导航栏将像之前一样仍始终显示在顶部。">
-<!ENTITY opt.miniOnAllInput.tooltip "如果启用此项，当您在任何类型的的输入框键入内容时都将显示迷你栏，而不仅仅是密码框。">
-<!ENTITY opt.miniOnChangeLocation.tooltip "强烈推荐！无论是您从当前网页打开到另一个网站（不同域名），还是您选择在后台标签页打开另一个网站之时，这都将显示一个迷你栏。">
 <!ENTITY opt.skyLights.label "启用天窗">
 <!ENTITY opt.skyLights.tooltip "天窗通过在标签栏下方添加一个不太显眼的小长方块来告诉您有关当前网页的信息，用来代替地址栏左侧的网页标识框。这样就能够帮助您始终确认所在的网页是否安全！">
 <!ENTITY opt.skyLightsHide.label "工具栏可见时隐藏天窗">
 <!ENTITY opt.skyLightsHide.tooltip "工具栏或迷你栏可见时自动隐藏天窗，因为这时您可以通过工具栏本身包括的网页标识框了解网页信息。">
+<!ENTITY cat.mini.label "显示迷你栏的时机">
+<!ENTITY opt.miniOnAllInput.label "聚焦在任何类型的输入框时">
+<!ENTITY opt.miniOnAllInput.tooltip "如果启用此项，当您在任何类型的输入框中键入内容时都将显示迷你栏，而不仅仅是密码框。">
+<!ENTITY opt.miniOnChangeLocation.label "前往另一个网站">
+<!ENTITY opt.miniOnChangeLocation.tooltip "强烈推荐！无论是当前标签页变更为另一个网站（不同域名），还是您选择了另一个不同网站的后台标签页，这都将显示一个迷你栏。">
+<!ENTITY opt.miniOnTabSelect.label "选择另一个标签页">
+<!ENTITY opt.miniOnTabSelect.tooltip "每次您改变标签页时显示迷你栏，让您知道您在每个标签页的当前位置。">
 <!ENTITY opt.useMouse.label "鼠标移动到顶部时显示 chrome 界面">
 <!ENTITY opt.useMouse.tooltip "工具栏会对鼠标移动产生反应，当鼠标移入时显示，移出时隐藏。如果禁用该项，则您只有在按 F6 定位到地址栏，或者一个面板打开时才会显示相依赖的工具栏。">
 <!ENTITY opt.delayIn.label "鼠标移入的灵敏度">

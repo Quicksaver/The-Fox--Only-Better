@@ -5,13 +5,19 @@
 <!ENTITY cat.general.label "Algemeen">
 <!ENTITY opt.slimChrome.label "Chrome verkleinen inschakelen">
 <!ENTITY opt.slimChrome.tooltip "Stroomlijnt de interface en maximaliseert de ruimte voor inhoud, door de bovenste werkbalken te verbergen als u ze niet nodig hebt.">
+<!ENTITY opt.includeNavBar.label "Navigatiebalk ook verbergen">
 <!ENTITY opt.includeNavBar.tooltip "Verbergt de navigatiebalk met de overige werkbalken. Als dit is uitgeschakeld zal de navigatiebalk net als voorheen altijd zichtbaar zijn.">
-<!ENTITY opt.miniOnAllInput.tooltip "Schakel dit in als u de mini-locatiebalk wilt weergeven bij invoer in elk type invoerveld, en niet alleen wachtwoordvelden.">
-<!ENTITY opt.miniOnChangeLocation.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
 <!ENTITY opt.skyLights.label "Daklichten inschakelen">
 <!ENTITY opt.skyLights.tooltip "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm. Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
 <!ENTITY opt.skyLightsHide.label "Daklichten verbergen als chrome zichtbaar is">
 <!ENTITY opt.skyLightsHide.tooltip "De Daklichten worden verborgen als de werkbalken of de minibalk zichtbaar zijn, aangezien al hun informatie al ergens in de werkbalken zichtbaar is.">
+<!ENTITY cat.mini.label "Minibalk weergeven bij…">
+<!ENTITY opt.miniOnAllInput.label "focus geven aan elk soort invoerveld">
+<!ENTITY opt.miniOnAllInput.tooltip "Schakel dit in als u de mini-locatiebalk wilt weergeven bij invoer in elk type invoerveld, en niet alleen wachtwoordvelden.">
+<!ENTITY opt.miniOnChangeLocation.label "naar een andere locatie navigeren">
+<!ENTITY opt.miniOnChangeLocation.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
+<!ENTITY opt.miniOnTabSelect.label "selecteren van een ander tabblad">
+<!ENTITY opt.miniOnTabSelect.tooltip "Geeft de minibalk weer telkens als u van tabblad wijzigt, om u uw huidige locatie op elke tabblad te laten weten.">
 <!ENTITY opt.useMouse.label "Chrome weergeven als muis bovenzijde aanwijst">
 <!ENTITY opt.useMouse.tooltip "De werkbalken reageren op muisbewegingen en zullen verschijnen als de muis erboven hangt en verdwijnen als de muisaanwijzer weg is. Als dit is uitgeschakeld kunt u de werkbalken alleen benaderen door op F6 te drukken om de locatiebalk focus te geven, of wanneer een paneel dat aan één van de verborgen werkbalken is verankerd opent.">
 <!ENTITY opt.delayIn.label "Gevoeligheid bij binnenkomst">

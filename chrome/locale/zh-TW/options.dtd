@@ -5,13 +5,19 @@
 <!ENTITY cat.general.label "一般設定">
 <!ENTITY opt.slimChrome.label "啟用精簡介面">
 <!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
+<!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
 <!ENTITY opt.includeNavBar.tooltip "將瀏覽工具列連同其他工具列一起隱藏。若否，則瀏覽工具列同預設顯示於視窗上端。">
-<!ENTITY opt.miniOnAllInput.tooltip "啟用此選項則在任何地方進行輸入都將以迷你工具列顯示">
-<!ENTITY opt.miniOnChangeLocation.tooltip "(建議啟用)迷你工具列會在當前分頁改變網址時或移往不同網址之背景分頁時出現">
 <!ENTITY opt.skyLights.label "啟用曙光(Sky Lights)特效">
 <!ENTITY opt.skyLights.tooltip "曙光(Sky Lights)特效">
 <!ENTITY opt.skyLightsHide.label "當工具列顯示時隱藏曙光(Sky Lights)特效">
 <!ENTITY opt.skyLightsHide.tooltip "當工具列或迷你工具列顯示時，由於資訊已顯示於工具列的某處，曙光特效將自動消除">
+<!ENTITY cat.mini.label "Show the mini bar when...">
+<!ENTITY opt.miniOnAllInput.label "focusing any type of input box">
+<!ENTITY opt.miniOnAllInput.tooltip "啟用此選項則在任何地方進行輸入都將以迷你工具列顯示">
+<!ENTITY opt.miniOnChangeLocation.label "surfing to another location">
+<!ENTITY opt.miniOnChangeLocation.tooltip "(建議啟用)迷你工具列會在當前分頁改變網址時或移往不同網址之背景分頁時出現">
+<!ENTITY opt.miniOnTabSelect.label "selecting another tab">
+<!ENTITY opt.miniOnTabSelect.tooltip "Shows the mini bar every time you change tabs, to let you know of your current location on each tab.">
 <!ENTITY opt.useMouse.label "當滑鼠移到頂端，工具列顯示">
 <!ENTITY opt.useMouse.tooltip "工具列會因應游標的位置，當游標在上面時顯示，離開時則隱藏。若取消此選項，則僅能透過敲擊&lt;F6&gt;來使用位址列">
 <!ENTITY opt.delayIn.label "展開延遲">

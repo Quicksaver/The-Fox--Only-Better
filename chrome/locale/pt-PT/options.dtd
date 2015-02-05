@@ -5,13 +5,19 @@
 <!ENTITY cat.general.label "Geral">
 <!ENTITY opt.slimChrome.label "Activar a Interface Reduzida">
 <!ENTITY opt.slimChrome.tooltip "Simplifica a interface do navegador e maximiza o espaço de visualização de conteúdo, escondendo convenientemente as barras de ferramentas do topo quando não são necessárias.">
+<!ENTITY opt.includeNavBar.label "Esconder também a barra de navegação">
 <!ENTITY opt.includeNavBar.tooltip "A barra de navegação também é escondida com as outras barras de ferramentas. Se desactivar esta opção, a barra de navegação estará sempre visível no topo como sempre.">
-<!ENTITY opt.miniOnAllInput.tooltip "Actie esta opção se desejar que a mini barra de endereço seja mostrada ao inserir texto em qualquer tipo de caixa de texto, e não apenas em campos de palavra-passe.">
-<!ENTITY opt.miniOnChangeLocation.tooltip "Altamente recomendado! A mini barra irá aparecer sempre que o separador actual mudar de endereço (com um anfitrião diferente), ou sempre que selecionar um separador que tenha mudado de endereço entretanto.">
 <!ENTITY opt.skyLights.label "Activar as Luzes no Céu">
 <!ENTITY opt.skyLights.tooltip "As Luzes no Céu fornecem informação acerca da página actual, através de um sistema visual não intrusivo no topo do navegador. Elas permitem-lhe ter sempre a certeza de onde se encontra e o quão seguro é lá se encontrar!">
-<!ENTITY opt.skyLightsHide.label "Esconder as Luzes no Céu quando as barras de ferramentas estão visíveis">
+<!ENTITY opt.skyLightsHide.label "Ocultar as Luzes no Céu ao mostrar as barras">
 <!ENTITY opt.skyLightsHide.tooltip "As Luzes no Céu escondem-se sempre que as barras de ferramentas ou a mini barra esteja visível, já que toda a informação dada pelas luzes já deva existir nas barras de ferramentas em si de algum modo.">
+<!ENTITY cat.mini.label "Mostrar a mini barra ao...">
+<!ENTITY opt.miniOnAllInput.label "focar qualquer caixa de texto">
+<!ENTITY opt.miniOnAllInput.tooltip "Active esta opção se desejar que a mini barra de endereço seja mostrada ao inserir texto em qualquer tipo de caixa de texto, e não apenas em campos de palavra-passe.">
+<!ENTITY opt.miniOnChangeLocation.label "navegar para outro endereço">
+<!ENTITY opt.miniOnChangeLocation.tooltip "Altamente recomendado! A mini barra irá aparecer sempre que o separador actual mudar de endereço (com um anfitrião diferente), ou sempre que selecionar um separador que tenha mudado de endereço entretanto.">
+<!ENTITY opt.miniOnTabSelect.label "selecionar outro separador">
+<!ENTITY opt.miniOnTabSelect.tooltip "Mostra a mini barra sempre que mudar entre separadores, para que estejas sempre a par da localização do separador actual.">
 <!ENTITY opt.useMouse.label "Mostrar as barras de ferramentas consoante a posição do rato">
 <!ENTITY opt.useMouse.tooltip "As barras de ferramentas irão reagir ao movimento do rota, aparecendo sempre que o rato se encontre sobre elas, e escondendo-se sempre que o rato as deixe. Se esta opção for desactivada, só será possível aceder às barras de ferramentas ao pressionar F6 para focar a barra de endereço, ou quando algum painel abre ancorado a uma delas.">
 <!ENTITY opt.delayIn.label "Sensibilidade ao entrar">

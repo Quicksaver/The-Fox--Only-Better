@@ -5,13 +5,19 @@
 <!ENTITY cat.general.label "Général">
 <!ENTITY opt.slimChrome.label "Activer l'Interface Réduite">
 <!ENTITY opt.slimChrome.tooltip "Simplifie l'interface et maximise l'espace d'affichage du contenu, en cachant les barres d'outils supérieures lorsque vous n'en avez pas besoin.">
+<!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
 <!ENTITY opt.includeNavBar.tooltip "Cache la barre d'adresse avec les autres barres d'outils. Si cette option est désactivée, la barre d'adresse sera toujours visible en haut de l'interface comme auparavant.">
-<!ENTITY opt.miniOnAllInput.tooltip "Activez cette option si vous voulez que la mini-barre s'affiche quand vous tapez dans n'importe quel champs de texte, et pas seulement un de mot de passe.">
-<!ENTITY opt.miniOnChangeLocation.tooltip "Hautement recommandé! La mini-barre apparaîtra lorsque dans l'onglet courant, l'adresse change pour une autre (nom de domaine différent), ou quand vous basculez vers un onglet jusque là en arrière plan, et qui aurait changé d'adresse pendant ce temps.">
 <!ENTITY opt.skyLights.label "Activer les Sky Lights">
 <!ENTITY opt.skyLights.tooltip "Les Sky Lights vous donnent des informations sur la page web que vous êtes actuellement en train de visiter à travers une aide alternative et non-intrusive en haut de l'interface. Ils vous aident à être sûr de l'endroit où vous êtes et ce qu'il est possible de faire sans danger!">
 <!ENTITY opt.skyLightsHide.label "Cacher les Sky Lights lorsque l'interface est visible">
 <!ENTITY opt.skyLightsHide.tooltip "Les Sky Lights se cacheront lorsque les barres d'outils ou la mini-barre sont visibles, dans la mesure où toutes leurs informations seront déjà incluses dans les barres d'outils.">
+<!ENTITY cat.mini.label "Show the mini bar when...">
+<!ENTITY opt.miniOnAllInput.label "focusing any type of input box">
+<!ENTITY opt.miniOnAllInput.tooltip "Activez cette option si vous voulez que la mini-barre s'affiche quand vous tapez dans n'importe quel champs de texte, et pas seulement un de mot de passe.">
+<!ENTITY opt.miniOnChangeLocation.label "surfing to another location">
+<!ENTITY opt.miniOnChangeLocation.tooltip "Hautement recommandé! La mini-barre apparaîtra lorsque dans l'onglet courant, l'adresse change pour une autre (nom de domaine différent), ou quand vous basculez vers un onglet jusque là en arrière plan, et qui aurait changé d'adresse pendant ce temps.">
+<!ENTITY opt.miniOnTabSelect.label "selecting another tab">
+<!ENTITY opt.miniOnTabSelect.tooltip "Shows the mini bar every time you change tabs, to let you know of your current location on each tab.">
 <!ENTITY opt.useMouse.label "Affiche l'interface lorsque la souris va vers sur le haut de la fenêtre">
 <!ENTITY opt.useMouse.tooltip "Les barres d'outils réagiront aux mouvements de la souris, apparaîtront lorsque la souris survolera leur position, et se cacheront lorsque la quittera. Si cette option est désactivée, les barres d'outils ne seront accessibles qu'en utilisant la touche F6 (ce qui donnera le focus à la barre d'adresse), ou quand un panneau s'ouvre ancré à une des barres d'outils cachées.">
 <!ENTITY opt.delayIn.label "Sensibilité à l'entrée">
