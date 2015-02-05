@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.12';
+Modules.VERSION = '1.5.13';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -33,7 +33,8 @@ this.MIN_RIGHT = 22;
 this.MIN_WIDTH = 550;
 
 // how much (px) should the active area of the slimmer "extend" on windows with chromehidden~=menubar
-this.EXTEND_SLIM_CHROMEHIDDEN = 15;
+// also affects the main window when Tree Style Tabs is enabled
+this.EXTEND_SLIM_CHROMEHIDDEN = 21;
 
 this.moveSlimChromeStyle = {};
 this.lastSlimChromeStyle = null;
