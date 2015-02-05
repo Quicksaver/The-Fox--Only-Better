@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.11';
+Modules.VERSION = '1.5.12';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -144,6 +144,12 @@ this.moveSlimChrome = function() {
 	Styles.load('slimChromeMove_'+_UUID, sscode, true);
 	
 	dispatch(slimChromeContainer, { type: 'MovedSlimChrome', cancelable: false });
+};
+
+this.moveOnSidebar = function(aBox, aAttr, oldVal, newVal) {
+	if(oldVal != newVal) {
+		delayMoveSlimChrome();
+	}
 };
 
 this.miniSideSwitch = function(v) {
@@ -884,6 +890,10 @@ this.loadSlimChrome = function() {
 	// position the top chrome correctly when the window is resized or a toolbar is shown/hidden
 	Listeners.add(window, 'resize', delayMoveSlimChrome);
 	
+	// make sure the chrome position is updated when toggling the sidebar
+	Watchers.addAttributeWatcher($('sidebar-box'), 'hidden', moveOnSidebar, false, false);
+	Watchers.addAttributeWatcher($('sidebar-box'), 'collapsed', moveOnSidebar, false, false);
+	
 	// also keep the toolbox visible if it has focus of course
 	Listeners.add(gNavToolbox, 'focus', onFocus, true);
 	Listeners.add(gNavToolbox, 'blur', onMouseOut, true);
@@ -952,6 +962,8 @@ this.unloadSlimChrome = function() {
 	var focused = isAncestor(document.commandDispatcher.focusedElement, slimChromeContainer) && getParentWithId(document.commandDispatcher.focusedElement);
 	
 	Listeners.remove(window, 'resize', delayMoveSlimChrome);
+	Watchers.removeAttributeWatcher($('sidebar-box'), 'hidden', moveOnSidebar, false, false);
+	Watchers.removeAttributeWatcher($('sidebar-box'), 'collapsed', moveOnSidebar, false, false);
 	Listeners.remove(browserPanel, 'mouseout', onMouseOutBrowser);
 	Listeners.remove(browserPanel, 'mouseover', onMouseReEnterBrowser);
 	Listeners.remove(gNavToolbox, 'dragstart', onDragStart);
