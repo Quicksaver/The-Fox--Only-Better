@@ -1,6 +1,20 @@
 {
-	"current":"1.1.8",
+	"current":"1.1.9",
+	"knownissues":[
+		["In multiprocess firefox (e10s), moving the mouse to the empty tabs area doesn't show the toolbars (<a target=\"_blank\" href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=1120078\">bug 1120078</a>)"]
+	],
 	"releases": {
+		"1.1.9":{
+			"date":"February 5, 2015",
+			"notes":[
+				["new","Option to show the mini bar on every tab select. This may have caused the other preferences relative to the mini bar to reset, so you may have to reconfigure them; I'm sorry for the inconvenience on this one, it shouldn't happen again."],
+				["updated","pt-PT and zh-TW locales"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/australis-small-icons/\">Australis Small Icons</a>, wouldn't take effect with Slim Chrome enabled"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/classicthemerestorer/\">Classic Theme Restorer</a>'s movable back/forward button, appearance issues in the mini bar"],
+				["bugfix","Sometimes opening or closing the sidebar would leave the top toolbars positioned incorrectly in the window"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/tree-style-tab/\">Tree Style Tab</a>, made it easier to show the toolbars when moving the mouse to the window title"]
+			]
+		},
 		"1.1.8":{
 			"date":"December 21, 2014",
 			"notes":[
