@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.5';
+Modules.VERSION = '1.1.6';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -82,7 +82,7 @@ this.openReleaseNotes = function(e) {
 	if(e.type == 'click' && e.which != 1) { return; }
 	if(e.type == 'keypress' && e.keycode != e.DOM_VK_RETURN) { return; }
 	
-	if(window.opener && window.opener instanceof window.opener.ChromeWindow) {
+	if(window.opener && window.opener instanceof window.opener.ChromeWindow && window.opener.gBrowser) {
 		openReleaseNotesTab(window.opener);
 	} else {
 		Windows.callOnMostRecent(openReleaseNotesTab, 'navigator:browser');
