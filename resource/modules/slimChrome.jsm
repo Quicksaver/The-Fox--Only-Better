@@ -1,4 +1,4 @@
-Modules.VERSION = '1.5.13';
+Modules.VERSION = '1.5.14';
 
 this.__defineGetter__('slimChromeSlimmer', function() { return $(objName+'-slimChrome-slimmer'); });
 this.__defineGetter__('slimChromeContainer', function() { return $(objName+'-slimChrome-container'); });
@@ -74,10 +74,9 @@ this.moveSlimChrome = function() {
 	moveSlimChromeStyle.right += document.documentElement.clientWidth -appContentPos.right;
 	
 	// Compatibility with TreeStyleTab
-	if($('TabsToolbar') && !$('TabsToolbar').collapsed) {
+	if(TabsToolbar && !TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden') {
 		// This is also needed when the tabs are on the left, the width of the findbar doesn't follow with the rest of the window for some reason
-		if($('TabsToolbar').getAttribute('treestyletab-tabbar-position') == 'left' || $('TabsToolbar').getAttribute('treestyletab-tabbar-position') == 'right') {
-			var TabsToolbar = $('TabsToolbar');
+		if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left' || TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
 			var TabsSplitter = document.getAnonymousElementByAttribute($('content'), 'class', 'treestyletab-splitter');
 			moveSlimChromeStyle.width -= TabsToolbar.clientWidth;
 			moveSlimChromeStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
@@ -921,7 +920,7 @@ this.loadSlimChrome = function() {
 	// make the drop indicator visible on windows with aero enabled;
 	// the indicator comes from the binding, and if for some reason it's removed/re-applied, we would lose this watcher, so we need to make sure it stays
 	if(WINNT) {
-		Listeners.add($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
+		Listeners.add(TabsToolbar, 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	}
 	
 	// follow changes to chrome toolbars, in case they're in our box and it should be shown
@@ -980,7 +979,7 @@ this.unloadSlimChrome = function() {
 	Listeners.remove(gBrowser, 'keyup', slimChromeKeyup, true);
 	Listeners.remove(window, 'keydown', slimChromeEsc, true);
 	Listeners.remove(slimChromeContainer, 'transitionend', slimChromeTransitioned);
-	Listeners.remove($('TabsToolbar'), 'dragenter', setSlimChromeTabDropIndicatorWatcher);
+	Listeners.remove(TabsToolbar, 'dragenter', setSlimChromeTabDropIndicatorWatcher);
 	Listeners.remove(contentArea, 'mousemove', contentAreaOnMouseMove);
 	Listeners.remove(gBrowser.tabContainer, 'TabSelect', slimChromeOnTabSelect);
 	Messenger.unlistenWindow(window, 'locationChange', slimChromeOnLocationChange);
