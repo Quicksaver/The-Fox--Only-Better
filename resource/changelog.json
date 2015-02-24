@@ -1,9 +1,17 @@
 {
-	"current":"1.1.9",
+	"current":"1.1.10",
 	"knownissues":[
 		["In multiprocess firefox (e10s), moving the mouse to the empty tabs area doesn't show the toolbars (<a target=\"_blank\" href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=1120078\">bug 1120078</a>)"]
 	],
 	"releases": {
+		"1.1.10":{
+			"date":"February 24, 2015",
+			"notes":[
+				["changed","Release Notes tab URI defaults to about:thefoxonlybetter instead of chrome://..., which is now fully functional in multiprocess firefox (e10s)"],
+				["bugfix","The Release Notes link in the preferences dialog would sometimes fail to work"],
+				["bugfix","Compatibility with <a target=\"blank\" href=\"https://addons.mozilla.org/firefox/addon/tree-style-tab/\">Tree Style Tab</a>'s autohide tabs toolbar feature, toolbars would not be properly sized"]
+			]
+		},
 		"1.1.9":{
 			"date":"February 5, 2015",
 			"notes":[
