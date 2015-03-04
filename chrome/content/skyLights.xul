@@ -13,4 +13,6 @@
 			ignoreCUI="true"/>
 	</toolbox>
 	
+	<toolbar id="objName-slimChrome-slimmer" skyLights="true"/>
+	
 </overlay>

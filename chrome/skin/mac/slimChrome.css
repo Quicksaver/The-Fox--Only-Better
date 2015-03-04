@@ -14,6 +14,7 @@
 		background-repeat: repeat-x, no-repeat;
 		background-position: 0 1px, 0 0;
 		box-shadow: inset 0 1px 0 hsla(0,0%,100%,.4);
+		height: 4px;
 	}
 	
 	/* extra selectors to add specificity */
