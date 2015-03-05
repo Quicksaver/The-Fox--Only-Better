@@ -1,6 +1,7 @@
-Modules.VERSION = '1.1.7';
+Modules.VERSION = '1.1.8';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
+this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 
 this.LLBlistener = function() {
 	if(!Prefs.includeNavBar) { return; }
@@ -8,7 +9,7 @@ this.LLBlistener = function() {
 	if(typeof(blockedPopup) != 'undefined' && blockedPopup) { return; }
 	
 	// show the link hover state immediately
-	if(window.gURLBar.getAttribute('overlinkstate') == 'showing') {
+	if(gURLBar.getAttribute('overlinkstate') == 'showing') {
 		Timers.cancel('LBBlistener');
 		setAttribute(slimChromeContainer, 'overlinkstate', 'true');
 		setMini(true);
@@ -27,16 +28,22 @@ this.LLBlistener = function() {
 
 // its preferences are lost when slimChrome un/loads
 this.LLBreapply = function() {
-	LinkLocationBar.startup();
+	LinkLocationBar.applyPrefs();
 	LLBapply(); // will only actually apply when slimChromeContainer exists, so it's safe to call always here
 };
 
 this.LLBapply = function() {
-	Listeners.add(slimChromeContainer, 'mouseover', LLBonMouseOver, true);
+	try{ Listeners.add(slimChromeContainer, 'mouseover', LLBonMouseOver, true); }
+	catch(ex) {}
 };
 
 this.LLBunapply = function() {
 	Listeners.remove(slimChromeContainer, 'mouseover', LLBonMouseOver, true);
+	removeAttribute(slimChromeContainer, 'overlinkstate');
+};
+
+this.LLBreApplyPrefs = function() {
+	Timers.init('LLBreApplyPrefs', function() { LinkLocationBar.applyPrefs(); }, 250);
 };
 
 this.LLBresize = function() {
@@ -73,8 +80,22 @@ Modules.LOADMODULE = function() {
 	Listeners.add(window, 'UnloadingSlimChrome', LLBunapply);
 	Listeners.add(window, 'UnloadedSlimChrome', LLBreapply);
 	Listeners.add(window, 'MovedSlimChrome', LLBresize);
+	Prefs.listen('includeNavBar', LLBreApplyPrefs);
 	
-	Watchers.addAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
+	Watchers.addAttributeWatcher(gURLBar, 'overlinkstate', LLBlistener, false, false);
+	
+	Piggyback.add('LinkLocationBar', gURLBar, '_updateOverLink', function(aURL) {
+		Timers.cancel('_updateOverLink');
+		
+		// just throwing a value out there, basically anything that's too small means the chrome is still hidden, so this value wouldn't be the actual mini's width to be used,
+		// in turn the text would not be colored correctly (it would not distinguish the domain from the rest) because it truncates it when the width is not enough
+		if(this._shell.boxObject.width < 150) {
+			Timers.init('_updateOverLink', function() { gURLBar._updateOverLink(aURL); }, 50);
+			return false;
+		}
+		
+		return true;
+	}, Piggyback.MODE_BEFORE);
 	
 	if(typeof(lastSlimChromeStyle) != 'undefined' && lastSlimChromeStyle) {
 		LLBresize();
@@ -84,12 +105,13 @@ Modules.LOADMODULE = function() {
 };
 
 Modules.UNLOADMODULE = function() {
-	Watchers.removeAttributeWatcher(window.gURLBar, 'overlinkstate', LLBlistener, false, false);
-	
+	Piggyback.revert('LinkLocationBar', gURLBar, '_updateOverLink');
+	Watchers.removeAttributeWatcher(gURLBar, 'overlinkstate', LLBlistener, false, false);
 	Listeners.remove(window, 'LoadedSlimChrome', LLBreapply);
 	Listeners.remove(window, 'UnloadingSlimChrome', LLBunapply);
 	Listeners.remove(window, 'UnloadedSlimChrome', LLBreapply);
 	Listeners.remove(window, 'MovedSlimChrome', LLBresize);
+	Prefs.unlisten('includeNavBar', LLBreApplyPrefs);
 	
 	Styles.unload('LLBresize_'+_UUID);
 	
