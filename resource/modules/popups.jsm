@@ -1,10 +1,14 @@
-Modules.VERSION = '2.0.23';
+Modules.VERSION = '2.0.24';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
 this.holdPanelUI = function(e) {
-	e.detail = 'PanelUI-button';
-	e.stopPropagation();
+	// make sure we only trigger the chrome when the popup is opened through its button
+	// https://github.com/Quicksaver/The-Fox--Only-Better/issues/93
+	if(e.target.anchorNode) {
+		e.detail = 'PanelUI-button';
+		e.stopPropagation();
+	}
 };
 
 this.holdNavBarOverflow = function(e) {
