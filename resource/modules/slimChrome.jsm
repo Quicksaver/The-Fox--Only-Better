@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -701,9 +701,9 @@ this.slimChrome = {
 	
 	onTabSelect: function(e) {
 		if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
+		&& !this.focusPasswords() // focusPasswords will always show mini if a password field is focused
 		&& (	(Prefs.miniOnChangeLocation && gBrowser.mCurrentBrowser._lastHost != gBrowser.mCurrentBrowser._currentHost) // only if miniOnChangeLocation and the webhost has changed
 			|| (e && Prefs.miniOnTabSelect) ) // or when supposed to show on every tab select (and this is actually a TabSelect event)
-		&& !this.focusPasswords() // focusPasswords will always show mini if a password field is focused
 		&& (typeof(popups) == 'undefined' || !popups.blocked) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(this.container, 'hover') // also no point in showing mini if chrome is already shown
 		&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
