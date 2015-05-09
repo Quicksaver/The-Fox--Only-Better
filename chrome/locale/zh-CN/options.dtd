@@ -14,9 +14,9 @@
 <!ENTITY cat.mini.label "显示迷你栏的时机">
 <!ENTITY opt.miniOnAllInput.label "聚焦在任何类型的输入框时">
 <!ENTITY opt.miniOnAllInput.tooltip "如果启用此项，当您在任何类型的输入框中键入内容时都将显示迷你栏，而不仅仅是密码框。">
-<!ENTITY opt.miniOnChangeLocation.label "前往另一个网站">
+<!ENTITY opt.miniOnChangeLocation.label "前往另一个网站时">
 <!ENTITY opt.miniOnChangeLocation.tooltip "强烈推荐！无论是当前标签页变更为另一个网站（不同域名），还是您选择了另一个不同网站的后台标签页，这都将显示一个迷你栏。">
-<!ENTITY opt.miniOnTabSelect.label "选择另一个标签页">
+<!ENTITY opt.miniOnTabSelect.label "选择另一个标签页时">
 <!ENTITY opt.miniOnTabSelect.tooltip "每次您改变标签页时显示迷你栏，让您知道您在每个标签页的当前位置。">
 <!ENTITY opt.useMouse.label "鼠标移动到顶部时显示 chrome 界面">
 <!ENTITY opt.useMouse.tooltip "工具栏会对鼠标移动产生反应，当鼠标移入时显示，移出时隐藏。如果禁用该项，则您只有在按 F6 定位到地址栏，或者一个面板打开时才会显示相依赖的工具栏。">
