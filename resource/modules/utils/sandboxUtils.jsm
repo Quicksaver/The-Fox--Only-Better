@@ -1,4 +1,4 @@
-Modules.VERSION = '2.3.4';
+Modules.VERSION = '2.3.5';
 Modules.UTILS = true;
 Modules.CLEAN = false;
 
@@ -34,11 +34,6 @@ this.__defineGetter__('Watchers', function() { delete this.Watchers; Modules.loa
 
 // Keysets - handles editable keysets for the add-on
 this.__defineGetter__('Keysets', function() { Windows; delete this.Keysets; Modules.load('utils/Keysets'); return Keysets; });
-
-// Piggyback - This module allows me to Piggyback methods of any object. It also gives me access to the CustomizableUI module backstage pass, so I can do the same to it.
-this.__defineGetter__('Piggyback', function() { delete this.Piggyback; delete this.CustomizableUI; delete this.CUIBackstage; Modules.load('utils/Piggyback'); return Piggyback; });
-this.__defineGetter__('CustomizableUI', function() { delete this.Piggyback; delete this.CustomizableUI; delete this.CUIBackstage; Modules.load('utils/Piggyback'); return CustomizableUI; });
-this.__defineGetter__('CUIBackstage', function() { delete this.Piggyback; delete this.CustomizableUI; delete this.CUIBackstage; Modules.load('utils/Piggyback'); return CUIBackstage; });
 
 // closeCustomize() - useful for when you want to close the customize tabs for whatever reason
 this.closeCustomize = function() {

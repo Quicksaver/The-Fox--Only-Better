@@ -1,25 +1,44 @@
-Modules.VERSION = '1.0.3';
+Modules.VERSION = '2.0.0';
 
 this.__defineGetter__('RSS_TICKER_UI', function() { return window.RSS_TICKER_UI; });
 this.__defineGetter__('RSS_TICKER_UTILS', function() { return window.RSS_TICKER_UTILS; });
 this.__defineGetter__('RSS_TICKER_FEED_MANAGER', function() { return window.RSS_TICKER_FEED_MANAGER; });
 
-this.RSSTickerReload = function() {
-	RSS_TICKER_UI.unloadTicker();
-	RSS_TICKER_UI.loadTicker();
+this.RSSTicker = {	
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'LoadedSlimChrome':
+			case 'UnloadedSlimChrome':
+				this.reload();
+				break;
+		}
+	},
 	
-	// we don't want a doubled menu item for this toolbar
-	var i = gNavToolbox.externalToolbars.indexOf(RSS_TICKER_UI.toolbar);
-	if(i > -1) {
-		gNavToolbox.externalToolbars.splice(i, 1);
-	}
+	observe: function(aSubject, aTopic, aData) {
+		switch(aSubject) {
+			case 'tickerPlacement':
+				this.style();
+				break;
+		}
+	},
 	
-	RSSTickerStyle();
-};
-
-this.RSSTickerStyle = function() {
-	if(typeof(slimChromeContainer) != 'undefined') {
-		toggleAttribute(slimChromeContainer, 'RSSTicker', Prefs.tickerPlacement == 2);
+	reload: function() {
+		RSS_TICKER_UI.unloadTicker();
+		RSS_TICKER_UI.loadTicker();
+		
+		// we don't want a doubled menu item for this toolbar
+		var i = gNavToolbox.externalToolbars.indexOf(RSS_TICKER_UI.toolbar);
+		if(i > -1) {
+			gNavToolbox.externalToolbars.splice(i, 1);
+		}
+		
+		this.style();
+	},
+	
+	style: function() {
+		if(typeof(slimChrome) != 'undefined') {
+			toggleAttribute(slimChrome.container, 'RSSTicker', Prefs.tickerPlacement == 2);
+		}
 	}
 };
 
@@ -33,26 +52,26 @@ Modules.LOADMODULE = function() {
 		]
 	]);
 	
-	Prefs.listen('tickerPlacement', RSSTickerStyle);
+	Prefs.listen('tickerPlacement', RSSTicker);
 	
-	Listeners.add(window, 'LoadedSlimChrome', RSSTickerReload);
-	Listeners.add(window, 'UnloadedSlimChrome', RSSTickerReload);
+	Listeners.add(window, 'LoadedSlimChrome', RSSTicker);
+	Listeners.add(window, 'UnloadedSlimChrome', RSSTicker);
 	
-	if(typeof(slimChromeContainer) != 'undefined' && slimChromeContainer) {
-		RSSTickerReload();
+	if(typeof(slimChrome) != 'undefined' && slimChrome.container) {
+		RSSTicker.reload();
 	}
 };
 
 Modules.UNLOADMODULE = function() {
-	Listeners.remove(window, 'LoadedSlimChrome', RSSTickerReload);
-	Listeners.remove(window, 'UnloadedSlimChrome', RSSTickerReload);
+	Listeners.remove(window, 'LoadedSlimChrome', RSSTicker);
+	Listeners.remove(window, 'UnloadedSlimChrome', RSSTicker);
 	
-	Prefs.unlisten('tickerPlacement', RSSTickerStyle);
+	Prefs.unlisten('tickerPlacement', RSSTicker);
 	
 	toCode.revert(RSS_TICKER_UI, 'RSS_TICKER_UI.loadTicker');
 	
 	// this is usually unloaded before slimChrome when disabling the add-on, so its listeners don't trigger this
 	if(UNLOADED) {
-		RSSTickerReload();
+		RSSTicker.reload();
 	}
 };

@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.3';
+Modules.VERSION = '1.0.4';
 
 this.__defineGetter__('BrowserSearch', function() { return window.BrowserSearch; });
 
@@ -54,11 +54,11 @@ Modules.LOADMODULE = function() {
 		
 		if(placement) {
 			// show the chrome if the search bar is somewhere in there, before we do anything else
-			if(typeof(slimChromeContainer) != 'undefined'
-			&& !trueAttribute(slimChromeContainer, 'hover')
-			&& (placement.area == CustomizableUI.AREA_PANEL || placement.area == CustomizableUI.AREA_NAVBAR || isAncestor(searchBar, slimChromeContainer))) {
+			if(typeof(slimChrome) != 'undefined'
+			&& !trueAttribute(slimChrome.container, 'hover')
+			&& (placement.area == CustomizableUI.AREA_PANEL || placement.area == CustomizableUI.AREA_NAVBAR || isAncestor(searchBar, slimChrome.container))) {
 				focusSearchWhenFinished = true;
-				initialShowChrome(1500);
+				slimChrome.initialShow(1500);
 				return;
 			}
 			

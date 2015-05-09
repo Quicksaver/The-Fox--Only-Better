@@ -19,7 +19,7 @@
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
 //				This should be a copy of the same method in bootstrap.js.
 // DOMContentLoaded.add(aMethod) - use this to listen to DOMContentLoaded events, instead of adding a dedicated listener to Scope, to avoid a very weird ZC
-//	aMethod - (function) normal event listener
+//	aMethod - (function) normal event listener or (object) a object containing a .onDOMContentLoaded method; both expect aEvent as its single parameter
 // DOMContentLoaded.remove(aMethod) - undo the above step
 //	see DOMContentLoaded.add
 
@@ -33,8 +33,11 @@ this.theFoxOnlyBetter = {
 	objPathString: 'thefoxonlybetter',
 	
 	initialized: false,
+	listeners: new Set(),
+	_queued: new Set(),
 	
-	version: '1.2.4',
+	version: '1.4.0',
+	isContent: true,
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
@@ -58,6 +61,56 @@ this.theFoxOnlyBetter = {
 	// and some global (content) things
 	webProgress: null,
 	
+	// implement message listeners
+	MESSAGES: [
+		'shutdown',
+		'load',
+		'unload',
+		'loadQueued',
+		'pref',
+		'init',
+		'reinit'
+	],
+	
+	messageName: function(m) {
+		// +1 is for the ':' after objName
+		return m.name.substr(this.objName.length +1);
+	},
+	
+	receiveMessage: function(m) {
+		let name = this.messageName(m);
+		
+		switch(name) {
+			case 'shutdown':
+				this.unload();
+				break;
+				
+			case 'load':
+				this.loadModule(m.data);
+				break;
+				
+			case 'unload':
+				this.unloadModule(m.data);
+				break;
+				
+			case 'loadQueued':
+				this.loadQueued();
+				break;
+			
+			case 'pref':
+				this.carriedPref(m.data);
+				break;
+			
+			case 'init':
+				this.finishInit(m.data);
+				break;
+			
+			case 'reinit':
+				this.reinit();
+				break;
+		}
+	},
+	
 	init: function() {
 		this.WINNT = Services.appinfo.OS == 'WINNT';
 		this.DARWIN = Services.appinfo.OS == 'Darwin';
@@ -66,29 +119,27 @@ this.theFoxOnlyBetter = {
 		// AddonManager can't be used in child processes!
 		XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/devtools/Console.jsm");
 		XPCOMUtils.defineLazyModuleGetter(this.Scope, "PluralForm", "resource://gre/modules/PluralForm.jsm");
+		XPCOMUtils.defineLazyModuleGetter(this.Scope, "Promise", "resource://gre/modules/Promise.jsm");
+		XPCOMUtils.defineLazyModuleGetter(this.Scope, "Task", "resource://gre/modules/Task.jsm");
 		XPCOMUtils.defineLazyServiceGetter(Services, "navigator", "@mozilla.org/network/protocol;1?name=http", "nsIHttpProtocolHandler");
 		
 		this.webProgress = docShell.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIWebProgress);
 		
-		this.DOMContentLoaded.listener = this.DOMContentLoaded.listener.bind(this.DOMContentLoaded);
-		this.Scope.addEventListener('DOMContentLoaded', this.DOMContentLoaded.listener);
+		this.Scope.addEventListener('DOMContentLoaded', this.DOMContentLoaded);
 		
 		// and finally our add-on stuff begins
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/Modules.jsm", this);
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
 		Services.scriptloader.loadSubScript("resource://"+this.objPathString+"/modules/utils/windowUtilsPreload.jsm", this);
 		
-		this.listen('shutdown', this.unload);
-		this.listen('load', this.loadModule);
-		this.listen('unload', this.unloadModule);
-		this.listen('pref', this.carriedPref);
-		this.listen('init', this.finishInit);
-		this.listen('reinit', this.reinit);
+		for(let msg of this.MESSAGES) {
+			this.listen(msg, this);
+		}
 		this.message('init');
 	},
 	
-	finishInit: function(m) {
-		this.AddonData = JSON.parse(m.data);
+	finishInit: function(data) {
+		this.AddonData = data;
 		this.initialized = true;
 	},
 	
@@ -98,21 +149,20 @@ this.theFoxOnlyBetter = {
 		}
 	},
 	
-	// aids to listen for messages from chrome
-	listeners: [],
 	listen: function(aMessage, aListener) {
-		for(var i=0; i<this.listeners.length; i++) {
-			if(this.listeners[i].message == aMessage && this.listeners[i].listener == aListener) { return; }
+		for(let l of this.listeners) {
+			if(l.message == aMessage && l.listener == aListener) { return; }
 		}
 		
-		this.listeners.push({ message: aMessage, listener: aListener, bound: aListener.bind(this) });
-		addMessageListener(this.objName+':'+aMessage, this.listeners[this.listeners.length -1].bound);
+		this.listeners.add({ message: aMessage, listener: aListener });
+		addMessageListener(this.objName+':'+aMessage, aListener);
 	},
+	
 	unlisten: function(aMessage, aListener) {
-		for(var i=0; i<this.listeners.length; i++) {
-			if(this.listeners[i].message == aMessage && this.listeners[i].listener == aListener) {
-				removeMessageListener(this.objName+':'+aMessage, this.listeners[i].bound);
-				this.listeners.splice(i, 1);
+		for(let l of this.listeners) {
+			if(l.message == aMessage && l.listener == aListener) {
+				removeMessageListener(this.objName+':'+aMessage, aListener);
+				this.listeners.delete(l);
 				return;
 			}
 		}
@@ -120,21 +170,45 @@ this.theFoxOnlyBetter = {
 	
 	// send a message to chrome
 	message: function(aMessage, aData, aCPOW) {
+		// prevents console messages on e10s closing windows (i.e. view-source), there's no point in sending messages from here if "here" doesn't exist anymore
+		if(!content) { return; }
+		
 		sendAsyncMessage(this.objName+':'+aMessage, aData, aCPOW);
 	},
 	
-	// load modules into this object through Modules
-	loadModule: function(m) {
-		this.Modules.load('content/'+m.data);
+	loadModule: function(name) {
+		// prevents console messages on e10s startup if this is loaded onto the initial temporary browser, which is almost immediately removed afterwards
+		if(!content) { return; }
+		
+		if(this.initialized) {
+			this.Modules.load('content/'+name);
+		} else if(!this._queued.has(name)) {
+			this._queued.add(name);
+		}
 	},
-	unloadModule: function(m) {
-		this.Modules.unload('content/'+m.data);
+	
+	unloadModule: function(name) {
+		// prevents console messages on e10s closing windows (i.e. view-source), there's no point in unloading anything in-content if the content doesn't exist after all
+		if(!content) { return; }
+		
+		if(this._queued.has(name)) {
+			this._queued.delete(name);
+		}
+		this.Modules.unload('content/'+name);
+	},
+	
+	loadQueued: function() {
+		// finish loading the modules that were waiting for content to be fully initialized
+		for(let module of this._queued) {
+			this.Modules.load('content/'+module);
+		}
+		this._queued = new Set();
 	},
 	
 	// we can't access AddonManager (thus FUEL) from content processes, so we simulate it, by syncing this object to the sandbox's Prefs (chrome -> content, one way only)
-	carriedPref: function(m) {
-		for(var pref in m.data) {
-			this.Prefs[pref] = m.data[pref];
+	carriedPref: function(prefs) {
+		for(let pref in prefs) {
+			this.Prefs[pref] = prefs[pref];
 		}
 	},
 	
@@ -156,14 +230,19 @@ this.theFoxOnlyBetter = {
 				}
 			}
 		},
-		listener: function(e) {
-			for(var h of this.handlers) {
-				try { h(e); } catch(ex) { Cu.reportError(ex); }
+		handleEvent: function(e) {
+			for(let h of this.handlers) {
+				try {
+					if(typeof(h.onDOMContentLoaded) == 'function') {
+						h.onDOMContentLoaded(e);
+					} else {
+						h(e);
+					}
+				}
+				catch(ex) { Cu.reportError(ex); }
 			}
 		}
 	},
-	
-	// some lazily loaded modules
 	
 	handleDeadObject: function(ex) {
 		if(ex.message == "can't access dead object") {
@@ -179,13 +258,16 @@ this.theFoxOnlyBetter = {
 	
 	// clean up this object
 	unload: function() {
-		this.Modules.clean();
+		try {
+			this.Modules.clean();
+		}
+		catch(ex) { Cu.reportError(ex); }
 		
-		this.Scope.removeEventListener('DOMContentLoaded', this.DOMContentLoaded.listener);
+		this.Scope.removeEventListener('DOMContentLoaded', this.DOMContentLoaded);
 		
 		// remove all listeners, to make sure nothing is left over
-		for(var i=0; i<this.listeners.length; i++) {
-			removeMessageListener(this.objName+':'+this.listeners[i].message, this.listeners[i].bound);
+		for(let l of this.listeners) {
+			removeMessageListener(this.objName+':'+l.message, l.listener);
 		}
 		
 		delete this.Scope[this.objName];

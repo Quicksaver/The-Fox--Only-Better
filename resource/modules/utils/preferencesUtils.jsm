@@ -1,4 +1,4 @@
-Modules.VERSION = '1.3.3';
+Modules.VERSION = '1.4.1';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -21,11 +21,11 @@ this.dependsOn = {
 		return $$("[dependson]");
 	},
 	
-	changed: function(e) {
+	handleEvent: function(e) {
 		if(e.target.localName != 'preference' || !e.target.id) { return; }
 		
 		var fields = $$("[preference='"+e.target.id+"']");
-		var elements = dependsOn.getAll();
+		var elements = this.getAll();
 		var alreadyChanged = [];
 		
 		for(var field of fields) {
@@ -34,8 +34,8 @@ this.dependsOn = {
 			for(var node of elements) {
 				if(alreadyChanged.indexOf(node) > -1) { continue; }
 				
-				if(node.getAttribute('dependson').indexOf(field.id) > -1) {
-					dependsOn.updateElement(node);
+				if(node.getAttribute('dependson').contains(field.id)) {
+					this.updateElement(node);
 					alreadyChanged.push(node);
 				}
 			}
@@ -44,8 +44,8 @@ this.dependsOn = {
 		for(var node of elements) {
 			if(alreadyChanged.indexOf(node) > -1) { continue; }
 			
-			if(node.getAttribute('dependson').indexOf(e.target.id) > -1) {
-				dependsOn.updateElement(node);
+			if(node.getAttribute('dependson').contains(e.target.id)) {
+				this.updateElement(node);
 				alreadyChanged.push(node);
 			}
 		}
@@ -69,7 +69,7 @@ this.dependsOn = {
 			while(a < alternates.length) {
 				var inverse = false;
 				var dependency = alternates[a].split(':');
-				if(dependency[0].indexOf('!') > -1) {
+				if(dependency[0].contains('!')) {
 					inverse = true;
 					dependency[0] = dependency[0].replace('!', '');
 				}
@@ -172,7 +172,7 @@ this.sizeProperly = function() {
 
 Modules.LOADMODULE = function() {
 	dependsOn.updateAll();
-	Listeners.add(window, "change", dependsOn.changed, false);
+	Listeners.add(window, "change", dependsOn, false);
 	
 	initScales();
 	
@@ -189,7 +189,7 @@ Modules.UNLOADMODULE = function() {
 	window.sizeToContent = window._sizeToContent;
 	delete window._sizeToContent;
 	
-	Listeners.remove(window, "change", dependsOn.changed, false);
+	Listeners.remove(window, "change", dependsOn, false);
 	
 	if(UNLOADED) {
 		window.close();

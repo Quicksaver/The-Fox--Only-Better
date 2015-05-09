@@ -1,21 +1,23 @@
-Modules.VERSION = '1.0.6';
+Modules.VERSION = '2.0.0';
 
-this.__defineGetter__('S4Eprogress', function() { return $('urlbar-progress-alt'); });
-
-this.S4Estate = false;
-
-this.S4Elistener = function() {
-	if(!Prefs.includeNavBar) { return; }
+this.S4E = {
+	state: false,
 	
-	var current = S4Eprogress && !S4Eprogress.hidden && !S4Eprogress.collapsed;
-	S4Estate = current;
-	if(typeof(setMini) != 'undefined') {
-		if(S4Estate) {
-			// show immediately when progress bar becomes visible
-			setMini(true);
-		} else if(!slimChromeOnTabSelect()) {
-			// don't hide immediately when page load ends
-			Timers.init('setMini', hideMiniInABit, 2000);
+	get progress () { return $('urlbar-progress-alt'); },
+	
+	attrWatcher: function() {
+		if(!Prefs.includeNavBar) { return; }
+		
+		var current = this.progress && !this.progress.hidden && !this.progress.collapsed;
+		this.state = current;
+		if(typeof(slimChrome) != 'undefined') {
+			if(this.state) {
+				// show immediately when progress bar becomes visible
+				slimChrome.setMini(true);
+			} else if(!slimChrome.onTabSelect()) {
+				// don't hide immediately when page load ends
+				Timers.init('setMini', () => { slimChrome.hideMiniInABit(); }, 2000);
+			}
 		}
 	}
 };
@@ -23,15 +25,15 @@ this.S4Elistener = function() {
 Modules.LOADMODULE = function() {
 	Styles.load('S4E', 'S4E');
 	
-	Watchers.addAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
-	Watchers.addAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
-	Watchers.addAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
+	Watchers.addAttributeWatcher(S4E.progress, 'hidden', S4E, false, false);
+	Watchers.addAttributeWatcher(S4E.progress, 'collapsed', S4E, false, false);
+	Watchers.addAttributeWatcher(S4E.progress, 'value', S4E, false, false);
 };
 
 Modules.UNLOADMODULE = function() {
-	Watchers.removeAttributeWatcher(S4Eprogress, 'hidden', S4Elistener, false, false);
-	Watchers.removeAttributeWatcher(S4Eprogress, 'collapsed', S4Elistener, false, false);
-	Watchers.removeAttributeWatcher(S4Eprogress, 'value', S4Elistener, false, false);
+	Watchers.removeAttributeWatcher(S4E.progress, 'hidden', S4E, false, false);
+	Watchers.removeAttributeWatcher(S4E.progress, 'collapsed', S4E, false, false);
+	Watchers.removeAttributeWatcher(S4E.progress, 'value', S4E, false, false);
 	
 	if(UNLOADED) {
 		Styles.unload('S4E');

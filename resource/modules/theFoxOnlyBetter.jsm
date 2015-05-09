@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.8';
+Modules.VERSION = '2.0.0';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -10,19 +10,40 @@ this.__defineGetter__('mozFullScreen', function() { return document.mozFullScree
 this.__defineGetter__('fullScreenAutohide', function() { return !DARWIN && Prefs.autohide; });
 
 // set this here, so I can modify it through other modules without reseting it when slimChrome un/loads
-this.slimChromeExceptions = ['addon-bar'];
+this.slimChromeExceptions = new Set(['addon-bar']);
 
-this.fullScreenListener = function() {
-	// We get the fullscreen event _before_ the window transitions into or out of FS mode.
-	toggleSlimChrome(!fullScreen && !mozFullScreen && fullScreenAutohide);
+this.handleEvent = function(e) {
+	switch(e.type) {
+		case 'fullscreen':
+			// We get the fullscreen event _before_ the window transitions into or out of FS mode.
+			toggleSlimChrome(!fullScreen && !mozFullScreen && fullScreenAutohide);
+			break;
+	}
 };
 
-this.fullScreenAutohideListener = function() {
-	toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
+this.observe = function(aSubject, aTopic, aData) {
+	switch(aSubject) {
+		case 'slimChrome':
+			toggleSlimChrome();
+			togglePopups();
+			break;
+			
+		case 'autohide':
+			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
+			break;
+		
+		case 'beforecustomization':
+			toggleSlimChrome(true);
+			break;
+		
+		case 'aftercustomization':
+			toggleSlimChrome(false);
+			break;
+	}
 };
 
-this.customizeListener = function(e) {
-	toggleSlimChrome(e.type == 'beforecustomization');
+this.onLoad = function() {
+	toggleSlimChrome();
 };
 
 this.doOpenOptions = function() {
@@ -43,7 +64,7 @@ this.ensureNotAllDisabled = function() {
 this.toggleSlimChrome = function(noLoad) {
 	toggleAttribute(slimChromeBroadcaster, 'checked', Prefs.slimChrome);
 	
-	if(noLoad === undefined || noLoad == 'slimChrome') {
+	if(noLoad === undefined) {
 		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
 		noLoad = (fullScreen && !mozFullScreen && fullScreenAutohide) || customizing;
 	}
@@ -60,31 +81,29 @@ Modules.LOADMODULE = function() {
 	// for security reasons, we don't let both skyLights and miniOnChangeLocation be disabled at the same time
 	ensureNotAllDisabled();
 	
-	Overlays.overlayWindow(window, 'TheFOB', null, function() { toggleSlimChrome(); });
+	Overlays.overlayWindow(window, 'TheFOB', self);
 	
 	Modules.load('whatsNew');
 	Modules.load('compatibilityFix/windowFixes');
 	
-	Prefs.listen('slimChrome', toggleSlimChrome);
-	Prefs.listen('slimChrome', togglePopups);
-	Prefs.listen('autohide', fullScreenAutohideListener);
+	Prefs.listen('slimChrome', self);
+	Prefs.listen('autohide', self);
 	
-	Listeners.add(window, 'fullscreen', fullScreenListener);
-	Listeners.add(window, 'beforecustomization', customizeListener);
-	Listeners.add(window, 'aftercustomization', customizeListener);
+	Listeners.add(window, 'fullscreen', self);
+	Listeners.add(window, 'beforecustomization', self);
+	Listeners.add(window, 'aftercustomization', self);
 	
 	togglePopups();
 	toggleSlimChrome();
 };
 
 Modules.UNLOADMODULE = function() {
-	Listeners.remove(window, 'fullscreen', fullScreenListener);
-	Listeners.remove(window, 'beforecustomization', customizeListener);
-	Listeners.remove(window, 'aftercustomization', customizeListener);
+	Listeners.remove(window, 'fullscreen', self);
+	Listeners.remove(window, 'beforecustomization', self);
+	Listeners.remove(window, 'aftercustomization', self);
 	
-	Prefs.unlisten('slimChrome', toggleSlimChrome);
-	Prefs.unlisten('slimChrome', togglePopups);
-	Prefs.unlisten('autohide', fullScreenAutohideListener);
+	Prefs.unlisten('slimChrome', self);
+	Prefs.unlisten('autohide', self);
 	
 	Modules.unload('slimChrome');
 	Modules.unload('popups');

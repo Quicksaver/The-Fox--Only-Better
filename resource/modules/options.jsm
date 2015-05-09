@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.7';
+Modules.VERSION = '1.1.8';
 
 this.__defineGetter__('slimChromePopup', function() { return $('slimChromeKeyset-menupopup'); });
 
@@ -31,16 +31,16 @@ this.fillKeycodes = function() {
 		$(slimChromePopup.parentNode.getAttribute('preference')).value = 'none';
 	}
 	
-	for(var item of slimChromePopup.childNodes) {
-		var keycode = item.getAttribute('value');
+	for(let child of slimChromePopup.childNodes) {
+		var keycode = child.getAttribute('value');
 		if(!slimChromeAvailable[keycode]) {
 			continue;
 		}
 		
-		item.removeAttribute('hidden');
-		item.removeAttribute('disabled');
+		child.removeAttribute('hidden');
+		child.removeAttribute('disabled');
 		if(keycode == slimChromeKey.keycode) {
-			slimChromePopup.parentNode.selectedItem = item;
+			slimChromePopup.parentNode.selectedItem = child;
 			// It has the annoying habit of re-selecting the first (none) entry when selecting a menuitem with '*' as value
 			if(keycode == '*') {
 				var slimChromeItemIndex = slimChromePopup.parentNode.selectedIndex;
@@ -51,10 +51,10 @@ this.fillKeycodes = function() {
 };
 
 this.initialShowInWindow = function(aWindow, style, animation, duration) {
-	if(aWindow[objName] && aWindow[objName].initialShowChrome && aWindow[objName].slimChromeStyle) {
-		aWindow[objName].slimStyle = style;
-		aWindow[objName].slimAnimation = animation;
-		aWindow[objName].initialShowChrome(duration);
+	if(aWindow[objName] && aWindow[objName].slimChrome && aWindow[objName].slimStyle) {
+		aWindow[objName].slimStyle.style = style;
+		aWindow[objName].slimChrome.slimAnimation = animation;
+		aWindow[objName].slimChrome.initialShow(duration);
 	}
 };
 

@@ -1,14 +1,14 @@
-Modules.VERSION = '1.0.3';
+Modules.VERSION = '1.0.4';
 
 this.__defineGetter__('AniWeatherBrowserAgent', function() { return window.AniWeatherBrowserAgent; });
 
 Modules.LOADMODULE = function() {
 	Piggyback.add('AniWeather', AniWeatherBrowserAgent, 'prepareReportById', function() {
 		// don't let slim chrome hide the top of the animation popups
-		if(typeof(slimChromeContainer) != 'undefined' && trueAttribute(slimChromeContainer, 'hover')) {
+		if(typeof(slimChrome) != 'undefined' && trueAttribute(slimChrome.container, 'hover')) {
 			var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 			sscode += '@namespace url(http://www.w3.org/1999/xhtml);\n';
-			sscode += '#weatherLauncher { margin-top: '+slimChromeContainer.clientHeight+'px !important; }\n';
+			sscode += '#weatherLauncher { margin-top: '+slimChrome.container.clientHeight+'px !important; }\n';
 			Styles.load('aniWeahter_'+_UUID, sscode, true);
 		}
 	}, Piggyback.MODE_AFTER);

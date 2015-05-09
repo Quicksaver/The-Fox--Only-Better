@@ -1,52 +1,69 @@
-Modules.VERSION = '1.0.1';
+Modules.VERSION = '2.0.0';
 
-this.toggleUIEnhancerURLBar = function() {
-	// force a reload of this feature, so the breadcrumbs are added back after the nav-bar moves and the location bar binding removes them
-	if(Prefs.enhanceURLBar) {
-		Prefs.enhanceURLBar = false;
-		aSync(function() { Prefs.enhanceURLBar = true; });
-	}
-};
-
-this.UIEnhancerFixer = function(aEnabled) {
-	if(aEnabled) {
+this.UIEnhancer = {
+	id: 'UIEnhancer@girishsharma',
+	
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'LoadedSlimChrome':
+				// force a reload of this feature, so the breadcrumbs are added back after the nav-bar moves and the location bar binding removes them
+				if(Prefs.enhanceURLBar) {
+					Prefs.enhanceURLBar = false;
+					aSync(function() { Prefs.enhanceURLBar = true; });
+				}
+				break;
+		}
+	},
+	
+	observe: function(aSubject, aTopic, aData) {
+		if(Prefs.slimChrome) {
+			this.listen();
+		} else {
+			this.unlisten();
+		}
+	},
+	
+	onEnabled: function(addon) {
+		if(addon.id == this.id) { this.enable(); }
+	},
+	
+	onDisabled: function(addon) {
+		if(addon.id == this.id) { this.disable(); }
+	},
+	
+	listen: function() {
+		AddonManager.addAddonListener(this);
+		AddonManager.getAddonByID(this.id, (addon) => {
+			if(addon && addon.isActive) { this.enable(); }
+		});
+	},
+	
+	unlisten: function() {
+		AddonManager.removeAddonListener(this);
+		this.disable();
+	},
+	
+	enable: function() {
 		Prefs.setDefaults({ enhanceURLBar: true }, 'UIEnhancer');
 		
-		Listeners.add(window, 'LoadedSlimChrome', toggleUIEnhancerURLBar);
-	} else {
-		Listeners.remove(window, 'LoadedSlimChrome', toggleUIEnhancerURLBar);
-	}
-};
-
-this.UIEnhancerListener = {
-	onEnabled: function(addon) {
-		if(addon.id == 'UIEnhancer@girishsharma') { UIEnhancerFixer(true); }
+		Listeners.add(window, 'LoadedSlimChrome', this);
 	},
-	onDisabled: function(addon) {
-		if(addon.id == 'UIEnhancer@girishsharma') { UIEnhancerFixer(false); }
-	}
-};
-
-this.toggleUIEnhancerListener = function(unloaded) {
-	if(!UNLOADED && !unloaded && Prefs.slimChrome) {
-		AddonManager.addAddonListener(UIEnhancerListener);
-		AddonManager.getAddonByID('UIEnhancer@girishsharma', function(addon) {
-			if(addon && addon.isActive) { UIEnhancerFixer(true); }
-		});
-	} else {
-		AddonManager.removeAddonListener(UIEnhancerListener);
-		UIEnhancerFixer(false);
+	
+	disable: function() {
+		Listeners.remove(window, 'LoadedSlimChrome', this);
 	}
 };
 
 Modules.LOADMODULE = function() {
-	Prefs.listen('slimChrome', toggleUIEnhancerListener);
+	Prefs.listen('slimChrome', UIEnhancer);
 	
-	toggleUIEnhancerListener();
+	if(Prefs.slimChrome) {
+		UIEnhancer.listen();
+	}
 };
 
 Modules.UNLOADMODULE = function() {
-	toggleUIEnhancerListener(true);
+	UIEnhancer.unlisten();
 	
-	Prefs.unlisten('slimChrome', toggleUIEnhancerListener);
+	Prefs.unlisten('slimChrome', UIEnhancer);
 };

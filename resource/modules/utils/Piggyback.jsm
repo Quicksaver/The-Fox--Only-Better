@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.0';
+Modules.VERSION = '1.2.1';
 Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
@@ -23,7 +23,7 @@ Modules.BASEUTILS = true;
 //	see add()
 
 this.Piggyback = {
-	_obj: '_Piggyback_'+objName,
+	_obj: '_Piggyback_',
 	MODE_REPLACE: 0,
 	MODE_BEFORE: 1,
 	MODE_AFTER: 2,
@@ -151,6 +151,11 @@ this.Piggyback = {
 };
 
 Modules.LOADMODULE = function() {
+	// needs to be defined here, because in content processes it wouldn't find objName (inside the same object, loaded directly, would need "this")
+	Piggyback._obj += objName;
+	
+	if(self.isContent) { return; }
+	
 	// CustomizableUI is a special case, as CustomizableUIInternal is frozen and not exported
 	self.CUIBackstage = Cu.import("resource:///modules/CustomizableUI.jsm", self);
 	CUIBackstage[Piggyback._obj] = {
@@ -199,6 +204,8 @@ Modules.LOADMODULE = function() {
 };
 
 Modules.UNLOADMODULE = function() {
+	if(self.isContent) { return; }
+	
 	var ids = CUIBackstage.__PiggybackIds ? CUIBackstage.__PiggybackIds.split(' ') : [];
 	
 	// we really need to put everything back as it was!

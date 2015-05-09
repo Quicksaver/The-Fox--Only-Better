@@ -1,42 +1,55 @@
-Modules.VERSION = '1.0.0';
+Modules.VERSION = '2.0.0';
 
-this.ASIFixer = function(aEnabled) {
-	if(aEnabled) {
+this.ASI = {
+	id: 'australissmall@icons.com',
+	
+	observe: function(aSubject, aTopic, aData) {
+		if(Prefs.slimChrome) {
+			this.listen();
+		} else {
+			this.unlisten();
+		}
+	},
+	
+	onEnabled: function(addon) {
+		if(addon.id == this.id) { this.enable(); }
+	},
+	
+	onDisabled: function(addon) {
+		if(addon.id == this.id) { this.disable(); }
+	},
+	
+	listen: function() {
+		AddonManager.addAddonListener(this);
+		AddonManager.getAddonByID(this.id, (addon) => {
+			if(addon && addon.isActive) { this.enable(); }
+		});
+	},
+	
+	unlisten: function() {
+		AddonManager.removeAddonListener(this);
+		this.disable();
+	},
+	
+	enable: function() {
 		Styles.load('ASI', 'ASI');
-	} else {
+	},
+	
+	disable: function() {
 		Styles.unload('ASI');
 	}
 };
 
-this.ASIListener = {
-	onEnabled: function(addon) {
-		if(addon.id == 'australissmall@icons.com') { ASIFixer(true); }
-	},
-	onDisabled: function(addon) {
-		if(addon.id == 'australissmall@icons.com') { ASIFixer(false); }
-	}
-};
-
-this.toggleASIListener = function(unloaded) {
-	if(!UNLOADED && !unloaded && Prefs.slimChrome) {
-		AddonManager.addAddonListener(ASIListener);
-		AddonManager.getAddonByID('australissmall@icons.com', function(addon) {
-			if(addon && addon.isActive) { ASIFixer(true); }
-		});
-	} else {
-		AddonManager.removeAddonListener(ASIListener);
-		ASIFixer(false);
-	}
-};
-
 Modules.LOADMODULE = function() {
-	Prefs.listen('slimChrome', toggleASIListener);
+	Prefs.listen('slimChrome', ASI);
 	
-	toggleASIListener();
+	if(Prefs.slimChrome) {
+		ASI.listen();
+	}
 };
 
 Modules.UNLOADMODULE = function() {
-	toggleASIListener(true);
+	ASI.unlisten();
 	
-	Prefs.unlisten('slimChrome', toggleASIListener);
+	Prefs.unlisten('slimChrome', ASI);
 };

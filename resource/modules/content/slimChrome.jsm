@@ -1,80 +1,82 @@
-Modules.VERSION = '1.0.5';
+Modules.VERSION = '2.0.0';
 
-this.miniActive = false;
-
-this.focusPasswords = function(e) {
-	var active = false;
+this.slimChrome = {
+	miniActive: false,
+	lastHost: null,
 	
-	if(e.type == 'focus'
-	&& e.target
-	&& e.target.nodeName
-	&& e.target.nodeName.toLowerCase() == 'input'
-	&& !e.target.disabled
-	&& (Prefs.miniOnAllInput || e.target.type == 'password')) {
-		active = true;
-	}
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'focus':
+				this.focusPasswords(e.target, true);
+				break;
+				
+			case 'blur':
+				this.focusPasswords(e.target, false);
+				break;
+		}
+	},
 	
-	if(active != miniActive) {
-		miniActive = active;
-		message('focusPasswords', miniActive);
-	}
-};
-
-this.slimChromeProgressListener = {
-	// this is needed in content progress listeners (for some reason)
-	QueryInterface: XPCOMUtils.generateQI([Ci.nsIWebProgressListener, Ci.nsISupportsWeakReference]),
+	focusPasswords: function(target, focus) {
+		var active = false;
+		
+		if(focus
+		&& target
+		&& target.nodeName
+		&& target.nodeName.toLowerCase() == 'input'
+		&& !target.disabled
+		&& (Prefs.miniOnAllInput || target.type == 'password')) {
+			active = true;
+		}
+		
+		if(active != this.miniActive) {
+			this.miniActive = active;
+			message('focusPasswords', this.miniActive);
+		}
+	},
 	
-	last: null,
 	onLocationChange: function(aProgress, aRequest, aURI) {
 		try { var host = aURI.host; }
 		catch(ex) { var host = aURI.spec; }
 		
 		// no point in showing in certain cases
-		if(host == this.last) { return; }
+		if(host == this.lastHost) { return; }
 		
-		this.last = host;
+		this.lastHost = host;
 		message('locationChange', { host: host, spec: aURI.spec });
-	}
-};
-
-this.focusLoadListener = function() {
-	// I don't think there's a way to do this without relying on each document's MutationObserver instance
-	try {
-		var listener = {
-			observer: null,
-			handler: function(mutations) {
-				try {
-					focusPasswords({
-						target: document.activeElement,
-						type: 'focus'
-					});
-				}
+	},
+	
+	onDOMContentLoaded: function() {
+		// I don't think there's a way to do this without relying on each document's MutationObserver instance
+		try {
+			var observer = new content.MutationObserver((mutations) => {
+				try { this.focusPasswords(document.activeElement, true); }
 				catch(ex) {}
-			}
+			});
+			observer.observe(document.documentElement, { childList: true, subtree: true });
 		}
-		
-		listener.observer = new content.MutationObserver(listener.handler);
-		listener.observer.observe(document.documentElement, { childList: true, subtree: true });
-	}
-	catch(ex) {}
+		catch(ex) {}
+	},
+	
+	// this is needed in content progress listeners (for some reason)
+	QueryInterface: XPCOMUtils.generateQI([Ci.nsIWebProgressListener, Ci.nsISupportsWeakReference]),
 };
 
 Modules.LOADMODULE = function() {
 	// show mini chrome when focusing password fields
-	Listeners.add(Scope, 'focus', focusPasswords, true);
-	Listeners.add(Scope, 'blur', focusPasswords, true);
+	Listeners.add(Scope, 'focus', slimChrome, true);
+	Listeners.add(Scope, 'blur', slimChrome, true);
 	
 	// show mini when the current tab changes host
-	webProgress.addProgressListener(slimChromeProgressListener, Ci.nsIWebProgress.NOTIFY_ALL);
+	webProgress.addProgressListener(slimChrome, Ci.nsIWebProgress.NOTIFY_ALL);
 	
 	// observe when any changes to the webpage are made, so that for instance when a focused input field is removed, the mini bar doesn't stay stuck open
-	DOMContentLoaded.add(focusLoadListener);
-	focusLoadListener();
+	DOMContentLoaded.add(slimChrome);
+	slimChrome.onDOMContentLoaded();
 };
 
 Modules.UNLOADMODULE = function() {
-	webProgress.removeProgressListener(slimChromeProgressListener);
-	DOMContentLoaded.remove(focusLoadListener);
-	Listeners.remove(Scope, 'focus', focusPasswords, true);
-	Listeners.remove(Scope, 'blur', focusPasswords, true);
+	webProgress.removeProgressListener(slimChrome);
+	DOMContentLoaded.remove(slimChrome);
+	Listeners.remove(Scope, 'focus', slimChrome, true);
+	Listeners.remove(Scope, 'blur', slimChrome, true);
 };

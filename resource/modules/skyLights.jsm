@@ -1,11 +1,50 @@
-Modules.VERSION = '1.0.4';
-
-this.__defineGetter__('skyLightsContainer', function() { return $(objName+'-skyLights-container'); });
-
-this.skyLightsExisting = [];
+Modules.VERSION = '1.1.0';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
+	get container () { return $(objName+'-skyLights-container'); },
+	
+	lights: new Map(),
+	
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'click':
+				if(e.defaultPrevented) { return; }
+				
+				if(e.target._action) {
+					e.target._action(e);
+				} else if(e.target.parentNode._action) {
+					e.target.parentNode._action(e);
+				}
+				break;
+			
+			case 'WillShowSlimChrome':
+				var node = e.detail.target;
+				if(isAncestor(node, this.container)) {
+					while(node) {
+						if(node == this.container) { return; }
+						
+						if(node.className == 'skyLight') {
+							e.preventDefault();
+							e.stopPropagation();
+							return;
+						}
+						
+						node = node.parentNode;
+					}
+				}
+				break;
+		}
+	},
+	
+	observe: function(aSubject, aTopic, aData) {
+		switch(aSubject) {
+			case 'skyLightsHide':
+				this.hideOnChrome();
+				breaK;
+		}
+	},
+	
 	update: function(name, props) {
 		if(typeof(name) != 'string') { return; }
 		
@@ -13,7 +52,7 @@ this.skyLights = {
 		
 		if(!light) {
 			// in case something calls this too soon
-			if(!skyLightsContainer) { return; }
+			if(!this.container) { return; }
 			
 			light = document.createElement('box');
 			light.id = objName+'-skyLights-'+name;
@@ -21,17 +60,17 @@ this.skyLights = {
 			setAttribute(light, 'context', 'toolbar-context-menu');
 			
 			light._action = null;
-			Listeners.add(light, 'click', skyLightsOnClick);
+			Listeners.add(light, 'click', this);
 			
 			light.appendChild(document.createElement('box'));
 			setAttribute(light.firstChild, 'class', 'skyLightArea');
-			Listeners.add(light.firstChild, 'click', skyLightsOnClick);
+			Listeners.add(light.firstChild, 'click', this);
 			
-			skyLightsContainer.appendChild(light);
-			skyLightsExisting.push({ name: name, node: light });
+			this.container.appendChild(light);
+			this.lights.set(name, light);
 		}
 		
-		for(var p in props) {
+		for(let p in props) {
 			switch(p) {
 				// state is an identifying string, mostly for convenience to quickly and easily retrieve the current state of the light
 				case 'state':
@@ -99,9 +138,9 @@ this.skyLights = {
 					if(props[p]) {
 						light._alert = function() {
 							Timers.cancel('skyLightsAlert-'+name);
-							Listeners.remove(light, 'mouseover', light._alert);
-							delete light._alert;
-							removeAttribute(light, 'alert');
+							Listeners.remove(this, 'mouseover', this._alert);
+							delete this._alert;
+							removeAttribute(this, 'alert');
 						};
 						
 						Listeners.add(light, 'mouseover', light._alert);
@@ -119,103 +158,69 @@ this.skyLights = {
 	get: function(name) {
 		if(typeof(name) != 'string') { return; }
 		
-		for(var s of skyLightsExisting) {
-			if(s.name == name) {
-				return s.node;
-			}
-		}
-		return null;
+		return this.lights.get(name);
 	},
 	
 	remove: function(name) {
 		if(typeof(name) != 'string') { return; }
 		
-		for(var i = 0; i < skyLightsExisting.length; i++) {
-			if(skyLightsExisting[i].name == name) {
-				Listeners.remove(skyLightsExisting[i].node, 'click', skyLightsOnClick);
-				Listeners.remove(skyLightsExisting[i].node.firstChild, 'click', skyLightsOnClick);
-				if(skyLightsExisting[i].node._alert) {
-					skyLightsExisting[i].node._alert();
-				}
-				
-				skyLightsExisting[i].node.remove();
-				Styles.unload('skyLight-'+name+'_'+_UUID);
-				skyLightsExisting.splice(i, 1);
-				break;
+		if(this.lights.has(name)) {
+			var light = this.lights.get(name);
+			Listeners.remove(light, 'click', this);
+			Listeners.remove(light.firstChild, 'click', this);
+			if(light._alert) {
+				light._alert();
 			}
+			
+			light.remove();
+			Styles.unload('skyLight-'+name+'_'+_UUID);
+			this.lights.delete(name);
 		}
-	}
-};
-
-this.skyLightsOnClick = function(e) {
-	if(e.defaultPrevented) { return; }
+	},
 	
-	if(e.target._action) {
-		e.target._action(e);
-	} else if(e.target.parentNode._action) {
-		e.target.parentNode._action(e);
-	}
-};
-
-this.skyLightsOnSlimChrome = function(e) {
-	var node = e.detail.target;
-	if(!isAncestor(node, skyLightsContainer)) { return; }
+	hideOnChrome: function() {
+		toggleAttribute(this.container, 'hideWhenChromeVisible', Prefs.skyLightsHide);
+	},
 	
-	while(node) {
-		if(node == skyLightsContainer) { return; }
+	init: function() {
+		Listeners.add(slimChrome.container, 'WillShowSlimChrome', this, true);
 		
-		if(node.className == 'skyLight') {
-			e.preventDefault();
-			e.stopPropagation();
-			return;
+		Prefs.listen('skyLightsHide', this);
+		this.hideOnChrome();
+		
+		dispatch(this.container, { type: 'LoadedSkyLights', cancelable: false });
+	},
+	
+	deinit: function() {
+		dispatch(this.container, { type: 'UnloadingSkyLights', cancelable: false });
+		
+		Prefs.unlisten('skyLightsHide', this);
+		removeAttribute(this.container, 'hideWhenChromeVisible');
+		
+		Listeners.remove(slimChrome.container, 'WillShowSlimChrome', this, true);
+		
+		// make sure all the lights are properly unloaded
+		for(let light of this.lights.keys()) {
+			this.remove(light);
 		}
-		
-		node = node.parentNode;
-	}
-};
-
-this.skyLightsHideOnChrome = function() {
-	toggleAttribute(skyLightsContainer, 'hideWhenChromeVisible', Prefs.skyLightsHide);
-};
-
-this.skyLightsLoad = function() {
-	Listeners.add(slimChromeContainer, 'WillShowSlimChrome', skyLightsOnSlimChrome, true);
-	
-	Prefs.listen('skyLightsHide', skyLightsHideOnChrome);
-	skyLightsHideOnChrome();
-	
-	dispatch(skyLightsContainer, { type: 'LoadedSkyLights', cancelable: false });
-};
-
-this.skyLightsUnload = function() {
-	dispatch(skyLightsContainer, { type: 'UnloadingSkyLights', cancelable: false });
-	
-	Prefs.unlisten('skyLightsHide', skyLightsHideOnChrome);
-	removeAttribute(skyLightsContainer, 'hideWhenChromeVisible');
-	
-	Listeners.remove(slimChromeContainer, 'WillShowSlimChrome', skyLightsOnSlimChrome, true);
-	
-	// make sure all the lights are properly unloaded
-	while(skyLightsExisting.length > 0) {
-		skyLights.remove(skyLightsExisting[0].name);
 	}
 };
 
 Modules.LOADMODULE = function() {
 	// in case the overlay is already loaded (don't even know if this can happen but better make sure)
-	if(skyLightsContainer) {
-		skyLightsLoad();
+	if(skyLights.container) {
+		skyLights.init();
 	}
 	
-	Overlays.overlayURI('chrome://'+objPathString+'/content/slimChrome.xul', 'skyLights', null,
-		function(aWindow) { if(typeof(aWindow[objName].skyLightsLoad) != 'undefined') { aWindow[objName].skyLightsLoad(); } },
-		function(aWindow) { if(typeof(aWindow[objName].skyLightsUnload) != 'undefined') { aWindow[objName].skyLightsUnload(); } }
-	);
+	Overlays.overlayURI('chrome://'+objPathString+'/content/slimChrome.xul', 'skyLights', {
+		onLoad: function(aWindow) { if(typeof(aWindow[objName].skyLights) != 'undefined') { aWindow[objName].skyLights.init(); } },
+		onUnload: function(aWindow) { if(typeof(aWindow[objName].skyLights) != 'undefined') { aWindow[objName].skyLights.deinit(); } }
+	});
 };
 
 Modules.UNLOADMODULE = function() {
 	// make sure this runs in case the overlay unloads after the module
-	skyLightsUnload();
+	skyLights.deinit();
 	
 	if(UNLOADED || !Prefs.skyLights || !Prefs.includeNavBar) {
 		Overlays.removeOverlayURI('chrome://'+objPathString+'/content/slimChrome.xul', 'skyLights');
