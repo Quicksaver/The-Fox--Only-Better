@@ -32,6 +32,17 @@
 		margin-top: -1px;
 	}
 	
+	/* Always draw a border on Yosemite to ensure the border is well-defined there (the default border is too light). */
+	@media (-moz-mac-yosemite-theme) {
+		#main-window[tabsintitlebar] #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer:not(:-moz-lwtheme) {
+			position: relative;
+			z-index: 1;
+			border-top: 1px solid hsla(0,0%,0%,.2);
+			background-clip: padding-box;
+			margin-top: -1px;
+		}
+	}
+	
 	#main-window[customize-entered] #theFoxOnlyBetter-slimChrome-slimmer {
 		border-top-left-radius: 2.5px;
 		border-top-right-radius: 2.5px;
