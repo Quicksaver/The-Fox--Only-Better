@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.1';
+Modules.VERSION = '2.0.2';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -203,7 +203,7 @@ this.slimChrome = {
 				if(e.ctrlKey || e.altKey || e.metaKey // don't trigger for modkeys or any keyboard shortcuts
 				|| this.container.hovers == 0 // don't bother of course...
 				|| this.initialShowings.size > 0 // the chrome is showing automatically, so make sure it finishes first
-				|| (typeof(popups) != 'undefined' && popup.held.size > 0) // don't trigger from keystrokes when there's a popup open
+				|| (typeof(popups) != 'undefined' && popups.held.size > 0) // don't trigger from keystrokes when there's a popup open
 				|| isAncestor(document.commandDispatcher.focusedElement, this.container) // make sure the top chrome isn't focused
 				) {
 					break;
