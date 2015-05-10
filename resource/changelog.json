@@ -1,6 +1,12 @@
 {
-	"current":"1.1.12",
+	"current":"1.1.13",
 	"releases": {
+		"1.1.13":{
+			"date":"May 10, 2015",
+			"notes":[
+				["bugfix","Hotfix for last release"]
+			]
+		},
 		"1.1.12":{
 			"date":"May 9, 2015",
 			"notes":[
