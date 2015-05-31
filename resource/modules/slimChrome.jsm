@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.2';
+Modules.VERSION = '2.0.3';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -664,10 +664,12 @@ this.slimChrome = {
 				gNavBar.overflowable._onResize();
 				gNavBar.overflowable._lazyResizeHandler.finalize().then(() => {
 					gNavBar.overflowable._lazyResizeHandler = null;
+					this.urlTooltip();
 					dispatch(this.container, { type: 'FinishedSlimChromeWidth', cancelable: false });
 				});
 			}
 			else {
+				this.urlTooltip();
 				dispatch(this.container, { type: 'FinishedSlimChromeWidth', cancelable: false });
 			}
 		}
@@ -697,6 +699,20 @@ this.slimChrome = {
 		var visible = trueAttribute(this.container, 'hover') || trueAttribute(this.container, 'mini');
 		toggleAttribute(this.container, 'noPointerEvents', !visible);
 		toggleAttribute(gNavToolbox, 'slimChromeVisible', visible);
+		
+		if(visible) {
+			this.urlTooltip();
+		}
+	},
+	
+	// it seems like gURLBar's overflow and underflow events don't fire all the time as expected to update these values when (un)hovering the chrome
+	urlTooltip: function() {
+		if(gURLBar.inputField.scrollLeftMax > 0) {
+			gURLBar._contentIsCropped = true;
+		} else {
+			gURLBar._contentIsCropped = false;
+			gURLBar._hideURLTooltip();
+		}
 	},
 	
 	onTabSelect: function(e) {
