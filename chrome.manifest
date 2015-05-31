@@ -1,4 +1,5 @@
 content   thefoxonlybetter                    chrome/content/
+resource  thefoxonlybetter                    resource/
 
 locale    thefoxonlybetter-en   en-US         chrome/locale/en-US/
 locale    thefoxonlybetter      en-US         chrome/locale/en-US/

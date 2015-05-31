@@ -1,4 +1,4 @@
-Modules.VERSION = '2.4.0';
+Modules.VERSION = '2.4.1';
 Modules.UTILS = true;
 
 // Browsers - Aid object to track and perform tasks on all document browsers across the windows.
@@ -171,9 +171,14 @@ this.Browsers = {
 			if(watcher.topic == aTopic
 			&& (!watcher.uri || aSubject.document.documentURI == watcher.uri)) {
 				if(watcher.handler.observe) {
-					callOnLoad(aSubject, () => {
-						watcher.handler.observe(aSubject, aTopic);
-					}, watcher.beforeComplete);
+					// we need to make sure that we're calling the right watcher (and thus actually call all watchers),
+					// otherwise the for loop can continue and watcher changes inside the function itself after it's been sent to callOnLoad
+					(function() {
+						var actualWatcher = watcher;
+						callOnLoad(aSubject, () => {
+							actualWatcher.handler.observe(aSubject, aTopic);
+						}, actualWatcher.beforeComplete);
+					})();
 				} else {
 					callOnLoad(aSubject, watcher.handler, watcher.beforeComplete);
 				}

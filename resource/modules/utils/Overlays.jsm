@@ -1,4 +1,4 @@
-Modules.VERSION = '2.15.0';
+Modules.VERSION = '2.15.1';
 Modules.UTILS = true;
 
 // Overlays - to use overlays in my bootstraped add-ons. The behavior is as similar to what is described in https://developer.mozilla.org/en/XUL_Tutorial/Overlays as I could manage.
@@ -1467,14 +1467,13 @@ this.Overlays = {
 			var getNode = aWindow.document.getElementById(trim(id));
 			if(!getNode) { continue; }
 			
-			var curChild = getNode.firstChild;
-			while(curChild) {
-				if(curChild.nodeName == 'preferences' || isAncestor(node, curChild)) {
-					curChild = curChild.nextSibling;
-					continue;
-				}
+			var child = getNode.firstChild
+			while(child) {
+				let move = child;
+				child = child.nextSibling;
+				if(move.nodeName == 'preferences' || isAncestor(node, move)) { continue; }
 				
-				this.appendChild(aWindow, curChild, node);
+				this.appendChild(aWindow, move, node);
 			}
 		}
 	},

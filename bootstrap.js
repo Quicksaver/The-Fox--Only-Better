@@ -7,7 +7,7 @@
 //						otherwise return true or call continueStartup(aData, aReason)
 //	onStartup/onShutdown/onInstall/onUninstall(aData, aReason) - (optional) (methods) to be called on startup() and shutdown() to initialize and terminate the add-on
 //	resource folder in installpath, with modules folder containing Modules, sandboxUtils and utils modules
-//	chrome.manifest file with content, locale and skin declarations properly set
+//	chrome.manifest file with content, locale, skin and resource declarations properly set
 // handleDeadObject(ex) - 	expects [nsIScriptError object] ex. Shows dead object notices as warnings only in the console.
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
 // prepareObject(window, aName) - initializes a window-dependent add-on object with utils loaded into it, returns the newly created object
@@ -27,10 +27,9 @@
 //	aCallback - (function(aSubject)) to be called on aSubject
 //	(optional) beforeComplete - (bool) if true, aCallback will be called on aSubject immediately, regardless of its readyState value; defaults to false.
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
-// Note: Firefox 34 is the minimum version supported as the modules assume we're in a version with Australis already,
-// along with xulStore already implemented, in detriment of localstore.rdf.
+// Note: Firefox 38 is the minimum version supported as the script assumes the resource path will be automatically loaded from chrome.manifest.
 
-let bootstrapVersion = '1.7.6';
+let bootstrapVersion = '1.7.7';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -184,31 +183,6 @@ function callOnLoad(aSubject, aCallback, beforeComplete) {
 	}, false);
 }
 
-function setResourceHandler() {
-	let alias = Services.io.newFileURI(AddonData.installPath);
-	let resourceURI = (AddonData.installPath.isDirectory()) ? alias.spec : 'jar:' + alias.spec + '!/';
-	resourceURI += 'resource/';
-	
-	// Set the default strings for the add-on
-	Services.scriptloader.loadSubScript(resourceURI + 'defaults.js', this);
-	
-	alias = Services.io.newURI(resourceURI, null, null);
-	let resource = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
-	resource.setSubstitution(objPathString, alias);
-	
-	// Get the utils.jsm module into our sandbox
-	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/Modules.jsm", this);
-	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
-	Modules.load("utils/sandboxUtils");
-}
-
-function removeResourceHandler() {
-	Modules.unload("utils/sandboxUtils");
-	
-	let resource = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
-	resource.setSubstitution(objPathString, null);
-}
-
 function disable() {
 	AddonManager.getAddonByID(AddonData.id, function(addon) {
 		addon.userDisabled = true;
@@ -237,8 +211,15 @@ function startup(aData, aReason) {
 		Addon = addon;
 	});
 	
-	// add resource:// protocol handler so I can access my modules
-	setResourceHandler();
+	// Set the default strings for the add-on
+	let alias = Services.io.newFileURI(AddonData.installPath);
+	let defaultsURI = ((AddonData.installPath.isDirectory()) ? alias.spec : 'jar:' + alias.spec + '!/')+'resource/defaults.js';
+	Services.scriptloader.loadSubScript(defaultsURI, this);
+	
+	// Get the utils.jsm module into our sandbox
+	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/Modules.jsm", this);
+	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/sandboxUtilsPreload.jsm", this);
+	Modules.load("utils/sandboxUtils");
 	
 	// set add-on preferences defaults
 	// This should come before startConditions() so we can use it in there
@@ -269,8 +250,7 @@ function shutdown(aData, aReason) {
 		}
 	}
 	
-	// remove resource://
-	removeResourceHandler();
+	Modules.unload("utils/sandboxUtils");
 	removeOnceListener();
 }
 
