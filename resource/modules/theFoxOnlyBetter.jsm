@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -18,6 +18,14 @@ this.handleEvent = function(e) {
 			// We get the fullscreen event _before_ the window transitions into or out of FS mode.
 			toggleSlimChrome(!fullScreen && !mozFullScreen && fullScreenAutohide);
 			break;
+		
+		case 'beforecustomization':
+			toggleSlimChrome(true);
+			break;
+		
+		case 'aftercustomization':
+			toggleSlimChrome(false);
+			break;
 	}
 };
 
@@ -30,14 +38,6 @@ this.observe = function(aSubject, aTopic, aData) {
 			
 		case 'autohide':
 			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
-			break;
-		
-		case 'beforecustomization':
-			toggleSlimChrome(true);
-			break;
-		
-		case 'aftercustomization':
-			toggleSlimChrome(false);
 			break;
 	}
 };
