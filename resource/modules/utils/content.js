@@ -36,12 +36,13 @@ this.theFoxOnlyBetter = {
 	listeners: new Set(),
 	_queued: new Set(),
 	
-	version: '1.4.0',
+	version: '1.4.1',
 	isContent: true,
 	Scope: this, // to delete our variable on shutdown later
 	get document () { return content.document; },
 	$: function(id) { return content.document.getElementById(id); },
-	$$: function(sel) { return content.document.querySelectorAll(sel); },
+	$$: function(sel, parent = content.document) { return parent.querySelectorAll(sel); },
+	$ª: function(parent, anonid, anonattr = 'anonid') { return content.document.getAnonymousElementByAttribute(parent, anonattr, anonid); },
 	
 	// easy and useful helpers for when I'm debugging
 	LOG: function(str) {

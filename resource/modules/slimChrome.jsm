@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.3';
+Modules.VERSION = '2.0.4';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -93,6 +93,25 @@ this.slimChrome = {
 			
 			case 'focus':
 				this.setHover(true, true);
+				
+				// the translation infobar toggle button keeps focus after being clicked, so we need to shift it to the translation infobar itself
+				// to dismiss the top chrome, otherwise it will stay visible and cover the infobar
+				if(e.target.id == 'translate-notification-icon') {
+					aSync(() => {
+						let notification = gBrowser.getNotificationBox().getNotificationWithValue('translation');
+						if(notification) {
+							let button = $ª(notification, 'translate');
+							if(button) {
+								button.focus();
+							}
+						}
+						
+						// in case the infobar is being closed, we can't (or shouldn't) shift focus to anything, so we just dismiss this event
+						else {
+							this.setHover(false);
+						}
+					}, 100);
+				}
 				break;
 			
 			case 'mouseover':
@@ -377,7 +396,7 @@ this.slimChrome = {
 		if(TabsToolbar && !TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden') {
 			// This is also needed when the tabs are on the left, the width of the findbar doesn't follow with the rest of the window for some reason
 			if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left' || TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
-				var TabsSplitter = document.getAnonymousElementByAttribute($('content'), 'class', 'treestyletab-splitter');
+				var TabsSplitter = $ª($('content'), 'treestyletab-splitter', 'class');
 				this.moveStyle.width -= TabsToolbar.clientWidth;
 				this.moveStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
 				if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left') {
@@ -469,7 +488,7 @@ this.slimChrome = {
 					
 					// the searchbar's engine selection popup is a bit of a special case; the mouseover events repeat for the actual searchbar
 					if(parent.localName == 'searchbar' && e.type == 'mouseover') {
-						var searchPopup = document.getAnonymousElementByAttribute(parent, 'anonid', 'searchbar-popup');
+						var searchPopup = $ª(parent, 'searchbar-popup');
 						if(searchPopup.state == 'open') {
 							if(e.screenY >= searchPopup.boxObject.screenY
 							&& e.screenY <= searchPopup.boxObject.screenY +searchPopup.boxObject.height

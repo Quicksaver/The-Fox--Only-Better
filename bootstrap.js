@@ -29,7 +29,7 @@
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
 // Note: Firefox 38 is the minimum version supported as the script assumes the resource path will be automatically loaded from chrome.manifest.
 
-let bootstrapVersion = '1.7.7';
+let bootstrapVersion = '1.7.8';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -99,7 +99,8 @@ function prepareObject(window, aName) {
 		window: window,
 		get document () { return window.document; },
 		$: function(id) { return window.document.getElementById(id); },
-		$$: function(sel) { return window.document.querySelectorAll(sel); }
+		$$: function(sel, parent = window.document) { return parent.querySelectorAll(sel); },
+		$ª: function(parent, anonid, anonattr = 'anonid') { return window.document.getAnonymousElementByAttribute(parent, anonattr, anonid); }
 	};
 	
 	Services.scriptloader.loadSubScript("resource://"+objPathString+"/modules/utils/Modules.jsm", window[objectName]);
