@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.4';
+Modules.VERSION = '2.0.5';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -37,6 +37,21 @@ this.slimChrome = {
 		this.animation();
 	},
 	
+	get currentHost () { return gBrowser.mCurrentBrowser._currentHost; },
+	get currentSpec () { return gBrowser.mCurrentBrowser._currentSpec; },
+	set currentHost (v) { return gBrowser.mCurrentBrowser._currentHost = v; },
+	set currentSpec (v) { return gBrowser.mCurrentBrowser._currentSpec = v; },
+	
+	_lastHost: null,
+	get tabLastHost () { return gBrowser.mCurrentBrowser._lastHost; },
+	get lastHost () { return this._lastHost; },
+	set lastHost (v) {
+		// don't account for newly opened tabs, which don't have a host yet, so that we can compare with its opener later
+		if(v) { this._lastHost = v; }
+		
+		return gBrowser.mCurrentBrowser._lastHost = v;
+	},
+	
 	moveStyle: {},
 	lastStyle: null,
 	initialLoading: true,
@@ -55,8 +70,8 @@ this.slimChrome = {
 				break;
 			
 			case 'locationChange':
-				m.target._currentHost = m.data.host;
-				m.target._currentSpec = m.data.spec;
+				this.currentHost = m.data.host;
+				this.currentSpec = m.data.spec;
 				
 				if(m.target == gBrowser.mCurrentBrowser) {
 					this.onTabSelect();
@@ -737,20 +752,22 @@ this.slimChrome = {
 	onTabSelect: function(e) {
 		if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
 		&& !this.focusPasswords() // focusPasswords will always show mini if a password field is focused
-		&& (	(Prefs.miniOnChangeLocation && gBrowser.mCurrentBrowser._lastHost != gBrowser.mCurrentBrowser._currentHost) // only if miniOnChangeLocation and the webhost has changed
+		&& (	(	Prefs.miniOnChangeLocation // the user must to show on every location change of course
+				&& this.tabLastHost != this.currentHost // the webhost in the current tab has changed
+				&& this.lastHost != this.currentHost) // we shouldn't show the mini bar when switching between tabs of the same host
 			|| (e && Prefs.miniOnTabSelect) ) // or when supposed to show on every tab select (and this is actually a TabSelect event)
 		&& (typeof(popups) == 'undefined' || !popups.blocked) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(this.container, 'hover') // also no point in showing mini if chrome is already shown
 		&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
-		&& window.XULBrowserWindow.inContentWhitelist.indexOf(gBrowser.mCurrentBrowser._currentSpec) == -1 // and if the current address is not whitelisted
+		&& window.XULBrowserWindow.inContentWhitelist.indexOf(this.currentSpec) == -1 // and if the current address is not whitelisted
 		) {
 			this.setMini(true);
 			Timers.init('setMini', () => { this.hideMiniInABit(); }, 2000);
-			gBrowser.mCurrentBrowser._lastHost = gBrowser.mCurrentBrowser._currentHost;
+			this.lastHost = this.currentHost;
 			return true;
 		}
 		
-		gBrowser.mCurrentBrowser._lastHost = gBrowser.mCurrentBrowser._currentHost;
+		this.lastHost = this.currentHost;
 		return false;
 	},
 	
