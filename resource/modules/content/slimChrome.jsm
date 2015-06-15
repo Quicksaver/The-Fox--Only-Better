@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.slimChrome = {
 	miniActive: false,
@@ -36,13 +36,13 @@ this.slimChrome = {
 	
 	onLocationChange: function(aProgress, aRequest, aURI) {
 		try { var host = aURI.host; }
-		catch(ex) { var host = aURI.spec; }
+		catch(ex) { var host = aURI.specIgnoringRef || aURI.spec; }
 		
 		// no point in showing in certain cases
 		if(host == this.lastHost) { return; }
 		
 		this.lastHost = host;
-		message('locationChange', { host: host, spec: aURI.spec });
+		message('locationChange', { host: host, spec: aURI.specIgnoringRef || aURI.spec });
 	},
 	
 	onDOMContentLoaded: function() {
