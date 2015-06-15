@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.1';
+Modules.VERSION = '2.0.2';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -46,8 +46,8 @@ this.onLoad = function() {
 	toggleSlimChrome();
 };
 
-this.doOpenOptions = function() {
-	openOptions();
+this.openOptions = function() {
+	PrefPanes.open(window);
 };
 
 this.toggleSlimChromePref = function() {
@@ -83,7 +83,6 @@ Modules.LOADMODULE = function() {
 	
 	Overlays.overlayWindow(window, 'TheFOB', self);
 	
-	Modules.load('whatsNew');
 	Modules.load('compatibilityFix/windowFixes');
 	
 	Prefs.listen('slimChrome', self);
@@ -109,7 +108,6 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('popups');
 	
 	Modules.unload('compatibilityFix/windowFixes');
-	Modules.unload('whatsNew');
 	
 	Overlays.removeOverlayWindow(window, 'TheFOB');
 };

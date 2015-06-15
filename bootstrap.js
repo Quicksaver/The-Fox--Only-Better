@@ -1,13 +1,22 @@
+// VERSION = '1.8.0';
+
 // This looks for file defaults.js in resource folder, expects:
-//	defaultsVersion - (string) version of defaults.js file, not mandatory but always helpful
 //	objName - (string) main object name for the add-on, to be added to window element
 //	objPathString - (string) add-on path name to use in URIs
-//	prefList: (object) { prefName: defaultValue } - add-on preferences
+//	addonUUID = (string) used to register the add-on's about: uri; must be unique for each add-on! See http://www.famkruithof.net/uuid/uuidgen for generating one
+//	prefList - (object) { prefName: defaultValue } - add-on preferences
+//	paneList - (iterable) of array with a panes arguments to apply to PrefPanes.setList(); see PrefPanes.jsm
+//	addonUris - (object) containing any of the following string properties
+//		homepage: add-on homepage
+//		support: add-on support page
+//		fullchangelog: add-on detailed changelog (usually github commits page)
+//		email: developer e-mail
+//		profile: developer profile or homepage
+//		api: address from where it should fetch the data for the About pane's current development state
+//		development: where the follow ongoing add-on development
 //	startConditions(aData, aReason) -	(optional) (method) should return false if any requirements the add-on needs aren't met,
 //						otherwise return true or call continueStartup(aData, aReason)
-//	onStartup/onShutdown/onInstall/onUninstall(aData, aReason) - (optional) (methods) to be called on startup() and shutdown() to initialize and terminate the add-on
-//	resource folder in installpath, with modules folder containing Modules, sandboxUtils and utils modules
-//	chrome.manifest file with content, locale, skin and resource declarations properly set
+//	onStartup/onShutdown/onInstall/onUninstall(aData, aReason) - (optional) (methods) to be called appropriately as their name suggest
 // handleDeadObject(ex) - 	expects [nsIScriptError object] ex. Shows dead object notices as warnings only in the console.
 //				If the code can handle them accordingly and firefox does its thing, they shouldn't cause any problems.
 // prepareObject(window, aName) - initializes a window-dependent add-on object with utils loaded into it, returns the newly created object
@@ -29,7 +38,6 @@
 // disable() - disables the add-on, in general the add-on disabling itself is a bad idea so I shouldn't use it
 // Note: Firefox 38 is the minimum version supported as the script assumes the resource path will be automatically loaded from chrome.manifest.
 
-let bootstrapVersion = '1.7.8';
 let UNLOADED = false;
 let STARTED = false;
 let Addon = {};
@@ -40,6 +48,24 @@ let isChrome = true;
 
 // Globals - lets me use objects that I can share through all the windows
 let Globals = {};
+
+// actual add-on data, to be overriden by defaults.js
+let objName = null;
+let objPathString = null;
+let prefList = null;
+let paneList = null;
+let addonUUID = null;
+
+// add-on relevant links, to be overriden by defaults.js
+let addonUris = {
+	homepage: '',
+	support: '',
+	fullchangelog: '',
+	email: '',
+	profile: '',
+	api: '',
+	development: ''
+};
 
 const {classes: Cc, interfaces: Ci, utils: Cu, manager: Cm, results: Cr} = Components;
 Cu.import("resource://gre/modules/Services.jsm");
@@ -192,6 +218,12 @@ function disable() {
 
 function continueStartup(aReason) {
 	STARTED = aReason;
+	
+	// append actual preferences panes into the preferences tab
+	if(paneList) {
+		PrefPanes.setList(paneList);
+	}
+	
 	if(typeof(onStartup) == 'function') {
 		onStartup(AddonData, aReason);
 	}
@@ -224,7 +256,9 @@ function startup(aData, aReason) {
 	
 	// set add-on preferences defaults
 	// This should come before startConditions() so we can use it in there
-	Prefs.setDefaults(prefList);
+	if(prefList) {
+		Prefs.setDefaults(prefList);
+	}
 	
 	if(typeof(startConditions) != 'function' || startConditions(aReason)) {
 		continueStartup(aReason);
@@ -245,7 +279,6 @@ function shutdown(aData, aReason) {
 	}
 	
 	if(STARTED) {
-		closeOptions();
 		if(typeof(onShutdown) == 'function') {
 			onShutdown(aData, aReason);
 		}

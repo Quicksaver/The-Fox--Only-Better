@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://thefoxonlybetter/skin/options.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/options.dtd">
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+			
+	<richlistbox id="categories">
+		<richlistitem id="category-main"
+			class="category"
+			value="paneSlimChrome"
+			tooltiptext="&pane.slimChrome.label;"
+			position="1"
+			align="center">
+			
+			<image class="category-icon"/>
+			<label class="category-name" flex="1" value="&pane.slimChrome.label;"/>
+		</richlistitem>
+	</richlistbox>
+	
+	<prefpane id="mainPrefPane">
+		<preferences>
+			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
+			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
+			<preference id="pref-miniOnChangeLocation" name="extensions.thefoxonlybetter.miniOnChangeLocation" type="bool"/>
+			<preference id="pref-miniOnTabSelect" name="extensions.thefoxonlybetter.miniOnTabSelect" type="bool"/>
+			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
+			<preference id="pref-includeNavBar" name="extensions.thefoxonlybetter.includeNavBar" type="bool"/>
+			<preference id="pref-skyLights" name="extensions.thefoxonlybetter.skyLights" type="bool"/>
+			<preference id="pref-skyLightsHide" name="extensions.thefoxonlybetter.skyLightsHide" type="bool"/>
+			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
+			<preference id="pref-delayOut" name="extensions.thefoxonlybetter.delayOut" type="int"/>
+			<preference id="pref-slimStyle" name="extensions.thefoxonlybetter.slimStyle" type="string"/>
+			<preference id="pref-slimAnimation" name="extensions.thefoxonlybetter.slimAnimation" type="string"/>
+			<preference id="pref-slimChromeKeycode" name="extensions.thefoxonlybetter.slimChromeKeycode" type="string"/>
+			<preference id="pref-slimChromeAccel" name="extensions.thefoxonlybetter.slimChromeAccel" type="bool"/>
+			<preference id="pref-slimChromeShift" name="extensions.thefoxonlybetter.slimChromeShift" type="bool"/>
+			<preference id="pref-slimChromeAlt" name="extensions.thefoxonlybetter.slimChromeAlt" type="bool"/>
+		</preferences>
+		
+		<hbox id="header-slimChrome" class="header" collapsed="true" data-category="paneSlimChrome">
+			<label class="header-name">&pane.slimChrome.label;</label>
+		</hbox>
+		
+		<groupbox align="start" id="paneSlimChrome-main" collapsed="true" data-category="paneSlimChrome">
+			<checkbox label="&opt.slimChrome.label;" tooltiptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
+		</groupbox>
+		
+		<groupbox align="start" id="paneSlimChrome-includes" collapsed="true" data-category="paneSlimChrome">
+			<caption label="&cat.general.label;"/>
+			<checkbox label="&opt.includeNavBar.label;"
+				tooltiptext="&opt.includeNavBar.tooltip;"
+				dependson="pref-slimChrome"
+				preference="pref-includeNavBar"/>
+			<checkbox label="&opt.skyLights.label;"
+				tooltiptext="&opt.skyLights.tooltip;"
+				dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation"
+				preference="pref-skyLights"/>
+			<checkbox label="&opt.skyLightsHide.label;"
+				tooltiptext="&opt.skyLightsHide.tooltip;"
+				class="indent"
+				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
+				preference="pref-skyLightsHide"/>
+		</groupbox>
+		
+		<groupbox align="start" id="paneSlimChrome-mini" collapsed="true" data-category="paneSlimChrome">
+			<caption label="&cat.mini.label;"/>
+			<checkbox label="&opt.miniOnAllInput.label;"
+				tooltiptext="&opt.miniOnAllInput.tooltip;"
+				dependson="pref-slimChrome,pref-includeNavBar"
+				preference="pref-miniOnAllInput"/>
+			<checkbox label="&opt.miniOnChangeLocation.label;"
+				tooltiptext="&opt.miniOnChangeLocation.tooltip;"
+				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
+				preference="pref-miniOnChangeLocation"/>
+			<checkbox label="&opt.miniOnTabSelect.label;"
+				tooltiptext="&opt.miniOnTabSelect.tooltip;"
+				dependson="pref-slimChrome,pref-includeNavBar"
+				preference="pref-miniOnTabSelect"/>
+		</groupbox>
+		
+		<groupbox align="start" id="paneSlimChrome-mouse" collapsed="true" data-category="paneSlimChrome">
+			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
+			<vbox align="stretch" id="delaysBox">
+				<hbox tooltiptext="&opt.delayIn.tooltip;">
+					<label value="&opt.delayIn.label;" dependson="pref-slimChrome,pref-useMouse"/>
+					<hbox flex="1"/>
+					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
+					<scale dependson="pref-slimChrome,pref-useMouse"
+						dir="reverse"
+						width="175"
+						min="75"
+						max="1000"
+						value="75"
+						increment="25"
+						pageincrement="150"
+						preference="pref-delayIn"/>
+					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				</hbox>
+				<hbox tooltiptext="&opt.delayOut.tooltip;">
+					<label value="&opt.delayOut.label;" dependson="pref-slimChrome,pref-useMouse"/>
+					<hbox flex="1"/>
+					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
+					<scale dependson="pref-slimChrome,pref-useMouse"
+						dir="reverse"
+						width="175"
+						min="75"
+						max="1000"
+						value="75"
+						increment="25"
+						pageincrement="150"
+						preference="pref-delayOut"/>
+					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
+				</hbox>
+			</vbox>
+		</groupbox>
+		
+		<groupbox align="start" id="paneSlimChrome-style" collapsed="true" data-category="paneSlimChrome">
+			<caption label="&cat.appearance.label;"/>
+			<radiogroup id="slimStyleRadio" preference="pref-slimStyle" oncommand="objName.initialShowInOpener(this.value, document.getElementById('slimAnimationRadio').value, 1500);">
+				<hbox>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.full.label;" tooltiptext="&opt.style.full.tooltip;" value="full"/>
+				</hbox>
+			</radiogroup>
+		</groupbox>
+		
+		<groupbox align="start" id="paneSlimChrome-animation" collapsed="true" data-category="paneSlimChrome">
+			<caption label="&cat.animation.label;"/>
+			<radiogroup id="slimAnimationRadio" preference="pref-slimAnimation" oncommand="objName.initialShowInOpener(document.getElementById('slimStyleRadio').value, this.value, 1000);">
+				<hbox>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.fadein.label;" tooltiptext="&opt.animation.fadein.tooltip;" value="fadein"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.slidedown.label;" tooltiptext="&opt.animation.slidedown.tooltip;" value="slidedown"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.rollout.label;" tooltiptext="&opt.animation.rollout.tooltip;" value="rollout"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.hinge.label;" tooltiptext="&opt.animation.hinge.tooltip;" value="hinge"/>
+				</hbox>
+			</radiogroup>
+		</groupbox>
+		
+		<groupbox align="start" id="paneSlimChrome-shortcut" collapsed="true" data-category="paneSlimChrome">
+			<caption label="&cat.slimChromeKeyset.label;"/>
+			<hbox>
+				<checkbox class="smallindent" keysetAccel="slimChrome" preference="pref-slimChromeAccel"/>
+				<checkbox class="smallindent" keysetAlt="slimChrome" preference="pref-slimChromeAlt"/>
+				<checkbox class="smallindent" keysetShift="slimChrome" preference="pref-slimChromeShift"/>
+				<menulist class="smallindent" keyset="slimChrome" preference="pref-slimChromeKeycode"/>
+			</hbox>
+		</groupbox>
+	</prefpane>
+</overlay>

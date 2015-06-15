@@ -1,7 +1,20 @@
-var defaultsVersion = '1.2.4';
-var objName = 'theFoxOnlyBetter';
-var objPathString = 'thefoxonlybetter';
-var prefList = {
+// VERSION = '1.3';
+
+objName = 'theFoxOnlyBetter';
+objPathString = 'thefoxonlybetter';
+addonUUID = '9cb2c7a0-5224-11e4-916c-0800200c9a66';
+
+addonUris = {
+	homepage: 'https://addons.mozilla.org/firefox/addon/the-fox-only-better/',
+	support: 'https://github.com/Quicksaver/The-Fox--Only-Better/issues',
+	fullchangelog: 'https://github.com/Quicksaver/The-Fox--Only-Better/commits/master',
+	email: 'mailto:quicksaver@gmail.com',
+	profile: 'https://addons.mozilla.org/firefox/user/quicksaver/',
+	api: 'http://fasezero.com/addons/api/thefoxonlybetter',
+	development: 'http://fasezero.com/addons/'
+};
+
+prefList = {
 	slimChrome: true,
 	miniOnAllInput: false,
 	miniOnChangeLocation: true,
@@ -19,22 +32,16 @@ var prefList = {
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,
 	slimChromeShift: false,
-	slimChromeAlt: false,
-	
-	// for the what's new tab, it's better they're here so they're automatically carried over to content
-	lastVersionNotify: '0',
-	notifyOnUpdates: true
+	slimChromeAlt: false
 };
+
+paneList = [
+	[ 'paneSlimChrome', true ]
+];
 
 function startAddon(window) {
 	prepareObject(window);
 	window[objName].Modules.load(objName, true);
-}
-
-function startPreferences(window) {
-	replaceObjStrings(window.document);
-	preparePreferences(window);
-	window[objName].Modules.load('options');
 }
 
 function onStartup(aReason) {
@@ -44,18 +51,11 @@ function onStartup(aReason) {
 	// Apply the add-on to every window opened and to be opened
 	Windows.callOnAll(startAddon, 'navigator:browser');
 	Windows.register(startAddon, 'domwindowopened', 'navigator:browser');
-	
-	// Apply the add-on to every preferences window opened and to be opened
-	Windows.callOnAll(startPreferences, null, "chrome://"+objPathString+"/content/options.xul");
-	Windows.register(startPreferences, 'domwindowopened', null, "chrome://"+objPathString+"/content/options.xul");
-	Browsers.callOnAll(startPreferences, "chrome://"+objPathString+"/content/options.xul");
-	Browsers.register(startPreferences, 'pageshow', "chrome://"+objPathString+"/content/options.xul");
 }
 
 function onShutdown(aReason) {
 	// remove the add-on from all windows
 	Windows.callOnAll(removeObject, null, null, true);
-	Browsers.callOnAll(removeObject, null, true);
 	
 	Modules.unload('keysets');
 	Modules.unload('compatibilityFix/sandboxFixes');

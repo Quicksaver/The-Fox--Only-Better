@@ -19,7 +19,7 @@
 			insertbefore="puzzleBars-contextSeparator"
 			label="&theFOB.options.label;"
 			accesskey="&theFOB.options.accesskey;"
-			oncommand="objName.doOpenOptions();"/>
+			oncommand="objName.openOptions();"/>
 	</menupopup>
 	
 </overlay>

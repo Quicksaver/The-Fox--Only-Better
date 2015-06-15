@@ -1,8 +1,4 @@
-<!ENTITY Optwindow.style "width: 34em;">
-<!ENTITY options.title "The Fox, Only Better">
-
 <!ENTITY pane.slimChrome.label "Slim Chrome">
-<!ENTITY pane.about.label "About">
 
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
@@ -54,25 +50,3 @@
 <!ENTITY opt.animation.hinge.tooltip "Special hinge effect, created by Geek in Training. If you like it you should thank him!">
 
 <!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
-<!ENTITY opt.keyset.control "Control">
-<!ENTITY opt.keyset.shift "Shift">
-<!ENTITY opt.keyset.alt "Alt">
-<!ENTITY opt.keyset.command "Command">
-<!ENTITY opt.keyset.option "Option">
-<!ENTITY opt.keyset.none "None">
-<!ENTITY opt.keyset.spacebar "Spacebar">
-<!ENTITY opt.keyset.pageup "Page Up">
-<!ENTITY opt.keyset.pagedown "Page Down">
-<!ENTITY opt.keyset.end "End">
-<!ENTITY opt.keyset.home "Home">
-<!ENTITY opt.keyset.left "Left">
-<!ENTITY opt.keyset.up "Up">
-<!ENTITY opt.keyset.right "Right">
-<!ENTITY opt.keyset.down "Down">
-
-<!ENTITY about.name "The Fox, Only Better">
-<!ENTITY about.by "by Quicksaver">
-<!ENTITY about.desc "All information about the add-on and its developer can be found in its Mozilla Add-ons Homepage. If you liked the add-on, please consider leaving there a nice review or a small contribution to help support its continued development. Bug reports and suggestions can be made in the technical support webpage.">
-<!ENTITY about.home "Add-on Homepage">
-<!ENTITY about.tech "Technical Support">
-<!ENTITY about.notes "Release Notes">
