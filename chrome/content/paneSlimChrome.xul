@@ -86,9 +86,9 @@
 					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<scale dependson="pref-slimChrome,pref-useMouse"
 						dir="reverse"
-						width="175"
+						width="200"
 						min="75"
-						max="1000"
+						max="2500"
 						value="75"
 						increment="25"
 						pageincrement="150"
@@ -101,9 +101,9 @@
 					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<scale dependson="pref-slimChrome,pref-useMouse"
 						dir="reverse"
-						width="175"
+						width="200"
 						min="75"
-						max="1000"
+						max="2500"
 						value="75"
 						increment="25"
 						pageincrement="150"
