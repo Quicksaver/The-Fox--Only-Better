@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.5';
+Modules.VERSION = '2.0.6';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -260,6 +260,13 @@ this.slimChrome = {
 				// also, don't capture this if we're in HTML5 fullscreen mode and in Mac OS X, as it's just weird
 				if(DARWIN && mozFullScreen) { break; }
 				
+				// the mouse hovered the tabs context menu, so there's no need to keep the chrome open for this
+				if(e.explicitOriginalTarget && e.explicitOriginalTarget.id == 'tabContextMenu') { break; }
+				
+				// it's still possible that the toolbar context menu was opened by right-clicking the tabs empty area, we need to account for this special case as well
+				let toolbarMenu = $('toolbar-context-menu');
+				if((toolbarMenu.state == 'showing' || toolbarMenu.state == 'open') && isAncestor(toolbarMenu.triggerNode, $('tabbrowser-tabs'))) { break; }
+				
 				if(!document.documentElement.getAttribute('chromehidden').contains('menubar') && dispatch(this.container, { type: 'SlimChromeNormalActiveArea' })) {
 					// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
 					if(e.screenY < gNavToolbox.boxObject.screenY
@@ -487,7 +494,7 @@ this.slimChrome = {
 		var node = e.originalTarget;
 		
 		// we don't want the chrome to show or hide when hovering the menu popups from the menu bar
-		var toolbars = [MenuBar, TabsToolbar];
+		var toolbars = [ MenuBar, TabsToolbar ];
 		
 		// if we're not including the nav-bar in the container, might as well apply the same rule to it
 		if(!Prefs.includeNavBar) {
