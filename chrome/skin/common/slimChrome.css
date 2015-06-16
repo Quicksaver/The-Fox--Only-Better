@@ -44,7 +44,7 @@
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons > *:not(#page-report-button):not(#readinglist-addremove-button):not(#reader-mode-button) {
 		visibility: collapse;
 	}
 	
