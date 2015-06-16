@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.6';
+Modules.VERSION = '2.0.7';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -107,7 +107,13 @@ this.slimChrome = {
 				break;
 			
 			case 'focus':
-				this.setHover(true, true);
+				// in a few cases we shouldn't trigger chrome to appear immediately, the small delay will be sufficient for other handlers to cancel
+				// the showing if, for instance, we're in the mini bar and click one of the buttons
+				var now =
+					e.originalTarget == gURLBar.inputField // always trigger the full chrome when focusing the location bar itself
+					|| trueAttribute(this.container, 'hover') // it's already shown so go ahead and keep it shown
+					|| !trueAttribute(this.container, 'mini'); // if the mini bar is hidden already, we can't be using anything in it
+				this.setHover(true, now);
 				
 				// the translation infobar toggle button keeps focus after being clicked, so we need to shift it to the translation infobar itself
 				// to dismiss the top chrome, otherwise it will stay visible and cover the infobar
