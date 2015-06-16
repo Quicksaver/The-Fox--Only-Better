@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.17';
+Modules.VERSION = '1.0.18';
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
@@ -39,6 +39,10 @@ Modules.LOADMODULE = function() {
 		Modules.loadIf('compatibilityFix/AniWeather', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("{fc2b8f80-d9a5-4f51-8076-7c7ce3c67ee3}", function(addon) {
+		Modules.loadIf('compatibilityFix/diigoTb', (addon && addon.isActive));
+	});
+	
 	Modules.load('compatibilityFix/UIEnhancer');
 };
 
@@ -56,5 +60,6 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/LinkLocationBar');
 	Modules.unload('compatibilityFix/hackBar');
 	Modules.unload('compatibilityFix/AniWeather');
+	Modules.unload('compatibilityFix/diigoTb');
 	Modules.unload('compatibilityFix/UIEnhancer');
 };
