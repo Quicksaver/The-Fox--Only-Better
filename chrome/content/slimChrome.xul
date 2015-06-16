@@ -7,7 +7,6 @@
 	
 	<toolbox id="navigator-toolbox" slimChrome="true">
 		<toolbar id="objName-slimChrome-slimmer"
-			class="toolbar-primary"
 			waitForSS="chrome://objPathString/skin/slimChrome.css chrome://objPathString-os/skin/slimChrome.css"
 			fullscreentoolbar="true"
 			context="toolbar-context-menu"

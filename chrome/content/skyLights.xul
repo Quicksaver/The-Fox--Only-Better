@@ -5,7 +5,6 @@
 	
 	<toolbox id="navigator-toolbox">
 		<toolbar id="objName-skyLights-container"
-			class="toolbar-primary"
 			waitForSS="chrome://objPathString/skin/skyLights.css chrome://objPathString-os/skin/skyLights.css"
 			fullscreentoolbar="true"
 			insertafter="objName-slimChrome-slimmer"

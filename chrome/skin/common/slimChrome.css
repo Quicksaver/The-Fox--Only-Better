@@ -229,5 +229,11 @@
 	#theFoxOnlyBetter-slimChrome-container #PlacesToolbarDropIndicatorHolder {
 		top: 60%;
 	}
+	
+	/* fix for https://bugzilla.mozilla.org/show_bug.cgi?id=647540, .chromeclass-location isn't obeyed by itself anymore,
+	   it just assumes that anything that's not #nav-bar is not location */
+	window[chromehidden~="toolbar"]:not([chromehidden~="location"]) #theFoxOnlyBetter-slimChrome-slimmer {
+		display: -moz-box !important;
+	}
 
 }
