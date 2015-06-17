@@ -4,7 +4,7 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 			
 	<richlistbox id="categories">
-		<richlistitem id="category-main"
+		<richlistitem id="category-slimChrome"
 			class="category"
 			value="paneSlimChrome"
 			tooltiptext="&pane.slimChrome.label;"
