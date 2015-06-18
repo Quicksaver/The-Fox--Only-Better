@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.slimStyle = {
 	get clipPathURLBarWrapper () { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); },
@@ -409,7 +409,6 @@ this.slimStyle = {
 		
 		delete slimChrome.container._borderSize;
 		delete slimChrome.container._lastWidth;
-		delete slimChrome.container._lastHeight;
 		
 		removeAttribute(gNavToolbox, 'slimStyle');
 	}
