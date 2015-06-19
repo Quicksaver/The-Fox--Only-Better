@@ -2,14 +2,17 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>thefoxonlybetter@quicksaver</em:id>
-		<em:type>2</em:type>
+		
+		<em:name>The Fox, Only Better</em:name>
 		<em:version>1.1.14b5</em:version>
+		
 		<em:creator>Quicksaver</em:creator>
 		<em:optionsURL>about:thefoxonlybetter</em:optionsURL>
-		<em:optionsType>3</em:optionsType>
 		<em:iconURL>chrome://thefoxonlybetter/skin/icon.png</em:iconURL>
 		<em:homepageURL>https://addons.mozilla.org/firefox/addon/the-fox-only-better/</em:homepageURL>
-		<em:name>The Fox, Only Better</em:name>
+		
+		<em:type>2</em:type>
+		<em:optionsType>3</em:optionsType>
 		<em:bootstrap>true</em:bootstrap>
 		<em:multiprocessCompatible>true</em:multiprocessCompatible>
 		
