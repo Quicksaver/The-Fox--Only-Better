@@ -1,7 +1,4 @@
-<!ENTITY Optwindow.style "width: 36em;">
-<!ENTITY options.title "The Fox, Only Better">
 <!ENTITY pane.slimChrome.label "Chrome verkleinen">
-<!ENTITY pane.about.label "Over">
 <!ENTITY cat.general.label "Algemeen">
 <!ENTITY opt.slimChrome.label "Chrome verkleinen inschakelen">
 <!ENTITY opt.slimChrome.tooltip "Stroomlijnt de interface en maximaliseert de ruimte voor inhoud, door de bovenste werkbalken te verbergen als u ze niet nodig hebt.">
@@ -47,24 +44,3 @@
 <!ENTITY opt.animation.hinge.label "GiT’s scharniereffect">
 <!ENTITY opt.animation.hinge.tooltip "Speciaal scharniereffect, gemaakt door Geek in Training. Als u het mooi vindt kunt u hem bedanken!">
 <!ENTITY cat.slimChromeKeyset.label "Sneltoets voor in- of uitschakelen">
-<!ENTITY opt.keyset.control "Ctrl">
-<!ENTITY opt.keyset.shift "Shift">
-<!ENTITY opt.keyset.alt "Alt">
-<!ENTITY opt.keyset.command "Cmd">
-<!ENTITY opt.keyset.option "Optie">
-<!ENTITY opt.keyset.none "Geen">
-<!ENTITY opt.keyset.spacebar "Spatiebalk">
-<!ENTITY opt.keyset.pageup "PgUp">
-<!ENTITY opt.keyset.pagedown "PgDn">
-<!ENTITY opt.keyset.end "End">
-<!ENTITY opt.keyset.home "Home">
-<!ENTITY opt.keyset.left "Links">
-<!ENTITY opt.keyset.up "Omhoog">
-<!ENTITY opt.keyset.right "Rechts">
-<!ENTITY opt.keyset.down "Omlaag">
-<!ENTITY about.name "The Fox, Only Better">
-<!ENTITY about.by "door Quicksaver">
-<!ENTITY about.desc "Alle informatie over de add-on en zijn ontwikkelaar kan worden gevonden op de startpagina op Mozilla Add-ons. Als u plezier aan de add-on beleeft, overweeg dan een aardige beoordeling of een kleine bijdrage om verdere ontwikkeling te ondersteunen. Bugrapporten en suggesties kunnen worden doorgegeven in de webpagina voor technische ondersteuning.">
-<!ENTITY about.home "Add-on-startpagina">
-<!ENTITY about.tech "Technische ondersteuning">
-<!ENTITY about.notes "Versieopmerkingen">

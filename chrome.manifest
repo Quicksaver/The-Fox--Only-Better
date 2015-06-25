@@ -3,6 +3,7 @@ resource  thefoxonlybetter                    resource/
 
 locale    thefoxonlybetter-en   en-US         chrome/locale/en-US/
 locale    thefoxonlybetter      en-US         chrome/locale/en-US/
+locale    thefoxonlybetter      es            chrome/locale/es/
 locale    thefoxonlybetter      fr            chrome/locale/fr/
 locale    thefoxonlybetter      nl            chrome/locale/nl/
 locale    thefoxonlybetter      pt-PT         chrome/locale/pt-PT/

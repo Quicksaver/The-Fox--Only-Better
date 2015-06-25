@@ -1,7 +1,4 @@
-<!ENTITY Optwindow.style "width:30em;">
-<!ENTITY options.title "The Fox, Only Better">
 <!ENTITY pane.slimChrome.label "精簡介面">
-<!ENTITY pane.about.label "關於">
 <!ENTITY cat.general.label "一般設定">
 <!ENTITY opt.slimChrome.label "啟用精簡介面">
 <!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
@@ -47,24 +44,3 @@
 <!ENTITY opt.animation.hinge.label "GiT轉板特效">
 <!ENTITY opt.animation.hinge.tooltip "瀏覽工具列以門板旋轉方式出現於視窗(感謝Geek in Training提供)">
 <!ENTITY cat.slimChromeKeyset.label "功能啟用/關閉快捷鍵">
-<!ENTITY opt.keyset.control "Ctrl">
-<!ENTITY opt.keyset.shift "Shift">
-<!ENTITY opt.keyset.alt "Alt">
-<!ENTITY opt.keyset.command "Cmd">
-<!ENTITY opt.keyset.option "選項">
-<!ENTITY opt.keyset.none "無">
-<!ENTITY opt.keyset.spacebar "空白鍵">
-<!ENTITY opt.keyset.pageup "「Page Up」鍵">
-<!ENTITY opt.keyset.pagedown "「Page Down」鍵">
-<!ENTITY opt.keyset.end "「End」鍵">
-<!ENTITY opt.keyset.home "「Home」鍵">
-<!ENTITY opt.keyset.left "左方向鍵">
-<!ENTITY opt.keyset.up "上方向鍵">
-<!ENTITY opt.keyset.right "右方向鍵">
-<!ENTITY opt.keyset.down "下方向鍵">
-<!ENTITY about.name "The Fox, Only Better">
-<!ENTITY about.by "by Quicksaver">
-<!ENTITY about.desc "所有關於此附加元件及開發者之資訊請見Mozilla附加元件頁。如果你喜歡這個附加元件，請不吝留下正面評語或提供協助持續開發。錯誤回報和建議管道請見技術支援頁。">
-<!ENTITY about.home "附加元件頁">
-<!ENTITY about.tech "技術支援">
-<!ENTITY about.notes "版本資訊">

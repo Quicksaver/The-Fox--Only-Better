@@ -1,7 +1,4 @@
-<!ENTITY Optwindow.style "width: 29em;">
-<!ENTITY options.title "The Fox, Only Better">
 <!ENTITY pane.slimChrome.label "精简界面">
-<!ENTITY pane.about.label "关于">
 <!ENTITY cat.general.label "常规">
 <!ENTITY opt.slimChrome.label "启用精简界面功能">
 <!ENTITY opt.slimChrome.tooltip "在您不需要的时候隐藏顶部工具栏，使得用户界面更具流线型，同时最大化网页显示面积。">
@@ -47,24 +44,3 @@
 <!ENTITY opt.animation.hinge.label "GiT 的翻转特效">
 <!ENTITY opt.animation.hinge.tooltip "Geek in Training 制作的特殊翻转特效。觉得满意的话就请对他表示感谢吧！">
 <!ENTITY cat.slimChromeKeyset.label "键盘快捷键的启用或禁用">
-<!ENTITY opt.keyset.control "Ctrl">
-<!ENTITY opt.keyset.shift "Shift">
-<!ENTITY opt.keyset.alt "Alt">
-<!ENTITY opt.keyset.command "Command">
-<!ENTITY opt.keyset.option "Option">
-<!ENTITY opt.keyset.none "无">
-<!ENTITY opt.keyset.spacebar "空格键">
-<!ENTITY opt.keyset.pageup "Page Up">
-<!ENTITY opt.keyset.pagedown "Page Down">
-<!ENTITY opt.keyset.end "End">
-<!ENTITY opt.keyset.home "Home">
-<!ENTITY opt.keyset.left "左键">
-<!ENTITY opt.keyset.up "上键">
-<!ENTITY opt.keyset.right "右键">
-<!ENTITY opt.keyset.down "下键">
-<!ENTITY about.name "The Fox, Only Better">
-<!ENTITY about.by "创造者：Quicksaver">
-<!ENTITY about.desc "有关附加组件和开发者的所有信息都可以在 Mozilla 附加组件主页中找到。如果本附加组件有幸得到您的喜欢，请考虑给我们一个高的评价或一点捐助以支持我们继续开发。您还可以在技术支持页面进行 Bug 报告和建议。">
-<!ENTITY about.home "附加组件主页">
-<!ENTITY about.tech "技术支持">
-<!ENTITY about.notes "发行说明">

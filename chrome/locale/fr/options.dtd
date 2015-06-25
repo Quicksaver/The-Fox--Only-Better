@@ -1,7 +1,4 @@
-<!ENTITY Optwindow.style "width: 36em;">
-<!ENTITY options.title "The Fox, Only Better">
 <!ENTITY pane.slimChrome.label "Interface Réduite">
-<!ENTITY pane.about.label "À propos">
 <!ENTITY cat.general.label "Général">
 <!ENTITY opt.slimChrome.label "Activer l'Interface Réduite">
 <!ENTITY opt.slimChrome.tooltip "Simplifie l'interface et maximise l'espace d'affichage du contenu, en cachant les barres d'outils supérieures lorsque vous n'en avez pas besoin.">
@@ -47,24 +44,3 @@
 <!ENTITY opt.animation.hinge.label "Effet de Charnière de GiT">
 <!ENTITY opt.animation.hinge.tooltip "Un effet spécial en charnière, crée par Geek in Training. Si vous aimez, remerciez-le !">
 <!ENTITY cat.slimChromeKeyset.label "Raccourci clavier pour activer ou désactiver">
-<!ENTITY opt.keyset.control "Ctrl">
-<!ENTITY opt.keyset.shift "Maj">
-<!ENTITY opt.keyset.alt "Alt">
-<!ENTITY opt.keyset.command "Command">
-<!ENTITY opt.keyset.option "Option">
-<!ENTITY opt.keyset.none "Aucune">
-<!ENTITY opt.keyset.spacebar "Barre d'espace">
-<!ENTITY opt.keyset.pageup "Page précédante">
-<!ENTITY opt.keyset.pagedown "Page suivante">
-<!ENTITY opt.keyset.end "Fin">
-<!ENTITY opt.keyset.home "Origine">
-<!ENTITY opt.keyset.left "Gauche">
-<!ENTITY opt.keyset.up "Haut">
-<!ENTITY opt.keyset.right "Droite">
-<!ENTITY opt.keyset.down "Bas">
-<!ENTITY about.name "The Fox, Only Better">
-<!ENTITY about.by "par Quicksaver">
-<!ENTITY about.desc "Toutes les informations sur l'extension et son développeur peuvent être trouvées sur la page de Mozilla Add-ons dédiée à ce module. Si vous aimez l'extension, vous pouvez laisser un commentaire ou aider au développement en réalisant un don. Les rapports de bugs et suggestions peuvent être faits sur la page web de support technique.">
-<!ENTITY about.home "Page d'accueil de l'extension">
-<!ENTITY about.tech "Assistance technique">
-<!ENTITY about.notes "Notes de versions">

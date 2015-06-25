@@ -33,6 +33,14 @@
 		</em:localized>
 		<em:localized>
 			<Description>
+				<em:locale>es</em:locale>
+				<em:name>The Fox, Only Better</em:name>
+				<em:description>Australis, el nuevo tema decorativo de Firefox, hizo que un gran navegador luciera estupendo. ¡Y ahora también será estupenda la sensación al usarlo!</em:description>
+				<em:translator>strel</em:translator>
+			</Description>
+		</em:localized>
+		<em:localized>
+			<Description>
 				<em:locale>fr</em:locale>
 				<em:name>The Fox, Only Better</em:name>
 				<em:description>La nouvelle interface « Australis » pour Firefox rend votre navigateur plus élégant, cette extension le rendra encore meilleur !</em:description>

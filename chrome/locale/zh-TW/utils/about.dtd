@@ -1,0 +1,24 @@
+<!ENTITY about.paneTitle "關於">
+<!ENTITY about.version "版本{v}">
+<!ENTITY about.versionDivider " - ">
+<!ENTITY about.uptodate "恭喜，您正在使用最新版本!">
+<!ENTITY about.needsupdate "有更新版本!">
+<!ENTITY about.description "欲瞭解此版本之&quot;版本資訊&quot;和&quot;已知問題&quot;，請查看下方。若有任何運作上的問題或對未來版本功能上的建議，歡迎回報。">
+<!ENTITY about.descriptionB "The add-on is free, but fixing problems, adding new features and ensuring everything works with each new Firefox release is laborious and can be difficult at times. If you enjoy the add-on, please support its continued development. As the link says, &quot;You Can Help&quot;!">
+<!ENTITY about.allVersions "顯示所有先前版本資訊">
+<!ENTITY about.notifyOnUpdates "在下次更新時顯示此分頁">
+<!ENTITY about.development "Development Status">
+<!ENTITY about.helpdevelopment "YOU CAN HELP">
+<!ENTITY about.information "更多訊息">
+<!ENTITY about.home "附加元件頁">
+<!ENTITY about.fullchangelog "完整變更紀錄">
+<!ENTITY about.problems "有疑問？">
+<!ENTITY about.tech "在技術支援網頁開啟一個關於您的問題的issue">
+<!ENTITY about.email "或者以電子郵件方式告知">
+<!ENTITY about.author "更多關於作者">
+<!ENTITY about.trymore "歡迎嘗試其他我所製作的附加元件，體驗更佳的firefox!">
+<!ENTITY about.profile "那些可在我的個人資訊中找到">
+<!ENTITY about.share "分享到">
+<!ENTITY about.friends "拉入更多朋友一起體驗最棒的瀏覽器">
+<!ENTITY about.moreshare "其他服務...">
+<!ENTITY about.tryit "讓你的firefox變得更棒-The Fox, Only Better!">

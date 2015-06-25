@@ -1,0 +1,24 @@
+<!ENTITY about.paneTitle "Over">
+<!ENTITY about.version "Versie {v}">
+<!ENTITY about.versionDivider " - ">
+<!ENTITY about.uptodate "actueel, gefeliciteerd!">
+<!ENTITY about.needsupdate "update beschikbaar!">
+<!ENTITY about.description "Lees hieronder de “Versieopmerkingen” en “Bekende problemen” voor deze versie. Ik hoor graag van gevonden problemen of suggesties voor toekomstige versies.">
+<!ENTITY about.descriptionB "De add-on is gratis, maar het oplossen van problemen, toevoegen van nieuwe functies en ervoor zorgen dat alles bij elke nieuwe versie van Firefox werkt is arbeidsintensief en kan soms lastig zijn. Als u plezier beleeft aan de add-on, steun dan verdere ontwikkeling. Zoals de koppeling als zegt, ‘U kunt helpen’!">
+<!ENTITY about.allVersions "Opmerkingen van alle eerdere versies weergeven">
+<!ENTITY about.notifyOnUpdates "Dit tabblad bij de volgende update weergeven">
+<!ENTITY about.development "Ontwikkelstatus">
+<!ENTITY about.helpdevelopment "U KUNT HELPEN">
+<!ENTITY about.information "Meer informatie">
+<!ENTITY about.home "Add-on-startpagina">
+<!ENTITY about.fullchangelog "Volledig overzicht van wijzigingen">
+<!ENTITY about.problems "Problemen?">
+<!ENTITY about.tech "Start een issue op de ondersteuningspagina waarin u uw probleem schetst">
+<!ENTITY about.email "Of stuur me er een e-mailbericht over">
+<!ENTITY about.author "Meer van de schrijver">
+<!ENTITY about.trymore "Probeer één van mijn andere add-ons voor een nog betere Firefox-ervaring!">
+<!ENTITY about.profile "Vind ze in mijn profiel">
+<!ENTITY about.share "Delen!">
+<!ENTITY about.friends "Wees niet de enige met een geweldige browser. Vertel het uw vrienden!">
+<!ENTITY about.moreshare "Overige diensten…">
+<!ENTITY about.tryit "Probeer deze add-on die het gebruik van uw Firefox geweldig doet aanvoelen - The Fox, Only Better!">

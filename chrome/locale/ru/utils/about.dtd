@@ -1,0 +1,24 @@
+<!ENTITY about.paneTitle "О расширении">
+<!ENTITY about.version "Версия {v}">
+<!ENTITY about.versionDivider " - ">
+<!ENTITY about.uptodate "поздравляю, у вас свежая версия!">
+<!ENTITY about.needsupdate "доступно обновление!">
+<!ENTITY about.description "Прочтите &quot;Примечания к выпуску&quot; и &quot;Известные проблемы&quot; для этой версии. Дайте мне знать если у вас имеются какие либо проблемы или предложения.">
+<!ENTITY about.descriptionB "Это дополнение бесплатно, но исправление ошибок, добавление новых функций и обеспечение совместимости с новыми версиями Firefox довольно трудоемкий процесс. Если Вам нравится это дополнение, вы можете помочь его дальнейшему развитию. Как говорится,  &quot;Вы можете помочь&quot;!">
+<!ENTITY about.allVersions "Показать заметки о всех предыдущих версиях">
+<!ENTITY about.notifyOnUpdates "Показать эту вкладку при следующем обновлении">
+<!ENTITY about.development "Статус разработки">
+<!ENTITY about.helpdevelopment "ВЫ МОЖЕТЕ ПОМОЧЬ">
+<!ENTITY about.information "Больше информации">
+<!ENTITY about.home "Домашняя страница дополнения">
+<!ENTITY about.fullchangelog "Полный список изменений">
+<!ENTITY about.problems "Проблемы?">
+<!ENTITY about.tech "Открыть страницу поддержки, описывающую вашу проблему">
+<!ENTITY about.email "Или отправить мне сообщение с проблемой">
+<!ENTITY about.author "Больше информации от автора">
+<!ENTITY about.trymore "Попробуйте одно из моих других дополнений!">
+<!ENTITY about.profile "Найти их в моем профиле">
+<!ENTITY about.share "Поделиться!">
+<!ENTITY about.friends "Не будь эгоистом с крутым браузером. Расскажи друзьям, дай им возможность почувствовать свою исключительность!">
+<!ENTITY about.moreshare "Другие услуги.">
+<!ENTITY about.tryit "Попробуй это дополнение, которое дает возможность почувствовать удовольствие от использования Firefox - The Fox, Only Better!">

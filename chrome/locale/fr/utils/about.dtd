@@ -1,0 +1,24 @@
+<!ENTITY about.paneTitle "À propos">
+<!ENTITY about.version "Version {v}">
+<!ENTITY about.versionDivider " - ">
+<!ENTITY about.uptodate "A jour, félicitations !">
+<!ENTITY about.needsupdate "Mise à jour disponible !">
+<!ENTITY about.description "Lire les &quot;Notes de versions&quot; et les &quot;Problèmes connus&quot; de la version ci-dessus. Prévenez moi de tout problème que vous pourriez rencontrer, ou si vous avez des idées pour de futures mise-à-jour.">
+<!ENTITY about.descriptionB "Cette extension est gratuite, mais résoudre les problèmes, ajouter de nouvelles fonctionnalités et s'assurer que tout fonctionne à chaque nouvelle version de Firefox est laborieux et peut être difficile à certains moments. Si vous aimez cette extension, veuillez soutenir son développement continu. Comme le lien dit, &quot;Vous pouvez aider &quot;!">
+<!ENTITY about.allVersions "Montrer les notes de toutes les versions précédentes">
+<!ENTITY about.notifyOnUpdates "Montre moi cet onglet à la prochaine mise-à-jour">
+<!ENTITY about.development "État du développement">
+<!ENTITY about.helpdevelopment "Vous pouvez aider !">
+<!ENTITY about.information "Plus d'information">
+<!ENTITY about.home "Page d’accueil de l'extension">
+<!ENTITY about.fullchangelog "Changelog complet">
+<!ENTITY about.problems "Un problèmes">
+<!ENTITY about.tech "Ouvrir un sujet sur la page de support, décrivant votre problème">
+<!ENTITY about.email "Ou envoie moi un e-mail à ce sujet">
+<!ENTITY about.author "Plus d'information sur l'auteur">
+<!ENTITY about.trymore "Essaye une de mes autres extensions pour une expérience encore meilleure de Firefox">
+<!ENTITY about.profile "Trouve les dans mon profil">
+<!ENTITY about.share "Partage!">
+<!ENTITY about.friends "Ne soit pas le seul avec un bon navigateur. Partage le meilleur avec tes amis !">
+<!ENTITY about.moreshare "Autres services...">
+<!ENTITY about.tryit "Essaye cette extension qui rendra Firefox génial à utiliser - The Fox, Only Better!">

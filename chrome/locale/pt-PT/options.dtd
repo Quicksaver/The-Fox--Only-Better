@@ -1,7 +1,4 @@
-<!ENTITY Optwindow.style "width: 38em;">
-<!ENTITY options.title "O Fox, Só Que Melhor">
 <!ENTITY pane.slimChrome.label "Interface Reduzida">
-<!ENTITY pane.about.label "Sobre">
 <!ENTITY cat.general.label "Geral">
 <!ENTITY opt.slimChrome.label "Activar a Interface Reduzida">
 <!ENTITY opt.slimChrome.tooltip "Simplifica a interface do navegador e maximiza o espaço de visualização de conteúdo, escondendo convenientemente as barras de ferramentas do topo quando não são necessárias.">
@@ -47,24 +44,3 @@
 <!ENTITY opt.animation.hinge.label "Efeito dobradiça do GiT">
 <!ENTITY opt.animation.hinge.tooltip "Efeito especial de dobradiça, criado por Geek in Training. Se gosta deste efeito devia agradecer-lhe!">
 <!ENTITY cat.slimChromeKeyset.label "Atalho de teclado para activar e desactivar">
-<!ENTITY opt.keyset.control "Control">
-<!ENTITY opt.keyset.shift "Shift">
-<!ENTITY opt.keyset.alt "Alt">
-<!ENTITY opt.keyset.command "Comando">
-<!ENTITY opt.keyset.option "Opção">
-<!ENTITY opt.keyset.none "Nenhum">
-<!ENTITY opt.keyset.spacebar "Barra de espaços">
-<!ENTITY opt.keyset.pageup "Página para cima">
-<!ENTITY opt.keyset.pagedown "Página para baixo">
-<!ENTITY opt.keyset.end "Fim">
-<!ENTITY opt.keyset.home "Início">
-<!ENTITY opt.keyset.left "Seta esquerda">
-<!ENTITY opt.keyset.up "Seta cima">
-<!ENTITY opt.keyset.right "Seta direita">
-<!ENTITY opt.keyset.down "Seta baixo">
-<!ENTITY about.name "O Fox, Só Que Melhor">
-<!ENTITY about.by "por Quicksaver">
-<!ENTITY about.desc "Toda a informação relativa a este extra e ao seu autor pode ser encontrada na página dos Extras do Mozilla. Se gostou da extensão, pode mostrar o seu agrado ao lá deixar um comentário ou pode também fazer uma pequena contribuição para manter o seu desenvolvimento. Sugestões e problemas podem ser comunicados na página de suporte técnico.">
-<!ENTITY about.home "Página do Extra do Mozilla">
-<!ENTITY about.tech "Suporte Técnico">
-<!ENTITY about.notes "Notas de Lançamento">
