@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.1';
+Modules.VERSION = '2.0.2';
 
 this.slimStyle = {
 	get clipPathURLBarWrapper () { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); },
@@ -312,23 +312,14 @@ this.slimStyle = {
 			return;
 		}
 		
-		var windowStyle = getComputedStyle(document.documentElement);
-		var containerBox = slimChrome.container.getBoundingClientRect();
 		var containerStyle = getComputedStyle(slimChrome.container);
-		
-		// Another personas in OSX tweak
-		var offsetWindowPadding = windowStyle.backgroundPosition;
-		var offsetY = -containerBox.top;
-		offsetY += parseInt(containerStyle.marginTop);
-		if(offsetWindowPadding.contains(' ') && offsetWindowPadding.contains('px', offsetWindowPadding.indexOf(' ') +1)) {
-			offsetY += parseInt(offsetWindowPadding.substr(offsetWindowPadding.indexOf(' ') +1, offsetWindowPadding.indexOf('px', offsetWindowPadding.indexOf(' ') +1)));
+		var marginTop = parseInt(containerStyle.marginTop);
+		var offsetY = -slimChrome.container.boxObject.y;
+		if(marginTop < 2) {
+			offsetY += parseInt(containerStyle.marginTop);
 		}
 		
-		if(containerStyle.direction == 'ltr') {
-			var borderStart = parseInt(containerStyle.borderLeftWidth);
-		} else {
-			var borderStart = parseInt(containerStyle.borderRightWidth);
-		}
+		var borderStart = (containerStyle.direction == 'ltr') ? parseInt(containerStyle.borderLeftWidth) : parseInt(containerStyle.borderRightWidth);
 		
 		// +1/-1 compensates for borders misplacement in CSS
 		if(LTR) {
