@@ -1,6 +1,28 @@
 {
-	"current":"1.1.13",
+	"current":"1.2",
 	"releases": {
+		"1.2":{
+			"date":"June 25, 2015",
+			"notes":[
+				["new","Brand new preferences tab with a new \"About\" pane (previously the \"Release Notes\" tab)"],
+				["new","es locale"],
+				["changed","The active development process for the add-on is undergoing a few changes, check out the information and links at the top of this pane for more details"],
+				["changed","When the mini bar is enabled for changing locations, it shouldn't appear when switching to a tab that belongs to the same host as the previous tab (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/101\">issue #101</a>)"],
+				["changed","Mouse sensitivity \"Low\" value has been increased from 1sec to 2.5sec; this should accommodate for most cases (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/103\">issue #103</a>)"],
+				["removed","Compatibility with Firefox 37 and below"],
+				["bugfix","The location bar could sometimes not show its tooltip text when it has a long (cropped) url"],
+				["bugfix","Slim Chrome was not disabled when in Customize mode"],
+				["bugfix","Toolbars would get stuck open after clicking the translation notification icon"],
+				["bugfix","The toolbars shouldn't stay visible when opening a tab context menu (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/103\">issue #103</a>)"],
+				["bugfix","Compatibility with <a target=\"blank\" href=\"https://addons.mozilla.org/firefox/addon/diigo-web-highlighter-and-stic/\">Diigo Toolbar</a>: its toolbar was constantly overflowed and seemingly emtpy with Slim Chrome enabled"],
+				["bugfix","Clicking anywhere in the mini bar would make the full toolbars appear, only the actual location bar should trigger this"],
+				["bugfix","Mini bar should show Popup Blocking Settings, Add/Remove to Reading List, and Reader View icons"],
+				["bugfix","The location bar was inaccessible in most popup windows"],
+				["bugfix","Compatibility with <a target=\"blank\" href=\"https://addons.mozilla.org/firefox/addon/status-4-evar/\">Status-4-Evar</a>: focusing and unfocusing the location bar could sometimes make it forget its progress bar style"],
+				["bugfix","Compatibility with <a target=\"blank\" href=\"https://addons.mozilla.org/firefox/addon/forecastfox-fix-version/\">Forecastfox (fix version)</a>: its toolbar could cause some visual issues in Slim Chrome's container (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/95\">issue #95</a>)"],
+				["bugfix","Lightweight themes in Slim Chrome could sometimes be misaligned with the rest of the browser (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/106\">issue #106</a>)"]
+			]
+		},
 		"1.1.13":{
 			"date":"May 10, 2015",
 			"notes":[
