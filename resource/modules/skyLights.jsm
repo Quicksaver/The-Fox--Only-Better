@@ -1,4 +1,4 @@
-Modules.VERSION = '1.1.0';
+Modules.VERSION = '1.1.1';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -41,7 +41,7 @@ this.skyLights = {
 		switch(aSubject) {
 			case 'skyLightsHide':
 				this.hideOnChrome();
-				breaK;
+				break;
 		}
 	},
 	
