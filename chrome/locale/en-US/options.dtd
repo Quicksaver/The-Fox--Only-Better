@@ -2,11 +2,12 @@
 
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
-<!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars while you don't need them.">
+<!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars when you don't need them.">
 <!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
 <!ENTITY opt.includeNavBar.tooltip "Hides the navigation bar along with the other toolbars. If this is disabled, the navigation bar will always be visible at the top like before.">
 <!ENTITY opt.skyLights.label "Enable Sky Lights">
-<!ENTITY opt.skyLights.tooltip "Sky Lights give you information about the webpage you are currently visiting, through an alternate and non-obtrusive visual aid in the top chrome. They help you always be sure of where you are and of what is safe to do in there!">
+<!ENTITY opt.skyLights.tooltip.a "Sky Lights give you information about the webpage you are currently visiting, through an alternate and non-obtrusive visual aid in the top chrome.">
+<!ENTITY opt.skyLights.tooltip.b "They help you always be sure of where you are and of what is safe to do in there!">
 <!ENTITY opt.skyLightsHide.label "Hide Sky Lights when chrome is visible">
 <!ENTITY opt.skyLightsHide.tooltip "The Sky Lights will hide when the toolbars or the mini bar is visible, since all their information should already be included somewhere in the toolbars themselves.">
 
@@ -19,13 +20,14 @@
 <!ENTITY opt.miniOnTabSelect.tooltip "Shows the mini bar every time you change tabs, to let you know of your current location on each tab.">
 
 <!ENTITY opt.useMouse.label "Show the chrome when the mouse moves to the top">
-<!ENTITY opt.useMouse.tooltip "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves. If this is disabled, you can only access the toolbars by hitting F6 to focus the location bar, or when a panel opens anchored to one of the hidden toolbars.">
 <!ENTITY opt.delayIn.label "Sensitivity on entering">
-<!ENTITY opt.delayIn.tooltip "Determines the delay after which the chrome will appear, when the mouse moves to the top of the browser.">
 <!ENTITY opt.delayOut.label "Sensitivity on leaving">
-<!ENTITY opt.delayOut.tooltip "Determines the delay after which the chrome will hide, when the mouse leaves it.">
 <!ENTITY opt.delayLow.label "Low">
 <!ENTITY opt.delayHigh.label "High">
+<!ENTITY opt.useMouse.tooltip.a "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves.">
+<!ENTITY opt.useMouse.tooltip.b "If this is disabled, you can only access the toolbars by hitting F6 to focus the location bar, or when a panel opens anchored to one of the hidden toolbars.">
+<!ENTITY opt.delayIn.tooltip "Determines the delay after which the chrome will appear, when the mouse moves to the top of the browser.">
+<!ENTITY opt.delayOut.tooltip "Determines the delay after which the chrome will hide, when the mouse leaves it.">
 
 <!ENTITY cat.appearance.label "Style">
 <!ENTITY opt.style.australis.label "Australis">

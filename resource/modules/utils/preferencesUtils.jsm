@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.2';
+Modules.VERSION = '2.1.0';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -389,7 +389,209 @@ this.categories = {
 	}
 };
 
+// helptext -	mostly a fancy tooltip system for the in-content preferences, the help text is shown on the right at the edge of the prefPane node,
+//		or right next to the hovered item when there is not enough space at the edge.
+// Simply add any of the following attributes to any nodes that are meant to show the helptext when they are hovered or selected:
+//	helptext - text value to be used directly as the helptext content, the simplest form of this feature and the one most closely resembling a native tooltip
+//	helpbox - id pointing to a node that will be shown in the helptext panel, useful for more complex instances and takes precedence over helptext
+//	helpactive - set in nodes that will be selectable using the keyboard (i.e. scales, radiogroups), the script will look for the other attributes in any related node 
+this.helptext = {
+	kPanelWidth: 310, // roughly the maximum size of the panel node
+	kContentsWidth: 275, // the actual maximum size of the helptext contents
+	
+	root: null,
+	panel: null,
+	contents: null,
+	main: null,
+	prefPane: null,
+	
+	handleEvent: function(e) {
+		if(e.target != this.panel) {
+			var target = e.target;
+			
+			// special case for radiogroup
+			if(target._helpactive && target.selectedItem) {
+				target = target.selectedItem;
+			}
+			
+			while(!target._helptext && !target._helpbox) {
+				target = target.parentNode;
+				if(!target) { return; }
+			}
+		}
+		
+		switch(e.type) {
+			case 'focus':
+			case 'mouseover':
+				// duh
+				Timers.cancel('closeHelpText');
+				
+				// immediately hide the panel if the mouse touches it, the user might be trying to reach something behind
+				if(e.target == this.panel) {
+					this.panel.hidePopup();
+					return;
+				}
+				
+				// no point in reshowing if the box is already showing what it's supposed to
+				if(this.panel.state == 'open' && this.panel._activeItem == target) { return; }
+				
+				// append the current helptext relative to the hovered item
+				var text = target._helpbox;
+				if(text) {
+					text = $(text);
+					if(text) {
+						text = this.panel.ownerDocument.importNode(text, true);
+						text.collapsed = false;
+					}
+				}
+				if(!text) {
+					text = target._helptext;
+					if(!text) { return; }
+					
+					let description = this.panel.ownerDocument.createElement('description');
+					description.textContent = text;
+					text = description;
+				}
+				
+				// remove any previous helptext
+				while(this.contents.firstChild) {
+					this.contents.firstChild.remove();
+				}
+				
+				this.contents.appendChild(text);
+				this.panel._activeItem = target;
+				
+				let position = 'rightcenter bottomleft';
+				let x = 0;
+				let free = 0;
+				
+				if(LTR) {
+					// try to open the helptext at the end of the prefPane element (about where the header underline ends)
+					x = (this.prefPane.boxObject.x +this.prefPane.boxObject.width) - (target.boxObject.x +target.boxObject.width);
+					
+					// but whenever possible don't show the helptext outside of the tab's boundaries, in case the window isn't wide enough
+					free = (this.main.boxObject.x +this.main.boxObject.width) - (this.prefPane.boxObject.x +this.prefPane.boxObject.width);
+				}
+				else {
+					// same thing except reversed on the left for RTL layouts
+					x = target.boxObject.x -this.prefPane.boxObject.x;
+					
+					free = this.prefPane.boxObject.x -this.main.boxObject.x;
+				}
+				
+				if(free < this.kPanelWidth) {
+					x -= this.kPanelWidth -free;
+				}
+				
+				// negative values for this would be silly, the helptext would appear over the item it's supposed to help with,
+				// so show it right next to the item if this happens for some reason
+				x = Math.max(x, 0);
+				
+				if(this.panel.state == 'open') {
+					this.panel.moveToAnchor(target, position, x);
+				} else {
+					this.panel.openPopup(target, position, x);
+				}
+				
+				break;
+			
+			case 'blur':
+				// don't hide the popup when clicking a preference to toggle it (which in turn blurs it)
+				if(this.panel._activeItem) {
+					let checkers = [];
+					if(this.panel._activeItem.hasAttribute('helptext')) {
+						checkers.push('[helptext="'+this.panel._activeItem.getAttribute('helptext')+'"]:hover');
+					}
+					if(this.panel._activeItem.hasAttribute('helpbox')) {
+						checkers.push('[helpbox="'+this.panel._activeItem.getAttribute('helpbox')+'"]:hover');
+					}
+					
+					let hovered = checkers.length > 0 && $$(checkers.join(','))[0];
+					if(hovered) { return; }
+				}
+				
+			case 'mouseout':
+				Timers.init('closeHelpText', () => {
+					if(this.panel.state == 'closed') { return; }
+					
+					this.panel.hidePopup();
+				}, 250);
+				break;
+			
+			case 'popuphidden':
+				while(this.contents.firstChild) {
+					this.contents.firstChild.remove();
+				}
+				break;
+		}
+	},
+	
+	onLoad: function() {
+		this.panel = this.root.document.getElementById(objName+'-helptext');
+		this.contents = this.root.document.getElementById(objName+'-helptext-contents');
+		this.main = $$('.main-content')[0];
+		this.prefPane = this.main.firstChild;
+		
+		// avoid using a stylesheet for this, it's just simpler this way because of this being used by multiple add-ons
+		// (hence avoid using multiple stylesheets with the same declarations)
+		this.contents.style.maxWidth = this.kContentsWidth+'px';
+		
+		// ensure the direction of the panel is the same as the preferences tab direction (main window could be different if add-on doesn't include the RTL locale used)
+		this.panel.style.direction = getComputedStyle(document.documentElement).direction;
+		
+		Listeners.add(this.panel, 'mouseover', this);
+		Listeners.add(this.panel, 'popuphidden', this);
+		
+		let nodes = $$('[helptext],[helpbox],[helpactive]');
+		for(let node of nodes) {
+			if(node._helptext || node._helpbox || node._helpactive) { continue; }
+			node._helptext = node.getAttribute('helptext');
+			node._helpbox = node.getAttribute('helpbox');
+			node._helpactive = node.getAttribute('helpactive');
+			
+			// there's this weird bug where the style attributes don't take effect until they're re-added, go figure...
+			if(node._helpbox) {
+				let box = $(node._helpbox);
+				if(box) {
+					let styled = $$('[style]', box);
+					for(let inner of styled) {
+						setAttribute(inner, 'style', inner.getAttribute('style')+' ');
+					}
+				}
+			}
+			
+			Listeners.add(node, 'mouseover', this);
+			Listeners.add(node, 'mouseout', this);
+			Listeners.add(node, 'focus', this);
+			Listeners.add(node, 'blur', this);
+		}
+	},
+	
+	uninit: function() {
+		Timers.cancel('closeHelpText');
+		Listeners.remove(this.panel, 'mouseover', this);
+		Listeners.remove(this.panel, 'popuphidden', this);
+		
+		let nodes = $$('[helptext],[helpbox],[helpactive]');
+		for(let node of nodes) {
+			if(!node._helptext && !node._helpbox && !node._helpactive) { continue; }
+			
+			delete node._helptext;
+			delete node._helpbox;
+			delete node._helpactive;
+			Listeners.remove(node, 'mouseover', this);
+			Listeners.remove(node, 'mouseout', this);
+			Listeners.remove(node, 'focus', this);
+			Listeners.remove(node, 'blur', this);
+		}
+	}
+};
+
 Modules.LOADMODULE = function() {
+	alwaysRunOnClose.push(function() {
+		Overlays.removeOverlayWindow(helptext.root, 'utils/helptext');
+	});
+	
 	callOnLoad(window, function() {
 		dependsOn.updateAll();
 		Listeners.add(window, "change", dependsOn);
@@ -397,6 +599,18 @@ Modules.LOADMODULE = function() {
 		initScales();
 		keys.init();
 		categories.init();
+		
+		// investigate when exactly I can use windowRoot
+		helptext.root = window.windowRoot
+			? window.windowRoot.ownerGlobal
+			: window.QueryInterface(Ci.nsIInterfaceRequestor)
+				.getInterface(Ci.nsIWebNavigation)
+				.QueryInterface(Ci.nsIDocShellTreeItem)
+				.rootTreeItem
+				.QueryInterface(Ci.nsIInterfaceRequestor)
+				.getInterface(Ci.nsIDOMWindow);
+		
+		Overlays.overlayWindow(helptext.root, 'utils/helptext', helptext);
 	});
 };
 
@@ -404,6 +618,9 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, "change", dependsOn);
 	keys.uninit();
 	categories.uninit();
+	helptext.uninit();
+	
+	Overlays.removeOverlayWindow(helptext.root, 'utils/helptext');
 	
 	if(UNLOADED) {
 		window.close();

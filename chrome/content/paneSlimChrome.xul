@@ -41,50 +41,66 @@
 		</hbox>
 		
 		<groupbox align="start" id="paneSlimChrome-main" collapsed="true" data-category="paneSlimChrome">
-			<checkbox label="&opt.slimChrome.label;" tooltiptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
+			<checkbox label="&opt.slimChrome.label;" helptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-includes" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.includeNavBar.label;"
-				tooltiptext="&opt.includeNavBar.tooltip;"
+				helptext="&opt.includeNavBar.tooltip;"
 				dependson="pref-slimChrome"
 				preference="pref-includeNavBar"/>
 			<checkbox label="&opt.skyLights.label;"
-				tooltiptext="&opt.skyLights.tooltip;"
+				helpbox="paneSlimChrome-skyLights-helptext"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation"
 				preference="pref-skyLights"/>
 			<checkbox label="&opt.skyLightsHide.label;"
-				tooltiptext="&opt.skyLightsHide.tooltip;"
+				helpbox="paneSlimChrome-skyLights-helptext"
 				class="indent"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
 				preference="pref-skyLightsHide"/>
+			<vbox id="paneSlimChrome-skyLights-helptext" collapsed="true">
+				<description>&opt.skyLights.tooltip.a;</description>
+				<description style="margin-top:1em;">&opt.skyLights.tooltip.b;</description>
+				<description style="font-weight:bold; margin-top:2em;">&opt.skyLightsHide.label;</description>
+				<description>&opt.skyLightsHide.tooltip;</description>
+			</vbox>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-mini" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.mini.label;"/>
 			<checkbox label="&opt.miniOnAllInput.label;"
-				tooltiptext="&opt.miniOnAllInput.tooltip;"
+				helpbox="paneSlimChrome-mini-helptext"
 				dependson="pref-slimChrome,pref-includeNavBar"
 				preference="pref-miniOnAllInput"/>
 			<checkbox label="&opt.miniOnChangeLocation.label;"
-				tooltiptext="&opt.miniOnChangeLocation.tooltip;"
+				helpbox="paneSlimChrome-mini-helptext"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
 				preference="pref-miniOnChangeLocation"/>
 			<checkbox label="&opt.miniOnTabSelect.label;"
-				tooltiptext="&opt.miniOnTabSelect.tooltip;"
+				helpbox="paneSlimChrome-mini-helptext"
 				dependson="pref-slimChrome,pref-includeNavBar"
 				preference="pref-miniOnTabSelect"/>
+			<vbox id="paneSlimChrome-mini-helptext" collapsed="true">
+				<description>&cat.mini.label;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnAllInput.label;</description>
+				<description>&opt.miniOnAllInput.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnChangeLocation.label;</description>
+				<description>&opt.miniOnChangeLocation.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnTabSelect.label;</description>
+				<description>&opt.miniOnTabSelect.tooltip;</description>
+			</vbox>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-mouse" collapsed="true" data-category="paneSlimChrome">
-			<caption><checkbox label="&opt.useMouse.label;" tooltiptext="&opt.useMouse.tooltip;" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
+			<caption><checkbox label="&opt.useMouse.label;" helpbox="paneSlimChrome-mouse-helptext" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
 			<vbox align="stretch" id="delaysBox">
-				<hbox tooltiptext="&opt.delayIn.tooltip;">
+				<hbox helpbox="paneSlimChrome-mouse-helptext">
 					<label value="&opt.delayIn.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<hbox flex="1"/>
 					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<scale dependson="pref-slimChrome,pref-useMouse"
+						helpactive="true"
 						dir="reverse"
 						width="200"
 						min="75"
@@ -95,11 +111,12 @@
 						preference="pref-delayIn"/>
 					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				</hbox>
-				<hbox tooltiptext="&opt.delayOut.tooltip;">
+				<hbox helpbox="paneSlimChrome-mouse-helptext">
 					<label value="&opt.delayOut.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<hbox flex="1"/>
 					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<scale dependson="pref-slimChrome,pref-useMouse"
+						helpactive="true"
 						dir="reverse"
 						width="200"
 						min="75"
@@ -111,31 +128,67 @@
 					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				</hbox>
 			</vbox>
+			<vbox id="paneSlimChrome-mouse-helptext" collapsed="true">
+				<description>&opt.useMouse.tooltip.a;</description>
+				<description style="margin-top:1em;">&opt.useMouse.tooltip.b;</description>
+				<description style="font-weight:bold; margin-top:2em;">&opt.delayIn.label;</description>
+				<description>&opt.delayIn.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.delayOut.label;</description>
+				<description>&opt.delayOut.tooltip;</description>
+			</vbox>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-style" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.appearance.label;"/>
-			<radiogroup id="slimStyleRadio" preference="pref-slimStyle" oncommand="objName.initialShowInOpener(this.value, document.getElementById('slimAnimationRadio').value, 1500);">
+			<radiogroup id="slimStyleRadio"
+				helpbox="paneSlimChrome-style-helptext"
+				preference="pref-slimStyle"
+				oncommand="objName.initialShowInOpener(this.value, document.getElementById('slimAnimationRadio').value, 1500);">
 				<hbox>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.australis.label;" tooltiptext="&opt.style.australis.tooltip;" value="australis"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.round.label;" tooltiptext="&opt.style.round.tooltip;" value="round"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.compact.label;" tooltiptext="&opt.style.compact.tooltip;" value="compact"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.full.label;" tooltiptext="&opt.style.full.tooltip;" value="full"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.australis.label;" value="australis"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.round.label;" value="round"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.compact.label;" value="compact"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.full.label;" value="full"/>
 				</hbox>
 			</radiogroup>
+			<vbox id="paneSlimChrome-style-helptext" collapsed="true">
+				<description style="font-weight:bold;">&opt.style.australis.label;</description>
+				<description>&opt.style.australis.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.style.round.label;</description>
+				<description>&opt.style.round.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.style.compact.label;</description>
+				<description>&opt.style.compact.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.style.full.label;</description>
+				<description>&opt.style.full.tooltip;</description>
+			</vbox>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-animation" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.animation.label;"/>
-			<radiogroup id="slimAnimationRadio" preference="pref-slimAnimation" oncommand="objName.initialShowInOpener(document.getElementById('slimStyleRadio').value, this.value, 1000);">
+			<radiogroup id="slimAnimationRadio"
+				helpbox="paneSlimChrome-animation-helptext"
+				preference="pref-slimAnimation"
+				oncommand="objName.initialShowInOpener(document.getElementById('slimStyleRadio').value, this.value, 1000);">
 				<hbox>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.none.label;" tooltiptext="&opt.animation.none.tooltip;" value="none"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.fadein.label;" tooltiptext="&opt.animation.fadein.tooltip;" value="fadein"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.slidedown.label;" tooltiptext="&opt.animation.slidedown.tooltip;" value="slidedown"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.rollout.label;" tooltiptext="&opt.animation.rollout.tooltip;" value="rollout"/>
-					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.hinge.label;" tooltiptext="&opt.animation.hinge.tooltip;" value="hinge"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.none.label;" value="none"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.fadein.label;" value="fadein"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.slidedown.label;" value="slidedown"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.rollout.label;" value="rollout"/>
+					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.hinge.label;" value="hinge"/>
 				</hbox>
 			</radiogroup>
+			<vbox id="paneSlimChrome-animation-helptext" collapsed="true">
+				<description style="font-weight:bold;">&opt.animation.none.label;</description>
+				<description>&opt.animation.none.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.animation.fadein.label;</description>
+				<description>&opt.animation.fadein.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.animation.slidedown.label;</description>
+				<description>&opt.animation.slidedown.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.animation.rollout.label;</description>
+				<description>&opt.animation.rollout.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.animation.hinge.label;</description>
+				<description>&opt.animation.hinge.tooltip;</description>
+			</vbox>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-shortcut" collapsed="true" data-category="paneSlimChrome">
