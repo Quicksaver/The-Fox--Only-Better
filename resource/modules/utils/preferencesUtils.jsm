@@ -1,4 +1,4 @@
-Modules.VERSION = '2.1.0';
+Modules.VERSION = '2.1.1';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -418,6 +418,8 @@ this.helptext = {
 				target = target.parentNode;
 				if(!target) { return; }
 			}
+			
+			if(target.disabled) { return; }
 		}
 		
 		switch(e.type) {
