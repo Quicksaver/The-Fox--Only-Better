@@ -123,7 +123,7 @@
 						value="75"
 						increment="25"
 						pageincrement="150"
-						preference="pref-delayIn"/>
+						prefScale="pref-delayIn"/>
 					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				</hbox>
 				<hbox helpbox="paneSlimChrome-mouse-helptext" jump="delayOut" dependson="pref-slimChrome,pref-useMouse">
@@ -139,7 +139,7 @@
 						value="75"
 						increment="25"
 						pageincrement="150"
-						preference="pref-delayOut"/>
+						prefScale="pref-delayOut"/>
 					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				</hbox>
 			</vbox>

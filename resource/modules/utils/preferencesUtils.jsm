@@ -1,4 +1,4 @@
-Modules.VERSION = '2.2.0';
+Modules.VERSION = '2.3.0';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -121,13 +121,58 @@ this.dependsOn = {
 };
 
 
-// initScales - every <scale> node should be properly initialized if it has a preference attribute; should work in most cases.
-// If you want to bypass this you can set onsyncfrompreference attribute on the scale.
-this.initScales = function() {
-	var scales = $$('scale');
-	for(let scale of scales) {
-		if(!scale.getAttribute('onsyncfrompreference') && scale.getAttribute('preference')) {
-			scale.value = $(scale.getAttribute('preference')).value;
+// scales -	every <scale> node should be properly initialized with a "prefScale" attribute instead of a "preference" attribute.
+//		Setting a "preference" attribute would make the scale very sluggish to move. Instead, we use a more aSynchronous process, so the UI doesn't stutter.
+this.scales = {
+	init: function() {
+		var scales = $$('scale[prefScale]');
+		for(let scale of scales) {
+			scale._pref = pref = $(scale.getAttribute('prefScale'));
+			
+			scale.handleEvent = function(e) {
+				if(this._timer) {
+					this._timer.cancel();
+					delete this._timer;
+				}
+				
+				switch(e.target) {
+					case this:
+						this._timer = aSync(() => {
+							this._pref.value = this.value;
+							delete this._timer;
+						}, 250);
+						break;
+					
+					case this._pref:
+						this._timer = aSync(() => {
+							this.value = this._pref.value;
+							delete this._timer;
+						}, 250);
+						break;
+				}
+			};
+			
+			Listeners.add(scale, 'change', scale);
+			Listeners.add(scale._pref, 'change', scale);
+			
+			scale.value = scale._pref.value;
+		}
+	},
+	
+	uninit: function() {
+		var scales = $$('scale[prefScale]');
+		for(let scale of scales) {
+			Listeners.remove(scale, 'change', scale);
+			Listeners.remove(scale._pref, 'change', scale);
+			
+			// make sure we don't lose any changes, for those fast as lightning users out there
+			if(scale._timer) {
+				scale._timer.cancel();
+				scale._timer.handler();
+				delete scale._timer;
+			}
+			
+			delete scale._pref;
 		}
 	}
 };
@@ -947,7 +992,7 @@ Modules.LOADMODULE = function() {
 		dependsOn.updateAll();
 		Listeners.add(window, "change", dependsOn);
 		
-		initScales();
+		scales.init();
 		keys.init();
 		categories.init();
 		controllers.init();
@@ -968,6 +1013,7 @@ Modules.LOADMODULE = function() {
 
 Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, "change", dependsOn);
+	scales.uninit();
 	keys.uninit();
 	categories.uninit();
 	controllers.uninit();
