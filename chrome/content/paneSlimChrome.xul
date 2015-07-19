@@ -41,21 +41,27 @@
 		</hbox>
 		
 		<groupbox align="start" id="paneSlimChrome-main" collapsed="true" data-category="paneSlimChrome">
-			<checkbox label="&opt.slimChrome.label;" helptext="&opt.slimChrome.tooltip;" preference="pref-slimChrome"/>
+			<checkbox label="&opt.slimChrome.label;"
+				helptext="&opt.slimChrome.tooltip;"
+				jump="slimChrome"
+				preference="pref-slimChrome"/>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-includes" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.includeNavBar.label;"
 				helptext="&opt.includeNavBar.tooltip;"
+				jump="includeNavBar"
 				dependson="pref-slimChrome"
 				preference="pref-includeNavBar"/>
 			<checkbox label="&opt.skyLights.label;"
 				helpbox="paneSlimChrome-skyLights-helptext"
+				jump="skyLights"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation"
 				preference="pref-skyLights"/>
 			<checkbox label="&opt.skyLightsHide.label;"
 				helpbox="paneSlimChrome-skyLights-helptext"
+				jump="skyLightsHide"
 				class="indent"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
 				preference="pref-skyLightsHide"/>
@@ -71,14 +77,17 @@
 			<caption label="&cat.mini.label;"/>
 			<checkbox label="&opt.miniOnAllInput.label;"
 				helpbox="paneSlimChrome-mini-helptext"
+				jump="miniOnAllInput"
 				dependson="pref-slimChrome,pref-includeNavBar"
 				preference="pref-miniOnAllInput"/>
 			<checkbox label="&opt.miniOnChangeLocation.label;"
 				helpbox="paneSlimChrome-mini-helptext"
+				jump="miniOnChangeLocation"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
 				preference="pref-miniOnChangeLocation"/>
 			<checkbox label="&opt.miniOnTabSelect.label;"
 				helpbox="paneSlimChrome-mini-helptext"
+				jump="miniOnTabSelect"
 				dependson="pref-slimChrome,pref-includeNavBar"
 				preference="pref-miniOnTabSelect"/>
 			<vbox id="paneSlimChrome-mini-helptext" collapsed="true">
@@ -93,9 +102,15 @@
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-mouse" collapsed="true" data-category="paneSlimChrome">
-			<caption><checkbox label="&opt.useMouse.label;" helpbox="paneSlimChrome-mouse-helptext" dependson="pref-slimChrome" preference="pref-useMouse"/></caption>
+			<caption>
+				<checkbox label="&opt.useMouse.label;"
+					helpbox="paneSlimChrome-mouse-helptext"
+					jump="useMouse"
+					dependson="pref-slimChrome"
+					preference="pref-useMouse"/>
+			</caption>
 			<vbox align="stretch" id="delaysBox">
-				<hbox helpbox="paneSlimChrome-mouse-helptext" dependson="pref-slimChrome,pref-useMouse">
+				<hbox helpbox="paneSlimChrome-mouse-helptext" jump="delayIn" dependson="pref-slimChrome,pref-useMouse">
 					<label value="&opt.delayIn.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<hbox flex="1"/>
 					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
@@ -111,7 +126,7 @@
 						preference="pref-delayIn"/>
 					<label value="&opt.delayHigh.label;" dependson="pref-slimChrome,pref-useMouse"/>
 				</hbox>
-				<hbox helpbox="paneSlimChrome-mouse-helptext" dependson="pref-slimChrome,pref-useMouse">
+				<hbox helpbox="paneSlimChrome-mouse-helptext" jump="delayOut" dependson="pref-slimChrome,pref-useMouse">
 					<label value="&opt.delayOut.label;" dependson="pref-slimChrome,pref-useMouse"/>
 					<hbox flex="1"/>
 					<label value="&opt.delayLow.label;" dependson="pref-slimChrome,pref-useMouse"/>
@@ -142,6 +157,7 @@
 			<caption label="&cat.appearance.label;"/>
 			<radiogroup id="slimStyleRadio"
 				helpbox="paneSlimChrome-style-helptext"
+				jump="slimStyle"
 				dependson="pref-slimChrome"
 				preference="pref-slimStyle"
 				oncommand="objName.initialShowInOpener(this.value, document.getElementById('slimAnimationRadio').value, 1500);">
@@ -168,6 +184,7 @@
 			<caption label="&cat.animation.label;"/>
 			<radiogroup id="slimAnimationRadio"
 				helpbox="paneSlimChrome-animation-helptext"
+				jump="slimAnimation"
 				dependson="pref-slimChrome"
 				preference="pref-slimAnimation"
 				oncommand="objName.initialShowInOpener(document.getElementById('slimStyleRadio').value, this.value, 1000);">
@@ -195,7 +212,7 @@
 		
 		<groupbox align="start" id="paneSlimChrome-shortcut" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.slimChromeKeyset.label;"/>
-			<hbox>
+			<hbox jump="slimChromeKeycode,&cat.slimChromeKeyset.label;">
 				<checkbox class="smallindent" keysetAccel="slimChrome" preference="pref-slimChromeAccel"/>
 				<checkbox class="smallindent" keysetAlt="slimChrome" preference="pref-slimChromeAlt"/>
 				<checkbox class="smallindent" keysetShift="slimChrome" preference="pref-slimChromeShift"/>

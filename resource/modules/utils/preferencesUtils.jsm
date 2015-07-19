@@ -1,4 +1,4 @@
-Modules.VERSION = '2.1.1';
+Modules.VERSION = '2.2.0';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -589,6 +589,355 @@ this.helptext = {
 	}
 };
 
+// controllers - object that manages the buttons and jump to field at the footer of the preferences tab
+//	undo() - undoes the last action, self-explanatory
+//	redo() - undoes the undo(), self-explanatory
+//	reset() - resets all preferences in the prefList object
+//	export() - presents a dialog to the user, to choose a file location to export the add-on's current preferences values (exported as JSON data)
+//	import() - presents a dialog to the user, to choose a JSON file from which to import preferences; any preferences are missing from the file will be reset
+//	jumpto() -	brings the user to the first node containing the word searched for; only nodes containing a "jump" attribute are considered in the following order:
+//				1) match the word with a partial of the "jump" attribute value; good for keywords or preference names
+//				2) match the word with the collective text value of all descendents of the node
+this.controllers = {
+	initialized: false,
+	
+	nodes: {
+		undo: null,
+		redo: null,
+		import: null,
+		export: null,
+		reset: null,
+		jumpto: null
+	},
+	
+	current: {},
+	past: [],
+	future: [],
+	
+	jumpNodes: [],
+	highlighted: null,
+	
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'command':
+				switch(e.target) {
+					case this.nodes.undo:
+						this.undo();
+						break;
+						
+					case this.nodes.redo:
+						this.redo();
+						break;
+						
+					case this.nodes.import:
+						this.import();
+						break;
+						
+					case this.nodes.export:
+						this.export();
+						break;
+						
+					case this.nodes.reset:
+						this.reset();
+						break;
+				}
+				break;
+			
+			case 'input':
+				this.jumpto();
+				break;
+			
+			case 'keypress':
+				if(e.keyCode == e.DOM_VK_RETURN) {
+					this.jumpto();
+				}
+				break;
+			
+			case 'dragover':
+				if(e.dataTransfer.types.contains("text/plain")) {
+					e.preventDefault();
+				}
+				break;
+			
+			case 'drop':
+				let value = e.dataTransfer.getData("text/plain");
+				this.nodes.jumpto.value = value;
+				this.jumpto();
+				e.stopPropagation();
+				e.preventDefault();
+				break;
+		}
+	},
+	
+	observe: function(aSubject, aTopic, aData) {
+		Timers.init('delaySaveState', () => {
+			// 'current' now refers to the previous preferences state, so we add it to the list of past states for the undo button to cycle through
+			this.past.push(this.current);
+			
+			// any change to the preferences should null any redo function that might have been enabled by hitting undo
+			this.future = [];
+			
+			// get a new 'current' state from the actual current preferences values
+			this.init();
+		}, 50);
+	},
+	
+	init: function(prefsOnly) {
+		if(!prefsOnly) {
+			this.nodes.undo = $('undoButton');
+			this.nodes.redo = $('redoButton');
+			this.nodes.import = $('importButton');
+			this.nodes.export = $('exportButton');
+			this.nodes.reset = $('resetButton');
+			this.nodes.jumpto = $('jumpto');
+			
+			Listeners.add(this.nodes.undo, 'command', this);
+			Listeners.add(this.nodes.redo, 'command', this);
+			Listeners.add(this.nodes.import, 'command', this);
+			Listeners.add(this.nodes.export, 'command', this);
+			Listeners.add(this.nodes.reset, 'command', this);
+			
+			Listeners.add(this.nodes.jumpto, 'input', this);
+			Listeners.add(this.nodes.jumpto, 'keypress', this);
+			Listeners.add(this.nodes.jumpto, 'dragover', this);
+			Listeners.add(this.nodes.jumpto, 'drop', this);
+			
+			this.getJumpNodes();
+			this.nodes.jumpto.value = '';
+			this.jumpto(); // set an initial state
+		}
+		
+		this.current = {};
+		for(let pref in prefList) {
+			if(pref.startsWith('NoSync_')) { continue; }
+			
+			this.current[pref] = Prefs[pref];
+			if(!this.initialized) {
+				Prefs.listen(pref, this);
+			}
+		}
+		
+		this.checkButtons();
+		this.initialized = true;
+	},
+	
+	uninit: function(prefsOnly) {
+		Timers.cancel('delaySaveState'); // this shouldn't be needed to be called but better make sure
+		
+		if(!prefsOnly) {
+			Listeners.remove(this.nodes.undo, 'command', this);
+			Listeners.remove(this.nodes.redo, 'command', this);
+			Listeners.remove(this.nodes.import, 'command', this);
+			Listeners.remove(this.nodes.export, 'command', this);
+			Listeners.remove(this.nodes.reset, 'command', this);
+			
+			Listeners.remove(this.nodes.jumpto, 'input', this);
+			Listeners.remove(this.nodes.jumpto, 'keypress', this);
+			Listeners.remove(this.nodes.jumpto, 'dragover', this);
+			Listeners.remove(this.nodes.jumpto, 'drop', this);
+		}
+		
+		if(this.initialized) {
+			for(let pref in prefList) {
+				if(pref.startsWith('NoSync_')) { continue; }
+				Prefs.unlisten(pref, this);
+			}
+			
+			this.initialized = false;
+		}
+	},
+	
+	checkButtons: function() {
+		$('undoButton').disabled = this.past.length == 0;
+		$('redoButton').disabled = this.future.length == 0;
+	},
+	
+	undo: function() {
+		this.undoRedo('past', 'future');
+	},
+	
+	redo: function() {
+		this.undoRedo('future', 'past');
+	},
+	
+	undoRedo: function(from, to) {
+		if(this[from].length == 0) { return; }
+		
+		// remove the listeners
+		this.uninit(true);
+		
+		this[to].push(this.current);
+		
+		let state = this[from].pop();
+		for(let pref in state) {
+			// I don't think this would trigger any change events when assigning the same value, but didn't feel like testing...
+			if(state[pref] != Prefs[pref]) {
+				Prefs[pref] = state[pref];
+			}
+		}
+		
+		// reimplement the listeners and get a new 'current' state
+		this.init(true);
+	},
+	
+	reset: function() {
+		for(let pref in prefList) {
+			if(pref.startsWith('NoSync_')) { continue; }
+			Prefs.reset(pref);
+		}
+	},
+	
+	export: function() {
+		this.showFilePicker(Ci.nsIFilePicker.modeSave, function(aFile) {
+			let { TextEncoder, OS } = Cu.import("resource://gre/modules/osfile.jsm", {});
+			
+			let list = { [objName]: AddonData.version };
+			for(let pref in prefList) {
+				list[pref] = Prefs[pref];
+			}
+			let save = (new TextEncoder()).encode(JSON.stringify(list));
+			
+			OS.File.open(aFile.path, { truncate: true }).then(function(ref) {
+				ref.write(save).then(function() {
+					ref.close();
+				});
+			});
+		});
+	},
+	
+	import: function() {
+		this.showFilePicker(Ci.nsIFilePicker.modeOpen, function(aFile) {
+			let { TextDecoder, OS } = Cu.import("resource://gre/modules/osfile.jsm", {});
+			
+			OS.File.open(aFile.path, { read: true }).then(function(ref) {
+				ref.read().then(function(saved) {
+					ref.close();
+					
+					try {
+						let list = JSON.parse((new TextDecoder()).decode(saved));
+						if(!list[objName]) { return; }
+						
+						for(let pref in prefList) {
+							if(pref in list) {
+								Prefs[pref] = list[pref];
+							} else {
+								Prefs.reset(pref);
+							}
+						}
+					}
+					// this doesn't really matter, for the user an invalid file will seem like it no-ops
+					catch(ex) { Cu.reportError(ex); }
+				});
+			});
+		});
+	},
+	
+	showFilePicker: function(mode, aCallback) {
+		let fp = Cc["@mozilla.org/filepicker;1"].createInstance(Ci.nsIFilePicker);
+		fp.defaultExtension = 'json';
+		fp.appendFilter('JSON data', '*.json');
+		
+		if(mode == Ci.nsIFilePicker.modeSave) {
+			let date = new Date();
+			let dateStr = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'-'+date.getHours()+'-'+date.getMinutes()+'-'+date.getSeconds();
+			fp.defaultString = objPathString+'-'+dateStr;
+		}
+		
+		fp.init(window, null, mode);
+		fp.open(function(aResult) {
+			if(aResult != Ci.nsIFilePicker.returnCancel) {
+				aCallback(fp.file);
+			}
+		});
+	},
+	
+	getJumpNodes: function() {
+		this.jumpNodes = $$('[jump]');
+		for(let node of this.jumpNodes) {
+			node._jumpPref = node.getAttribute('jump').toLowerCase();
+			node._jumpText = this.getJumpText(node).toLowerCase();
+		}
+	},
+	
+	getJumpText: function(node) {
+		switch(node.nodeName) {
+			case 'checkbox':
+			case 'radio':
+				return node.getAttribute('label');
+			
+			case 'label':
+			case 'description':
+				return node.textContent || node.value;
+			
+			default:
+				if(!node.childNodes || node.childNodes.length == 0) { return ''; }
+				
+				let ret = '';
+				for(let child of node.childNodes) {
+					ret += this.getJumpText(child);
+				}
+				return ret;
+		}
+	},
+	
+	jumpto: function() {
+		let val = this.nodes.jumpto.value;
+		if(!val) {
+			this.clearHighlighted(false);
+			return;
+		}
+		val = val.toLowerCase();
+		
+		// first find the exact word in the jump attributes
+		for(let node of this.jumpNodes) {
+			if(node._jumpPref.contains(val)) {
+				this.highlight(node);
+				return;
+			}
+		}
+		
+		// try to find the word in the collective text of the nodes childNodes
+		for(let node of this.jumpNodes) {
+			if(node._jumpText.contains(val)) {
+				this.highlight(node);
+				return;
+			}
+		}
+		
+		// couldn't find the word, so tell that to the user
+		this.clearHighlighted(true);
+	},
+	
+	clearHighlighted: function(notfound) {
+		if(this.highlighted) {
+			this.highlighted.classList.remove('highlight');
+			this.highlighted = null;
+		}
+		
+		toggleAttribute(this.nodes.jumpto, 'notfound', notfound);
+	},
+	
+	highlight: function(node) {
+		this.clearHighlighted(false);
+		
+		// in case the node is in another pane, we need to show it first, otherwise we can't scroll to it
+		let pane = node;
+		while(!pane.hasAttribute('data-category')) {
+			pane = pane.parentNode;
+			
+			// we went too far, something went wrong
+			if(!pane.parentNode) { return; }
+		}
+		
+		pane = pane.getAttribute('data-category');
+		categories.gotoPref(pane);
+		
+		node.scrollIntoView();
+		node.classList.add('highlight');
+		this.highlighted = node;
+	}
+};
+
 Modules.LOADMODULE = function() {
 	alwaysRunOnClose.push(function() {
 		Overlays.removeOverlayWindow(helptext.root, 'utils/helptext');
@@ -601,6 +950,7 @@ Modules.LOADMODULE = function() {
 		initScales();
 		keys.init();
 		categories.init();
+		controllers.init();
 		
 		// investigate when exactly I can use windowRoot
 		helptext.root = window.windowRoot
@@ -620,6 +970,7 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, "change", dependsOn);
 	keys.uninit();
 	categories.uninit();
+	controllers.uninit();
 	helptext.uninit();
 	
 	Overlays.removeOverlayWindow(helptext.root, 'utils/helptext');
