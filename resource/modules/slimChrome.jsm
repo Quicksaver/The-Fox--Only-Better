@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.7';
+Modules.VERSION = '2.0.8';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -573,6 +573,17 @@ this.slimChrome = {
 			
 			if(this.container.hovers == 0) {
 				Timers.init('setHover', () => {
+					// safeguard against hiding the toolbars while the cursor is in the location bar,
+					// apparently this can happen sometimes, although it's very hard to reproduce, I haven't figured out the exact steps yet;
+					// see https://github.com/Quicksaver/The-Fox--Only-Better/issues/108
+					if(document.activeElement == gURLBar.inputField) {
+						if(this.container.hovers == 0) {
+							this.container.hovers++;
+							this.hoverTrue();
+						}
+						return;
+					}
+					 
 					this.out();
 					removeAttribute(this.container, 'fullWidth');
 					removeAttribute(this.container, 'hover');
