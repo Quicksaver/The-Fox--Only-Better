@@ -44,7 +44,7 @@
 			<checkbox label="&opt.slimChrome.label;"
 				helptext="&opt.slimChrome.tooltip;"
 				jump="slimChrome"
-				preference="pref-slimChrome"/>
+				delayPreference="pref-slimChrome"/>
 		</groupbox>
 		
 		<groupbox align="start" id="paneSlimChrome-includes" collapsed="true" data-category="paneSlimChrome">
@@ -53,18 +53,18 @@
 				helptext="&opt.includeNavBar.tooltip;"
 				jump="includeNavBar"
 				dependson="pref-slimChrome"
-				preference="pref-includeNavBar"/>
+				delayPreference="pref-includeNavBar"/>
 			<checkbox label="&opt.skyLights.label;"
 				helpbox="paneSlimChrome-skyLights-helptext"
 				jump="skyLights"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation"
-				preference="pref-skyLights"/>
+				delayPreference="pref-skyLights"/>
 			<checkbox label="&opt.skyLightsHide.label;"
 				helpbox="paneSlimChrome-skyLights-helptext"
 				jump="skyLightsHide"
 				class="indent"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
-				preference="pref-skyLightsHide"/>
+				delayPreference="pref-skyLightsHide"/>
 			<vbox id="paneSlimChrome-skyLights-helptext" collapsed="true">
 				<description>&opt.skyLights.tooltip.a;</description>
 				<description style="margin-top:1em;">&opt.skyLights.tooltip.b;</description>
@@ -79,17 +79,17 @@
 				helpbox="paneSlimChrome-mini-helptext"
 				jump="miniOnAllInput"
 				dependson="pref-slimChrome,pref-includeNavBar"
-				preference="pref-miniOnAllInput"/>
+				delayPreference="pref-miniOnAllInput"/>
 			<checkbox label="&opt.miniOnChangeLocation.label;"
 				helpbox="paneSlimChrome-mini-helptext"
 				jump="miniOnChangeLocation"
 				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
-				preference="pref-miniOnChangeLocation"/>
+				delayPreference="pref-miniOnChangeLocation"/>
 			<checkbox label="&opt.miniOnTabSelect.label;"
 				helpbox="paneSlimChrome-mini-helptext"
 				jump="miniOnTabSelect"
 				dependson="pref-slimChrome,pref-includeNavBar"
-				preference="pref-miniOnTabSelect"/>
+				delayPreference="pref-miniOnTabSelect"/>
 			<vbox id="paneSlimChrome-mini-helptext" collapsed="true">
 				<description>&cat.mini.label;</description>
 				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnAllInput.label;</description>
@@ -107,7 +107,7 @@
 					helpbox="paneSlimChrome-mouse-helptext"
 					jump="useMouse"
 					dependson="pref-slimChrome"
-					preference="pref-useMouse"/>
+					delayPreference="pref-useMouse"/>
 			</caption>
 			<vbox align="stretch" id="delaysBox">
 				<hbox helpbox="paneSlimChrome-mouse-helptext" jump="delayIn" dependson="pref-slimChrome,pref-useMouse">
@@ -159,7 +159,7 @@
 				helpbox="paneSlimChrome-style-helptext"
 				jump="slimStyle"
 				dependson="pref-slimChrome"
-				preference="pref-slimStyle"
+				delayPreference="pref-slimStyle"
 				oncommand="objName.initialShowInOpener(this.value, document.getElementById('slimAnimationRadio').value, 1500);">
 				<hbox>
 					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.style.australis.label;" value="australis"/>
@@ -186,7 +186,7 @@
 				helpbox="paneSlimChrome-animation-helptext"
 				jump="slimAnimation"
 				dependson="pref-slimChrome"
-				preference="pref-slimAnimation"
+				delayPreference="pref-slimAnimation"
 				oncommand="objName.initialShowInOpener(document.getElementById('slimStyleRadio').value, this.value, 1000);">
 				<hbox>
 					<radio dependson="pref-slimChrome" class="smallindent" label="&opt.animation.none.label;" value="none"/>
@@ -213,10 +213,10 @@
 		<groupbox align="start" id="paneSlimChrome-shortcut" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.slimChromeKeyset.label;"/>
 			<hbox jump="slimChromeKeycode,&cat.slimChromeKeyset.label;">
-				<checkbox class="smallindent" keysetAccel="slimChrome" preference="pref-slimChromeAccel"/>
-				<checkbox class="smallindent" keysetAlt="slimChrome" preference="pref-slimChromeAlt"/>
-				<checkbox class="smallindent" keysetShift="slimChrome" preference="pref-slimChromeShift"/>
-				<menulist class="smallindent" keyset="slimChrome" preference="pref-slimChromeKeycode"/>
+				<checkbox class="smallindent" keysetAccel="slimChrome" delayPreference="pref-slimChromeAccel"/>
+				<checkbox class="smallindent" keysetAlt="slimChrome" delayPreference="pref-slimChromeAlt"/>
+				<checkbox class="smallindent" keysetShift="slimChrome" delayPreference="pref-slimChromeShift"/>
+				<menulist class="smallindent" keyset="slimChrome" delayPreference="pref-slimChromeKeycode"/>
 			</hbox>
 		</groupbox>
 	</prefpane>
