@@ -1,6 +1,19 @@
 {
-	"current":"1.2",
+	"current":"1.2.1",
 	"releases": {
+		"1.2.1":{
+			"date":"July 28, 2015",
+			"notes":[
+				["new","Undo/Redo/Import/Export/Restore-defaults/Jump-to functions in the preferences"],
+				["updated","fr and zh-TW locales"],
+				["changed","Re-styled and optimized the help tooltips in the preferences"],
+				["changed","Only request the Development Status information when the About pane in the preferences is accessed"],
+				["bugfix","Force LTR layout for the preferences tab options, at least until any RTL locales are included"],
+				["bugfix","Minor startup improvements"],
+				["bugfix","The preferences, in particular the sensitivity sliders, were very sluggish to use, all should be much smoother now"],
+				["bugfix","Compatibility with <a target=\"blank\" href=\"https://addons.mozilla.org/firefox/addon/simplify-awesome-bar/\">Simplify Awesome Bar</a>: location bar would sometimes hide while the cursor was still in it (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/108\">issue #108</a>)"]
+			]
+		},
 		"1.2":{
 			"date":"June 25, 2015",
 			"notes":[
