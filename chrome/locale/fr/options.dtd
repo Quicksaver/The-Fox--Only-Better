@@ -5,7 +5,8 @@
 <!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
 <!ENTITY opt.includeNavBar.tooltip "Cache la barre d'adresse avec les autres barres d'outils. Si cette option est désactivée, la barre d'adresse sera toujours visible en haut de l'interface comme auparavant.">
 <!ENTITY opt.skyLights.label "Activer les Sky Lights">
-<!ENTITY opt.skyLights.tooltip "Les Sky Lights vous donnent des informations sur la page web que vous êtes actuellement en train de visiter à travers une aide alternative et non-intrusive en haut de l'interface. Ils vous aident à être sûr de l'endroit où vous êtes et ce qu'il est possible de faire sans danger!">
+<!ENTITY opt.skyLights.tooltip.a "Les Sky Lights vous donnent des informations sur la page web que vous êtes actuellement en train de visiter à travers une aide alternative et non-intrusive en haut de l'interface.">
+<!ENTITY opt.skyLights.tooltip.b "Ils vous aident à être sûr de l'endroit où vous êtes et ce qu'il est possible de faire sans danger!">
 <!ENTITY opt.skyLightsHide.label "Cacher les Sky Lights lorsque l'interface est visible">
 <!ENTITY opt.skyLightsHide.tooltip "Les Sky Lights se cacheront lorsque les barres d'outils ou la mini-barre sont visibles, dans la mesure où toutes leurs informations seront déjà incluses dans les barres d'outils.">
 <!ENTITY cat.mini.label "Show the mini bar when...">
@@ -16,7 +17,8 @@
 <!ENTITY opt.miniOnTabSelect.label "selecting another tab">
 <!ENTITY opt.miniOnTabSelect.tooltip "Shows the mini bar every time you change tabs, to let you know of your current location on each tab.">
 <!ENTITY opt.useMouse.label "Affiche l'interface lorsque la souris va vers sur le haut de la fenêtre">
-<!ENTITY opt.useMouse.tooltip "Les barres d'outils réagiront aux mouvements de la souris, apparaîtront lorsque la souris survolera leur position, et se cacheront lorsque la quittera. Si cette option est désactivée, les barres d'outils ne seront accessibles qu'en utilisant la touche F6 (ce qui donnera le focus à la barre d'adresse), ou quand un panneau s'ouvre ancré à une des barres d'outils cachées.">
+<!ENTITY opt.useMouse.tooltip.a "Les barres d'outils réagiront aux mouvements de la souris, apparaîtront lorsque la souris survolera leur position, et se cacheront lorsque la quittera.">
+<!ENTITY opt.useMouse.tooltip.b "Si cette option est désactivée, les barres d'outils ne seront accessibles qu'en utilisant la touche F6 (ce qui donnera le focus à la barre d'adresse), ou quand un panneau s'ouvre ancré à une des barres d'outils cachées.">
 <!ENTITY opt.delayIn.label "Sensibilité à l'entrée">
 <!ENTITY opt.delayIn.tooltip "Détermine le délai après lequel l'interface apparaîtra, quand la souris passera sur le haut du navigateur.">
 <!ENTITY opt.delayOut.label "Sensibilité à la sortie">

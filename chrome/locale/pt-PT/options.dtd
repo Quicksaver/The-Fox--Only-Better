@@ -5,7 +5,8 @@
 <!ENTITY opt.includeNavBar.label "Esconder também a barra de navegação">
 <!ENTITY opt.includeNavBar.tooltip "A barra de navegação também é escondida com as outras barras de ferramentas. Se desactivar esta opção, a barra de navegação estará sempre visível no topo como sempre.">
 <!ENTITY opt.skyLights.label "Activar as Luzes no Céu">
-<!ENTITY opt.skyLights.tooltip "As Luzes no Céu fornecem informação acerca da página actual, através de um sistema visual não intrusivo no topo do navegador. Elas permitem-lhe ter sempre a certeza de onde se encontra e o quão seguro é lá se encontrar!">
+<!ENTITY opt.skyLights.tooltip.a "As Luzes no Céu fornecem informação acerca da página actual, através de um sistema visual não intrusivo no topo do navegador.">
+<!ENTITY opt.skyLights.tooltip.b "Elas permitem-lhe ter sempre a certeza de onde se encontra e o quão seguro é lá se encontrar!">
 <!ENTITY opt.skyLightsHide.label "Ocultar as Luzes no Céu ao mostrar as barras">
 <!ENTITY opt.skyLightsHide.tooltip "As Luzes no Céu escondem-se sempre que as barras de ferramentas ou a mini barra esteja visível, já que toda a informação dada pelas luzes já deva existir nas barras de ferramentas em si de algum modo.">
 <!ENTITY cat.mini.label "Mostrar a mini barra ao...">
@@ -16,7 +17,8 @@
 <!ENTITY opt.miniOnTabSelect.label "selecionar outro separador">
 <!ENTITY opt.miniOnTabSelect.tooltip "Mostra a mini barra sempre que mudar entre separadores, para que estejas sempre a par da localização do separador actual.">
 <!ENTITY opt.useMouse.label "Mostrar as barras de ferramentas consoante a posição do rato">
-<!ENTITY opt.useMouse.tooltip "As barras de ferramentas irão reagir ao movimento do rota, aparecendo sempre que o rato se encontre sobre elas, e escondendo-se sempre que o rato as deixe. Se esta opção for desactivada, só será possível aceder às barras de ferramentas ao pressionar F6 para focar a barra de endereço, ou quando algum painel abre ancorado a uma delas.">
+<!ENTITY opt.useMouse.tooltip.a "As barras de ferramentas irão reagir ao movimento do rota, aparecendo sempre que o rato se encontre sobre elas, e escondendo-se sempre que o rato as deixe.">
+<!ENTITY opt.useMouse.tooltip.b "Se esta opção for desactivada, só será possível aceder às barras de ferramentas ao pressionar F6 para focar a barra de endereço, ou quando algum painel abre ancorado a uma delas.">
 <!ENTITY opt.delayIn.label "Sensibilidade ao entrar">
 <!ENTITY opt.delayIn.tooltip "Determina o tempo de espera após o qual as barras de ferramentas aparecem, quando o rato é movido para o topo do navegador.">
 <!ENTITY opt.delayOut.label "Sensibilidade ao sair">

@@ -1,0 +1,13 @@
+<!ENTITY preferences.button "Voorkeuren">
+<!ENTITY preferences.undo.label "Ongedaan maken">
+<!ENTITY preferences.redo.label "Opnieuw uitvoeren">
+<!ENTITY preferences.undoredo.tooltip "Herstel snel elke wijziging aan de instellingen van de add-on, inclusief uit bestand importeren en terugzetten van standaardwaarden.">
+<!ENTITY preferences.import.label "Uit bestand importeren…">
+<!ENTITY preferences.import.tooltip "Add-onvoorkeuren uit een eerder geëxporteerd bestand op uw computer laden.">
+<!ENTITY preferences.export.label "Naar bestand exporteren…">
+<!ENTITY preferences.export.tooltip "Sla uw add-onvoorkeuren in een extern bestand op om ze te bewaren.">
+<!ENTITY preferences.reset.label "Standaardwaarden terugzetten">
+<!ENTITY preferences.reset.tooltip.a "Alle instellingen worden teruggezet op hun standaardwaarden, alsof de add-on net is geïnstalleerd.">
+<!ENTITY preferences.reset.tooltip.b "Plaatsen van knoppen in werkbalken worden niet gewijzigd, om deze terug te zetten dient u de knop Standaardwaarden terugzetten in het beeld Aanpassen te gebruiken.">
+<!ENTITY preferences.jumpto.label "Naar instelling…">
+<!ENTITY preferences.jumpto.tooltip "Type een woord en u wordt naar de eerste instelling met dit wordt gebracht.">

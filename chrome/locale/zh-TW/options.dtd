@@ -4,9 +4,10 @@
 <!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
 <!ENTITY opt.includeNavBar.label "也隱藏瀏覽工具列">
 <!ENTITY opt.includeNavBar.tooltip "將瀏覽工具列連同其他工具列一起隱藏。若否，則瀏覽工具列同預設顯示於視窗上端。">
-<!ENTITY opt.skyLights.label "啟用曙光(Sky Lights)特效">
-<!ENTITY opt.skyLights.tooltip "曙光(Sky Lights)特效">
-<!ENTITY opt.skyLightsHide.label "當工具列顯示時隱藏曙光(Sky Lights)特效">
+<!ENTITY opt.skyLights.label "啟用曙光(Sky Lights)">
+<!ENTITY opt.skyLights.tooltip.a "曙光為非干擾性的視覺輔助按鈕提供替代捷徑顯示關於當前網頁資訊">
+<!ENTITY opt.skyLights.tooltip.b "它幫助您可隨時確認網頁的安全性">
+<!ENTITY opt.skyLightsHide.label "當工具列顯示時隱藏曙光(Sky Lights)">
 <!ENTITY opt.skyLightsHide.tooltip "當工具列或迷你工具列顯示時，由於資訊已顯示於工具列的某處，曙光特效將自動消除">
 <!ENTITY cat.mini.label "當何種情況以迷你工具列顯示">
 <!ENTITY opt.miniOnAllInput.label "游標於任何輸入框時">
@@ -16,7 +17,8 @@
 <!ENTITY opt.miniOnTabSelect.label "選擇其他分頁時">
 <!ENTITY opt.miniOnTabSelect.tooltip "當每次切換分頁時皆顯示迷你工具列以方便得知當前分頁網址">
 <!ENTITY opt.useMouse.label "當滑鼠移到頂端，工具列顯示">
-<!ENTITY opt.useMouse.tooltip "工具列會因應游標的位置，當游標在上面時顯示，離開時則隱藏。若取消此選項，則僅能透過敲擊&lt;F6&gt;來使用位址列">
+<!ENTITY opt.useMouse.tooltip.a "工具列會因應游標的位置，當游標在上面時顯示，離開時則隱藏。">
+<!ENTITY opt.useMouse.tooltip.b "若取消此選項，則僅能透過敲擊&lt;F6&gt;來使用位址列">
 <!ENTITY opt.delayIn.label "展開延遲">
 <!ENTITY opt.delayIn.tooltip "調整游標移近分頁列下緣至視窗出現的反應時間長短">
 <!ENTITY opt.delayOut.label "收藏延遲">

@@ -5,7 +5,8 @@
 <!ENTITY opt.includeNavBar.label "Navigatiebalk ook verbergen">
 <!ENTITY opt.includeNavBar.tooltip "Verbergt de navigatiebalk met de overige werkbalken. Als dit is uitgeschakeld zal de navigatiebalk net als voorheen altijd zichtbaar zijn.">
 <!ENTITY opt.skyLights.label "Daklichten inschakelen">
-<!ENTITY opt.skyLights.tooltip "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm. Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
+<!ENTITY opt.skyLights.tooltip.a "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm.">
+<!ENTITY opt.skyLights.tooltip.b "Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
 <!ENTITY opt.skyLightsHide.label "Daklichten verbergen als chrome zichtbaar is">
 <!ENTITY opt.skyLightsHide.tooltip "De Daklichten worden verborgen als de werkbalken of de minibalk zichtbaar zijn, aangezien al hun informatie al ergens in de werkbalken zichtbaar is.">
 <!ENTITY cat.mini.label "Minibalk weergeven bij…">
@@ -16,7 +17,8 @@
 <!ENTITY opt.miniOnTabSelect.label "selecteren van een ander tabblad">
 <!ENTITY opt.miniOnTabSelect.tooltip "Geeft de minibalk weer telkens als u van tabblad wijzigt, om u uw huidige locatie op elke tabblad te laten weten.">
 <!ENTITY opt.useMouse.label "Chrome weergeven als muis bovenzijde aanwijst">
-<!ENTITY opt.useMouse.tooltip "De werkbalken reageren op muisbewegingen en zullen verschijnen als de muis erboven hangt en verdwijnen als de muisaanwijzer weg is. Als dit is uitgeschakeld kunt u de werkbalken alleen benaderen door op F6 te drukken om de locatiebalk focus te geven, of wanneer een paneel dat aan één van de verborgen werkbalken is verankerd opent.">
+<!ENTITY opt.useMouse.tooltip.a "De werkbalken reageren op muisbewegingen en zullen verschijnen als de muis erboven hangt en verdwijnen als de muisaanwijzer weg is.">
+<!ENTITY opt.useMouse.tooltip.b "Als dit is uitgeschakeld kunt u de werkbalken alleen benaderen door op F6 te drukken om de locatiebalk focus te geven, of wanneer een paneel dat aan één van de verborgen werkbalken is verankerd opent.">
 <!ENTITY opt.delayIn.label "Gevoeligheid bij binnenkomst">
 <!ENTITY opt.delayIn.tooltip "Bepaalt de vertraging waarna de chrome verschijnt wanneer de muis naar de bovenzijde van de browser beweegt.">
 <!ENTITY opt.delayOut.label "Gevoeligheid bij verlaten">

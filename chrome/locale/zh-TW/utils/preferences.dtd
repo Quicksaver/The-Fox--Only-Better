@@ -1,0 +1,13 @@
+<!ENTITY preferences.button "設定">
+<!ENTITY preferences.undo.label "回復">
+<!ENTITY preferences.redo.label "重做">
+<!ENTITY preferences.undoredo.tooltip "自檔案或初始預設值快速回復附加元件設定檔">
+<!ENTITY preferences.import.label "載入檔案自...">
+<!ENTITY preferences.import.tooltip "自過去輸出檔案載入設定檔">
+<!ENTITY preferences.export.label "輸出到檔案...">
+<!ENTITY preferences.export.tooltip "將設定值儲存到外部檔案">
+<!ENTITY preferences.reset.label "回復預設值">
+<!ENTITY preferences.reset.tooltip.a "所有設定將回復到如同新安裝時的初始值">
+<!ENTITY preferences.reset.tooltip.b "工具列按鈕位置將不受影響，若也想重設工具列按鈕位置可透過在「自訂介面」(Customize view)中的「回復預設按鈕」(Restore Defaults button)">
+<!ENTITY preferences.jumpto.label "跳到設定...">
+<!ENTITY preferences.jumpto.tooltip "輸入字串則將自動跳到含有此字串的第一組設定">

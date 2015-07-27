@@ -5,7 +5,8 @@
 <!ENTITY opt.includeNavBar.label "Ocultar además la barra de navegación">
 <!ENTITY opt.includeNavBar.tooltip "Oculta la barra de navegación junto con el resto de barras de herramientas. Si esto está deshabilitado, la barra de navegación siempre estará visible en la parte superior, como antes.">
 <!ENTITY opt.skyLights.label "Habilitar claraboyas">
-<!ENTITY opt.skyLights.tooltip "Las claraboyas le dan información sobre la página web que está visitando actualmente, mediante una ayuda visual intermitente y no-intrusiva en la parte superior del chrome (interfaz). ¡Le ayudan a estar siempre seguro de dónde se encuentra y de qué es seguro o no hacer allí!">
+<!ENTITY opt.skyLights.tooltip.a "Las claraboyas le dan información sobre la página web que está visitando actualmente, mediante una ayuda visual intermitente y no-intrusiva en la parte superior del chrome (interfaz).">
+<!ENTITY opt.skyLights.tooltip.b "¡Le ayudan a estar siempre seguro de dónde se encuentra y de qué es seguro o no hacer allí!">
 <!ENTITY opt.skyLightsHide.label "Ocultar claraboyas cuando el chrome (interfaz) sea visible">
 <!ENTITY opt.skyLightsHide.tooltip "Las claraboyas se ocultarán cuando las barras de herramientas o la mini-barra sean visibles, puesto que toda la información ya debería estar incluida en alguna parte en las propias barras de herramientas.">
 <!ENTITY cat.mini.label "Mostrar la mini-barra al...">
@@ -16,7 +17,8 @@
 <!ENTITY opt.miniOnTabSelect.label "seleccionar otra pestaña">
 <!ENTITY opt.miniOnTabSelect.tooltip "Muestra la mini-barra cada vez que cambia de pestañas, para hacerle saber en cada pestaña dónde se encuentra.">
 <!ENTITY opt.useMouse.label "Mostrar el chrome (interfaz) cuando el ratón se mueva a la parte superior">
-<!ENTITY opt.useMouse.tooltip "Las barras de herramientas reaccionarán a los movimientos del ratón, aparecerán cuando el ratón esté sobre ellas y se ocultarán cuando deje de estarlo. Si esto está deshabilitado, sólo puede acceder a las barras de herramientas pulsando F6 para poner el foco en la barra de direcciones, o cuando un panel se abra anclado a una de las barras de herramientas ocultadas.">
+<!ENTITY opt.useMouse.tooltip.a "Las barras de herramientas reaccionarán a los movimientos del ratón, aparecerán cuando el ratón esté sobre ellas y se ocultarán cuando deje de estarlo.">
+<!ENTITY opt.useMouse.tooltip.b "Si esto está deshabilitado, sólo puede acceder a las barras de herramientas pulsando F6 para poner el foco en la barra de direcciones, o cuando un panel se abra anclado a una de las barras de herramientas ocultadas.">
 <!ENTITY opt.delayIn.label "Sensibilidad al aparecer">
 <!ENTITY opt.delayIn.tooltip "Determina el retardo tras el cual aparecerá el chrome (interfaz) cuando el ratón se mueva a la parte superior del navegador.">
 <!ENTITY opt.delayOut.label "Sensibilidad al desaparecer">
