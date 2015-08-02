@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
@@ -44,6 +44,11 @@ this.identityBox = {
 	update: function(doAction) {
 		if(typeof(skyLights) == 'undefined') { return; }
 		
+		// default transparent state, for modes:
+		//	gIdentityHandler.IDENTITY_MODE_UNKNOWN
+		//	gIdentityHandler.IDENTITY_MODE_CHROMEUI
+		//	gIdentityHandler.IDENTITY_MODE_FILE_URI
+		
 		var props = {
 			tooltip: $('identity-icon-label').value,
 			state: gIdentityBox.className,
@@ -65,7 +70,24 @@ this.identityBox = {
 				props.color = 'hsl(52,100%,50%)';
 				break;
 			
-			default: break;
+			default:
+				// these were introduced in FF42
+				if(Services.vc.compare(Services.appinfo.version, "42.0a1") >= 0) {
+					switch(props.state) {
+						case gIdentityHandler.MIXED_ACTIVE_BLOCKED_IDENTIFIED:
+							props.color = 'hsl(82,100%,40%)';
+							break;
+						
+						case gIdentityHandler.IDENTITY_MODE_MIXED_ACTIVE_BLOCKED:
+							props.color = 'hsl(220,100%,40%)';
+							break;
+						
+						case gIdentityHandler.IDENTITY_MODE_USES_WEAK_CIPHER:
+							props.color = 'hsl(52,100%,50%)';
+							break;
+					}
+				}
+				break;
 		}
 		
 		if($('identity-icon-country-label').value) {
@@ -115,12 +137,21 @@ Modules.LOADMODULE = function() {
 		return this.__mode;
 	});
 	
-	toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
-		// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
-		['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
-			'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
-		]
-	]);
+	if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
+		toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
+			// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
+			['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
+				'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
+			]
+		]);
+	} else {
+		toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
+			// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
+			['this._identityPopup.openPopup(this._identityIcons, "bottomcenter topleft");',
+				'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcons, "bottomcenter topleft");'
+			]
+		]);
+	}
 	
 	Listeners.add(gIdentityPopup, 'AskingForNodeOwner', identityBox);
 	Listeners.add(gIdentityPopup, 'popupshowing', identityBox);
