@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.1';
+Modules.VERSION = '2.0.2';
 
 this.slimChrome = {
 	miniActive: false,
@@ -28,9 +28,21 @@ this.slimChrome = {
 			active = true;
 		}
 		
-		if(active != this.miniActive) {
-			this.miniActive = active;
-			message('focusPasswords', this.miniActive);
+		Timers.init('focusPasswords', () => {
+			if(active != this.miniActive || (active && target.type == 'password')) {
+				this.miniActive = active;
+				message('focusPasswords', this.miniActive);
+			}
+		}, 50);
+		
+		// only password fields should keep the mini bar shown for as long as they're focused
+		if(active && target.type != 'password') {
+			Timers.init('inputFieldFocused', function() {
+				message('focusPasswords', false);
+			}, 2000);
+		}
+		else {
+			Timers.cancel('inputFieldFocused');
 		}
 	},
 	
