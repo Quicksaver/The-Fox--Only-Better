@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.1';
+Modules.VERSION = '2.1.0';
 
 this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
@@ -10,6 +10,8 @@ this.__defineGetter__('KeyEvent', function() { return window.KeyEvent; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 
 this.identityBox = {
+	initialized: false,
+	
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'AskingForNodeOwner':
@@ -20,30 +22,87 @@ this.identityBox = {
 				break;
 			
 			case 'popupshowing':
-				if(typeof(skyLights) != 'undefined') {
-					skyLights.update('identityBox', { active: e.target.anchorNode == skyLights.get('identityBox') });
-				}
+				skyLights.update('identityBox', { active: e.target.anchorNode == skyLights.get('identityBox') });
 				break;
 				
 			case 'popuphiding':
-				if(typeof(skyLights) != 'undefined') {
-					skyLights.update('identityBox', { active: false });
-				}
+				skyLights.update('identityBox', { active: false });
 				break;
 			
 			case 'LoadedSkyLights':
-				this.update(true);
+				this.init();
 				break;
 			
 			case 'UnloadingSkyLights':
-				this.remove();
+				this.deinit();
 				break;
 		}
 	},
 	
-	update: function(doAction) {
-		if(typeof(skyLights) == 'undefined') { return; }
+	init: function() {
+		if(this.initialized) { return; }
+		this.initialized = true;
 		
+		gIdentityHandler.__mode = gIdentityHandler._mode;
+		delete gIdentityHandler._mode;
+		gIdentityHandler.__defineGetter__('_mode', function() { return this.__mode; });
+		gIdentityHandler.__defineSetter__('_mode', function(v) {
+			this.__mode = v;
+			identityBox.update();
+			return this.__mode;
+		});
+		
+		if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
+			toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
+				// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
+				['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
+					'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
+				]
+			]);
+		} else {
+			// change the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
+			Piggyback.add('identityBox', gIdentityHandler, 'handleIdentityButtonEvent', function(event) {
+				let light = skyLights.get('identityBox');
+				let anchor = (isAncestor(event.target, light)) ? light : $('identity-icons');
+				
+				if(anchor != this._identityIcons) {
+					delete this._identityIcons;
+					this._identityIcons = anchor;
+				}
+				
+				return true;
+			}, Piggyback.MODE_BEFORE);
+		}
+		
+		Listeners.add(gIdentityPopup, 'popupshowing', this);
+		Listeners.add(gIdentityPopup, 'popuphiding', this);
+		
+		this.update(true);
+	},
+	
+	deinit: function() {
+		if(!this.initialized) { return; }
+		this.initialized = false;
+		
+		delete gIdentityHandler._mode;
+		gIdentityHandler._mode = gIdentityHandler.__mode;
+		delete gIdentityHandler.__mode;
+		
+		if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
+			toCode.revert(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent');
+		} else {
+			Piggyback.revert('identityBox', gIdentityHandler, 'handleIdentityButtonEvent');
+			delete gIdentityHandler._identityIcons;
+			gIdentityHandler._identityIcons = $('identity-icons');
+		}
+		
+		Listeners.remove(gIdentityPopup, 'popupshowing', this);
+		Listeners.remove(gIdentityPopup, 'popuphiding', this);
+		
+		this.remove();
+	},
+	
+	update: function(doAction) {
 		// default transparent state, for modes:
 		//	gIdentityHandler.IDENTITY_MODE_UNKNOWN
 		//	gIdentityHandler.IDENTITY_MODE_CHROMEUI
@@ -121,59 +180,24 @@ this.identityBox = {
 	},
 	
 	remove: function() {
-		if(typeof(skyLights) != 'undefined') {
-			skyLights.remove('identityBox');
-		}
+		skyLights.remove('identityBox');
 	}
 };
 
 Modules.LOADMODULE = function() {
-	gIdentityHandler.__mode = gIdentityHandler._mode;
-	delete gIdentityHandler._mode;
-	gIdentityHandler.__defineGetter__('_mode', function() { return this.__mode; });
-	gIdentityHandler.__defineSetter__('_mode', function(v) {
-		this.__mode = v;
-		identityBox.update();
-		return this.__mode;
-	});
-	
-	if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
-		toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
-			// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
-			['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
-				'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
-			]
-		]);
-	} else {
-		toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
-			// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
-			['this._identityPopup.openPopup(this._identityIcons, "bottomcenter topleft");',
-				'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcons, "bottomcenter topleft");'
-			]
-		]);
-	}
-	
 	Listeners.add(gIdentityPopup, 'AskingForNodeOwner', identityBox);
-	Listeners.add(gIdentityPopup, 'popupshowing', identityBox);
-	Listeners.add(gIdentityPopup, 'popuphiding', identityBox);
 	Listeners.add(window, 'LoadedSkyLights', identityBox);
 	Listeners.add(window, 'UnloadingSkyLights', identityBox);
 	
-	identityBox.update(true);
+	if(self.skyLights) {
+		identityBox.init();
+	}
 };
 
 Modules.UNLOADMODULE = function() {
-	delete gIdentityHandler._mode;
-	gIdentityHandler._mode = gIdentityHandler.__mode;
-	delete gIdentityHandler.__mode;
-	
-	toCode.revert(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent');
-	
 	Listeners.remove(gIdentityPopup, 'AskingForNodeOwner', identityBox);
-	Listeners.remove(gIdentityPopup, 'popupshowing', identityBox);
-	Listeners.remove(gIdentityPopup, 'popuphiding', identityBox);
 	Listeners.remove(window, 'LoadedSkyLights', identityBox);
 	Listeners.remove(window, 'UnloadingSkyLights', identityBox);
 	
-	identityBox.remove();
+	identityBox.deinit();
 };
