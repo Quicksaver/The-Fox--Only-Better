@@ -181,6 +181,13 @@
 		padding: 4px 0;
 	}
 	
+	/* appropriating this bit of code to also style the nav-bar in popup windows */
+	window[chromehidden~="toolbar"] #nav-bar #urlbar-wrapper,
+	#navigator-toolbox[slimStyle="compact"] #nav-bar #urlbar-wrapper {
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
+	
 	#navigator-toolbox[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
 		padding: 0 3px;
 	}
