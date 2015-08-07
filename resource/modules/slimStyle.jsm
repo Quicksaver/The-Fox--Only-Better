@@ -1,4 +1,6 @@
-Modules.VERSION = '2.0.2';
+Modules.VERSION = '2.0.3';
+
+this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
 
 this.slimStyle = {
 	get clipPathURLBarWrapper () { return $(objName+'-slimChrome-clipPath-urlbar-wrapper-path'); },
@@ -111,6 +113,10 @@ this.slimStyle = {
 				switch(aSubject) {
 					case 'slimStyle':
 						this.apply();
+						break;
+					
+					case 'nonavbarbg':
+						this.stylePersona();
 						break;
 				}
 				break;
@@ -337,8 +343,12 @@ this.slimStyle = {
 		}
 		
 		var bgGradient = (WINNT) ? this.bgGradientWINNT : (DARWIN) ? this.bgGradientDARWIN : this.bgGradientLINUX;
+		/* Compatibility with CTR's "Navigation Toolbar: Remove Background Color": with lwthemes it should show the image, not the gradient */
+		if(CTR && Prefs.nonavbarbg && CTR.fxdefaulttheme) {
+			bgGradient = 'transparent, transparent';
+		}
 		
-		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
+		var sscode = '/* The Fox, Only Better CSS declarations of variable values */\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n';
@@ -406,7 +416,10 @@ this.slimStyle = {
 };
 
 Modules.LOADMODULE = function() {
+	Prefs.setDefaults({ nonavbarbg: false }, 'classicthemerestorer');
+	
 	Prefs.listen('slimStyle', slimStyle);
+	Prefs.listen('nonavbarbg', slimStyle);
 	
 	Listeners.add(window, 'LoadedSlimChrome', slimStyle);
 	Listeners.add(window, 'UnloadingSlimChrome', slimStyle);
@@ -429,6 +442,7 @@ Modules.UNLOADMODULE = function() {
 	Observers.remove(slimStyle, "lightweight-theme-preview-requested");
 	
 	Prefs.unlisten('slimStyle', slimStyle);
+	Prefs.unlisten('nonavbarbg', slimStyle);
 	
 	Styles.unload('slimChromeSVG_'+_UUID);
 	
