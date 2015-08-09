@@ -1,6 +1,18 @@
 {
-	"current":"1.2.1",
+	"current":"1.2.2",
 	"releases": {
+		"1.2.2":{
+			"date":"August 9, 2015",
+			"notes":[
+				["changed","\"Show mini bar when focusing any type of input box\" shows only a temporary mini bar, which will hide after a couple of seconds, hopefully making it less obtrusive. Note that password fields still keep the mini bar shown for as long as they're focused!"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/omnisidebar/\">OmniSidebar</a> and <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/puzzle-toolbars/\">Puzzle Toolbars</a>: the Bookmark This Page button would stop working if one of the add-ons was disabled/updated; this fix requires a browser restart"],
+				["bugfix","(Firefox 41+) Slim Chrome would be disabled after exiting fullscreen mode"],
+				["bugfix","(Firefox 42+) new modes and changes to the identity box prevented its Sky Light from appearing at the right place or showing the correct state"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/omnisidebar/\">OmniSidebar</a>: entering customize mode with Slim Chrome enabled could remove the OmniSidebar button from the browser"],
+				["bugfix","(Firefox 40+) appearance glitches with the Back/Forward buttons when using the Compact style"],
+				["bugfix","Compatibility with <a target=\"_blank\" href=\"https://addons.mozilla.org/firefox/addon/classicthemerestorer/\">Classic Theme Restorer</a>'s \"Navigation toolbar: remove background image\" option (<a target=\"_blank\" href=\"https://github.com/Quicksaver/The-Fox--Only-Better/issues/110\">issue #110</a>)"]
+			]
+		},
 		"1.2.1":{
 			"date":"July 28, 2015",
 			"notes":[
