@@ -1,4 +1,4 @@
-Modules.VERSION = '2.1.0';
+Modules.VERSION = '2.1.1';
 
 this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
@@ -43,16 +43,16 @@ this.identityBox = {
 		if(this.initialized) { return; }
 		this.initialized = true;
 		
-		gIdentityHandler.__mode = gIdentityHandler._mode;
-		delete gIdentityHandler._mode;
-		gIdentityHandler.__defineGetter__('_mode', function() { return this.__mode; });
-		gIdentityHandler.__defineSetter__('_mode', function(v) {
-			this.__mode = v;
-			identityBox.update();
-			return this.__mode;
-		});
-		
 		if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
+			gIdentityHandler.__mode = gIdentityHandler._mode;
+			delete gIdentityHandler._mode;
+			gIdentityHandler.__defineGetter__('_mode', function() { return this.__mode; });
+			gIdentityHandler.__defineSetter__('_mode', function(v) {
+				this.__mode = v;
+				identityBox.update();
+				return this.__mode;
+			});
+			
 			toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
 				// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
 				['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
@@ -60,6 +60,10 @@ this.identityBox = {
 				]
 			]);
 		} else {
+			Piggyback.add('identityBox', gIdentityHandler, 'refreshIdentityBlock', (newMode) => {
+				this.update();
+			}, Piggyback.MODE_AFTER);
+			
 			// change the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
 			Piggyback.add('identityBox', gIdentityHandler, 'handleIdentityButtonEvent', function(event) {
 				let light = skyLights.get('identityBox');
@@ -84,13 +88,15 @@ this.identityBox = {
 		if(!this.initialized) { return; }
 		this.initialized = false;
 		
-		delete gIdentityHandler._mode;
-		gIdentityHandler._mode = gIdentityHandler.__mode;
-		delete gIdentityHandler.__mode;
-		
 		if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
+			delete gIdentityHandler._mode;
+			gIdentityHandler._mode = gIdentityHandler.__mode;
+			delete gIdentityHandler.__mode;
+			
 			toCode.revert(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent');
 		} else {
+			Piggyback.revert('identityBox', gIdentityHandler, 'refreshIdentityBlock');
+			
 			Piggyback.revert('identityBox', gIdentityHandler, 'handleIdentityButtonEvent');
 			delete gIdentityHandler._identityIcons;
 			gIdentityHandler._identityIcons = $('identity-icons');
