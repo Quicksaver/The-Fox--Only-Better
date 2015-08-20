@@ -92,12 +92,6 @@
 		padding-right: 3px;
 	}
 	
-	/* I wonder what this will break... */
-	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon,
-	#navigator-toolbox[slimStyle="compact"] #forward-button > .toolbarbutton-icon {
-		width: auto !important;
-	}
-	
 	/* Australis style */
 	
 	#theFoxOnlyBetter-slimChrome-toolbars-before,
