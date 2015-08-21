@@ -138,7 +138,6 @@
 		width: 24px !important;
 	}
 	
-	
 	/* damn all these box-shadows to the deepest circles of hell!! */
 	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
 		box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25);
