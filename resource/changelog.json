@@ -1,6 +1,12 @@
 {
-	"current":"1.2.2",
+	"current":"1.2.3",
 	"releases": {
+		"1.2.3":{
+			"date":"August 21, 2015",
+			"notes":[
+				["bugfix","Refix the appearance glitches with the Compact style which the last release intended to fix"]
+			]
+		},
 		"1.2.2":{
 			"date":"August 9, 2015",
 			"notes":[
