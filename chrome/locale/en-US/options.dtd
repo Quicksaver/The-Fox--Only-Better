@@ -1,10 +1,15 @@
 <!ENTITY pane.slimChrome.label "Slim Chrome">
+<!ENTITY pane.skyLights.label "Sky Lights">
 
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Streamlines the interface and maximizes content viewing space, by conveniently hiding the top toolbars when you don't need them.">
 <!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
 <!ENTITY opt.includeNavBar.tooltip "Hides the navigation bar along with the other toolbars. If this is disabled, the navigation bar will always be visible at the top like before.">
+
+<!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
+<!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
+<!ENTITY opt.skyLights.requirements.description "In order to use Sky Lights, you need to enable Slim Chrome, as well as its &quot;Also hide the navigation bar&quot; option.">
 <!ENTITY opt.skyLights.label "Enable Sky Lights">
 <!ENTITY opt.skyLights.tooltip.a "Sky Lights give you information about the webpage you are currently visiting, through an alternate and non-obtrusive visual aid in the top chrome.">
 <!ENTITY opt.skyLights.tooltip.b "They help you always be sure of where you are and of what is safe to do in there!">

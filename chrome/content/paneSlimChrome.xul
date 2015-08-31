@@ -24,8 +24,6 @@
 			<preference id="pref-miniOnTabSelect" name="extensions.thefoxonlybetter.miniOnTabSelect" type="bool"/>
 			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
 			<preference id="pref-includeNavBar" name="extensions.thefoxonlybetter.includeNavBar" type="bool"/>
-			<preference id="pref-skyLights" name="extensions.thefoxonlybetter.skyLights" type="bool"/>
-			<preference id="pref-skyLightsHide" name="extensions.thefoxonlybetter.skyLightsHide" type="bool"/>
 			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
 			<preference id="pref-delayOut" name="extensions.thefoxonlybetter.delayOut" type="int"/>
 			<preference id="pref-slimStyle" name="extensions.thefoxonlybetter.slimStyle" type="string"/>
@@ -42,34 +40,19 @@
 		
 		<groupbox align="start" id="paneSlimChrome-main" collapsed="true" data-category="paneSlimChrome">
 			<checkbox label="&opt.slimChrome.label;"
-				helptext="&opt.slimChrome.tooltip;"
+				helpbox="paneSlimChrome-main-helptext"
 				jump="slimChrome"
 				delayPreference="pref-slimChrome"/>
-		</groupbox>
-		
-		<groupbox align="start" id="paneSlimChrome-includes" collapsed="true" data-category="paneSlimChrome">
-			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.includeNavBar.label;"
-				helptext="&opt.includeNavBar.tooltip;"
+				helpbox="paneSlimChrome-main-helptext"
 				jump="includeNavBar"
+				class="indent"
 				dependson="pref-slimChrome"
 				delayPreference="pref-includeNavBar"/>
-			<checkbox label="&opt.skyLights.label;"
-				helpbox="paneSlimChrome-skyLights-helptext"
-				jump="skyLights"
-				dependson="pref-slimChrome,pref-includeNavBar,pref-miniOnChangeLocation"
-				delayPreference="pref-skyLights"/>
-			<checkbox label="&opt.skyLightsHide.label;"
-				helpbox="paneSlimChrome-skyLights-helptext"
-				jump="skyLightsHide"
-				class="indent"
-				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
-				delayPreference="pref-skyLightsHide"/>
-			<vbox id="paneSlimChrome-skyLights-helptext" collapsed="true">
-				<description>&opt.skyLights.tooltip.a;</description>
-				<description style="margin-top:1em;">&opt.skyLights.tooltip.b;</description>
-				<description style="font-weight:bold; margin-top:2em;">&opt.skyLightsHide.label;</description>
-				<description>&opt.skyLightsHide.tooltip;</description>
+			<vbox id="paneSlimChrome-main-helptext" collapsed="true">
+				<description>&opt.slimChrome.tooltip;</description>
+				<description style="font-weight:bold; margin-top:2em;">&opt.includeNavBar.label;</description>
+				<description>&opt.includeNavBar.tooltip;</description>
 			</vbox>
 		</groupbox>
 		

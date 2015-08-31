@@ -1,4 +1,4 @@
-Modules.VERSION = '2.1.1';
+Modules.VERSION = '2.1.2';
 
 this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
@@ -108,7 +108,7 @@ this.identityBox = {
 		this.remove();
 	},
 	
-	update: function(doAction) {
+	update: function(initialize) {
 		// default transparent state, for modes:
 		//	gIdentityHandler.IDENTITY_MODE_UNKNOWN
 		//	gIdentityHandler.IDENTITY_MODE_CHROMEUI
@@ -165,8 +165,10 @@ this.identityBox = {
 			props.tooltip += gIdentityBox.tooltipText;
 		}
 		
-		if(doAction) {
+		if(initialize) {
 			props.action = this.action;
+			props.label = Strings.get('skyLights', 'identityBoxLabel');
+			props.description = Strings.get('skyLights', 'identityBoxDescription');
 		}
 		
 		skyLights.update('identityBox', props);

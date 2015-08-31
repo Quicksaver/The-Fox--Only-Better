@@ -1,8 +1,10 @@
-Modules.VERSION = '1.1.1';
+Modules.VERSION = '1.2.0';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
-	get container () { return $(objName+'-skyLights-container'); },
+	kLightPrefix: objName+'-skyLights-',
+	
+	get container () { return $(this.kLightPrefix+'container'); },
 	
 	lights: new Map(),
 	
@@ -42,6 +44,10 @@ this.skyLights = {
 			case 'skyLightsHide':
 				this.hideOnChrome();
 				break;
+			
+			case 'skyLightsPlacements':
+				this.updatePlacements(aData);
+				break;
 		}
 	},
 	
@@ -55,7 +61,7 @@ this.skyLights = {
 			if(!this.container) { return; }
 			
 			light = document.createElement('box');
-			light.id = objName+'-skyLights-'+name;
+			light.id = this.kLightPrefix+name;
 			setAttribute(light, 'class', 'skyLight');
 			setAttribute(light, 'context', 'toolbar-context-menu');
 			
@@ -68,6 +74,12 @@ this.skyLights = {
 			
 			this.container.appendChild(light);
 			this.lights.set(name, light);
+			
+			// register this light with the DnDprefs object, so its position can be customized
+			DnDprefs.addWidget('skyLightsPlacements', name, light, props.label, props.description);
+			
+			// we need to make sure the light is moved to the correct place or removed if the user chose to disable it
+			this.updatePlacements();
 		}
 		
 		for(let p in props) {
@@ -92,7 +104,7 @@ this.skyLights = {
 					var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
 					sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 					sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-					sscode += '	window['+objName+'_UUID="'+_UUID+'"] #theFoxOnlyBetter-skyLights-'+name+':-moz-any(:hover,[active],[alert="on"]) {\n';
+					sscode += '	window['+objName+'_UUID="'+_UUID+'"] '+this.kLightPrefix+name+':-moz-any(:hover,[active],[alert="on"]) {\n';
 					
 					if(isTransparent) {
 						sscode += '	box-shadow: rgba(0,0,0,0.2) 0 1px 2px;\n';
@@ -172,6 +184,7 @@ this.skyLights = {
 				light._alert();
 			}
 			
+			DnDprefs.removeWidget('skyLightsPlacements', name, light);
 			light.remove();
 			Styles.unload('skyLight-'+name+'_'+_UUID);
 			this.lights.delete(name);
@@ -183,15 +196,24 @@ this.skyLights = {
 	},
 	
 	init: function() {
+		DnDprefs.addHandler('skyLightsPlacements', this);
+		
 		Listeners.add(slimChrome.container, 'WillShowSlimChrome', this, true);
 		
 		Prefs.listen('skyLightsHide', this);
 		this.hideOnChrome();
 		
 		dispatch(this.container, { type: 'LoadedSkyLights', cancelable: false });
+		
+		// when closing a window we need to make sure all the references to this window's lights are removed from the DnDpref global object
+		alwaysRunOnClose.push(() => {
+			this.unregister();
+		});
 	},
 	
 	deinit: function() {
+		this.unregister();
+		
 		dispatch(this.container, { type: 'UnloadingSkyLights', cancelable: false });
 		
 		Prefs.unlisten('skyLightsHide', this);
@@ -202,6 +224,52 @@ this.skyLights = {
 		// make sure all the lights are properly unloaded
 		for(let light of this.lights.keys()) {
 			this.remove(light);
+		}
+	},
+	
+	unregister: function() {
+		DnDprefs.removeHandler('skyLightsPlacements', this);
+		for(let [ name, light ] of this.lights) {
+			DnDprefs.removeWidget('skyLightsPlacements', name, light);
+		}
+	},
+	
+	updatePlacements: function(placements) {
+		if(!this.container) { return; }
+		
+		if(!placements) {
+			placements = DnDprefs.getPref('skyLightsPlacements');
+			if(!placements) { return; }
+		}
+		
+		let node = this.container.firstChild;
+		
+		for(let id of placements.order) {
+			let light = this.get(id);
+			
+			// if this light isn't active, skip it as there's no need to show it in the customization areas
+			if(!light) { continue; }
+			
+			// if the user chose to disable this specific light, we remove it from the DOM tree entirely
+			if(!placements.settings.get(id).enable) {
+				// keep going through the light nodes before removing it, so we don't lose our position
+				if(node && node == light) {
+					node = node.nextSibling;
+				}
+				
+				light.remove();
+				continue;
+			}
+			
+			// if the current node is already in the correct position, we can skip ahead
+			if(node && node == light) {
+				node = node.nextSibling;
+				continue;
+			}
+			
+			// we're going through the order in the array, so we can just append to the end since we'll eventually go through all lights in order
+			this.container.appendChild(light);
+			node = null;
 		}
 	}
 };

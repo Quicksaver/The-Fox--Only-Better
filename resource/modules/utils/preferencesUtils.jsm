@@ -1,4 +1,4 @@
-Modules.VERSION = '2.4.2';
+Modules.VERSION = '2.4.3';
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -1137,12 +1137,39 @@ this.controllers = {
 	}
 };
 
+this.DnDproxy = {
+	areas: null,
+	
+	init: function() {
+		// we initialize the DnDprefs module only if there are any such areas to be initialized
+		this.areas = $$('[DnDpref]');
+		for(let area of this.areas) {
+			let pref = area.getAttribute('DnDpref');
+			if(pref) {
+				DnDprefs.addArea(pref, area);
+			}
+		}
+	},
+	
+	uninit: function() {
+		if(this.areas) {
+			for(let area of this.areas) {
+				let pref = area.getAttribute('DnDpref');
+				if(pref) {
+					DnDprefs.removeArea(pref, area);
+				}
+			}
+		}
+	}
+};
+
 Modules.LOADMODULE = function() {
 	alwaysRunOnClose.push(function() {
 		Overlays.removeOverlayWindow(helptext.root, 'utils/helptext');
 	});
 	
 	callOnLoad(window, function() {
+		DnDproxy.init();
 		delayPreferences.init();
 		dependsOn.init();
 		keys.init();
@@ -1166,6 +1193,7 @@ Modules.LOADMODULE = function() {
 Modules.UNLOADMODULE = function() {
 	dependsOn.uninit();
 	delayPreferences.uninit();
+	DnDproxy.uninit();
 	keys.uninit();
 	categories.uninit();
 	controllers.uninit();

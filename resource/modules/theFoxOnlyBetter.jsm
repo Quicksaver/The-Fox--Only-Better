@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.3';
+Modules.VERSION = '2.0.4';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -58,13 +58,6 @@ this.toggleSlimChromePref = function() {
 	Prefs.slimChrome = !Prefs.slimChrome;
 };
 
-this.ensureNotAllDisabled = function() {
-	if(Prefs.includeNavBar && !Prefs.skyLights && !Prefs.miniOnChangeLocation) {
-		Prefs.skyLights = true;
-		Prefs.miniOnChangeLocation = true;
-	}
-};
-
 this.toggleSlimChrome = function(noLoad) {
 	toggleAttribute(slimChromeBroadcaster, 'checked', Prefs.slimChrome);
 	
@@ -81,9 +74,6 @@ this.togglePopups = function() {
 
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ autohide: true }, 'fullscreen', 'browser');
-	
-	// for security reasons, we don't let both skyLights and miniOnChangeLocation be disabled at the same time
-	ensureNotAllDisabled();
 	
 	Overlays.overlayWindow(window, 'TheFOB', self);
 	

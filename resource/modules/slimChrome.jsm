@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.8';
+Modules.VERSION = '2.0.9';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -10,6 +10,23 @@ this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
+
+this.ensureNotAllDisabled = function() {
+	// skyLights may not have initialized DnDprefs yet (or at all), so we need to make sure we get the identityBox light enabled status here,
+	// we do this process here to ensure this is always checked when enabling Slim Chrome itself
+	DnDprefs.addWidget('skyLightsPlacements', 'identityBox', 'ensureNotAllDisabled');
+	let settings = DnDprefs.getPref('skyLightsPlacements').settings.get('identityBox');
+	
+	if(Prefs.includeNavBar && !Prefs.miniOnChangeLocation
+	&& (!Prefs.skyLights || !settings.enable)) {
+		Prefs.skyLights = true;
+		Prefs.miniOnChangeLocation = true;
+		settings.enable = true;
+	}
+	
+	// remove this instance from the DnDprefs maps, as we only really needed it for this check for now
+	DnDprefs.removeWidget('skyLightsPlacements', 'identityBox', 'ensureNotAllDisabled');
+};
 
 this.slimChrome = {
 	// until I find a better way of finding out on which side of the browser is the scrollbar, I'm setting equal margins
@@ -1160,6 +1177,9 @@ this.toggleSkyLights = function() {
 };
 
 Modules.LOADMODULE = function() {
+	// for security reasons, we don't let both the identityBox sky Light and miniOnChangeLocation be disabled at the same time
+	ensureNotAllDisabled();
+	
 	slimChrome.browserListener = slimChrome.browserListener.bind(slimChrome);
 	
 	Messenger.loadInWindow(window, 'slimChrome');
