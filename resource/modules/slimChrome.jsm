@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.9';
+Modules.VERSION = '2.0.10';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -1131,6 +1131,7 @@ this.slimChrome = {
 		this.initialLoading = true;
 		
 		removeAttribute(gNavToolbox, 'slimAnimation');
+		removeAttribute(gNavToolbox, 'slimChromeVisible');
 		removeAttribute(gNavToolbox, 'dropIndicatorFix');
 		Watchers.removeAttributeWatcher(tabDropIndicator, 'collapsed', this, false, false);
 		
