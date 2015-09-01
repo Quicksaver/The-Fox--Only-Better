@@ -27,4 +27,20 @@
 		height: 5px;
 	}
 	
+	/* hide the bookmarks button dropmarker when it's in the mini bar */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button {
+		-moz-border-end: 1px solid transparent !important; /* FF's stylesheet has !important as well */
+	}
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button:hover > .toolbarbutton-menubutton-button,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button[open] {
+		border-color: hsla(0,0%,0%,.2) !important; /* to also override the above */
+	}
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button {
+		border-radius: 3px;
+	}
+	/* this prevents a visual glitch where the right border would be visible for a moment when showing the mini bar */
+	#theFoxOnlyBetter-slimChrome-container[noPointerEvents][onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button {
+		transition: none;
+	}
+	
 }

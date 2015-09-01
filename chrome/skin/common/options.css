@@ -13,3 +13,8 @@
 	list-style-image: url("chrome://thefoxonlybetter/skin/skylights.png");
 	-moz-image-region: rect(0px, 32px, 32px, 0px);
 }
+
+#theFoxOnlyBetter-DnDpref-bookmarkedItem .DnDpref-icon {
+	list-style-image: url("chrome://thefoxonlybetter/skin/skylights.png");
+	-moz-image-region: rect(0px, 64px, 32px, 32px);
+}

@@ -37,7 +37,7 @@
 	#theFoxOnlyBetter-skyLights-container .skyLight {
 		position: relative;
 		width: 18px;
-		margin: 0 9px;
+		margin: 0 18px;
 		border-radius: 3px;
 		background-image: linear-gradient(165deg, rgba(255,255,255,0.4) 2px, rgba(35,35,35,0));
 	}
@@ -59,10 +59,10 @@
 	/* this helps increase the active mouse area, so it doesn't take sniper precision to get to the light */
 	#theFoxOnlyBetter-skyLights-container .skyLightArea {
 		position: absolute;
-		width: 36px;
+		width: 54px;
 		height: 400%;
 		top: -150%;
-		left: -9px;
+		left: -18px;
 	}
 	
 	/* fix for https://bugzilla.mozilla.org/show_bug.cgi?id=647540, .chromeclass-location isn't obeyed by itself anymore,
@@ -72,4 +72,8 @@
 		display: flex !important;
 	}
 	
+	/* hide the bookmarks button dropmarker when it's in the mini bar */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button dropmarker {
+		visibility: collapse;
+	}
 }

@@ -150,7 +150,10 @@
 	}
 	
 	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
-		padding: 1px;
+		padding: 0 1px;
+	}
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #urlbar-container {
+		padding: 1px 0;
 	}
 	
 	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-before,

@@ -15,4 +15,25 @@
 		border-bottom-color: ThreeDDarkShadow;
 	}
 	
+	/* hide the bookmarks button dropmarker when it's in the mini bar */
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
+		-moz-border-end: 1px solid transparent;
+	}
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button:hover > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button[open] > .toolbarbutton-icon {
+		border-color: hsla(210,4%,10%,.1);
+	}
+	@media	(-moz-os-version: windows-xp),
+		(-moz-os-version: windows-vista),
+		(-moz-os-version: windows-win7) {
+		
+		#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
+			border-radius: 2px;
+		}
+		#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button:hover > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
+		#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button[open] > .toolbarbutton-icon {
+			border-color: hsla(210,54%,20%,.15) hsla(210,54%,20%,.2) hsla(210,54%,20%,.25);
+		}
+	}
+	
 }

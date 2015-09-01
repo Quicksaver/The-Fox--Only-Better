@@ -1,4 +1,4 @@
-Modules.VERSION = '3.0.1';
+Modules.VERSION = '3.0.2';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -37,7 +37,7 @@ this.holdNotificationPopup = function(e) {
 
 // Keep chrome visible when opening menus within it
 this.popups = {
-	block: ['identity-popup', 'notification-popup'],
+	block: new Set(['identity-popup', 'notification-popup']),
 	blocked: false,
 	held: new Set(),
 	
@@ -93,8 +93,9 @@ this.popups = {
 					}
 				}
 				
-				// nothing "native" is opening this popup, so let's see if someone claims it
-				if(!hold) {
+				// nothing "native" is opening this popup, so let's see if someone claims it,
+				// this should be unnecessary when there's a valid anchorNode reference
+				if(!hold && !e.target.anchorNode) {
 					trigger = dispatch(target, { type: 'AskingForNodeOwner', asking: true });
 					if(trigger && typeof(trigger) == 'string') {
 						trigger = $(trigger);
@@ -118,7 +119,7 @@ this.popups = {
 					if(Prefs.includeNavBar
 					&& trueAttribute(slimChrome.container, 'mini')
 					&& slimChrome.container.hovers == 0
-					&& this.block.indexOf(target.id) > -1) {
+					&& (this.block.has(target.id) || !dispatch(target, { type: 'ShouldPanelOpenFullChrome' }))) {
 						slimChrome.setMini(true);
 						this.blocked = true;
 					}
@@ -140,7 +141,8 @@ this.popups = {
 							hideIt(target, true);
 							
 							if(typeof(slimChrome) != 'undefined') {
-								if(trueAttribute(slimChrome.container, 'mini') && this.block.indexOf(target.id) > -1) {
+								if(trueAttribute(slimChrome.container, 'mini')
+								&& (this.block.has(target.id) || !dispatch(target, { type: 'ShouldPanelOpenFullChrome' }))) {
 									if(this.blocked) {
 										slimChrome.hideMiniInABit();
 										this.blocked = false;

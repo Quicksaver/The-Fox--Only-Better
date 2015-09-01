@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.0';
+Modules.VERSION = '1.2.1';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -13,11 +13,15 @@ this.skyLights = {
 			case 'click':
 				if(e.defaultPrevented) { return; }
 				
-				if(e.target._action) {
-					e.target._action(e);
-				} else if(e.target.parentNode._action) {
-					e.target.parentNode._action(e);
-				}
+				// the listener is attached to both the light and its inner container, which could lead to double calls to this,
+				// so we do it aSync to prevent redundant calls for the same click action
+				Timers.init('clickSkyLight', function() {
+					if(e.target._action) {
+						e.target._action(e);
+					} else if(e.target.parentNode._action) {
+						e.target.parentNode._action(e);
+					}
+				}, 0);
 				break;
 			
 			case 'WillShowSlimChrome':
@@ -212,6 +216,8 @@ this.skyLights = {
 	},
 	
 	deinit: function() {
+		Timers.cancel('clickSkyLight');
+		
 		this.unregister();
 		
 		dispatch(this.container, { type: 'UnloadingSkyLights', cancelable: false });
