@@ -1,4 +1,4 @@
-Modules.VERSION = '1.3.0';
+Modules.VERSION = '1.3.1';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -131,6 +131,9 @@ this.bookmarkedItem = {
 			
 			// adapted from BookmarkingUI.onCommand() - http://mxr.mozilla.org/mozilla-central/source/browser/base/content/browser-places.js#1630
 			props.action = (e) => {
+				// only left-clicks on the light should bookmark the page
+				if(e.button != 0) { return; }
+				
 				let isBookmarked = BookmarkingUI._itemIds.length > 0;
 				
 				// Ignore clicks on the star if we are updating its state.
