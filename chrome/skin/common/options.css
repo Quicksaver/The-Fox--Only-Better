@@ -7,6 +7,10 @@
 	min-width: 3em;
 }
 
+.topIndent {
+	margin-top: 1em;
+}
+
 /* Sky Lights icons */
 
 #theFoxOnlyBetter-DnDpref-identityBox .DnDpref-icon {

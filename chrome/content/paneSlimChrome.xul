@@ -22,6 +22,7 @@
 			<preference id="pref-miniOnAllInput" name="extensions.thefoxonlybetter.miniOnAllInput" type="bool"/>
 			<preference id="pref-miniOnChangeLocation" name="extensions.thefoxonlybetter.miniOnChangeLocation" type="bool"/>
 			<preference id="pref-miniOnTabSelect" name="extensions.thefoxonlybetter.miniOnTabSelect" type="bool"/>
+			<preference id="pref-miniOnPinnedTabs" name="extensions.thefoxonlybetter.miniOnPinnedTabs" type="bool"/>
 			<preference id="pref-useMouse" name="extensions.thefoxonlybetter.useMouse" type="bool"/>
 			<preference id="pref-includeNavBar" name="extensions.thefoxonlybetter.includeNavBar" type="bool"/>
 			<preference id="pref-delayIn" name="extensions.thefoxonlybetter.delayIn" type="int"/>
@@ -73,6 +74,12 @@
 				jump="miniOnTabSelect"
 				dependson="pref-slimChrome,pref-includeNavBar"
 				delayPreference="pref-miniOnTabSelect"/>
+			<checkbox label="&opt.miniOnPinnedTabs.label;"
+				class="topIndent"
+				helpbox="paneSlimChrome-mini-helptext"
+				jump="miniOnPinnedTabs"
+				dependson="pref-slimChrome,pref-includeNavBar"
+				delayPreference="pref-miniOnPinnedTabs"/>
 			<vbox id="paneSlimChrome-mini-helptext" collapsed="true">
 				<description>&cat.mini.label;</description>
 				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnAllInput.label;</description>
@@ -81,6 +88,8 @@
 				<description>&opt.miniOnChangeLocation.tooltip;</description>
 				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnTabSelect.label;</description>
 				<description>&opt.miniOnTabSelect.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.miniOnPinnedTabs.label;</description>
+				<description>&opt.miniOnPinnedTabs.tooltip;</description>
 			</vbox>
 		</groupbox>
 		

@@ -23,6 +23,8 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "Highly recommended! The mini bar will appear whenever the current tab changes to another location (different web host), or when you select a background tab that has changed location in the meantime.">
 <!ENTITY opt.miniOnTabSelect.label "selecting another tab">
 <!ENTITY opt.miniOnTabSelect.tooltip "Shows the mini bar every time you change tabs, to let you know of your current location on each tab.">
+<!ENTITY opt.miniOnPinnedTabs.label "Show the mini bar on pinned tabs">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Apply the above rules to pinned tabs as well.">
 
 <!ENTITY opt.useMouse.label "Show the chrome when the mouse moves to the top">
 <!ENTITY opt.useMouse.tooltip.a "The toolbars will react to mouse movements, they will appear when the mouse is over them and will hide when it leaves.">

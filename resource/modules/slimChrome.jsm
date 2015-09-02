@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.11';
+Modules.VERSION = '2.0.12';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -694,8 +694,9 @@ this.slimChrome = {
 	
 	focusPasswords: function() {
 		if(Prefs.includeNavBar && (typeof(popups) == 'undefined' || !popups.blocked)) {
-			this.setMini(gBrowser.mCurrentBrowser._showMiniBar);
-			return gBrowser.mCurrentBrowser._showMiniBar;
+			let show = gBrowser.mCurrentBrowser._showMiniBar && this.miniOnPinnedTabs();
+			this.setMini(show);
+			return show;
 		}
 		return false;
 	},
@@ -790,6 +791,10 @@ this.slimChrome = {
 		}
 	},
 	
+	miniOnPinnedTabs: function() {
+		return !gBrowser.selectedTab.pinned || Prefs.miniOnPinnedTabs;
+	},
+	
 	onTabSelect: function(e) {
 		if(Prefs.includeNavBar // if the nav bar isn't in our container, all this is useless
 		&& !this.focusPasswords() // focusPasswords will always show mini if a password field is focused
@@ -799,7 +804,7 @@ this.slimChrome = {
 			|| (e && Prefs.miniOnTabSelect) ) // or when supposed to show on every tab select (and this is actually a TabSelect event)
 		&& (typeof(popups) == 'undefined' || !popups.blocked) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(this.container, 'hover') // also no point in showing mini if chrome is already shown
-		&& !gBrowser.selectedTab.pinned // and if it's not a pinned tab
+		&& this.miniOnPinnedTabs() // and if it's not a pinned tab
 		&& window.XULBrowserWindow.inContentWhitelist.indexOf(this.currentSpec) == -1 // and if the current address is not whitelisted
 		) {
 			this.setMini(true);
