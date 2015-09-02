@@ -1,4 +1,4 @@
-Modules.VERSION = '2.5.3';
+Modules.VERSION = '2.5.4';
 Modules.UTILS = true;
 Modules.BASEUTILS = true;
 
@@ -165,7 +165,7 @@ this.Prefs = {
 	observe: function(aSubject, aTopic, aData) {
 		let pref = aData;
 		while(!this._prefObjects[pref]) {
-			if(!pref.contains('.')) {
+			if(!pref.includes('.')) {
 				Cu.reportError("Couldn't find listener handlers for preference "+aData);
 				return;
 			}

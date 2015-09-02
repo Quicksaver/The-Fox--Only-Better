@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.7';
+Modules.VERSION = '1.0.8';
 Modules.UTILS = true;
 
 // PrefPanes - handles the preferences tab and all its contents for the add-on
@@ -113,21 +113,8 @@ this.PrefPanes = {
 			Styles.load('PrefPanesHtmlFix', sscode, true);
 		}
 		
-		// and this doesn't seem need in current Aurora (FF40+)
-		if(Services.vc.compare(Services.appinfo.version, '40.0a2') < 0) {	
-			var sscode = '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
-			sscode += '@-moz-document url-prefix("'+this.chromeUri+'")'+(this.aboutUri ? ', url-prefix("'+this.aboutUri.spec+'")' : '')+' {\n';
-			sscode += '	.smallindent[focused="true"] > .radio-label-box {\n';
-			sscode += '		-moz-margin-start: -1px;\n';
-			sscode += '		-moz-margin-end: 0;\n';
-			sscode += '	}\n';
-			sscode += '}';
-			
-			Styles.load('PrefPanesXulFix', sscode, true);
-		}
-		
 		// if we're in a dev version, ignore all this
-		if(AddonData.version.contains('a') || AddonData.version.contains('b')) { return; }
+		if(AddonData.version.includes('a') || AddonData.version.includes('b')) { return; }
 		
 		// if we're updating from a version without this module, try to figure out the last version
 		if(Prefs.lastVersionNotify == '0' && STARTED == ADDON_UPGRADE && AddonData.oldVersion) {

@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.10';
+Modules.VERSION = '2.0.11';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -290,7 +290,7 @@ this.slimChrome = {
 				let toolbarMenu = $('toolbar-context-menu');
 				if((toolbarMenu.state == 'showing' || toolbarMenu.state == 'open') && isAncestor(toolbarMenu.triggerNode, $('tabbrowser-tabs'))) { break; }
 				
-				if(!document.documentElement.getAttribute('chromehidden').contains('menubar') && dispatch(this.container, { type: 'SlimChromeNormalActiveArea' })) {
+				if(!document.documentElement.getAttribute('chromehidden').includes('menubar') && dispatch(this.container, { type: 'SlimChromeNormalActiveArea' })) {
 					// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
 					if(e.screenY < gNavToolbox.boxObject.screenY
 					|| e.screenY > gNavToolbox.boxObject.screenY +gNavToolbox.boxObject.height
