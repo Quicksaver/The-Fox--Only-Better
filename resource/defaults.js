@@ -1,4 +1,4 @@
-// VERSION = '1.3.2';
+// VERSION = '1.3.3';
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -31,6 +31,8 @@ prefList = {
 	skyLightsHide: true,
 	skyLightsPlacements: '',
 	
+	adaptSearchBar: true,
+	
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,
 	slimChromeShift: false,
@@ -39,7 +41,8 @@ prefList = {
 
 paneList = [
 	[ 'paneSlimChrome', true ],
-	[ 'paneSkyLights', true ]
+	[ 'paneSkyLights', true ],
+	[ 'paneExperimental' ]
 ];
 
 function startAddon(window) {

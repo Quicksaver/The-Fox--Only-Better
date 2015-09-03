@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.4';
+Modules.VERSION = '2.0.5';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -43,6 +43,10 @@ this.observe = function(aSubject, aTopic, aData) {
 		case 'autohide':
 			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
 			break;
+		
+		case 'adaptSearchBar':
+			toggleAdaptSearchBar();
+			break;
 	}
 };
 
@@ -72,6 +76,10 @@ this.togglePopups = function() {
 	Modules.loadIf('popups', Prefs.slimChrome);
 };
 
+this.toggleAdaptSearchBar = function() {
+	Modules.loadIf('adaptSearchBar', Prefs.adaptSearchBar);
+};
+
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ autohide: true }, 'fullscreen', 'browser');
 	
@@ -81,6 +89,7 @@ Modules.LOADMODULE = function() {
 	
 	Prefs.listen('slimChrome', self);
 	Prefs.listen('autohide', self);
+	Prefs.listen('adaptSearchBar', self);
 	
 	Listeners.add(window, 'fullscreen', self);
 	Listeners.add(window, 'beforecustomization', self);
@@ -88,6 +97,7 @@ Modules.LOADMODULE = function() {
 	
 	togglePopups();
 	toggleSlimChrome();
+	toggleAdaptSearchBar();
 };
 
 Modules.UNLOADMODULE = function() {
@@ -97,7 +107,9 @@ Modules.UNLOADMODULE = function() {
 	
 	Prefs.unlisten('slimChrome', self);
 	Prefs.unlisten('autohide', self);
+	Prefs.unlisten('adaptSearchBar', self);
 	
+	Modules.unload('adaptSearchBar');
 	Modules.unload('slimChrome');
 	Modules.unload('popups');
 	
