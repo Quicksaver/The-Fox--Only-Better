@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.1';
+Modules.VERSION = '1.2.2';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -105,7 +105,7 @@ this.skyLights = {
 						}
 					}
 					
-					var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
+					var sscode = '/*Beyond Australis CSS declarations of variable values*/\n';
 					sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 					sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 					sscode += '	window['+objName+'_UUID="'+_UUID+'"] '+this.kLightPrefix+name+':-moz-any(:hover,[active],[alert="on"]) {\n';

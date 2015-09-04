@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.4';
+Modules.VERSION = '2.0.5';
 
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
 
@@ -166,7 +166,7 @@ this.slimStyle = {
 		
 		var navbarMargin = this.AUSTRALIS_BORDER_NAVBAR_MARGIN + (this.AUSTRALIS_BORDER_TOOLBAR_MARGIN *this.numToolbars());
 		
-		var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
+		var sscode = '/*Beyond Australis CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 		sscode += '	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars-before,\n';
@@ -348,7 +348,7 @@ this.slimStyle = {
 			bgGradient = 'transparent, transparent';
 		}
 		
-		var sscode = '/* The Fox, Only Better CSS declarations of variable values */\n';
+		var sscode = '/* Beyond Australis CSS declarations of variable values */\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n';

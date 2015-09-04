@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
@@ -74,7 +74,7 @@ this.LLB = {
 	},
 	
 	resize: function() {
-		var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
+		var sscode = '/*Beyond Australis CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) {\n';

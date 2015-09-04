@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.12';
+Modules.VERSION = '2.0.13';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -464,7 +464,7 @@ this.slimChrome = {
 		if(!this.shouldReMove(this.moveStyle)) { return; }
 		this.lastStyle = this.moveStyle;
 		
-		var sscode = '/*The Fox, Only Better CSS declarations of variable values*/\n';
+		var sscode = '/*Beyond Australis CSS declarations of variable values*/\n';
 		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
 		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(ltr) {\n';

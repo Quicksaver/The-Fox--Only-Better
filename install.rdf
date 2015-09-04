@@ -3,7 +3,7 @@
 	<Description about="urn:mozilla:install-manifest">
 		<em:id>thefoxonlybetter@quicksaver</em:id>
 		
-		<em:name>The Fox, Only Better</em:name>
+		<em:name>Beyond Australis</em:name>
 		<em:version>1.2.3</em:version>
 		
 		<em:creator>Quicksaver</em:creator>
@@ -27,8 +27,8 @@
 		<em:localized>
 			<Description>
 				<em:locale>en-US</em:locale>
-				<em:name>The Fox, Only Better</em:name>
-				<em:description>Australis, the new Firefox theme, made a great browser look awesome. And now it will also feel awesome using it!</em:description>
+				<em:name>Beyond Australis</em:name>
+				<em:description>Australis was the code name for the current Firefox theme, it aimed to make a great browser look awesome. Now you can go one step further and also make it feel awesome to use!</em:description>
 			</Description>
 		</em:localized>
 		<em:localized>
