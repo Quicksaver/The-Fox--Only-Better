@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.8';
+Modules.VERSION = '1.0.9';
 Modules.UTILS = true;
 
 // PrefPanes - handles the preferences tab and all its contents for the add-on
@@ -270,7 +270,8 @@ Modules.LOADMODULE = function() {
 	Prefs.setDefaults({
 		lastPrefPane: '',
 		lastVersionNotify: '0',
-		showTabOnUpdates: true
+		showTabOnUpdates: true,
+		userNoticedTabOnUpdates: false
 	});
 	
 	PrefPanes.init();
