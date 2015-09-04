@@ -55,7 +55,7 @@
 			<vbox id="skyLights-customize"
 				DnDpref="skyLightsPlacements"
 				dependson="pref-skyLights"
-				jump="skyLightsPlacements"
+				jump="skyLightsPlacements,&cat.skyLightsPlacements.label;"
 				helpbox="paneSkyLights-customize-helptext" />
 			<vbox id="paneSkyLights-customize-helptext" collapsed="true">
 				<description>&cat.skyLightsPlacements.tooltip;</description>
