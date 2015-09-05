@@ -1,290 +1,287 @@
 @import url("chrome://thefoxonlybetter-os/skin/svg.css");
 
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-@-moz-document url("chrome://browser/content/browser.xul") {
+
+#theFoxOnlyBetter-slimChrome-slimmer {
+	background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
+	background-clip: padding-box;
+}
+#main-window:not([theFoxOnlyBetter-FF41]) #theFoxOnlyBetter-slimChrome-slimmer {
+	box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
+}
+#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
+	position: relative;
+	z-index: 1;
+	margin-top: -1px;
+}
+
+@media	(-moz-os-version: windows-xp),
+	(-moz-os-version: windows-vista),
+	(-moz-os-version: windows-win7),
+	(-moz-os-version: windows-win8) {
 	
-	#theFoxOnlyBetter-slimChrome-slimmer {
-		background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
-		background-clip: padding-box;
-	}
-	#main-window:not([theFoxOnlyBetter-FF41]) #theFoxOnlyBetter-slimChrome-slimmer {
+	#main-window[theFoxOnlyBetter-FF41] #theFoxOnlyBetter-slimChrome-slimmer {
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
 	}
+	
 	#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
-		position: relative;
-		z-index: 1;
-		margin-top: -1px;
+		border-top: 1px solid hsla(209,67%,12%,0.35);
 	}
-	
-	@media	(-moz-os-version: windows-xp),
-		(-moz-os-version: windows-vista),
-		(-moz-os-version: windows-win7),
-		(-moz-os-version: windows-win8) {
-		
-		#main-window[theFoxOnlyBetter-FF41] #theFoxOnlyBetter-slimChrome-slimmer {
-			box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
-		}
-		
-		#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
-			border-top: 1px solid hsla(209,67%,12%,0.35);
-		}
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container {
-		margin-top: 0;
-		border: 1px solid ThreeDShadow;
-		border-top: none;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
-		-moz-appearance: none;
-		border-style: none;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
-		background-color: -moz-dialog;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
-		background-image: linear-gradient(rgba(253,253,253,0.4) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
-	}
-	
-	#navigator-toolbox > #RSSTICKERToolbar,
-	#navigator-toolbox > #puzzleBars-top-bar {
-		background-image: linear-gradient(rgba(253,253,253,0.4), rgba(255,255,255,0));
-		background-size: auto auto;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container #nav-bar {
-		background-image: none;
-		margin-top: 0;
-		box-shadow: none;
-		/* !important needed for bug 8426282 */
-		border-top: none !important;
-	}
-	
-	@media (-moz-windows-default-theme) {
-		@media	(-moz-os-version: windows-vista),
-			(-moz-os-version: windows-win7) {
-		
-			#theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
-				border-color: #aabccf;
-			}
-			
-			#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
-				background-color: hsl(210,75%,92%);
-			}
-		}
-		
-		@media	(-moz-os-version: windows-win8),
-			(-moz-os-version: windows-win10) {
-		
-			#main-window[theFoxOnlyBetter-FF41] #theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
-				border-color: #c2c2c2;
-			}
-		}
-	}
-	
-	#main-window[theFoxOnlyBetter-FF43] #theFoxOnlyBetter-slimChrome-container:-moz-lwtheme {
-		border-color: rgba(0,0,0,.3);
-	}
-	
-	@media (-moz-windows-compositor) {
-		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-container {
-			background-clip: padding-box;
-		}
-		
-		#theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
-			border-top: none !important;
-		}
-	}
-	
-	@media (-moz-windows-glass) {
-		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-slimmer {
-			border-top-left-radius: 2.5px;
-			border-top-right-radius: 2.5px;
-		}
-		
-		#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-		}
-	}
-	
-	/* mini chrome, the hover style always overrides all of this */
-	
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
-		-moz-border-start: 1px solid ThreeDShadow;
-		margin-left: 3px;
-	}
-	
-	/* these are so the identity box doesn't jump around when going back/forward in the tab history */
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
-		-moz-margin-start: 0;
-	}
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box {
-		padding-left: 3px;
-	}
-	
+}
+
+#theFoxOnlyBetter-slimChrome-container {
+	margin-top: 0;
+	border: 1px solid ThreeDShadow;
+	border-top: none;
+}
+
+#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
+	-moz-appearance: none;
+	border-style: none;
+}
+
+#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-color: -moz-dialog;
+}
+
+#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-image: linear-gradient(rgba(253,253,253,0.4) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
+}
+
+#navigator-toolbox > #RSSTICKERToolbar,
+#navigator-toolbox > #puzzleBars-top-bar {
+	background-image: linear-gradient(rgba(253,253,253,0.4), rgba(255,255,255,0));
+	background-size: auto auto;
+}
+
+#theFoxOnlyBetter-slimChrome-container #nav-bar {
+	background-image: none;
+	margin-top: 0;
+	box-shadow: none;
+	/* !important needed for bug 8426282 */
+	border-top: none !important;
+}
+
+@media (-moz-windows-default-theme) {
 	@media	(-moz-os-version: windows-vista),
 		(-moz-os-version: windows-win7) {
+	
+		#theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
+			border-color: #aabccf;
+		}
 		
-		window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
-			border-top-left-radius: 2px;
-			border-bottom-left-radius: 2px;
-		}
-		window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
-			border-top-right-radius: 2px;
-			border-bottom-right-radius: 2px;
+		#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
+			background-color: hsl(210,75%,92%);
 		}
 	}
 	
-	/* tab drop indicator would be cutoff, see bug 886281 and 936076 */
-	@media (-moz-windows-glass) {
-		#navigator-toolbox[dropIndicatorFix]:not([slimAnimation="hinge"]):not(:-moz-lwtheme) {
-			overflow: visible;
-		}
-		#navigator-toolbox:not([dropIndicatorFix]):not(:-moz-lwtheme) .tab-drop-indicator {
-			visibility: collapse;
+	@media	(-moz-os-version: windows-win8),
+		(-moz-os-version: windows-win10) {
+	
+		#main-window[theFoxOnlyBetter-FF41] #theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
+			border-color: #c2c2c2;
 		}
 	}
-	
-	/* compact style */
-	
-	#navigator-toolbox[slimStyle="compact"] #back-button {
-		border-radius: 0 !important;
-		padding-top: 0 !important;
-		padding-bottom: 0 !important;
+}
+
+#main-window[theFoxOnlyBetter-FF43] #theFoxOnlyBetter-slimChrome-container:-moz-lwtheme {
+	border-color: rgba(0,0,0,.3);
+}
+
+@media (-moz-windows-compositor) {
+	#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-container {
+		background-clip: padding-box;
 	}
 	
-	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-		border-radius: 0 !important;
-		padding: 2px 3px !important;
-		
-		/* needed because FF stylesheets set this width specifically as well */
-		width: 24px !important;
+	#theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
+		border-top: none !important;
+	}
+}
+
+@media (-moz-windows-glass) {
+	#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-slimmer {
+		border-top-left-radius: 2.5px;
+		border-top-right-radius: 2.5px;
 	}
 	
-	/* damn all these box-shadows to the deepest circles of hell!! */
+	#main-window[sizemode=normal] #theFoxOnlyBetter-slimChrome-toolbars #nav-bar {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+}
+
+/* mini chrome, the hover style always overrides all of this */
+
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	-moz-border-start: 1px solid ThreeDShadow;
+	margin-left: 3px;
+}
+
+/* these are so the identity box doesn't jump around when going back/forward in the tab history */
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
+	-moz-margin-start: 0;
+}
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box {
+	padding-left: 3px;
+}
+
+@media	(-moz-os-version: windows-vista),
+	(-moz-os-version: windows-win7) {
+	
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+		border-top-left-radius: 2px;
+		border-bottom-left-radius: 2px;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+		border-top-right-radius: 2px;
+		border-bottom-right-radius: 2px;
+	}
+}
+
+/* tab drop indicator would be cutoff, see bug 886281 and 936076 */
+@media (-moz-windows-glass) {
+	#navigator-toolbox[dropIndicatorFix]:not([slimAnimation="hinge"]):not(:-moz-lwtheme) {
+		overflow: visible;
+	}
+	#navigator-toolbox:not([dropIndicatorFix]):not(:-moz-lwtheme) .tab-drop-indicator {
+		visibility: collapse;
+	}
+}
+
+/* compact style */
+
+#navigator-toolbox[slimStyle="compact"] #back-button {
+	border-radius: 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
+	border-radius: 0 !important;
+	padding: 2px 3px !important;
+	
+	/* needed because FF stylesheets set this width specifically as well */
+	width: 24px !important;
+}
+
+/* damn all these box-shadows to the deepest circles of hell!! */
+#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
+	box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25);
+}
+#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):hover:active > .toolbarbutton-icon,
+#navigator-toolbox[slimStyle="compact"] #back-button[open="true"] > .toolbarbutton-icon {
+	box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25), 0 0.8px 0 0 hsla(210,80%,20%,.1) inset !important;
+}
+@media	(-moz-os-version: windows-xp),
+	(-moz-os-version: windows-vista),
+	(-moz-os-version: windows-win7) {
+		#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
+			box-shadow:	0 0.8px 0 hsla(0,0%,100%,.3) inset,
+					0 0 0 0.8px hsla(0,0%,100%,.3) inset,
+					0 0 0 0.8px hsla(210,54%,20%,.25),
+					0 0.8px 0 hsla(210,54%,20%,.35) !important;
+		}
+		#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):not([open="true"]):not(:active):hover > .toolbarbutton-icon {
+			box-shadow:	0 0.8px 0 hsla(0,0%,100%,.3) inset,
+					0 0 0 0.8px hsla(0,0%,100%,.3) inset,
+					0 0 0 0.8px hsla(210,54%,20%,.3),
+					0 0.8px 0 hsla(210,54%,20%,.4),
+					0 0 4px hsla(210,54%,20%,.2) !important;
+		}
+		#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):hover:active > .toolbarbutton-icon,
+		#navigator-toolbox[slimStyle="compact"] #back-button[open="true"] > .toolbarbutton-icon {
+			box-shadow:	0 0.8px 0.8px hsla(210,54%,20%,.1) inset,
+					0 0 0.8px hsla(210,54%,20%,.2) inset,
+					0 0 0 0.8px hsla(210,54%,20%,.4),
+					0 0.8px 0 hsla(210,54%,20%,.2) !important;
+		}
+		#main-window:not([customizing]) #navigator-toolbox[slimStyle="compact"] #back-button[disabled] > .toolbarbutton-icon {
+			box-shadow: 0 0 0 0.8px hsla(210,54%,20%,.55), 0 0.8px 0 hsla(210,54%,20%,.65) !important;
+		}
+}
+
+@media (-moz-os-version: windows-win8) {
 	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
 		box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25);
 	}
-	#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):hover:active > .toolbarbutton-icon,
-	#navigator-toolbox[slimStyle="compact"] #back-button[open="true"] > .toolbarbutton-icon {
-		box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25), 0 0.8px 0 0 hsla(210,80%,20%,.1) inset !important;
-	}
-	@media	(-moz-os-version: windows-xp),
-		(-moz-os-version: windows-vista),
-		(-moz-os-version: windows-win7) {
-			#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-				box-shadow:	0 0.8px 0 hsla(0,0%,100%,.3) inset,
-						0 0 0 0.8px hsla(0,0%,100%,.3) inset,
-						0 0 0 0.8px hsla(210,54%,20%,.25),
-						0 0.8px 0 hsla(210,54%,20%,.35) !important;
-			}
-			#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):not([open="true"]):not(:active):hover > .toolbarbutton-icon {
-				box-shadow:	0 0.8px 0 hsla(0,0%,100%,.3) inset,
-						0 0 0 0.8px hsla(0,0%,100%,.3) inset,
-						0 0 0 0.8px hsla(210,54%,20%,.3),
-						0 0.8px 0 hsla(210,54%,20%,.4),
-						0 0 4px hsla(210,54%,20%,.2) !important;
-			}
-			#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):hover:active > .toolbarbutton-icon,
-			#navigator-toolbox[slimStyle="compact"] #back-button[open="true"] > .toolbarbutton-icon {
-				box-shadow:	0 0.8px 0.8px hsla(210,54%,20%,.1) inset,
-						0 0 0.8px hsla(210,54%,20%,.2) inset,
-						0 0 0 0.8px hsla(210,54%,20%,.4),
-						0 0.8px 0 hsla(210,54%,20%,.2) !important;
-			}
-			#main-window:not([customizing]) #navigator-toolbox[slimStyle="compact"] #back-button[disabled] > .toolbarbutton-icon {
-				box-shadow: 0 0 0 0.8px hsla(210,54%,20%,.55), 0 0.8px 0 hsla(210,54%,20%,.65) !important;
-			}
-	}
-	
-	@media (-moz-os-version: windows-win8) {
-		#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-			box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25);
-		}
-	}
+}
 
-	@media	(-moz-os-version: windows-xp),
-		(-moz-os-version: windows-vista),
+@media	(-moz-os-version: windows-xp),
+	(-moz-os-version: windows-vista),
+	(-moz-os-version: windows-win7) {
+
+	#navigator-toolbox[slimStyle="compact"] #back-button,
+	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
+		border-radius: 2px 0 0 2px !important;
+	}
+}
+
+#navigator-toolbox[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
+	background-color: transparent !important;
+}
+
+#navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
+	padding-left: 3px !important;
+	
+	/* needed because FF stylesheets set this width specifically as well */
+	width: 25px !important;
+	height: 22px;
+}
+
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
+	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
+	-moz-margin-start: 0;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
+	margin-left: -27px;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
+	/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
+	margin-left: -27.01px;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper > #forward-button:not(:hover) > .toolbarbutton-icon {
+	box-shadow: none;
+	border-top-color: rgba(23, 51, 78, 0.25);
+	border-bottom-color: rgba(23, 51, 78, 0.4);
+	border-right-color: rgba(23, 51, 78, 0.25);
+}
+
+/* appropriating this bit of code to also style the nav-bar in popup windows */
+window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
+window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
+window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
+	padding: 4px 0;
+}
+
+#navigator-toolbox[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
+	padding: 0 3px;
+}
+
+/* australis style */
+
+#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+	border-color: transparent;
+}
+
+#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
+	border-bottom: 1px solid ThreeDShadow;
+}
+
+@media (-moz-windows-default-theme) {
+	@media	(-moz-os-version: windows-vista),
 		(-moz-os-version: windows-win7) {
 	
-		#navigator-toolbox[slimStyle="compact"] #back-button,
-		#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-			border-radius: 2px 0 0 2px !important;
+		#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
+			border-bottom-color: #aaaccf;
 		}
 	}
+}
 
-	#navigator-toolbox[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
-		background-color: transparent !important;
-	}
-	
-	#navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
-		padding-left: 3px !important;
-		
-		/* needed because FF stylesheets set this width specifically as well */
-		width: 25px !important;
-		height: 22px;
-	}
-	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
-		-moz-margin-start: 0;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
-		margin-left: -27px;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
-		/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
-		margin-left: -27.01px;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper > #forward-button:not(:hover) > .toolbarbutton-icon {
-		box-shadow: none;
-		border-top-color: rgba(23, 51, 78, 0.25);
-		border-bottom-color: rgba(23, 51, 78, 0.4);
-		border-right-color: rgba(23, 51, 78, 0.25);
-	}
-	
-	/* appropriating this bit of code to also style the nav-bar in popup windows */
-	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
-	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
-	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
-	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
-	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
-	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
-		padding: 4px 0;
-	}
-	
-	#navigator-toolbox[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
-		padding: 0 3px;
-	}
-	
-	/* australis style */
-	
-	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
-		border-color: transparent;
-	}
-	
-	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
-		border-bottom: 1px solid ThreeDShadow;
-	}
-	
-	@media (-moz-windows-default-theme) {
-		@media	(-moz-os-version: windows-vista),
-			(-moz-os-version: windows-win7) {
-		
-			#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
-				border-bottom-color: #aaaccf;
-			}
-		}
-	}
-	
-	/* animations */
-	
-	#navigator-toolbox:-moz-any([slimAnimation="rollout"],[slimAnimation="slidedown"]) #theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
-		margin-top: -5px;
-	}
-	
+/* animations */
+
+#navigator-toolbox:-moz-any([slimAnimation="rollout"],[slimAnimation="slidedown"]) #theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
+	margin-top: -5px;
 }

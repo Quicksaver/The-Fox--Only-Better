@@ -1,242 +1,239 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-@-moz-document url("chrome://browser/content/browser.xul") {
-	
-	#theFoxOnlyBetter-slimChrome-container {
-		position: fixed;
-		overflow: -moz-hidden-unscrollable;
-		z-index: 400;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini])[noPointerEvents],
-	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini])[noPointerEvents] * {
-		pointer-events: none !important;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
-		opacity: 0;
-	}
-	#theFoxOnlyBetter-slimChrome-container:-moz-any([hover],[mini]) {
-		opacity: 1;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container > [flex] {
-		width: 100%;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-slimmer {
-		-moz-appearance: none;
-		min-height: 0;
-		height: 3px;
-	}
-	
-	/* when the container has no visible toolbars, don't show its borders */
-	#theFoxOnlyBetter-slimChrome-container[numToolbars="0"] {
-		opacity: 0;
-		pointer-events: none !important;
-	}
-	
-	/* mini chrome, the hover style always overrides all of this */
-	
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar):not([showInMiniBar="true"]),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container):not([showInMiniBar="true"]),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons > *:not(#page-report-button):not(#readinglist-addremove-button):not(#reader-mode-button) {
-		visibility: collapse;
-	}
-	
-	/* this needs the important tag */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #omnibar-in-urlbar {
-		visibility: collapse !important;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
-		transition: none;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #back-button + #urlbar-wrapper {
-		-moz-margin-start: 0;
-		clip-path: none;
-	}
-	
-	/* round style */
-	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([mini]),[mini][hover]) {
-		border-radius: 20px 20px 200px 200px;
-	}
-	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([onlyURLBar]),[onlyURLBar][hover]) #theFoxOnlyBetter-slimChrome-toolbars > #nav-bar {
-		padding-left: 13px;
-		padding-right: 13px;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer[collapsed="true"] ~ #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
-		padding-left: 16px;
-		padding-right: 16px;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer:not([collapsed="true"]) ~ #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
-		padding-left: 53px;
-		padding-right: 53px;
-	}
-	
-	/* compact style */
-	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([mini]),[mini][hover]) {
-		border-radius: 0 0 8px 8px;
-	}
-	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
-		padding-left: 3px;
-		padding-right: 3px;
-	}
-	
-	/* Australis style */
-	
-	#theFoxOnlyBetter-slimChrome-toolbars-before,
-	#theFoxOnlyBetter-slimChrome-toolbars-after {
-		position: absolute;
-		z-index: 2;
-		height: 100%;
-		top: 0;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(ltr),
-	#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(rtl) {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars-left");
-		left: -1px;
-	}
-	#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(rtl),
-	#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(ltr) {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars-right");
-		right: -1px;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-toolbars-bottom {
-		position: absolute;
-		height: 0;
-		bottom: 0;
-		z-index: 4;
-		border-bottom: none;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-toolbars {
-		position: relative;
-		z-index: 4;
-	}
-	
-	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar) {
-		margin: 0 -3px;
-	}
-	
-	/* full width style */
-	
-	#navigator-toolbox[slimStyle="full"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
-		border-left: none;
-		border-right: none;
-	}
-	
-	/* common elements to all styles */
-	
-	window[chromehidden~="toolbar"] #navigator-toolbox:not([slimStyle="full"]) #theFoxOnlyBetter-slimChrome-container,
-	#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
-		border-radius: 0 0 4px 4px;
-	}
-	
-	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #urlbar-container {
-		padding-top: 2px;
-		padding-bottom: 2px;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
-		padding: 0 1px;
-	}
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #urlbar-container {
-		padding: 1px 0;
-	}
-	
-	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-before,
-	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-after,
-	#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-bottom,
-	#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-before,
-	#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-after,
-	#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-bottom,
-	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-before,
-	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after,
-	window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-bottom {
-		display: none;
-	}
-	
-	/* animations */
-	
-	#navigator-toolbox:not([slimAnimation="none"]) #theFoxOnlyBetter-slimChrome-container[mini][hover],
-	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
-		transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
-	}
-	
-	#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
-		transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-in 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
-	}
-	
-	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container[in][mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
-		transition: opacity 0.15s ease-out 0s;
-	}
-	
-	#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
-		transition: opacity 0.20s ease-out 0s;
-	}
-	
-	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container[in][mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
-		transition: opacity 0.15s ease-in 0s, margin-top 0.15s linear 0s;
-	}
-	
-	#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
-		transition: opacity 0.15s ease-out 0s, margin-top 0.2s ease-out 0s;
-	}
-	
-	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
-		transition: opacity 0s linear .5s, transform .5s linear 0s;
-		transform: rotateX(-90deg);
-	}
-	
-	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
-	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
-		transition: transform .25s ease-in 0s;
-	}
-	
-	#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container {
-		transform-origin: top;
-	}
-	
-	#navigator-toolbox[slimAnimation="hinge"]  {
-		perspective: 1500px;
-	}
-	
-	/* some widget animations fixes */
-	
-	/* this needs to be on top of our chrome, not below it */
-	#downloads-animation-container,
-	#bookmarked-notification-container,
-	.tab-drop-indicator {
-		z-index: 500;
-	}
-	
-	/* I have no idea why this value works, or why 25% works as the default value for all OS's... but this is required otherwise the drop indicator would be too high up */
-	#theFoxOnlyBetter-slimChrome-container #PlacesToolbarDropIndicatorHolder {
-		top: 60%;
-	}
-	
-	/* fix for https://bugzilla.mozilla.org/show_bug.cgi?id=647540, .chromeclass-location isn't obeyed by itself anymore,
-	   it just assumes that anything that's not #nav-bar is not location */
-	window[chromehidden~="toolbar"]:not([chromehidden~="location"]) #theFoxOnlyBetter-slimChrome-slimmer {
-		display: -moz-box !important;
-	}
 
+#theFoxOnlyBetter-slimChrome-container {
+	position: fixed;
+	overflow: -moz-hidden-unscrollable;
+	z-index: 400;
+}
+
+#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini])[noPointerEvents],
+#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini])[noPointerEvents] * {
+	pointer-events: none !important;
+}
+
+#theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
+	opacity: 0;
+}
+#theFoxOnlyBetter-slimChrome-container:-moz-any([hover],[mini]) {
+	opacity: 1;
+}
+
+#theFoxOnlyBetter-slimChrome-container > [flex] {
+	width: 100%;
+}
+
+#theFoxOnlyBetter-slimChrome-slimmer {
+	-moz-appearance: none;
+	min-height: 0;
+	height: 3px;
+}
+
+/* when the container has no visible toolbars, don't show its borders */
+#theFoxOnlyBetter-slimChrome-container[numToolbars="0"] {
+	opacity: 0;
+	pointer-events: none !important;
+}
+
+/* mini chrome, the hover style always overrides all of this */
+
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar):not([showInMiniBar="true"]),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container):not([showInMiniBar="true"]),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar > :not(#nav-bar-customization-target),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > :not(#urlbar-wrapper),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > :not(#urlbar),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > toolbarbutton,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar > dropmarker,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-icons > *:not(#page-report-button):not(#readinglist-addremove-button):not(#reader-mode-button) {
+	visibility: collapse;
+}
+
+/* this needs the important tag */
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #omnibar-in-urlbar {
+	visibility: collapse !important;
+}
+
+#theFoxOnlyBetter-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
+	transition: none;
+}
+
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #back-button + #urlbar-wrapper {
+	-moz-margin-start: 0;
+	clip-path: none;
+}
+
+/* round style */
+
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([mini]),[mini][hover]) {
+	border-radius: 20px 20px 200px 200px;
+}
+
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([onlyURLBar]),[onlyURLBar][hover]) #theFoxOnlyBetter-slimChrome-toolbars > #nav-bar {
+	padding-left: 13px;
+	padding-right: 13px;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer[collapsed="true"] ~ #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	padding-left: 16px;
+	padding-right: 16px;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-slimmer:not([collapsed="true"]) ~ #theFoxOnlyBetter-slimChrome-container #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	padding-left: 53px;
+	padding-right: 53px;
+}
+
+/* compact style */
+
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([mini]),[mini][hover]) {
+	border-radius: 0 0 8px 8px;
+}
+
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+/* Australis style */
+
+#theFoxOnlyBetter-slimChrome-toolbars-before,
+#theFoxOnlyBetter-slimChrome-toolbars-after {
+	position: absolute;
+	z-index: 2;
+	height: 100%;
+	top: 0;
+}
+
+#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(ltr),
+#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(rtl) {
+	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars-left");
+	left: -1px;
+}
+#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-locale-dir(rtl),
+#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-locale-dir(ltr) {
+	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-toolbars-right");
+	right: -1px;
+}
+
+#theFoxOnlyBetter-slimChrome-toolbars-bottom {
+	position: absolute;
+	height: 0;
+	bottom: 0;
+	z-index: 4;
+	border-bottom: none;
+}
+
+#theFoxOnlyBetter-slimChrome-toolbars {
+	position: relative;
+	z-index: 4;
+}
+
+#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar) {
+	margin: 0 -3px;
+}
+
+/* full width style */
+
+#navigator-toolbox[slimStyle="full"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+	border-left: none;
+	border-right: none;
+}
+
+/* common elements to all styles */
+
+window[chromehidden~="toolbar"] #navigator-toolbox:not([slimStyle="full"]) #theFoxOnlyBetter-slimChrome-container,
+#theFoxOnlyBetter-slimChrome-container[mini]:not([hover]) {
+	border-radius: 0 0 4px 4px;
+}
+
+window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #urlbar-container {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
+	padding: 0 1px;
+}
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #urlbar-container {
+	padding: 1px 0;
+}
+
+#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-before,
+#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-after,
+#navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-bottom,
+#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-before,
+#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-after,
+#theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar] #theFoxOnlyBetter-slimChrome-toolbars-bottom,
+window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-before,
+window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after,
+window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-bottom {
+	display: none;
+}
+
+/* animations */
+
+#navigator-toolbox:not([slimAnimation="none"]) #theFoxOnlyBetter-slimChrome-container[mini][hover],
+#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
+#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
+#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[out][mini]:not([hover]),
+#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
+#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
+	transition: opacity 0.1s ease-out 0s, margin-top 0.1s ease-out 0s, width 0.1s linear 0s;
+}
+
+#navigator-toolbox[slimAnimation="rollout"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
+	transition: opacity 0.3s ease-out 0s, margin-top 0.25s ease-in 0s, width 0.1s linear 0s, border-radius 0s linear 0.3s;
+}
+
+#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container[in][mini]:not([hover]),
+#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
+	transition: opacity 0.15s ease-out 0s;
+}
+
+#navigator-toolbox[slimAnimation="fadein"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
+	transition: opacity 0.20s ease-out 0s;
+}
+
+#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container[in][mini]:not([hover]),
+#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
+	transition: opacity 0.15s ease-in 0s, margin-top 0.15s linear 0s;
+}
+
+#navigator-toolbox[slimAnimation="slidedown"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
+	transition: opacity 0.15s ease-out 0s, margin-top 0.2s ease-out 0s;
+}
+
+#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
+	transition: opacity 0s linear .5s, transform .5s linear 0s;
+	transform: rotateX(-90deg);
+}
+
+#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
+#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini])[hover] {
+	transition: transform .25s ease-in 0s;
+}
+
+#navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container {
+	transform-origin: top;
+}
+
+#navigator-toolbox[slimAnimation="hinge"]  {
+	perspective: 1500px;
+}
+
+/* some widget animations fixes */
+
+/* this needs to be on top of our chrome, not below it */
+#downloads-animation-container,
+#bookmarked-notification-container,
+.tab-drop-indicator {
+	z-index: 500;
+}
+
+/* I have no idea why this value works, or why 25% works as the default value for all OS's... but this is required otherwise the drop indicator would be too high up */
+#theFoxOnlyBetter-slimChrome-container #PlacesToolbarDropIndicatorHolder {
+	top: 60%;
+}
+
+/* fix for https://bugzilla.mozilla.org/show_bug.cgi?id=647540, .chromeclass-location isn't obeyed by itself anymore,
+   it just assumes that anything that's not #nav-bar is not location */
+window[chromehidden~="toolbar"]:not([chromehidden~="location"]) #theFoxOnlyBetter-slimChrome-slimmer {
+	display: -moz-box !important;
 }

@@ -1,157 +1,154 @@
 @import url("chrome://thefoxonlybetter-os/skin/svg.css");
 
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-@-moz-document url("chrome://browser/content/browser.xul") {
-	
-	#theFoxOnlyBetter-slimChrome-container {
-		margin-top: 0;
-		border: 1px solid ThreeDShadow;
-		border-top: none;
-	}
-	
-	#main-window[theFoxOnlyBetter-FF43] #theFoxOnlyBetter-slimChrome-container:-moz-lwtheme {
-		border-color: rgba(0,0,0,.3);
-	}
-	
-	#theFoxOnlyBetter-slimChrome-slimmer {
-		background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.25));
-		box-shadow: 0 1px 0 rgba(255,255,255,.3) inset;
-	}
-	
-	#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
-		position: relative;
-		z-index: 1;
-		margin-top: -1px;
-	}
-	
-	/* extra selectors are for specificity */
-	#navigator-toolbox > #TabsToolbar:not([collapsed="true"]) + toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#toolbar-menubar):not(#TabsToolbar) {
-		border-top: 1px solid hsla(0,0%,0%,.3);
-		background-clip: padding-box;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
-		-moz-appearance: none;
-		border-style: none;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
-		padding-top: 1px;
-		padding-bottom: 1px;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
-		background-color: -moz-dialog;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
-		background-image: linear-gradient(rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
-	}
-	
-	#navigator-toolbox > #RSSTICKERToolbar,
-	#navigator-toolbox > #puzzleBars-top-bar {
-		background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
-		background-size: auto auto;
-	}
-	
-	#theFoxOnlyBetter-slimChrome-container #nav-bar {
-		background-image: none;
-		box-shadow: none;
-		margin-top: 0;
-		padding-top: 2px;
-		padding-bottom: 2px;
-		/* !important needed for bug 1016056 */
-		border-top: none !important;
-	}
-	
-	/* mini chrome, the hover style always overrides all of this */
-	
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
-		-moz-border-start: 1px solid ThreeDShadow;
-		margin-left: 3px;
-	}
-	
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
-		border-top-left-radius: 2px;
-		border-bottom-left-radius: 2px;
-	}
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
-		border-top-right-radius: 2px;
-		border-bottom-right-radius: 2px;
-	}
-	
-	/* these are so the identity box doesn't jump around when going back/forward in the tab history */
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
-		-moz-margin-start: -1px;
-	}
-	
-	/* compact style */
-	
-	#navigator-toolbox[slimStyle="compact"] #back-button {
-		border-radius: 2px 0 0 2px;
-		padding-top: 0;
-		padding-bottom: 0;
-	}
-	
-	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-		border-radius: 2px 0 0 2px;
-		padding: 2px 3px;
-	}
-	#navigator-toolbox[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
-		background-color: transparent;
-	}
-	
-	#navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
-		padding-left: 3px;
-	}
-	
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
-		clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
-		-moz-margin-start: 0;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
-		margin-left: -28px;
-	}
-	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
-		/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
-		margin-left: -28.01px;
-	}
-	
-	/* appropriating this bit of code to also style the nav-bar in popup windows */
-	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
-	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
-	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
-	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button {
-		padding: 0 1px;
-	}
 
-	/* appropriating this bit of code to also style the nav-bar in popup windows */
-	window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
-	#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
-		-moz-margin-start: -2px;
-		-moz-margin-end: 1px;
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-	
-	#navigator-toolbox[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
-		padding: 0 3px;
-	}
-	
-	/* australis style */
-	
-	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
-		border-color: transparent;
-	}
-	
-	#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars {
-		border-bottom: 1px solid ThreeDShadow;
-	}
-	
-	/* animations */
-	
-	#navigator-toolbox:-moz-any([slimAnimation="rollout"],[slimAnimation="slidedown"]) #theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
-		margin-top: -5px;
-	}
+#theFoxOnlyBetter-slimChrome-container {
+	margin-top: 0;
+	border: 1px solid ThreeDShadow;
+	border-top: none;
+}
 
+#main-window[theFoxOnlyBetter-FF43] #theFoxOnlyBetter-slimChrome-container:-moz-lwtheme {
+	border-color: rgba(0,0,0,.3);
+}
+
+#theFoxOnlyBetter-slimChrome-slimmer {
+	background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.25));
+	box-shadow: 0 1px 0 rgba(255,255,255,.3) inset;
+}
+
+#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
+	position: relative;
+	z-index: 1;
+	margin-top: -1px;
+}
+
+/* extra selectors are for specificity */
+#navigator-toolbox > #TabsToolbar:not([collapsed="true"]) + toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#toolbar-menubar):not(#TabsToolbar) {
+	border-top: 1px solid hsla(0,0%,0%,.3);
+	background-clip: padding-box;
+}
+
+#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(:-moz-lwtheme) {
+	-moz-appearance: none;
+	border-style: none;
+}
+
+#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar) {
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-color: -moz-dialog;
+}
+
+#theFoxOnlyBetter-slimChrome-slimmer:not([collapsed]) ~ #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-image: linear-gradient(rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
+}
+
+#navigator-toolbox > #RSSTICKERToolbar,
+#navigator-toolbox > #puzzleBars-top-bar {
+	background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
+	background-size: auto auto;
+}
+
+#theFoxOnlyBetter-slimChrome-container #nav-bar {
+	background-image: none;
+	box-shadow: none;
+	margin-top: 0;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	/* !important needed for bug 1016056 */
+	border-top: none !important;
+}
+
+/* mini chrome, the hover style always overrides all of this */
+
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	-moz-border-start: 1px solid ThreeDShadow;
+	margin-left: 3px;
+}
+
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+
+/* these are so the identity box doesn't jump around when going back/forward in the tab history */
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
+	-moz-margin-start: -1px;
+}
+
+/* compact style */
+
+#navigator-toolbox[slimStyle="compact"] #back-button {
+	border-radius: 2px 0 0 2px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
+	border-radius: 2px 0 0 2px;
+	padding: 2px 3px;
+}
+#navigator-toolbox[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
+	background-color: transparent;
+}
+
+#navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
+	padding-left: 3px;
+}
+
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
+	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
+	-moz-margin-start: 0;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
+	margin-left: -28px;
+}
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
+	/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
+	margin-left: -28.01px;
+}
+
+/* appropriating this bit of code to also style the nav-bar in popup windows */
+window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
+window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button {
+	padding: 0 1px;
+}
+
+/* appropriating this bit of code to also style the nav-bar in popup windows */
+window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
+	-moz-margin-start: -2px;
+	-moz-margin-end: 1px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+#navigator-toolbox[slimStyle="compact"] #nav-bar #PanelUI-menu-button {
+	padding: 0 3px;
+}
+
+/* australis style */
+
+#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+	border-color: transparent;
+}
+
+#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars {
+	border-bottom: 1px solid ThreeDShadow;
+}
+
+/* animations */
+
+#navigator-toolbox:-moz-any([slimAnimation="rollout"],[slimAnimation="slidedown"]) #theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
+	margin-top: -5px;
 }
