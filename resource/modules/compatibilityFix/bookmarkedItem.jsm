@@ -1,4 +1,4 @@
-Modules.VERSION = '1.4.0';
+Modules.VERSION = '1.4.1';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -139,6 +139,7 @@ this.bookmarkedItem = {
 		if(initialize) {
 			props.label = Strings.get('skyLights', 'bookmarkedItemLabel');
 			props.description = Strings.get('skyLights', 'bookmarkedItemDescription');
+			props.speed = 250;
 			
 			// adapted from BookmarkingUI.onCommand() - http://mxr.mozilla.org/mozilla-central/source/browser/base/content/browser-places.js#1630
 			props.action = (e) => {
@@ -151,6 +152,9 @@ this.bookmarkedItem = {
 				if(!BookmarkingUI._pendingStmt) {
 					if(isBookmarked) {
 						this._anchor = bookmarkedItem.light;
+					} else {
+						// blink the light three times to show that the page was bookmarked
+						skyLights.update('bookmarkedItem', { alert: 2 });
 					}
 					PlacesCommandHook.bookmarkCurrentPage(isBookmarked);
 				}
@@ -201,6 +205,8 @@ Modules.LOADMODULE = function() {
 		
 		// when the anchor is the sky light, just go right ahead and show the panel
 		if(bookmarkedItem.initialized && aAnchorElement == bookmarkedItem.light) {
+			skyLights.update('bookmarkedItem', { active: true });
+			Listeners.add(bookmarkedItem.editPanel, 'popuphiding', function() { skyLights.update('bookmarkedItem', { active: false }); }, false, true);
 			return true;
 		}
 		

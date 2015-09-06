@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.2';
+Modules.VERSION = '1.2.3';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -69,6 +69,7 @@ this.skyLights = {
 			setAttribute(light, 'class', 'skyLight');
 			setAttribute(light, 'context', 'toolbar-context-menu');
 			
+			light._speed = 500;
 			light._action = null;
 			Listeners.add(light, 'click', this);
 			
@@ -108,7 +109,7 @@ this.skyLights = {
 					var sscode = '/*Beyond Australis CSS declarations of variable values*/\n';
 					sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 					sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-					sscode += '	window['+objName+'_UUID="'+_UUID+'"] '+this.kLightPrefix+name+':-moz-any(:hover,[active],[alert="on"]) {\n';
+					sscode += '	window['+objName+'_UUID="'+_UUID+'"] '+this.kLightPrefix+name+':-moz-any(:hover:not([alert="off"]),[active],[alert="on"]) {\n';
 					
 					if(isTransparent) {
 						sscode += '	box-shadow: rgba(0,0,0,0.2) 0 1px 2px;\n';
@@ -145,6 +146,12 @@ this.skyLights = {
 					toggleAttribute(light, 'active', props[p]);
 					break;
 				
+				// speed is the blinking speed in ms, corresponding to the duration of each phase (on and off), for when the alert state of the light is active,
+				// this defaults to 500ms if never set and the alert property is set
+				case 'speed':
+					light._speed = props[p];
+					break;
+					
 				// alert will blink the light until the user hovers it with the mouse
 				case 'alert':
 					if(light._alert) {
@@ -157,12 +164,34 @@ this.skyLights = {
 							Listeners.remove(this, 'mouseover', this._alert);
 							delete this._alert;
 							removeAttribute(this, 'alert');
+							removeAttribute(this, 'blinking');
 						};
 						
-						Listeners.add(light, 'mouseover', light._alert);
+						if(props[p] === true) {
+							light._blink = null;
+							Listeners.add(light, 'mouseover', light._alert);
+						} else {
+							light._blink = props[p];
+						}
+						
 						Timers.init('skyLightsAlert-'+name, function() {
-							setAttribute(light, 'alert', (light.getAttribute('alert') == 'on') ? 'off' : 'on');
-						}, 500, 'slack');
+							let phase = light.getAttribute('alert') == 'on' ? 'off' : 'on';
+							let blinking = light._blink !== null;
+							
+							if(blinking && phase == 'on') {
+								if(light._blink <= 0 && light._alert) {
+									light._alert();
+									return;
+								}
+								light._blink--;
+							}
+							
+							// this is so the last blink out fades the light immediately when the mouse isn't over it,
+							// other wise you could see its opacity change as an actual extra "phase" in the blinking
+							toggleAttribute(light, 'blinking', blinking && (light._blink > 0 || phase == 'off'));
+							
+							setAttribute(light, 'alert', phase);
+						}, light._speed, 'slack');
 					}
 					break;
 				

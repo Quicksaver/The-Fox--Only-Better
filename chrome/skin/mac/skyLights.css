@@ -10,7 +10,7 @@
 	border-bottom-color: hsla(0,0%,70%,.4);
 }
 
-#theFoxOnlyBetter-skyLights-container .skyLight[transparent]:-moz-any(:hover,[active],[alert="on"]):-moz-lwtheme {
+#theFoxOnlyBetter-skyLights-container .skyLight[transparent]:-moz-any(:hover:not([alert="off"]),[active],[alert="on"]):-moz-lwtheme {
 	border-bottom-color: hsla(0,0%,60%,.4);
 }
 

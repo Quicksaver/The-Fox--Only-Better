@@ -41,7 +41,7 @@
 	background-image: linear-gradient(165deg, rgba(255,255,255,0.4) 2px, rgba(35,35,35,0));
 }
 
-#theFoxOnlyBetter-skyLights-container .skyLight:not(:hover):not([active]):not([alert]) {
+#theFoxOnlyBetter-skyLights-container .skyLight:not(:hover):not([active]):-moz-any(:not([alert]),[alert=off][blinking]) {
 	opacity: 0.75;
 }
 
@@ -49,7 +49,7 @@
 	cursor: pointer;
 }
 
-#theFoxOnlyBetter-skyLights-container .skyLight:not([transparent]):-moz-any(:hover,[active],[alert="on"]) {
+#theFoxOnlyBetter-skyLights-container .skyLight:not([transparent]):-moz-any(:hover:not([alert="off"]),[active],[alert="on"]) {
 	border-top-color: ThreeDLightShadow;
 	border-left-color: ButtonHighlight;
 	border-right-color: ThreeDShadow;
