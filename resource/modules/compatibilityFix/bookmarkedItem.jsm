@@ -1,4 +1,4 @@
-Modules.VERSION = '1.4.1';
+Modules.VERSION = '1.4.2';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -8,10 +8,15 @@ this.bookmarkedItem = {
 	initialized: false,
 	_anchor: false,
 	
-	get broadcaster() { return $('bookmarkThisPageBroadcaster'); },
+	get button() { return BookmarkingUI.button; },
+	get broadcaster() {
+		if(Services.vc.compare(Services.appinfo.version, '41.0a1') < 0) {
+			return this.button;
+		}
+		return BookmarkingUI.broadcaster;
+	},
 	get editPanel() { return $('editBookmarkPanel'); },
 	get key() { return $('addBookmarkAsKb'); },
-	get button() { return CustomizableUI.getWidget('bookmarks-menu-button').forWindow(window).node; },
 	get light() { return skyLights.get('bookmarkedItem'); },
 	
 	handleEvent: function(e) {
