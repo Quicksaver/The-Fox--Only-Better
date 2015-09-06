@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.1';
+Modules.VERSION = '2.0.2';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
@@ -44,8 +44,8 @@ this.LLB = {
 	
 	attrWatcher: function() {
 		if(!Prefs.includeNavBar) { return; }
-		if(typeof(slimChrome) == 'undefined') { return; }
-		if(typeof(popups) != 'undefined' && popup.blocked) { return; }
+		if(!self.slimChrome) { return; }
+		if(self.popups && popups.blocked) { return; }
 		
 		// show the link hover state immediately
 		if(gURLBar.getAttribute('overlinkstate') == 'showing') {
