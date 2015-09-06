@@ -1,6 +1,5 @@
-Modules.VERSION = '2.1.2';
+Modules.VERSION = '2.1.3';
 
-this.__defineGetter__('PopupNotifications', function() { return window.PopupNotifications; });
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
 this.__defineGetter__('gIdentityBox', function() { return $('identity-box'); });
 this.__defineGetter__('gIdentityPopup', function() { return $('identity-popup'); });
@@ -35,6 +34,14 @@ this.identityBox = {
 			
 			case 'UnloadingSkyLights':
 				this.deinit();
+				break;
+			
+			case 'LoadedSlimChromePopups':
+				this.popupInit();
+				break;
+			
+			case 'UnloadingSlimChromePopups':
+				this.popupDeinit();
 				break;
 		}
 	},
@@ -108,6 +115,18 @@ this.identityBox = {
 		this.remove();
 	},
 	
+	popupInit: function() {
+		popups.mini.add('identity-popup');
+		
+		Listeners.add(gIdentityPopup, 'AskingForNodeOwner', this);
+	},
+	
+	popupDeinit: function() {
+		popups.mini.delete('identity-popup');
+		
+		Listeners.remove(gIdentityPopup, 'AskingForNodeOwner', this);
+	},
+	
 	update: function(initialize) {
 		// default transparent state, for modes:
 		//	gIdentityHandler.IDENTITY_MODE_UNKNOWN
@@ -175,7 +194,8 @@ this.identityBox = {
 	},
 	
 	action: function(e) {
-		var mixedBlocked = PopupNotifications.getNotification('mixed-content-blocked');
+		// Only need to call _showPanel if the PopupNotifications object for this window has already been initialized (i.e. its getter no longer exists)
+		let mixedBlocked = !Object.getOwnPropertyDescriptor(window, "PopupNotifications").get && window.PopupNotifications.getNotification('mixed-content-blocked');
 		if(mixedBlocked) {
 			PopupNotifications._showPanel([mixedBlocked], skyLights.get('identityBox'));
 			skyLights.update('identityBox', { active: true });
@@ -193,19 +213,29 @@ this.identityBox = {
 };
 
 Modules.LOADMODULE = function() {
-	Listeners.add(gIdentityPopup, 'AskingForNodeOwner', identityBox);
 	Listeners.add(window, 'LoadedSkyLights', identityBox);
 	Listeners.add(window, 'UnloadingSkyLights', identityBox);
+	Listeners.add(window, 'LoadedSlimChromePopups', identityBox);
+	Listeners.add(window, 'UnloadingSlimChromePopups', identityBox);
 	
 	if(self.skyLights) {
 		identityBox.init();
 	}
+	
+	if(self.popups) {
+		identityBox.popupInit();
+	}
 };
 
 Modules.UNLOADMODULE = function() {
-	Listeners.remove(gIdentityPopup, 'AskingForNodeOwner', identityBox);
 	Listeners.remove(window, 'LoadedSkyLights', identityBox);
 	Listeners.remove(window, 'UnloadingSkyLights', identityBox);
+	Listeners.remove(window, 'LoadedSlimChromePopups', identityBox);
+	Listeners.remove(window, 'UnloadingSlimChromePopups', identityBox);
 	
 	identityBox.deinit();
+	
+	if(self.popups) {
+		identityBox.popupDeinit();
+	}
 };

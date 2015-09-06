@@ -1,10 +1,11 @@
-Modules.VERSION = '1.0.18';
+Modules.VERSION = '1.0.19';
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
 	Modules.load('compatibilityFix/bookmarkedItem');
 	Modules.load('compatibilityFix/focusSearch');
 	Modules.load('compatibilityFix/identityBox');
+	Modules.load('compatibilityFix/popupNotifications');
 	Modules.load('compatibilityFix/devEdition');
 	
 	AddonManager.getAddonByID('treestyletab@piro.sakura.ne.jp', function(addon) {
@@ -51,6 +52,7 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/bookmarkedItem');
 	Modules.unload('compatibilityFix/focusSearch');
 	Modules.unload('compatibilityFix/identityBox');
+	Modules.unload('compatibilityFix/popupNotifications');
 	Modules.unload('compatibilityFix/devEdition');
 	Modules.unload('compatibilityFix/TreeStyleTab');
 	Modules.unload('compatibilityFix/omnibar');

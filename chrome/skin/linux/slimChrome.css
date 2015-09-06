@@ -152,3 +152,9 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 #navigator-toolbox:-moz-any([slimAnimation="rollout"],[slimAnimation="slidedown"]) #theFoxOnlyBetter-slimChrome-container:not([hover]):not([mini]) {
 	margin-top: -5px;
 }
+
+/* hide the bookmarks button dropmarker when it's in the mini bar */
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button:hover > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button[open] > .toolbarbutton-icon {
+	border-color: rgb(154,154,154);
+}

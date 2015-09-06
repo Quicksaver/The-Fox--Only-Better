@@ -237,3 +237,8 @@ window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-bottom {
 window[chromehidden~="toolbar"]:not([chromehidden~="location"]) #theFoxOnlyBetter-slimChrome-slimmer {
 	display: -moz-box !important;
 }
+
+/* hide the bookmarks button dropmarker when it's in the mini bar */
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button dropmarker {
+	visibility: collapse;
+}

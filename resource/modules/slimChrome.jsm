@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.13';
+Modules.VERSION = '2.0.14';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -693,7 +693,7 @@ this.slimChrome = {
 	},
 	
 	focusPasswords: function() {
-		if(Prefs.includeNavBar && (typeof(popups) == 'undefined' || !popups.blocked)) {
+		if(Prefs.includeNavBar && (!self.popups || !popups.blocked)) {
 			let show = gBrowser.mCurrentBrowser._showMiniBar && this.miniOnPinnedTabs();
 			this.setMini(show);
 			return show;
@@ -802,7 +802,7 @@ this.slimChrome = {
 				&& this.tabLastHost != this.currentHost // the webhost in the current tab has changed
 				&& this.lastHost != this.currentHost) // we shouldn't show the mini bar when switching between tabs of the same host
 			|| (e && Prefs.miniOnTabSelect) ) // or when supposed to show on every tab select (and this is actually a TabSelect event)
-		&& (typeof(popups) == 'undefined' || !popups.blocked) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
+		&& (!self.popups || !popups.blocked) // mini is already shown if a popup is blocking it open; we shouldn't close it here in a bit either
 		&& !trueAttribute(this.container, 'hover') // also no point in showing mini if chrome is already shown
 		&& this.miniOnPinnedTabs() // and if it's not a pinned tab
 		&& window.XULBrowserWindow.inContentWhitelist.indexOf(this.currentSpec) == -1 // and if the current address is not whitelisted
@@ -953,6 +953,18 @@ this.slimChrome = {
 		setAttribute(gNavToolbox, 'slimAnimation', this.slimAnimation);
 	},
 	
+	quickShowMini: function() {
+		// disable the animation temporarily, so that the mini bar appears immediately
+		if(!trueAttribute(this.container, 'mini')) {
+			setAttribute(gNavToolbox, 'slimAnimation', 'none');
+			Timers.init('quickShowMini', () => {
+				this.animation();
+			}, 0);
+		}
+		
+		this.setMini(true);
+	},
+	
 	// make sure the currently focused element stays focused after initializing
 	_focusedElement: null,
 	refocusElement: function() {
@@ -1096,6 +1108,7 @@ this.slimChrome = {
 		Timers.cancel('setHover');
 		Timers.cancel('setMini');
 		Timers.cancel('onlyURLBar');
+		Timers.cancel('quickShowMini');
 		Timers.cancel('contentAreaMouseMoved');
 		Timers.cancel('delayMoveSlimChrome');
 		Timers.cancel('ensureSlimChromeFinishedWidth');

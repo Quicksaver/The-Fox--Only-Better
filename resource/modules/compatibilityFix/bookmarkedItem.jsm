@@ -1,4 +1,4 @@
-Modules.VERSION = '1.3.1';
+Modules.VERSION = '1.4.0';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -20,29 +20,13 @@ this.bookmarkedItem = {
 				if(e.target == this.editPanel) {
 					Listeners.remove(window, 'popupshowing', this);
 					Listeners.add(e.target, 'AskingForNodeOwner', this);
-					Listeners.add(e.target, 'ShouldPanelOpenFullChrome', this, true);
 				}
 				break;
 			
 			case 'AskingForNodeOwner':
-				if(e.target.anchorNode != this.light) {
+				if(!this.initialized || e.target.anchorNode != this.light) {
 					e.detail = 'bookmarks-menu-button';
 					e.stopPropagation();
-				}
-				break;
-			
-			// make sure slimChrome knows it's supposed to keep the mini open for this panel
-			case 'ShouldPanelOpenFullChrome':
-				Listeners.remove(slimChrome.container, 'willSetMiniChrome', this);
-				e.preventDefault();
-				e.stopPropagation();
-				break;
-			
-			case 'willSetMiniChrome':
-				if(!e.detail) {
-					Timers.init('bookmarkedItemWillSetMiniChrome', function() {
-						slimChrome.setMini(true);
-					}, 0);
 				}
 				break;
 			
@@ -52,6 +36,14 @@ this.bookmarkedItem = {
 			
 			case 'UnloadingSkyLights':
 				this.deinit();
+				break;
+			
+			case 'LoadedSlimChromePopups':
+				this.popupInit();
+				break;
+			
+			case 'UnloadingSlimChromePopups':
+				this.popupDeinit();
 				break;
 			
 			// this is the Ctrl+D handler, we need to choose the best place where to open the panel in this case
@@ -83,8 +75,6 @@ this.bookmarkedItem = {
 		if(this.initialized) { return; }
 		this.initialized = true;
 		
-		setAttribute(this.button, 'showInMiniBar', 'true');
-		
 		setAttribute(this.key, 'originalcommand', this.key.getAttribute('command'));
 		removeAttribute(this.key, 'command');
 		setAttribute(this.key, 'oncommand', ';'); // the command event won't fire if there isn't "something" to "command"
@@ -107,12 +97,33 @@ this.bookmarkedItem = {
 		removeAttribute(this.key, 'oncommand');
 		Listeners.remove(this.key, 'command', this);
 		
-		removeAttribute(this.button, 'showInMiniBar');
-		
 		this.remove();
 		
 		Watchers.removeAttributeWatcher(this.broadcaster, 'starred', this, false, false);
 		Watchers.removeAttributeWatcher(this.broadcaster, 'buttontooltiptext', this, false, false);
+	},
+	
+	popupInit: function() {
+		// this shouldn't depend on the Sky Light being initialized
+		setAttribute(this.button, 'showInMiniBar', 'true');
+		
+		popups.mini.add('editBookmarkPanel');
+		
+		// the editBookmarkPanel is only created when first called
+		if(bookmarkedItem.editPanel) {
+			Listeners.add(this.editPanel, 'AskingForNodeOwner', this);
+		} else {
+			Listeners.add(window, 'popupshowing', this);
+		}
+	},
+	
+	popupDeinit: function() {
+		removeAttribute(this.button, 'showInMiniBar');
+		
+		popups.mini.delete('editBookmarkPanel');
+		
+		Listeners.remove(this.editPanel, 'AskingForNodeOwner', this);
+		Listeners.remove(window, 'popupshowing', this);
 	},
 	
 	update: function(initialize) {
@@ -155,14 +166,6 @@ this.bookmarkedItem = {
 };
 
 Modules.LOADMODULE = function() {
-	// the editBookmarkPanel is only created when first called
-	if(bookmarkedItem.editPanel) {
-		Listeners.add(bookmarkedItem.editPanel, 'AskingForNodeOwner', bookmarkedItem);
-		Listeners.add(bookmarkedItem.editPanel, 'ShouldPanelOpenFullChrome', bookmarkedItem, true);
-	} else {
-		Listeners.add(window, 'popupshowing', bookmarkedItem);
-	}
-	
 	Piggyback.add('bookmarkedItem', BookmarkingUI, '_showBookmarkedNotification', function() {
 		// the chrome should already be opened for this (it's a click on the button), so we don't need to delay or pause this notification,
 		// we only need to make sure the chrome doesn't hide until the animation is finished
@@ -205,31 +208,26 @@ Modules.LOADMODULE = function() {
 		let anchor = $("page-proxy-favicon");
 		if(aAnchorElement != anchor) { anchor = null; }
 		
-		// in case the panel will be attached to the star button, check to see if it's placed in our toolbars
+		// in case the panel will be attached to the star button or the identity box, check to see if it's placed in our toolbars
 		if(isAncestor(aAnchorElement, slimChrome.container)) {
 			// if we're anchoring to the button, see if we should show the mini bar instead of the full chrome
-			if(!anchor
-			&& Prefs.includeNavBar && isAncestor(button, gNavBar)
+			if(Prefs.includeNavBar
+			&& (anchor || isAncestor(button, gNavBar))
 			&& !trueAttribute(slimChrome.container, 'hover') && !slimChrome.container.hovers) {
-				// when the mini bar is already shown, just go ahead and open the panel
-				if(trueAttribute(slimChrome.container, 'mini')) {
-					// sometimes focusPasswords() is called between this step and the actual popupshowing, which hides the mini bar before the panel can block it,
-					// so we make sure the mini bar stays open in this case
-					Listeners.add(slimChrome.container, 'willSetMiniChrome', bookmarkedItem);
-					
-					return true;
+				// from this method to the actual showing of the panel, the mini bar is sometimes hidden by focusPasswords(),
+				// causing it to blink when opened again with the quickShowMini method from either here or the popups object
+				// (because of the keypresses in content? or maybe it's the rest of the StarUI handlers themselves doing it? haven't investigated this)
+				// at this point we're sure the panel will open, so we set this here to make sure focusPasswords() doesn't hide the mini bar
+				if(self.popups) {
+					popups.blocked = true;
 				}
 				
-				// it's not open yet, so open it now
-				slimChrome.setMini(true);
+				// the mini bar is not shown yet, so show it now
+				if(!trueAttribute(slimChrome.container, 'mini')) {
+					slimChrome.quickShowMini();
+				}
 				
-				// wait for the mini bar to be fully shown before opening the panel
-				Timers.init('_doShowEditBookmarkPanel', () => {
-					// get the anchor reference again, in case the previous node was lost
-					this._doShowEditBookmarkPanel(aItemId, anchor || BookmarkingUI.anchor, aPosition);
-				}, Prefs.slimAnimation == 'hinge' ? 300 : 200);
-				
-				return false;
+				return true;
 			}
 		
 			if(!trueAttribute(slimChrome.container, 'fullWidth')) {
@@ -256,9 +254,15 @@ Modules.LOADMODULE = function() {
 	
 	Listeners.add(window, 'LoadedSkyLights', bookmarkedItem);
 	Listeners.add(window, 'UnloadingSkyLights', bookmarkedItem);
+	Listeners.add(window, 'LoadedSlimChromePopups', bookmarkedItem);
+	Listeners.add(window, 'UnloadingSlimChromePopups', bookmarkedItem);
 	
 	if(self.skyLights) {
 		bookmarkedItem.init();
+	}
+	
+	if(self.popups) {
+		bookmarkedItem.popupInit();
 	}
 };
 
@@ -269,12 +273,14 @@ Modules.UNLOADMODULE = function() {
 	Piggyback.revert('bookmarkedItem', BookmarkingUI, '_showBookmarkedNotification');
 	Piggyback.revert('bookmarkedItem', StarUI, '_doShowEditBookmarkPanel');
 	
-	Listeners.remove(bookmarkedItem.editPanel, 'AskingForNodeOwner', bookmarkedItem);
-	Listeners.remove(bookmarkedItem.editPanel, 'ShouldPanelOpenFullChrome', bookmarkedItem, true);
-	Listeners.remove(self.slimChrome && slimChrome.container, 'willSetMiniChrome', bookmarkedItem);
-	Listeners.remove(window, 'popupshowing', bookmarkedItem);
 	Listeners.remove(window, 'LoadedSkyLights', bookmarkedItem);
 	Listeners.remove(window, 'UnloadingSkyLights', bookmarkedItem);
+	Listeners.remove(window, 'LoadedSlimChromePopups', bookmarkedItem);
+	Listeners.remove(window, 'UnloadingSlimChromePopups', bookmarkedItem);
 	
 	bookmarkedItem.deinit();
+	
+	if(self.popups) {
+		bookmarkedItem.popupDeinit();
+	}
 };

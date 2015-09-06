@@ -1,4 +1,4 @@
-Modules.VERSION = '3.0.2';
+Modules.VERSION = '3.0.3';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -28,16 +28,11 @@ this.holdPopupAutoCompleteRichResult = function(e) {
 	e.stopPropagation();
 };
 
-this.holdNotificationPopup = function(e) {
-	if(typeof(slimChrome) != 'undefined' && isAncestor(e.target.anchorNode, slimChrome.container)) {
-		e.detail = 'notification-popup-box';
-		e.stopPropagation();
-	}
-};
-
 // Keep chrome visible when opening menus within it
 this.popups = {
-	block: new Set(['identity-popup', 'notification-popup']),
+	// set of popup ids that are ok to be shown with only the mini bar
+	mini: new Set(),
+	
 	blocked: false,
 	held: new Set(),
 	
@@ -116,11 +111,12 @@ this.popups = {
 					}
 					
 					// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
-					if(Prefs.includeNavBar
-					&& trueAttribute(slimChrome.container, 'mini')
-					&& slimChrome.container.hovers == 0
-					&& (this.block.has(target.id) || !dispatch(target, { type: 'ShouldPanelOpenFullChrome' }))) {
-						slimChrome.setMini(true);
+					if(Prefs.includeNavBar && !slimChrome.container.hovers && this.mini.has(target.id)) {
+						// if the mini bar isn't show yet, we need to show it immediately, so popups anchored to it don't move around with it,
+						// otherwise it would look weird and the panels would always end up a bit off from their supposed anchor;
+						// this still causes the panel to sort of jump a bit most times, the only alternative is to try to open the panel only after the
+						// mini bar has actually been shown
+						slimChrome.quickShowMini();
 						this.blocked = true;
 					}
 					else {
@@ -132,7 +128,7 @@ this.popups = {
 						slimChrome.setHover(true, true);
 					}
 					
-					var selfRemover = (ee) => {
+					let selfRemover = (ee) => {
 						// don't trigger for submenus
 						if(ee.originalTarget == e.originalTarget) {
 							Listeners.remove(target, 'popuphidden', selfRemover);
@@ -141,8 +137,7 @@ this.popups = {
 							hideIt(target, true);
 							
 							if(typeof(slimChrome) != 'undefined') {
-								if(trueAttribute(slimChrome.container, 'mini')
-								&& (this.block.has(target.id) || !dispatch(target, { type: 'ShouldPanelOpenFullChrome' }))) {
+								if(!slimChrome.container.hovers && this.mini.has(target.id)) {
 									if(this.blocked) {
 										slimChrome.hideMiniInABit();
 										this.blocked = false;
@@ -211,10 +206,14 @@ this.popups = {
 		Listeners.add(window, 'popupshown', this);
 		Listeners.add(slimChrome.container, 'willSetMiniChrome', this);
 		Listeners.add(slimChrome.container, 'FinishedSlimChromeWidth', this);
+		
+		dispatch(slimChrome.container, { type: 'LoadedSlimChromePopups', cancelable: false });
 	},
 	
 	deinit: function() {
 		Timers.cancel('ensureHoldPopupShows');
+		
+		dispatch(slimChrome.container, { type: 'UnloadingSlimChromePopups', cancelable: false });
 		
 		Listeners.remove(window, 'popupshown', this);
 		Listeners.remove(slimChrome.container, 'willSetMiniChrome', this);
@@ -227,7 +226,7 @@ Modules.LOADMODULE = function() {
 	Listeners.add(window, 'UnloadingSlimChrome', popups);
 	
 	// in case slimChrome loads before popups
-	if(typeof(slimChrome) != 'undefined' && slimChrome.container) {
+	if(self.slimChrome && slimChrome.container) {
 		popups.init();
 	}
 	
@@ -236,7 +235,6 @@ Modules.LOADMODULE = function() {
 	Listeners.add($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
 	Listeners.add($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
 	Listeners.add($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
-	Listeners.add($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
 };
 
 Modules.UNLOADMODULE = function() {
@@ -244,12 +242,11 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove($('widget-overflow'), 'AskingForNodeOwner', holdNavBarOverflow);
 	Listeners.remove($('PopupAutoComplete'), 'AskingForNodeOwner', holdPopupAutoComplete);
 	Listeners.remove($('PopupAutoCompleteRichResult'), 'AskingForNodeOwner', holdPopupAutoCompleteRichResult);
-	Listeners.remove($('notification-popup'), 'AskingForNodeOwner', holdNotificationPopup);
 	
 	Listeners.remove(window, 'LoadedSlimChrome', popups);
 	Listeners.remove(window, 'UnloadingSlimChrome', popups);
 	
-	if(typeof(slimChrome) != 'undefined' && slimChrome.container) {
+	if(self.slimChrome && slimChrome.container) {
 		popups.deinit();
 	}
 };
