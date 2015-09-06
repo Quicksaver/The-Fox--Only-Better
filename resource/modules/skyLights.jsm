@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.3';
+Modules.VERSION = '1.2.4';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -109,7 +109,7 @@ this.skyLights = {
 					var sscode = '/*Beyond Australis CSS declarations of variable values*/\n';
 					sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
 					sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-					sscode += '	window['+objName+'_UUID="'+_UUID+'"] '+this.kLightPrefix+name+':-moz-any(:hover:not([alert="off"]),[active],[alert="on"]) {\n';
+					sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+this.kLightPrefix+name+':-moz-any(:hover:not([alert="off"]),[active],[alert="on"]) {\n';
 					
 					if(isTransparent) {
 						sscode += '	box-shadow: rgba(0,0,0,0.2) 0 1px 2px;\n';
