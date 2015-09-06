@@ -1,4 +1,4 @@
-Modules.VERSION = '3.0.3';
+Modules.VERSION = '3.0.4';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -111,7 +111,11 @@ this.popups = {
 					}
 					
 					// if opening a panel from the urlbar, we should keep the mini state, instead of expanding to full chrome
-					if(Prefs.includeNavBar && !slimChrome.container.hovers && this.mini.has(target.id)) {
+					if(Prefs.includeNavBar
+					&& !slimChrome.container.hovers
+					&& 	(this.mini.has(target.id) // this popup is whitelisted to block the mini bar
+						|| (!e.target.anchorNode && trigger && trueAttribute(slimChrome.container, 'mini'))) // context menu likely called from the mini bar
+					) {
 						// if the mini bar isn't show yet, we need to show it immediately, so popups anchored to it don't move around with it,
 						// otherwise it would look weird and the panels would always end up a bit off from their supposed anchor;
 						// this still causes the panel to sort of jump a bit most times, the only alternative is to try to open the panel only after the
@@ -137,14 +141,11 @@ this.popups = {
 							hideIt(target, true);
 							
 							if(typeof(slimChrome) != 'undefined') {
-								if(!slimChrome.container.hovers && this.mini.has(target.id)) {
-									if(this.blocked) {
-										slimChrome.hideMiniInABit();
-										this.blocked = false;
-									}
-								} else {
-									slimChrome.setHover(false);
+								if(this.blocked) {
+									slimChrome.hideMiniInABit();
+									this.blocked = false;
 								}
+								slimChrome.setHover(false);
 							}
 							
 							aSync(() => {
