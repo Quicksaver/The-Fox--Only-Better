@@ -1,4 +1,4 @@
-Modules.VERSION = '3.0.4';
+Modules.VERSION = '3.0.5';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -125,7 +125,7 @@ this.popups = {
 					}
 					else {
 						if(!trueAttribute(slimChrome.container, 'fullWidth')) {
-							hideIt(target);
+							target.collapsed = true;
 							Timers.init('ensureHoldPopupShows', () => { this.finishedWidth(); }, 200);
 						}
 						
@@ -138,7 +138,7 @@ this.popups = {
 							Listeners.remove(target, 'popuphidden', selfRemover);
 							
 							// making sure we don't collapse it permanently
-							hideIt(target, true);
+							target.collapsed = false;
 							
 							if(typeof(slimChrome) != 'undefined') {
 								if(this.blocked) {
@@ -190,7 +190,7 @@ this.popups = {
 				// obviously we won't need to move it if it isn't open
 				if(popup.open || popup.state == 'open') {
 					popup.moveTo(-1,-1);
-					hideIt(popup, true);
+					popup.collapsed = false;
 				}
 			}
 			

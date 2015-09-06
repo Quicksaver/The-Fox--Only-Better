@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.14';
+Modules.VERSION = '2.0.15';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -914,7 +914,7 @@ this.slimChrome = {
 			}
 		}
 		
-		hideIt(this.slimmer, Prefs.includeNavBar);
+		this.slimmer.collapsed = !Prefs.includeNavBar;
 	},
 	
 	initOverflowable: function(toolbar) {
