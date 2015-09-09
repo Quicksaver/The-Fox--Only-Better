@@ -246,13 +246,16 @@ window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #u
 	border-right-color: rgba(23, 51, 78, 0.25);
 }
 
-/* appropriating this bit of code to also style the nav-bar in popup windows */
+/* appropriating this bit of code to also style the mini bar and the nav-bar in popup windows */
 window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
 window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
 window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
 #navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]),
 #navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
-#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar .toolbarbutton-1:not([type=menu-button]),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
 	padding: 4px 0;
 }
 

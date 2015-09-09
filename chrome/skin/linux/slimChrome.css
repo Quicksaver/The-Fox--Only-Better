@@ -116,17 +116,20 @@ window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #b
 	margin-left: -28.01px;
 }
 
-/* appropriating this bit of code to also style the nav-bar in popup windows */
+/* appropriating this bit of code to also style the mini bar and the nav-bar in popup windows */
 window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
 window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button,
 #navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
-#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button {
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button ,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar .toolbarbutton-1:not([type=menu-button]):not(#back-button):not(#forward-button),
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-button {
 	padding: 0 1px;
 }
 
-/* appropriating this bit of code to also style the nav-bar in popup windows */
+/* appropriating this bit of code to also style the mini bar and the nav-bar in popup windows */
 window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
-#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
+#navigator-toolbox[slimStyle="compact"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker,
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar .toolbarbutton-1 > .toolbarbutton-menubutton-dropmarker {
 	-moz-margin-start: -2px;
 	-moz-margin-end: 1px;
 	margin-top: 0;
