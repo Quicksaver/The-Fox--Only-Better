@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.16';
+Modules.VERSION = '2.0.17';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -706,11 +706,16 @@ this.slimChrome = {
 		}
 	},
 	
+	// returns mini bar visible state!
 	focusPasswords: function() {
 		if(Prefs.includeNavBar && (!self.popups || !popups.blocked)) {
 			let show = gBrowser.mCurrentBrowser._showMiniBar && this.miniOnPinnedTabs();
-			this.setMini(show);
-			return show;
+			if(show) {
+				this.setMini(true);
+				return true;
+			} else {
+				return this.hideMiniInABit()
+			}
 		}
 		return false;
 	},
@@ -831,16 +836,18 @@ this.slimChrome = {
 		return false;
 	},
 	
+	// returns mini bar visible state!
 	hideMiniInABit: function() {
-		if(!Prefs.includeNavBar) { return; }
+		if(!Prefs.includeNavBar) { return false; }
 		
 		// don't hide mini if we're hovering it
 		if(this.container.hoversQueued > 0 && !trueAttribute(this.container, 'hover')) {
 			Timers.init('setMini', () => { this.hideMiniInABit(); }, 1000);
-			return;
+			return true;
 		}
 		
 		this.setMini(false);
+		return false;
 	},
 	
 	initialShowings: new Set(),
