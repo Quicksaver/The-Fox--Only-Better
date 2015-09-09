@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.15';
+Modules.VERSION = '2.0.16';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -432,16 +432,19 @@ this.slimChrome = {
 			right: this.MIN_RIGHT
 		};
 		
-		var appContentPos = $('content').getBoundingClientRect();
-		this.moveStyle.width += appContentPos.width;
-		this.moveStyle.left += appContentPos.left;
-		this.moveStyle.right += document.documentElement.clientWidth -appContentPos.right;
+		// by default Slim Chrome will occupy the whole window width, including the sidebars
+		let clientView = !Prefs.slimOnlyOverContent ? $('browser') : $('content');
+		
+		let bounds = clientView.getBoundingClientRect();
+		this.moveStyle.width += bounds.width;
+		this.moveStyle.left += bounds.left;
+		this.moveStyle.right += document.documentElement.clientWidth -bounds.right;
 		
 		// Compatibility with TreeStyleTab
 		if(TabsToolbar && !TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden') {
 			// This is also needed when the tabs are on the left, the width of the findbar doesn't follow with the rest of the window for some reason
 			if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left' || TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
-				var TabsSplitter = $ª($('content'), 'treestyletab-splitter', 'class');
+				let TabsSplitter = $ª($('content'), 'treestyletab-splitter', 'class');
 				this.moveStyle.width -= TabsToolbar.clientWidth;
 				this.moveStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
 				if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left') {
@@ -455,10 +458,21 @@ this.slimChrome = {
 			}
 		}
 		
-		this.moveStyle.fullWidth = Math.max(this.moveStyle.width +this.MIN_RIGHT +this.MIN_LEFT, 100);
+		this.moveStyle.fullWidth = this.moveStyle.width +this.MIN_RIGHT +this.MIN_LEFT;
 		this.moveStyle.fullLeft = this.moveStyle.left -this.MIN_LEFT;
 		this.moveStyle.fullRight = this.moveStyle.right -this.MIN_RIGHT;
 		
+		// the full width style shouldn't cover the borders that appear for non-maximized windows in Windows 8 and below
+		if(!Prefs.slimOnlyOverContent) {
+			let leftBorder = LTR ? $('browser-border-start') : $('browser-border-end');
+			let rightBorder = LTR ? $('browser-border-end') : $('browser-border-start');
+			this.moveStyle.fullWidth -= leftBorder.clientWidth +rightBorder.clientWidth;
+			this.moveStyle.fullLeft += leftBorder.clientWidth;
+			this.moveStyle.fullRight += rightBorder.clientWidth;
+		}
+		
+		// set a minimum width for the toolbars, to ensure they never completely disappear
+		this.moveStyle.fullWidth = Math.max(this.moveStyle.fullWidth, 100);
 		this.moveStyle.width = Math.max(this.moveStyle.width, 100);
 		
 		if(!this.shouldReMove(this.moveStyle)) { return; }

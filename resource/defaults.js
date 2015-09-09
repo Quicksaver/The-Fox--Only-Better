@@ -1,4 +1,4 @@
-// VERSION = '1.3.3';
+// VERSION = '1.3.4';
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -26,6 +26,7 @@ prefList = {
 	delayOut: 250,
 	slimStyle: 'australis',
 	slimAnimation: 'rollout',
+	slimOnlyOverContent: false, // hidden pref to enable old Slim Chrome look, with this enabled the toolbars won't cover the sidebar
 	
 	skyLights: true,
 	skyLightsHide: true,
