@@ -1,9 +1,14 @@
 <!ENTITY pane.slimChrome.label "Interface Réduite">
+<!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Général">
 <!ENTITY opt.slimChrome.label "Activer l'Interface Réduite">
 <!ENTITY opt.slimChrome.tooltip "Simplifie l'interface et maximise l'espace d'affichage du contenu, en cachant les barres d'outils supérieures lorsque vous n'en avez pas besoin.">
 <!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
 <!ENTITY opt.includeNavBar.tooltip "Cache la barre d'adresse avec les autres barres d'outils. Si cette option est désactivée, la barre d'adresse sera toujours visible en haut de l'interface comme auparavant.">
+<!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
+<!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
+<!ENTITY opt.skyLights.requirements.description "In order to use Sky Lights, you need to enable Slim Chrome, as well as its &quot;Also hide the navigation bar&quot; option.">
 <!ENTITY opt.skyLights.label "Activer les Sky Lights">
 <!ENTITY opt.skyLights.tooltip.a "Les Sky Lights vous donnent des informations sur la page web que vous êtes actuellement en train de visiter à travers une aide alternative et non-intrusive en haut de l'interface.">
 <!ENTITY opt.skyLights.tooltip.b "Ils vous aident à être sûr de l'endroit où vous êtes et ce qu'il est possible de faire sans danger!">
@@ -16,6 +21,8 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "Hautement recommandé! La mini-barre apparaîtra lorsque dans l'onglet courant, l'adresse change pour une autre (nom de domaine différent), ou quand vous basculez vers un onglet jusque là en arrière plan, et qui aurait changé d'adresse pendant ce temps.">
 <!ENTITY opt.miniOnTabSelect.label "selecting another tab">
 <!ENTITY opt.miniOnTabSelect.tooltip "Shows the mini bar every time you change tabs, to let you know of your current location on each tab.">
+<!ENTITY opt.miniOnPinnedTabs.label "Show the mini bar on pinned tabs">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Apply the above rules to pinned tabs as well.">
 <!ENTITY opt.useMouse.label "Affiche l'interface lorsque la souris va vers sur le haut de la fenêtre">
 <!ENTITY opt.useMouse.tooltip.a "Les barres d'outils réagiront aux mouvements de la souris, apparaîtront lorsque la souris survolera leur position, et se cacheront lorsque la quittera.">
 <!ENTITY opt.useMouse.tooltip.b "Si cette option est désactivée, les barres d'outils ne seront accessibles qu'en utilisant la touche F6 (ce qui donnera le focus à la barre d'adresse), ou quand un panneau s'ouvre ancré à une des barres d'outils cachées.">
@@ -46,3 +53,7 @@
 <!ENTITY opt.animation.hinge.label "Effet de Charnière de GiT">
 <!ENTITY opt.animation.hinge.tooltip "Un effet spécial en charnière, crée par Geek in Training. Si vous aimez, remerciez-le !">
 <!ENTITY cat.slimChromeKeyset.label "Raccourci clavier pour activer ou désactiver">
+<!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
+<!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
+<!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
+<!ENTITY opt.adaptSearchBar.description.b "Note that this is only a prototype feature. A few extras are still planned, most notably the ability to define your own custom rules for other search pages to work. For now, if you'd like to see the Search Bar adapt to other search engines, you'll have to request it through the add-on's support page.">

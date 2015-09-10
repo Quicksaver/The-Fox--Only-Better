@@ -1,9 +1,14 @@
 <!ENTITY pane.slimChrome.label "Chrome verkleinen">
+<!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Algemeen">
 <!ENTITY opt.slimChrome.label "Chrome verkleinen inschakelen">
 <!ENTITY opt.slimChrome.tooltip "Stroomlijnt de interface en maximaliseert de ruimte voor inhoud, door de bovenste werkbalken te verbergen als u ze niet nodig hebt.">
 <!ENTITY opt.includeNavBar.label "Navigatiebalk ook verbergen">
 <!ENTITY opt.includeNavBar.tooltip "Verbergt de navigatiebalk met de overige werkbalken. Als dit is uitgeschakeld zal de navigatiebalk net als voorheen altijd zichtbaar zijn.">
+<!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
+<!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
+<!ENTITY opt.skyLights.requirements.description "In order to use Sky Lights, you need to enable Slim Chrome, as well as its &quot;Also hide the navigation bar&quot; option.">
 <!ENTITY opt.skyLights.label "Daklichten inschakelen">
 <!ENTITY opt.skyLights.tooltip.a "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm.">
 <!ENTITY opt.skyLights.tooltip.b "Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
@@ -16,6 +21,8 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
 <!ENTITY opt.miniOnTabSelect.label "selecteren van een ander tabblad">
 <!ENTITY opt.miniOnTabSelect.tooltip "Geeft de minibalk weer telkens als u van tabblad wijzigt, om u uw huidige locatie op elke tabblad te laten weten.">
+<!ENTITY opt.miniOnPinnedTabs.label "Show the mini bar on pinned tabs">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Apply the above rules to pinned tabs as well.">
 <!ENTITY opt.useMouse.label "Chrome weergeven als muis bovenzijde aanwijst">
 <!ENTITY opt.useMouse.tooltip.a "De werkbalken reageren op muisbewegingen en zullen verschijnen als de muis erboven hangt en verdwijnen als de muisaanwijzer weg is.">
 <!ENTITY opt.useMouse.tooltip.b "Als dit is uitgeschakeld kunt u de werkbalken alleen benaderen door op F6 te drukken om de locatiebalk focus te geven, of wanneer een paneel dat aan één van de verborgen werkbalken is verankerd opent.">
@@ -46,3 +53,7 @@
 <!ENTITY opt.animation.hinge.label "GiT’s scharniereffect">
 <!ENTITY opt.animation.hinge.tooltip "Speciaal scharniereffect, gemaakt door Geek in Training. Als u het mooi vindt kunt u hem bedanken!">
 <!ENTITY cat.slimChromeKeyset.label "Sneltoets voor in- of uitschakelen">
+<!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
+<!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
+<!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
+<!ENTITY opt.adaptSearchBar.description.b "Note that this is only a prototype feature. A few extras are still planned, most notably the ability to define your own custom rules for other search pages to work. For now, if you'd like to see the Search Bar adapt to other search engines, you'll have to request it through the add-on's support page.">

@@ -1,9 +1,14 @@
 <!ENTITY pane.slimChrome.label "精簡介面">
+<!ENTITY pane.skyLights.label "曙光">
+<!ENTITY pane.experimental.label "實驗功能">
 <!ENTITY cat.general.label "一般設定">
 <!ENTITY opt.slimChrome.label "啟用精簡介面">
 <!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
 <!ENTITY opt.includeNavBar.label "也隱藏瀏覽工具列">
 <!ENTITY opt.includeNavBar.tooltip "將瀏覽工具列連同其他工具列一起隱藏。若否，則瀏覽工具列同預設顯示於視窗上端。">
+<!ENTITY cat.skyLightsPlacements.label "選擇並排列你的曙光">
+<!ENTITY cat.skyLightsPlacements.tooltip "拖曳曙光按鈕到你想要的位置。只要在這裡取消勾選即可個別隱藏曙光。">
+<!ENTITY opt.skyLights.requirements.description "要想使用曙光必須啟用Slim Chrome功能並設定隱藏瀏覽工具列">
 <!ENTITY opt.skyLights.label "啟用曙光(Sky Lights)">
 <!ENTITY opt.skyLights.tooltip.a "曙光為非干擾性的視覺輔助按鈕提供替代捷徑顯示關於當前網頁資訊">
 <!ENTITY opt.skyLights.tooltip.b "它幫助您可隨時確認網頁的安全性">
@@ -16,6 +21,8 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "(建議啟用)迷你工具列會在當前分頁改變網址時或移往不同網址之背景分頁時出現">
 <!ENTITY opt.miniOnTabSelect.label "選擇其他分頁時">
 <!ENTITY opt.miniOnTabSelect.tooltip "當每次切換分頁時皆顯示迷你工具列以方便得知當前分頁網址">
+<!ENTITY opt.miniOnPinnedTabs.label "在釘選分頁顯示迷你工具列">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "將上述設定也套用到迷你工具列">
 <!ENTITY opt.useMouse.label "當滑鼠移到頂端，工具列顯示">
 <!ENTITY opt.useMouse.tooltip.a "工具列會因應游標的位置，當游標在上面時顯示，離開時則隱藏。">
 <!ENTITY opt.useMouse.tooltip.b "若取消此選項，則僅能透過敲擊&lt;F6&gt;來使用位址列">
@@ -46,3 +53,7 @@
 <!ENTITY opt.animation.hinge.label "GiT轉板特效">
 <!ENTITY opt.animation.hinge.tooltip "瀏覽工具列以門板旋轉方式出現於視窗(感謝Geek in Training提供)">
 <!ENTITY cat.slimChromeKeyset.label "功能啟用/關閉快捷鍵">
+<!ENTITY opt.adaptSearchBar.label "整合型搜尋列">
+<!ENTITY opt.adaptSearchBar.tooltip "使搜尋列與網頁搜尋同步，搜尋列將會隨時顯示當前搜尋頁面所使用的搜尋關鍵字">
+<!ENTITY opt.adaptSearchBar.description.a "目前本功能支援大多數常用的搜尋引擎，完整的支援搜尋引擎清單可至附加元件的首頁查看">
+<!ENTITY opt.adaptSearchBar.description.b "請注意目前此功能還僅處於試作階段，尚有些功能正在規劃中，像是自訂是用不同搜尋頁面的規則，而如果你想要現在就讓搜尋列能顯示當前的搜尋關鍵字，則必須到附加元件支援頁告知">

@@ -1,9 +1,14 @@
 <!ENTITY pane.slimChrome.label "Slim Chrome">
+<!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Основное">
 <!ENTITY opt.slimChrome.label "Включить Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Упрощает интерфейс и увеличивает рабочее пространство, скрывая верхнюю панель инструментов, пока она не используется.">
 <!ENTITY opt.includeNavBar.label "Скрывать панель навигации">
 <!ENTITY opt.includeNavBar.tooltip "Прячет панель навигации вместе с остальными панелями инструментов. Если эта функция отключена, панель навигации всегда будет видна, как и раньше.">
+<!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
+<!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
+<!ENTITY opt.skyLights.requirements.description "In order to use Sky Lights, you need to enable Slim Chrome, as well as its &quot;Also hide the navigation bar&quot; option.">
 <!ENTITY opt.skyLights.label "Включить Sky Lights">
 <!ENTITY opt.skyLights.tooltip.a "Sky Lights сообщает информацию о текущей веб-странице при помощи ненавязчивой визуальной кнопки расположенной в верхней панели.">
 <!ENTITY opt.skyLights.tooltip.b "Это поможет Вам всегда быть уверенным, где вы находитесь и что здесь можно безопасно делать!">
@@ -16,6 +21,8 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "Рекомендуется! Мини-адресная строка будет появляться при изменении в текущей вкладке адреса (переход на другой веб-сервер), или всякий раз, когда вы выбираете фоновую вкладку, которая тем временем изменила свой адрес.">
 <!ENTITY opt.miniOnTabSelect.label "выборе другой вкладки">
 <!ENTITY opt.miniOnTabSelect.tooltip "Показывать мини-панель при смене вкладки, для того чтобы знать где вы находитесь в данный момент.">
+<!ENTITY opt.miniOnPinnedTabs.label "Show the mini bar on pinned tabs">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Apply the above rules to pinned tabs as well.">
 <!ENTITY opt.useMouse.label "Показывать панели при наведении на них указателя мыши">
 <!ENTITY opt.useMouse.tooltip.a "Панели реагируют на движение указателя мыши, они будут появляться когда указатель над ними и скрываться когда указатель покидает зону панелей.">
 <!ENTITY opt.useMouse.tooltip.b "Если отключить эту опцию, то доступ к панелям можно получить нажав на F6 для перевода фокуса на адресную строку, либо активировав одну из скрытых панелей.">
@@ -46,3 +53,7 @@
 <!ENTITY opt.animation.hinge.label "Эффект петель от GiT'а">
 <!ENTITY opt.animation.hinge.tooltip "Специальный эффект, созданный Geek in Training. Если Вам нравится, благодарите его!">
 <!ENTITY cat.slimChromeKeyset.label "Комбинация клавиш для включения/выключения">
+<!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
+<!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
+<!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
+<!ENTITY opt.adaptSearchBar.description.b "Note that this is only a prototype feature. A few extras are still planned, most notably the ability to define your own custom rules for other search pages to work. For now, if you'd like to see the Search Bar adapt to other search engines, you'll have to request it through the add-on's support page.">
