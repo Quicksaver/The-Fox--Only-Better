@@ -1,6 +1,28 @@
 {
-	"current":"1.2.3",
+	"current":"1.3",
 	"releases": {
+		"1.3":{
+			"date":"September 10, 2015",
+			"notes":[
+				["new","Name and icon \"Beyond Australis\", previously \"The Fox, Only Better\""],
+				["new","Sky Lights pane in the add-on preferences"],
+				["new","Ability to reorder and disable individual Sky Lights"],
+				["new","\"Bookmark Page\" Sky Light (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/57>issue #57</a>)"],
+				["new","Adaptable Search Bar experimental feature; keeps your Search Bar in sync with your web searches!"],
+				["changed","The bookarked star icon remains visible in the mini bar if the button is placed in the navigation bar"],
+				["changed","The \"Show this tab on the next update\" checkbox will be highlighted the first time the About pane is shown on an update, to better mark where future notifications can be easily disabled"],
+				["changed","The toolbars will now extend to all the available window space, as opposed to before where they would only cover the webpage space; for instance this means they will now appear over the sidebar as well. You can still revert to the old behavior by enabling the hidden preference \"extensions.thefoxonlybetter.slimOnlyOverContent\""],
+				["removed","Compatibility with Firefox 39 and below"],
+				["bugfix","Sensitivity sliders in the preferences weren't working at all"],
+				["bugfix","Sky Lights would not be immediately visible after exiting customize mode, you'd have to show and hide the toolbars at least once to see them again"],
+				["bugfix","A few appearance fixes for the latest versions of Firefox, particularly for Windows 10 (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/114>issue #114</a>)"],
+				["bugfix","Compatibility with latest Nightly build (Firefox 43)"],
+				["bugfix","Several behavioral improvements when opening panels anchored to the mini bar"],
+				["bugfix","The helptext panel in the add-on's preferences would sometimes cover the options on small screens or if the sidebar was open"],
+				["bugfix","The mini bar shouldn't hide when moving the cursor over it"],
+				["","Other minor fixes and improvements"]
+			]
+		},
 		"1.2.3":{
 			"date":"August 21, 2015",
 			"notes":[
