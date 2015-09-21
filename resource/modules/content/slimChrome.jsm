@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.2';
+Modules.VERSION = '2.0.3';
 
 this.slimChrome = {
 	miniActive: false,
@@ -79,7 +79,7 @@ Modules.LOADMODULE = function() {
 	Listeners.add(Scope, 'blur', slimChrome, true);
 	
 	// show mini when the current tab changes host
-	webProgress.addProgressListener(slimChrome, Ci.nsIWebProgress.NOTIFY_ALL);
+	WebProgress.add(slimChrome, Ci.nsIWebProgress.NOTIFY_ALL);
 	
 	// observe when any changes to the webpage are made, so that for instance when a focused input field is removed, the mini bar doesn't stay stuck open
 	DOMContentLoaded.add(slimChrome);
@@ -87,7 +87,7 @@ Modules.LOADMODULE = function() {
 };
 
 Modules.UNLOADMODULE = function() {
-	webProgress.removeProgressListener(slimChrome);
+	WebProgress.remove(slimChrome);
 	DOMContentLoaded.remove(slimChrome);
 	Listeners.remove(Scope, 'focus', slimChrome, true);
 	Listeners.remove(Scope, 'blur', slimChrome, true);
