@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.3';
+Modules.VERSION = '2.0.4';
 
 this.slimChrome = {
 	miniActive: false,
@@ -46,7 +46,7 @@ this.slimChrome = {
 		}
 	},
 	
-	onLocationChange: function(aProgress, aRequest, aURI) {
+	onLocationChange: function(aWebProgress, aRequest, aURI) {
 		try { var host = aURI.host; }
 		catch(ex) { var host = aURI.specIgnoringRef || aURI.spec; }
 		
@@ -70,7 +70,7 @@ this.slimChrome = {
 	},
 	
 	// this is needed in content progress listeners (for some reason)
-	QueryInterface: XPCOMUtils.generateQI([Ci.nsIWebProgressListener, Ci.nsISupportsWeakReference]),
+	QueryInterface: XPCOMUtils.generateQI([Ci.nsIWebProgressListener, Ci.nsISupportsWeakReference])
 };
 
 Modules.LOADMODULE = function() {
