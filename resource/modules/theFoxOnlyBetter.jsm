@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.5';
+Modules.VERSION = '2.0.6';
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -15,12 +15,7 @@ this.slimChromeExceptions = new Set(['addon-bar']);
 this.handleEvent = function(e) {
 	switch(e.type) {
 		case 'fullscreen':
-			// Before FF41, we get the fullscreen event _before_ the window transitions into or out of FS mode.
-			if(Services.vc.compare(Services.appinfo.version, "41.0a1") < 0) {
-				toggleSlimChrome(!fullScreen && !mozFullScreen && fullScreenAutohide);
-			} else {
-				toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
-			}
+			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
 			break;
 		
 		case 'beforecustomization':

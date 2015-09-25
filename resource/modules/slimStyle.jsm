@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.5';
+Modules.VERSION = '2.0.6';
 
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
 
@@ -431,7 +431,6 @@ Modules.LOADMODULE = function() {
 	Observers.add(slimStyle, "lightweight-theme-preview-requested");
 	
 	// for styling changes in the latest versions
-	toggleAttribute(document.documentElement, objName+'-FF41', Services.vc.compare(Services.appinfo.version, "41.0a1") >= 0);
 	toggleAttribute(document.documentElement, objName+'-FF42', Services.vc.compare(Services.appinfo.version, "42.0a1") >= 0);
 	toggleAttribute(document.documentElement, objName+'-FF43', Services.vc.compare(Services.appinfo.version, "43.0a1") >= 0);
 	
@@ -446,7 +445,6 @@ Modules.UNLOADMODULE = function() {
 	Observers.remove(slimStyle, "lightweight-theme-styling-update");
 	Observers.remove(slimStyle, "lightweight-theme-preview-requested");
 	
-	removeAttribute(document.documentElement, objName+'-FF41');
 	removeAttribute(document.documentElement, objName+'-FF42');
 	removeAttribute(document.documentElement, objName+'-FF43');
 	

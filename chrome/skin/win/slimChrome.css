@@ -6,9 +6,6 @@
 	background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
 	background-clip: padding-box;
 }
-#main-window:not([theFoxOnlyBetter-FF41]) #theFoxOnlyBetter-slimChrome-slimmer {
-	box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
-}
 #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
 	position: relative;
 	z-index: 1;
@@ -20,7 +17,7 @@
 	(-moz-os-version: windows-win7),
 	(-moz-os-version: windows-win8) {
 	
-	#main-window[theFoxOnlyBetter-FF41] #theFoxOnlyBetter-slimChrome-slimmer {
+	#theFoxOnlyBetter-slimChrome-slimmer {
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
 	}
 	
@@ -78,7 +75,7 @@
 	@media	(-moz-os-version: windows-win8),
 		(-moz-os-version: windows-win10) {
 	
-		#main-window[theFoxOnlyBetter-FF41] #theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
+		#theFoxOnlyBetter-slimChrome-container:not(:-moz-lwtheme) {
 			border-color: #c2c2c2;
 		}
 	}

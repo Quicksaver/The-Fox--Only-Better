@@ -1,4 +1,4 @@
-Modules.VERSION = '1.4.2';
+Modules.VERSION = '1.4.3';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -9,12 +9,7 @@ this.bookmarkedItem = {
 	_anchor: false,
 	
 	get button() { return BookmarkingUI.button; },
-	get broadcaster() {
-		if(Services.vc.compare(Services.appinfo.version, '41.0a1') < 0) {
-			return this.button;
-		}
-		return BookmarkingUI.broadcaster;
-	},
+	get broadcaster() { return BookmarkingUI.broadcaster; },
 	get editPanel() { return $('editBookmarkPanel'); },
 	get key() { return $('addBookmarkAsKb'); },
 	get light() { return skyLights.get('bookmarkedItem'); },
