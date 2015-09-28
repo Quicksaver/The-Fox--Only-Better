@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+Modules.VERSION = '2.0.1';
 
 this.TGM = {
 	id: 'TabGroupsManagerToolbar',
@@ -36,14 +36,14 @@ this.TGM = {
 	ordinal: function() {
 		var ordinal = Math.max(Prefs.groupBarOrdinal, Prefs.tabBarOrdinal) +1;
 		
-		var sscode = '/*The Fox, only better CSS declarations of variable values*/\n';
-		sscode += '@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n';
-		sscode += '@-moz-document url("'+document.baseURI+'") {\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer,\n';
-		sscode += '	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n';
-		sscode += '	  -moz-box-ordinal-group: '+ordinal+';\n';
-		sscode += '	}\n';
-		sscode += '}';
+		let sscode =
+			'@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n' +
+			'@-moz-document url("'+document.baseURI+'") {\n' +
+			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer,\n' +
+			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n' +
+			'	  -moz-box-ordinal-group: '+ordinal+';\n' +
+			'	}\n' +
+			'}';
 		
 		Styles.load('tgmOrdinal_'+_UUID, sscode, true);
 	}
