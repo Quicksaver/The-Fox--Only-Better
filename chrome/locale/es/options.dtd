@@ -1,19 +1,19 @@
 <!ENTITY pane.slimChrome.label "Chrome esbelto">
-<!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.skyLights.label "Claraboyas">
 <!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Habilitar chrome esbelto">
-<!ENTITY opt.slimChrome.tooltip "Estiliza la interfaz (chrome) y maximiza el espacio de visualización del contenido, ocultando convenientemente las barras de herramientas de la parte superior, mientras no las necesite.">
-<!ENTITY opt.includeNavBar.label "Ocultar además la barra de navegación">
+<!ENTITY opt.slimChrome.tooltip "Estiliza la interfaz gráfica (chrome) y maximiza el espacio de visualización del contenido, ocultando convenientemente las barras de herramientas de la parte superior, mientras no las necesita.">
+<!ENTITY opt.includeNavBar.label "Ocultar también la barra de navegación">
 <!ENTITY opt.includeNavBar.tooltip "Oculta la barra de navegación junto con el resto de barras de herramientas. Si esto está deshabilitado, la barra de navegación siempre estará visible en la parte superior, como antes.">
-<!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
-<!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
-<!ENTITY opt.skyLights.requirements.description "In order to use Sky Lights, you need to enable Slim Chrome, as well as its &quot;Also hide the navigation bar&quot; option.">
+<!ENTITY cat.skyLightsPlacements.label "Escoja y ordene sus claraboyas">
+<!ENTITY cat.skyLightsPlacements.tooltip "Arrastre y suelte las claraboyas para posicionarlas en el orden que desee. Para deshabilitar completamente cualquier claraboya individual, simplemente desmárquela aquí y no se mostrará en absoluto.">
+<!ENTITY opt.skyLights.requirements.description "Para usar claraboyas, necesita habilitar chrome esbelto, así como su opción &quot;Ocultar también la barra de navegación&quot;.">
 <!ENTITY opt.skyLights.label "Habilitar claraboyas">
-<!ENTITY opt.skyLights.tooltip.a "Las claraboyas le dan información sobre la página web que está visitando actualmente, mediante una ayuda visual intermitente y no-intrusiva en la parte superior del chrome (interfaz).">
+<!ENTITY opt.skyLights.tooltip.a "Las claraboyas le dan información sobre la página web que está visitando actualmente, mediante una ayuda visual intermitente y no-intrusiva en la parte superior del chrome (interfaz gráfica).">
 <!ENTITY opt.skyLights.tooltip.b "¡Le ayudan a estar siempre seguro de dónde se encuentra y de qué es seguro o no hacer allí!">
-<!ENTITY opt.skyLightsHide.label "Ocultar claraboyas cuando el chrome (interfaz) sea visible">
-<!ENTITY opt.skyLightsHide.tooltip "Las claraboyas se ocultarán cuando las barras de herramientas o la mini-barra sean visibles, puesto que toda la información ya debería estar incluida en alguna parte en las propias barras de herramientas.">
+<!ENTITY opt.skyLightsHide.label "Ocultar claraboyas cuando el chrome sea visible">
+<!ENTITY opt.skyLightsHide.tooltip "Las claraboyas se ocultarán cuando las barras de herramientas o la mini-barra (chrome/interfaz gráfica) sean visibles, puesto que toda la información ya debería estar incluida en alguna parte en las propias barras de herramientas.">
 <!ENTITY cat.mini.label "Mostrar la mini-barra al...">
 <!ENTITY opt.miniOnAllInput.label "poner el foco en cualquier tipo de campo de entrada">
 <!ENTITY opt.miniOnAllInput.tooltip "Habilite esto si desea que la mini-barra de direcciones se muestre cuando escriba en cualquier tipo de campo de entrada, y no sólo en los campos de contraseña.">
@@ -21,39 +21,39 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "¡Altamente recomendado! La mini-barra aparecerá en cualquier momento en que la pestaña actual cambie a otra dirección (servidor web distinto), o cuando seleccione una pestaña sin foco que entre tanto haya cambiado su dirección.">
 <!ENTITY opt.miniOnTabSelect.label "seleccionar otra pestaña">
 <!ENTITY opt.miniOnTabSelect.tooltip "Muestra la mini-barra cada vez que cambia de pestañas, para hacerle saber en cada pestaña dónde se encuentra.">
-<!ENTITY opt.miniOnPinnedTabs.label "Show the mini bar on pinned tabs">
-<!ENTITY opt.miniOnPinnedTabs.tooltip "Apply the above rules to pinned tabs as well.">
-<!ENTITY opt.useMouse.label "Mostrar el chrome (interfaz) cuando el ratón se mueva a la parte superior">
-<!ENTITY opt.useMouse.tooltip.a "Las barras de herramientas reaccionarán a los movimientos del ratón, aparecerán cuando el ratón esté sobre ellas y se ocultarán cuando deje de estarlo.">
-<!ENTITY opt.useMouse.tooltip.b "Si esto está deshabilitado, sólo puede acceder a las barras de herramientas pulsando F6 para poner el foco en la barra de direcciones, o cuando un panel se abra anclado a una de las barras de herramientas ocultadas.">
+<!ENTITY opt.miniOnPinnedTabs.label "Mostrar la mini barra en pestañas fijadas">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Aplica también las reglas de arriba a pestañas fijadas.">
+<!ENTITY opt.useMouse.label "Mostrar el chrome cuando el ratón se mueva a la parte superior">
+<!ENTITY opt.useMouse.tooltip.a "Las barras de herramientas (chrome/interfaz gráfica) reaccionarán a los movimientos del ratón, aparecerán cuando el ratón esté sobre ellas y se ocultarán cuando deje de estarlo.">
+<!ENTITY opt.useMouse.tooltip.b "Si esto está deshabilitado, sólo puede acceder a las barras de herramientas pulsando F6 para poner el foco en la barra de direcciones, o cuando un panel se abra anclado a una de las barras de herramientas ocultas.">
 <!ENTITY opt.delayIn.label "Sensibilidad al aparecer">
-<!ENTITY opt.delayIn.tooltip "Determina el retardo tras el cual aparecerá el chrome (interfaz) cuando el ratón se mueva a la parte superior del navegador.">
+<!ENTITY opt.delayIn.tooltip "Determina el retardo tras el cual aparecerá el chrome cuando el ratón se mueva a la parte superior del navegador.">
 <!ENTITY opt.delayOut.label "Sensibilidad al desaparecer">
-<!ENTITY opt.delayOut.tooltip "Determina el retardo tras el cual el chrome (interfaz) se ocultará cuando el ratón se retire.">
+<!ENTITY opt.delayOut.tooltip "Determina el retardo tras el cual el chrome se ocultará cuando el ratón se retire.">
 <!ENTITY opt.delayLow.label "Baja">
 <!ENTITY opt.delayHigh.label "Alta">
 <!ENTITY cat.appearance.label "Estilo">
 <!ENTITY opt.style.australis.label "Australis">
 <!ENTITY opt.style.australis.tooltip "Designado para proporcionar el aspecto y sensación del tema de decoración nativo de Firefox.">
 <!ENTITY opt.style.round.label "Espacioso">
-<!ENTITY opt.style.round.tooltip "Muestra las barras de herramientas en un contenedor espacioso con una gran forma redondeada. Se ajusta bien en general al tema decorativo predeterminado de Firefox.">
+<!ENTITY opt.style.round.tooltip "Muestra las barras de herramientas en un contenedor espacioso con una gran forma redondeada. Se ajusta bien de la apariencia predeterminada de Firefox al completo.">
 <!ENTITY opt.style.compact.label "Compacto">
-<!ENTITY opt.style.compact.tooltip "Un estilo minimizado que muestra la máxima cantidad de botones de barra de herramientas y campos de texto en el menor espacio posible, para no ocupar el área de la página web con elementos del chrome (interfaz).">
+<!ENTITY opt.style.compact.tooltip "Un estilo minimizado que muestra la máxima cantidad de botones de barra de herramientas y campos de texto en el menor espacio posible, para no ocupar el área de la página web con elementos del chrome (interfaz gráfica).">
 <!ENTITY opt.style.full.label "Ancho completo">
-<!ENTITY opt.style.full.tooltip "Las barras de herramientas se extienden por todo el espacio disponible, como lo harían si aún estuvieran adosadas a la parte superior del chrome (interfaz de Firefox), sin ningún borde o margen a los lados.">
+<!ENTITY opt.style.full.tooltip "Las barras de herramientas se extienden por todo el espacio disponible, como lo harían si aún estuvieran adosadas a la parte superior del chrome, sin ningún borde o margen a los lados.">
 <!ENTITY cat.animation.label "Animación">
 <!ENTITY opt.animation.none.label "Sin animación">
 <!ENTITY opt.animation.none.tooltip "Las barras de herramientas aparecen sin ningún efecto visual.">
 <!ENTITY opt.animation.fadein.label "Fundido">
 <!ENTITY opt.animation.fadein.tooltip "Animación simple que hace aparecer las barras de herramientas con un fundido.">
 <!ENTITY opt.animation.slidedown.label "Deslizamiento hacia abajo">
-<!ENTITY opt.animation.slidedown.tooltip "Un efecto de deslizamiento simple, donde las barras de herramientas surgen desde la parte superior del chrome (interfaz).">
+<!ENTITY opt.animation.slidedown.tooltip "Un efecto de deslizamiento simple, donde las barras de herramientas surgen desde la parte superior del chrome (interfaz gráfica).">
 <!ENTITY opt.animation.rollout.label "Desplegado">
 <!ENTITY opt.animation.rollout.tooltip "Las barras de herramientas se despliegan desde la parte superior.">
 <!ENTITY opt.animation.hinge.label "Efecto bisagra de GiT">
 <!ENTITY opt.animation.hinge.tooltip "Efecto bisagra, creado por Geek in Training. ¡Si le gusta debería agradecérselo a él!">
 <!ENTITY cat.slimChromeKeyset.label "Atajo de teclado para habilitar o deshabilitar">
-<!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
-<!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
-<!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
-<!ENTITY opt.adaptSearchBar.description.b "Note that this is only a prototype feature. A few extras are still planned, most notably the ability to define your own custom rules for other search pages to work. For now, if you'd like to see the Search Bar adapt to other search engines, you'll have to request it through the add-on's support page.">
+<!ENTITY opt.adaptSearchBar.label "Barra de búsqueda adaptable">
+<!ENTITY opt.adaptSearchBar.tooltip "Mantiene sincronizado su recuadro de búsqueda con sus búsquedas en páginas web. El recuadro de búsqueda siempre reflejará el término usado al navegar por cualquier página de resultados de un motor de búsqueda.">
+<!ENTITY opt.adaptSearchBar.description.a "Puede encontrar una lista de motores de búsqueda compatibles en la página principal del complemento. Actualmente debería funcionar con la mayoría de motores comunes de búsqueda.">
+<!ENTITY opt.adaptSearchBar.description.b "Observe que esto es sólo un prototipo de característica. Aún están planeados unos pocos extras, el más notable la capacidad de definir sus propias reglas de personalización para que funcione con otras páginas de búsqueda. Por ahora, si desea ver que el recuadro de búsqueda se adapte a otros motores de búsqueda, tendrá que solicitarlo a través de la página de soporte.">

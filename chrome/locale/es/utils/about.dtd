@@ -1,7 +1,7 @@
 <!ENTITY about.paneTitle "Acerca de">
 <!ENTITY about.version "Versión {v}">
 <!ENTITY about.versionDivider " - ">
-<!ENTITY about.uptodate "¡actualizado, felicidades!">
+<!ENTITY about.uptodate "está al día, ¡felicidades!">
 <!ENTITY about.needsupdate "¡actualización disponible!">
 <!ENTITY about.description "Revise debajo las &quot;Notas de la versión&quot; y los &quot;Problemas conocidos&quot; para esta versión. Hágame saber cualquier problema que encuentre, o si tiene cualquier sugerencia para futuras versiones.">
 <!ENTITY about.descriptionB "El complemento es gratuito, pero reparar problemas, añadir nuevas características y asegurarse de que todo funciona con cada nueva versión de Firefox, es laborioso y puede ser difícil en algunos momentos. Si disfruta de este complemento, por favor, apoye su desarrollo continuado. Como dice el enlace, ¡usted puede ayudar!">
@@ -13,7 +13,7 @@
 <!ENTITY about.home "Página principal de los complementos">
 <!ENTITY about.fullchangelog "Registro completo de cambios">
 <!ENTITY about.problems "¿Está teniendo problemas?">
-<!ENTITY about.tech "Abrar un asunto (issue) en la página de soporte describiendo su problema">
+<!ENTITY about.tech "Abra un asunto (issue) en la página de soporte describiendo su problema">
 <!ENTITY about.email "O envíeme un correo electrónico al respecto">
 <!ENTITY about.author "Más sobre el autor">
 <!ENTITY about.trymore "¡Pruebe uno de mis otros complementos para una experiencia de Firefox aún mejor!">
