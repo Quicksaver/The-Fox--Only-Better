@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.7';
+Modules.VERSION = '2.0.8';
 
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
 
@@ -166,27 +166,27 @@ this.slimStyle = {
 		
 		var navbarMargin = this.AUSTRALIS_BORDER_NAVBAR_MARGIN + (this.AUSTRALIS_BORDER_TOOLBAR_MARGIN *this.numToolbars());
 		
-		let sscode =
-			'@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n' +
-			'@-moz-document url("'+document.baseURI+'") {\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars-before,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars-after {\n' +
-			'		width: ' + width + 'px;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-toolbars-bottom {\n' +
-			'		margin-left: ' + bottomMargin + 'px;\n' +
-			'		margin-right: ' + bottomMargin + 'px;\n' +
-			'		width: calc(100% - ' + bottomWidth + 'px);\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n' +
-			'		margin-left: ' + toolbarsMargin + 'px !important;\n' +
-			'		margin-right: ' + toolbarsMargin + 'px !important;\n' +
-			'		width: calc(100% - ' + toolbarsWidth + 'px) !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #nav-bar {\n' +
-			'		margin: 0 -'+navbarMargin+'px;\n' +
-			'	}\n' +
-			'}';
+		let sscode = '\
+			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+			@-moz-document url("'+document.baseURI+'") {\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars-after {\n\
+					width: ' + width + 'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-toolbars-bottom {\n\
+					margin-left: ' + bottomMargin + 'px;\n\
+					margin-right: ' + bottomMargin + 'px;\n\
+					width: calc(100% - ' + bottomWidth + 'px);\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n\
+					margin-left: ' + toolbarsMargin + 'px !important;\n\
+					margin-right: ' + toolbarsMargin + 'px !important;\n\
+					width: calc(100% - ' + toolbarsWidth + 'px) !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #nav-bar {\n\
+					margin: 0 -'+navbarMargin+'px;\n\
+				}\n\
+			}';
 		
 		Styles.load('slimChromeSVG_'+_UUID, sscode, true);
 		
@@ -348,45 +348,45 @@ this.slimStyle = {
 			bgGradient = 'transparent, transparent';
 		}
 		
-		let sscode =
-			'@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n' +
-			'@-moz-document url("'+document.baseURI+'") {\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n' +
-			'	  background-color: ' + this.lwtheme.bgColor + ' !important;\n' +
-			'	  color: ' + this.lwtheme.color + ' !important;\n' +
-			'	  background-repeat: repeat !important;\n' +
-			'	  background-size: auto auto !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n' +
-			'	  background-image: linear-gradient('+((DARWIN) ? bgGradient : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n' +
-			'	  background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars {\n' +
-			'	  background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+offsetX+'px top '+offsetY+'px !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n' +
-			'	  background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+fullOffsetX+'px top '+offsetY+'px !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n' +
-			'	  background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetX+'px top '+offsetY+'px !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before:-moz-locale-dir(ltr),\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after:-moz-locale-dir(rtl) {\n' +
-			'	  background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetXLeft+'px top '+offsetY+'px !important;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after:-moz-locale-dir(ltr),\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before:-moz-locale-dir(rtl) {\n' +
-			'	  background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetXRight+'px top '+offsetY+'px !important;\n' +
-			'	}\n' +
-			'}';
+		let sscode = '\
+			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+			@-moz-document url("'+document.baseURI+'") {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
+					background-color: ' + this.lwtheme.bgColor + ' !important;\n\
+					color: ' + this.lwtheme.color + ' !important;\n\
+					background-repeat: repeat !important;\n\
+					background-size: auto auto !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
+					background-image: linear-gradient('+((DARWIN) ? bgGradient : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+					background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars {\n\
+					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+offsetX+'px top '+offsetY+'px !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n\
+					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+fullOffsetX+'px top '+offsetY+'px !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n\
+					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetX+'px top '+offsetY+'px !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before:-moz-locale-dir(ltr),\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after:-moz-locale-dir(rtl) {\n\
+					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetXLeft+'px top '+offsetY+'px !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after:-moz-locale-dir(ltr),\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before:-moz-locale-dir(rtl) {\n\
+					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetXRight+'px top '+offsetY+'px !important;\n\
+				}\n\
+			}';
 		
 		Styles.load('personaSlimChrome_'+_UUID, sscode, true);
 	},

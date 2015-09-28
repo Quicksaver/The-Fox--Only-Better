@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.5';
+Modules.VERSION = '1.2.6';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -106,14 +106,14 @@ this.skyLights = {
 						}
 					}
 					
-					let sscode = 
-						'@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n' +
-						'@-moz-document url("'+document.baseURI+'") {\n' +
-						'	window['+objName+'_UUID="'+_UUID+'"] #'+this.kLightPrefix+name+':-moz-any(:hover:not([alert="off"]),[active],[alert="on"]) {\n' +
-						'		box-shadow: rgba(0,0,0,0.2) 0 1px 2px'	+
-									(!isTransparent ? ' 1px, '+props[p]+' 3px 0 4px, '+props[p]+' -3px 0 4px, '+props[p]+' 0 0px 11px' : '')+';\n' +
-						'	}\n' +
-						'}';
+					let sscode = '\
+						@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+						@-moz-document url("'+document.baseURI+'") {\n\
+							window['+objName+'_UUID="'+_UUID+'"] #'+this.kLightPrefix+name+':-moz-any(:hover:not([alert="off"]),[active],[alert="on"]) {\n\
+								box-shadow: rgba(0,0,0,0.2) 0 1px 2px'	+
+									(!isTransparent ? ' 1px, '+props[p]+' 3px 0 4px, '+props[p]+' -3px 0 4px, '+props[p]+' 0 0px 11px' : '')+';\n\
+							}\n\
+						}';
 					
 					Styles.load('skyLight-'+name+'_'+_UUID, sscode, true);
 					toggleAttribute(light, 'transparent', isTransparent);

@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.3';
+Modules.VERSION = '2.0.4';
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
@@ -74,16 +74,16 @@ this.LLB = {
 	},
 	
 	resize: function() {
-		let sscode = 
-			'@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n' +
-			'@-moz-document url("'+document.baseURI+'") {\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) {\n' +
-			'		max-width: ' + Math.floor(slimChrome.lastStyle.width /2) + 'px;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="over-link-box"] {\n' +
-			'		max-width: ' + (Math.floor(slimChrome.lastStyle.width /2) -16) + 'px !important;\n' +
-			'	}\n' +
-			'}';
+		let sscode = '\
+			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+			@-moz-document url("'+document.baseURI+'") {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) {\n\
+					max-width: ' + Math.floor(slimChrome.lastStyle.width /2) + 'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="over-link-box"] {\n\
+					max-width: ' + (Math.floor(slimChrome.lastStyle.width /2) -16) + 'px !important;\n\
+				}\n\
+			}';
 		
 		Styles.load('LLBresize_'+_UUID, sscode, true);
 	}

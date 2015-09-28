@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.18';
+Modules.VERSION = '2.0.19';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -478,45 +478,45 @@ this.slimChrome = {
 		if(!this.shouldReMove(this.moveStyle)) { return; }
 		this.lastStyle = this.moveStyle;
 		
-		let sscode = 
-			'@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n' +
-			'@-moz-document url("'+document.baseURI+'") {\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(ltr) {\n' +
-			'		left: ' + this.moveStyle.left + 'px;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(rtl) {\n' +
-			'		right: ' + this.moveStyle.right + 'px;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n' +
-			'		width: ' + this.moveStyle.width + 'px;\n' +
-			'	}\n' +
-			
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(ltr) {\n' +
-			'		left: ' + this.moveStyle.fullLeft + 'px;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(rtl) {\n' +
-			'		right: ' + this.moveStyle.fullRight + 'px;\n' +
-			'	}\n' +
-		
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(ltr):not([miniSideSwitch]),\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(rtl)[miniSideSwitch] {\n' +
-			'		left: ' + this.moveStyle.left + 'px;\n' +
-			'		right: auto;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(rtl):not([miniSideSwitch]),\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(ltr)[miniSideSwitch] {\n' +
-			'		left: auto;\n' +
-			'		right: ' + this.moveStyle.right + 'px;\n' +
-			'	}\n' +
-		
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {\n' +
-			'		width: ' + this.moveStyle.fullWidth + 'px;\n' +
-			'	}\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimAnimation="rollout"]) #'+objName+'-slimChrome-container:not([hover])[onlyURLBar],\n' +
-			'	window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimAnimation="rollout"] #'+objName+'-slimChrome-container:not([hover]) {\n' +
-			'		width: ' + Math.min(this.moveStyle.width, this.MIN_WIDTH) + 'px;\n' +
-			'	}\n' +
-			'}';
+		let sscode = '\
+			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+			@-moz-document url("'+document.baseURI+'") {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(ltr) {\n\
+					left: ' + this.moveStyle.left + 'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:-moz-locale-dir(rtl) {\n\
+					right: ' + this.moveStyle.right + 'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container {\n\
+					width: ' + this.moveStyle.width + 'px;\n\
+				}\n\
+				\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(ltr) {\n\
+					left: ' + this.moveStyle.fullLeft + 'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])):-moz-locale-dir(rtl) {\n\
+					right: ' + this.moveStyle.fullRight + 'px;\n\
+				}\n\
+				\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(ltr):not([miniSideSwitch]),\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(rtl)[miniSideSwitch] {\n\
+					left: ' + this.moveStyle.left + 'px;\n\
+					right: auto;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(rtl):not([miniSideSwitch]),\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar]:-moz-locale-dir(ltr)[miniSideSwitch] {\n\
+					left: auto;\n\
+					right: ' + this.moveStyle.right + 'px;\n\
+				}\n\
+				\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {\n\
+					width: ' + this.moveStyle.fullWidth + 'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimAnimation="rollout"]) #'+objName+'-slimChrome-container:not([hover])[onlyURLBar],\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimAnimation="rollout"] #'+objName+'-slimChrome-container:not([hover]) {\n\
+					width: ' + Math.min(this.moveStyle.width, this.MIN_WIDTH) + 'px;\n\
+				}\n\
+			}';
 		
 		Styles.load('slimChromeMove_'+_UUID, sscode, true);
 		
