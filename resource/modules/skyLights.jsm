@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.6';
+Modules.VERSION = '1.2.7';
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {
@@ -80,8 +80,15 @@ this.skyLights = {
 			this.container.appendChild(light);
 			this.lights.set(name, light);
 			
+			// only our own lights are allowed to use the dependson attribute,
+			// so we hardcode it here instead of making it an argument of this method
+			let dependson = null;
+			if(name == 'identityBox') {
+				dependson = 'pref-miniOnChangeLocation';
+			}
+			
 			// register this light with the DnDprefs object, so its position can be customized
-			DnDprefs.addWidget('skyLightsPlacements', name, light, props.label, props.description);
+			DnDprefs.addWidget('skyLightsPlacements', name, light, props.label, props.description, dependson);
 			
 			// we need to make sure the light is moved to the correct place or removed if the user chose to disable it
 			this.updatePlacements();

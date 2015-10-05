@@ -67,7 +67,7 @@
 			<checkbox label="&opt.miniOnChangeLocation.label;"
 				helpbox="paneSlimChrome-mini-helptext"
 				jump="miniOnChangeLocation"
-				dependson="pref-slimChrome,pref-includeNavBar,pref-skyLights"
+				dependson="pref-slimChrome,pref-includeNavBar,state-identityBoxLight"
 				delayPreference="pref-miniOnChangeLocation"/>
 			<checkbox label="&opt.miniOnTabSelect.label;"
 				helpbox="paneSlimChrome-mini-helptext"

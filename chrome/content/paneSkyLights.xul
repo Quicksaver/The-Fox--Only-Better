@@ -20,6 +20,8 @@
 			<preference id="pref-skyLights" name="extensions.thefoxonlybetter.skyLights" type="bool"/>
 			<preference id="pref-skyLightsHide" name="extensions.thefoxonlybetter.skyLightsHide" type="bool"/>
 			<preference id="pref-skyLightsPlacements" name="extensions.thefoxonlybetter.skyLightsPlacements" type="string"/>
+			<!-- uninitialized preference that reports the final visibility state of the identityBox sky light, for use by the dependson attributes -->
+			<preference id="state-identityBoxLight" type="bool"/>
 		</preferences>
 		
 		<hbox id="header-skyLights" class="header" collapsed="true" data-category="paneSkyLights">
@@ -34,6 +36,7 @@
 			<checkbox label="&opt.skyLights.label;"
 				helpbox="paneSkyLights-main-helptext"
 				jump="skyLights"
+				dependson="pref-miniOnChangeLocation"
 				delayPreference="pref-skyLights"/>
 			<vbox id="paneSkyLights-main-helptext" collapsed="true">
 				<description>&opt.skyLights.tooltip.a;</description>
