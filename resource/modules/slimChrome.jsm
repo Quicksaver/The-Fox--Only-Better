@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.19';
+Modules.VERSION = '2.0.20';
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -168,6 +168,18 @@ this.slimChrome = {
 					this.container.hoversQueued++;
 					return;
 				}
+				
+				// Try not to double-mouseover items in child popups, otherwise it could lead to the toolbar getting stuck open.
+				// For instance, NoScript's "dis/allow scripts on this page" changes the DOM of the popup, where hovered items could
+				// be removed without triggering a mouseout event, leading to a subsequent mouseover on new/moved items.
+				if(isAncestor(e.target, popups.hovered)) { break; }
+				for(let popup of popups.held) {
+					if(isAncestor(e.target, popup)) {
+						popups.hovered = popup;
+						break;
+					}
+				}
+				
 				this.onMouseOver(e);
 				break;
 			
@@ -178,6 +190,12 @@ this.slimChrome = {
 					this.container.hoversQueued--;
 					break;
 				}
+				
+				// see note above about preventing double-mouseovers
+				if(isAncestor(e.target, popups.hovered)) {
+					popups.hovered = null;
+				}
+				
 				this.setHover(false);
 				break;
 			

@@ -1,4 +1,4 @@
-Modules.VERSION = '3.0.5';
+Modules.VERSION = '3.0.6';
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -34,7 +34,9 @@ this.popups = {
 	mini: new Set(),
 	
 	blocked: false,
+	hovered: null,
 	held: new Set(),
+	release: new Map(),
 	
 	handleEvent: function(e) {
 		switch(e.type) {
@@ -104,6 +106,13 @@ this.popups = {
 					// if we're opening the chrome now, the anchor may move, so we need to reposition the popup when it does
 					this.held.add(target);
 					
+					// make sure the popup stays in the set, so that ones that open and close quickly
+					// (i.e. multiple dis/allow actions in NoScript's popup) aren't removed while they're still open
+					if(this.release.has(target)) {
+						this.release.get(target).cancel();
+						this.release.delete(target);
+					}
+					
 					// sometimes when opening the menu panel, it will be nearly collapsed, I have no idea what is setting these values
 					if(target.id == 'PanelUI-popup') {
 						removeAttribute(target, 'width');
@@ -134,26 +143,31 @@ this.popups = {
 					
 					let selfRemover = (ee) => {
 						// don't trigger for submenus
-						if(ee.originalTarget == e.originalTarget) {
-							Listeners.remove(target, 'popuphidden', selfRemover);
+						if(ee.originalTarget != e.originalTarget) { return; }
+						
+						Listeners.remove(target, 'popuphidden', selfRemover);
+						if(this.hovered == target) {
+							// it's unlikely that a mouseout will occur once the popup is hidden,
+							// so make sure to undo whatever mouseover event hovered the popup
+							slimChrome.setHover(false);
 							
-							// making sure we don't collapse it permanently
-							target.collapsed = false;
-							
-							if(typeof(slimChrome) != 'undefined') {
-								if(this.blocked) {
-									slimChrome.hideMiniInABit();
-									this.blocked = false;
-								}
-								slimChrome.setHover(false);
-							}
-							
-							aSync(() => {
-								if(this.held.has(target)) {
-									this.held.delete(target);
-								}
-							}, 150);
+							this.hovered = null;
 						}
+						
+						// making sure we don't collapse it permanently
+						target.collapsed = false;
+						
+						if(typeof(slimChrome) != 'undefined') {
+							if(this.blocked) {
+								slimChrome.hideMiniInABit();
+								this.blocked = false;
+							}
+							slimChrome.setHover(false);
+						}
+						
+						this.release.set(target, aSync(() => {
+							this.held.delete(target);
+						}, 150));
 					}
 					Listeners.add(target, 'popuphidden', selfRemover);
 				}
