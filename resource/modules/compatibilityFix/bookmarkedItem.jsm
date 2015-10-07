@@ -1,4 +1,4 @@
-Modules.VERSION = '1.4.3';
+Modules.VERSION = '1.4.4';
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -143,6 +143,10 @@ this.bookmarkedItem = {
 			
 			// adapted from BookmarkingUI.onCommand() - http://mxr.mozilla.org/mozilla-central/source/browser/base/content/browser-places.js#1630
 			props.action = (e) => {
+				// don't do anything if the star button isn't meant to do anything either
+				let disabled = trueAttribute(this.broadcaster, 'stardisabled');
+				if(disabled) { return; }
+				
 				// only left-clicks on the light should bookmark the page
 				if(e.button != 0) { return; }
 				
