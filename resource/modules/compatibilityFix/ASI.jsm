@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+// VERSION 2.0.0
 
 this.ASI = {
 	id: 'australissmall@icons.com',

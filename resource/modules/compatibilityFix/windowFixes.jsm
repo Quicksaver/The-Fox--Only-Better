@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.19';
+// VERSION 1.0.19
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');

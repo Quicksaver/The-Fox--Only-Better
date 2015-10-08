@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.6';
+// VERSION 2.0.6
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });

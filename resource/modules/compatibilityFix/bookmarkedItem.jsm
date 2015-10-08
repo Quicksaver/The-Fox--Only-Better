@@ -1,4 +1,4 @@
-Modules.VERSION = '1.4.4';
+// VERSION 1.4.4
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });

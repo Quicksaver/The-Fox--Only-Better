@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.0';
+// VERSION 1.0.0
 
 // I don't particularly like the code in here, but this is how Diigo is built
 // and I just need to fix a bug to make it work with Slim Chrome correctly

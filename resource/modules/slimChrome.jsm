@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.20';
+// VERSION 2.0.20
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });

@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.8';
+// VERSION 2.0.8
 
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
 

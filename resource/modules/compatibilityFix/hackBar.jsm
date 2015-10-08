@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.2';
+// VERSION 1.0.2
 
 Modules.LOADMODULE = function() {
 	slimChromeExceptions.add('hackBarToolbar');

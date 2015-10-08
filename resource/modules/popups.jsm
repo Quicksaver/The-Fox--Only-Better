@@ -1,4 +1,4 @@
-Modules.VERSION = '3.0.6';
+// VERSION 3.0.6
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 

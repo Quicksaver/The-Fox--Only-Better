@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+// VERSION 2.0.0
 
 this.__defineGetter__('RSS_TICKER_UI', function() { return window.RSS_TICKER_UI; });
 this.__defineGetter__('RSS_TICKER_UTILS', function() { return window.RSS_TICKER_UTILS; });

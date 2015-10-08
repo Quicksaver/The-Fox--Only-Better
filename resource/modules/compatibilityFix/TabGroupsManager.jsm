@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.2';
+// VERSION 2.0.2
 
 this.TGM = {
 	id: 'TabGroupsManagerToolbar',

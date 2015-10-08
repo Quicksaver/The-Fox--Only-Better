@@ -1,4 +1,4 @@
-Modules.VERSION = '2.1.3';
+// VERSION 2.1.3
 
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
 this.__defineGetter__('gIdentityBox', function() { return $('identity-box'); });

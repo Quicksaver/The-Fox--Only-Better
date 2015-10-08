@@ -1,4 +1,4 @@
-Modules.VERSION = '1.0.0';
+// VERSION 1.0.0
 
 this.initialShowInWindow = function(aWindow, style, animation, duration) {
 	if(aWindow[objName] && aWindow[objName].slimChrome && aWindow[objName].slimStyle) {

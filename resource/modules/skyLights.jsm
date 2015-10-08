@@ -1,4 +1,4 @@
-Modules.VERSION = '1.2.7';
+// VERSION 1.2.7
 
 // this is the part for interaction by other possible add-ons or elements that will add/control other sky lights
 this.skyLights = {

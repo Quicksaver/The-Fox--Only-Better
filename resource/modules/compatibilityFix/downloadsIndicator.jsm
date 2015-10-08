@@ -1,4 +1,4 @@
-Modules.VERSION = '2.0.0';
+// VERSION 2.0.0
 
 this.__defineGetter__('DownloadsIndicatorView', function() { return window.DownloadsIndicatorView; });
 this.__defineGetter__('DownloadsCommon', function() { return window.DownloadsCommon; });
