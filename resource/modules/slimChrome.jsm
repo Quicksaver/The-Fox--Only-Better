@@ -1,4 +1,4 @@
-// VERSION 2.0.20
+// VERSION 2.0.21
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -941,8 +941,12 @@ this.slimChrome = {
 			
 			// the nav-bar really shouldn't over- or underflow when it's hidden, as it doesn't have its real width
 			this.initOverflowable(gNavBar);
+			
+			setAttribute(gNavToolbox, 'slimChromeNavBar', 'true');
 		}
 		else if((unload || !Prefs.includeNavBar) && isAncestor(gNavBar, this.container)) {
+			removeAttribute(gNavToolbox, 'slimChromeNavBar');
+			
 			this.deinitOverflowable(gNavBar);
 			
 			// don't trigger a re-register of this toolbar node with CUI when it's not needed
@@ -1190,6 +1194,7 @@ this.slimChrome = {
 		removeAttribute(gNavToolbox, 'slimAnimation');
 		removeAttribute(gNavToolbox, 'slimChromeVisible');
 		removeAttribute(gNavToolbox, 'dropIndicatorFix');
+		removeAttribute(gNavToolbox, 'slimChromeNavBar');
 		Watchers.removeAttributeWatcher(tabDropIndicator, 'collapsed', this, false, false);
 		
 		// reset this before we move the toolbar
