@@ -1,6 +1,5 @@
-@import url("chrome://thefoxonlybetter-os/skin/svg.css");
-
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@namespace svg url(http://www.w3.org/2000/svg);
 
 #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
 	-moz-appearance: none;
@@ -222,6 +221,21 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1:not(#back-button):not(
 
 #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars {
 	border-bottom: 1px solid #ababab;
+}
+
+svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke: #ababab;
+}
+
+#theFoxOnlyBetter-slimChrome-container[numToolbars="1"] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-container[numToolbars="1"] svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke-width: 0.03;
+}
+
+#theFoxOnlyBetter-slimChrome-container:not([numToolbars="1"]) svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-container:not([numToolbars="1"]) svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke-width: 0.02;
 }
 
 /* animations */

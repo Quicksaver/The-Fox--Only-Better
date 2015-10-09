@@ -1,6 +1,5 @@
-@import url("chrome://thefoxonlybetter-os/skin/svg.css");
-
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@namespace svg url(http://www.w3.org/2000/svg);
 
 #theFoxOnlyBetter-slimChrome-slimmer {
 	background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
@@ -276,6 +275,32 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 	
 		#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
 			border-bottom-color: #aaaccf;
+		}
+	}
+}
+
+svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke: ThreeDShadow;
+}
+
+#theFoxOnlyBetter-slimChrome-container[numToolbars="1"] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-container[numToolbars="1"] svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke-width: 0.03;
+}
+
+#theFoxOnlyBetter-slimChrome-container:not([numToolbars="1"]) svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+#theFoxOnlyBetter-slimChrome-container:not([numToolbars="1"]) svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke-width: 0.02;
+}
+
+@media (-moz-windows-default-theme) {
+	@media	(-moz-os-version: windows-vista),
+		(-moz-os-version: windows-win7) {
+	
+		svg|*#theFoxOnlyBetter-slimChrome-svg-before-path:not(:-moz-lwtheme),
+		svg|*#theFoxOnlyBetter-slimChrome-svg-after-path:not(:-moz-lwtheme) {
+			stroke: #aabccf;
 		}
 	}
 }
