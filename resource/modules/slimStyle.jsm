@@ -1,5 +1,6 @@
-// VERSION 2.0.8
+// VERSION 2.0.9
 
+this.__defineGetter__('DevEdition', function() { return window.DevEdition; });
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
 
 this.slimStyle = {
@@ -122,7 +123,9 @@ this.slimStyle = {
 				break;
 			
 			case 'lightweight-theme-styling-update':
-				aSync(() => { this.stylePersona(); });
+				Timers.init('stylePersona', () => {
+					this.stylePersona();
+				}, 0);
 				break;
 			
 			case 'lightweight-theme-preview-requested':
@@ -132,7 +135,9 @@ this.slimStyle = {
 	},
 	
 	clipPaths: function() {
-		aSync(() => { this.stylePersona(); });
+		Timers.init('stylePersona', () => {
+			this.stylePersona();
+		}, 0);
 		
 		if(this.style == 'compact') {
 			var d = !DARWIN ? 'm 1,-5 l 0,7.8 l 0,0.2 l 0,50 l 10000,0 l 0,-100 l -10000,0 z' : 'M 1,-5 l 0,50 l 10000,0 l 0,-100 l -10000,0 z';
@@ -296,7 +301,15 @@ this.slimStyle = {
 	},
 	
 	stylePersona: function() {
-		if(typeof(slimChrome) == 'undefined' || !slimChrome.container || !slimChrome.lastStyle) { return; }
+		if(!self.slimChrome || !slimChrome.container || !slimChrome.lastStyle) { return; }
+		
+		// although technically it is a lightweight theme like the others, none of this process is necessary for the DevEdition theme
+		if(DevEdition && DevEdition.isThemeCurrentlyApplied) {
+			setAttribute(gNavToolbox, 'slimDevEdition', 'true');
+			Styles.unload('personaSlimChrome_'+_UUID);
+			return;
+		}
+		removeAttribute(gNavToolbox, 'slimDevEdition');
 		
 		if(!trueAttribute(document.documentElement, 'lwtheme')) {
 			this.lwtheme.bgImage = '';
@@ -304,7 +317,7 @@ this.slimStyle = {
 			this.lwtheme.bgColor = '';
 		}
 		else {
-			var windowStyle = getComputedStyle(document.documentElement);
+			let windowStyle = getComputedStyle(document.documentElement);
 			if(this.lwtheme.bgImage != windowStyle.backgroundImage && windowStyle.backgroundImage != 'none') {
 				this.lwtheme.bgImage = windowStyle.backgroundImage;
 				this.lwtheme.color = windowStyle.color;
@@ -356,8 +369,6 @@ this.slimStyle = {
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
 					background-color: ' + this.lwtheme.bgColor + ' !important;\n\
 					color: ' + this.lwtheme.color + ' !important;\n\
-					background-repeat: repeat !important;\n\
-					background-size: auto auto !important;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
@@ -461,4 +472,5 @@ Modules.UNLOADMODULE = function() {
 	}
 	
 	removeAttribute(gNavToolbox, 'slimStyle');
+	removeAttribute(gNavToolbox, 'slimDevEdition');
 };

@@ -1,4 +1,5 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@namespace svg url(http://www.w3.org/2000/svg);
 
 #theFoxOnlyBetter-slimChrome-container {
 	position: fixed;
@@ -129,6 +130,13 @@ window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #t
 	margin: 0 -3px;
 }
 
+#theFoxOnlyBetter-slimChrome-toolbars:-moz-lwtheme,
+#theFoxOnlyBetter-slimChrome-toolbars-before:-moz-lwtheme,
+#theFoxOnlyBetter-slimChrome-toolbars-after:-moz-lwtheme {
+	background-repeat: repeat;
+	background-size: auto auto;
+}
+
 /* full width style */
 
 #navigator-toolbox[slimStyle="full"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
@@ -165,6 +173,54 @@ window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-before,
 window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-after,
 window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-toolbars-bottom {
 	display: none;
+}
+
+/* tweaks for the Developer Edition theme */
+
+#navigator-toolbox[slimDevEdition] #theFoxOnlyBetter-slimChrome-slimmer {
+	background-image: none !important;
+	box-shadow: 0 1px var(--chrome-nav-bar-separator-color) inset !important;
+	border: none !important;
+	margin-top: 0 !important;
+}
+
+#navigator-toolbox[slimDevEdition] #theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-color: var(--chrome-secondary-background-color) !important;
+	background-image: none !important;
+}
+
+#navigator-toolbox[slimDevEdition] #nav-bar {
+	box-shadow: none !important;
+}
+
+#navigator-toolbox[slimDevEdition]:-moz-any([slimStyle="round"],[slimStyle="full"]) #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #theFoxOnlyBetter-slimChrome-toolbars {
+	min-height: 31px !important;
+}
+
+#navigator-toolbox[slimDevEdition] > toolbar:not(#TabsToolbar):not(#toolbar-menubar)#theFoxOnlyBetter-skyLights-container {
+	background-color: transparent !important;
+}
+
+window[devtoolstheme="dark"] #navigator-toolbox[slimDevEdition]:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-container,
+window[devtoolstheme="dark"] #navigator-toolbox[slimDevEdition][slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar],
+window[devtoolstheme="dark"] #navigator-toolbox[slimDevEdition][slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
+	border-color: var(--chrome-background-color) !important;
+}
+
+window[devtoolstheme="dark"] #navigator-toolbox[slimDevEdition] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+window[devtoolstheme="dark"] #navigator-toolbox[slimDevEdition] svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke: var(--chrome-background-color) !important;
+}
+
+window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition]:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-container,
+window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition][slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:not([hover])[onlyURLBar],
+window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition][slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
+	border-color: #aaa !important;
+}
+
+window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
+window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition] svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
+	stroke: #aaa !important;
 }
 
 /* animations */
