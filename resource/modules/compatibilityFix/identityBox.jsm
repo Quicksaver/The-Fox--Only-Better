@@ -1,4 +1,4 @@
-// VERSION 2.1.3
+// VERSION 2.1.4
 
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
 this.__defineGetter__('gIdentityBox', function() { return $('identity-box'); });
@@ -103,8 +103,8 @@ this.identityBox = {
 			toCode.revert(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent');
 		} else {
 			Piggyback.revert('identityBox', gIdentityHandler, 'refreshIdentityBlock');
-			
 			Piggyback.revert('identityBox', gIdentityHandler, 'handleIdentityButtonEvent');
+			
 			delete gIdentityHandler._identityIcons;
 			gIdentityHandler._identityIcons = $('identity-icons');
 		}
@@ -128,50 +128,27 @@ this.identityBox = {
 	},
 	
 	update: function(initialize) {
-		// default transparent state, for modes:
-		//	gIdentityHandler.IDENTITY_MODE_UNKNOWN
-		//	gIdentityHandler.IDENTITY_MODE_CHROMEUI
-		//	gIdentityHandler.IDENTITY_MODE_FILE_URI
+		// modes are defined in gIdentityHandler.refreshIdentityBlock at http://mxr.mozilla.org/mozilla-central/source/browser/base/content/browser.js
+		// default transparent state, for modes "unknownIdentity" and "chromeUI"
 		
-		var props = {
+		let modes = gIdentityBox.classList;
+		let props = {
 			tooltip: $('identity-icon-label').value,
 			state: gIdentityBox.className,
 			color: 'transparent'
 		};
 		
-		switch(props.state) {
-			case gIdentityHandler.IDENTITY_MODE_IDENTIFIED:
-				props.color = 'hsl(82,100%,40%)';
-				break;
-			
-			case gIdentityHandler.IDENTITY_MODE_DOMAIN_VERIFIED:
-				props.color = 'hsl(220,100%,40%)';
-				break;
-			
-			case gIdentityHandler.IDENTITY_MODE_MIXED_ACTIVE_LOADED:
-			case gIdentityHandler.IDENTITY_MODE_MIXED_DISPLAY_LOADED_ACTIVE_BLOCKED:
-			case gIdentityHandler.IDENTITY_MODE_MIXED_DISPLAY_LOADED:
-				props.color = 'hsl(52,100%,50%)';
-				break;
-			
-			default:
-				// these were introduced in FF42
-				if(Services.vc.compare(Services.appinfo.version, "42.0a1") >= 0) {
-					switch(props.state) {
-						case gIdentityHandler.MIXED_ACTIVE_BLOCKED_IDENTIFIED:
-							props.color = 'hsl(82,100%,40%)';
-							break;
-						
-						case gIdentityHandler.IDENTITY_MODE_MIXED_ACTIVE_BLOCKED:
-							props.color = 'hsl(220,100%,40%)';
-							break;
-						
-						case gIdentityHandler.IDENTITY_MODE_USES_WEAK_CIPHER:
-							props.color = 'hsl(52,100%,50%)';
-							break;
-					}
-				}
-				break;
+		if(modes.contains("verifiedIdentity")) {
+			props.color = 'hsl(82,100%,40%)';
+		}
+		else if(modes.contains("verifiedDomain")) {
+			props.color = 'hsl(220,100%,40%)';
+		}
+		else if(modes.contains("mixedActiveContent")
+		|| modes.contains("mixedDisplayContentLoadedActiveBlocked")
+		|| modes.contains("mixedDisplayContent")
+		|| modes.contains("weakCipher")) {
+			props.color = 'hsl(52,100%,50%)';
 		}
 		
 		if($('identity-icon-country-label').value) {
