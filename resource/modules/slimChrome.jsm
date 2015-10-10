@@ -1,4 +1,4 @@
-// VERSION 2.0.21
+// VERSION 2.0.22
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -956,8 +956,6 @@ this.slimChrome = {
 				gNavToolbox.insertBefore(gNavBar, this.slimmer || customToolbars);
 			}
 		}
-		
-		this.slimmer.collapsed = !Prefs.includeNavBar;
 	},
 	
 	initOverflowable: function(toolbar) {
