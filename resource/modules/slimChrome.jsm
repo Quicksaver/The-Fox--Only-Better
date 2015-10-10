@@ -1,4 +1,4 @@
-// VERSION 2.0.22
+// VERSION 2.0.21
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -565,8 +565,8 @@ this.slimChrome = {
 					
 					// the searchbar's engine selection popup is a bit of a special case; the mouseover events repeat for the actual searchbar
 					if(parent.localName == 'searchbar' && e.type == 'mouseover') {
-						var searchPopup = $ª(parent, 'searchbar-popup');
-						if(searchPopup.state == 'open') {
+						let searchPopup = $ª(parent, 'searchbar-popup');
+						if(searchPopup && searchPopup.state == 'open') {
 							if(e.screenY >= searchPopup.boxObject.screenY
 							&& e.screenY <= searchPopup.boxObject.screenY +searchPopup.boxObject.height
 							&& e.screenX >= searchPopup.boxObject.screenX
