@@ -1,4 +1,4 @@
-// VERSION 2.1.4
+// VERSION 2.1.5
 
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
 this.__defineGetter__('gIdentityBox', function() { return $('identity-box'); });
@@ -147,7 +147,8 @@ this.identityBox = {
 		else if(modes.contains("mixedActiveContent")
 		|| modes.contains("mixedDisplayContentLoadedActiveBlocked")
 		|| modes.contains("mixedDisplayContent")
-		|| modes.contains("weakCipher")) {
+		|| modes.contains("weakCipher")
+		|| modes.contains("insecureLoginForms")) {
 			props.color = 'hsl(52,100%,50%)';
 		}
 		
