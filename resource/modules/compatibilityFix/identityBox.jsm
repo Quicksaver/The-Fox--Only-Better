@@ -1,4 +1,4 @@
-// VERSION 2.1.5
+// VERSION 2.1.6
 
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
 this.__defineGetter__('gIdentityBox', function() { return $('identity-box'); });
@@ -50,40 +50,22 @@ this.identityBox = {
 		if(this.initialized) { return; }
 		this.initialized = true;
 		
-		if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
-			gIdentityHandler.__mode = gIdentityHandler._mode;
-			delete gIdentityHandler._mode;
-			gIdentityHandler.__defineGetter__('_mode', function() { return this.__mode; });
-			gIdentityHandler.__defineSetter__('_mode', function(v) {
-				this.__mode = v;
-				identityBox.update();
-				return this.__mode;
-			});
+		Piggyback.add('identityBox', gIdentityHandler, 'refreshIdentityBlock', (newMode) => {
+			this.update();
+		}, Piggyback.MODE_AFTER);
+		
+		// change the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
+		Piggyback.add('identityBox', gIdentityHandler, 'handleIdentityButtonEvent', function(event) {
+			let light = skyLights.get('identityBox');
+			let anchor = (isAncestor(event.target, light)) ? light : $('identity-icons');
 			
-			toCode.modify(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent', [
-				// this changes the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
-				['this._identityPopup.openPopup(this._identityIcon, "bottomcenter topleft");',
-					'this._identityPopup.openPopup(isAncestor(event.target, $("theFoxOnlyBetter-skyLights-identityBox")) ? $("theFoxOnlyBetter-skyLights-identityBox") : this._identityIcon, "bottomcenter topleft");'
-				]
-			]);
-		} else {
-			Piggyback.add('identityBox', gIdentityHandler, 'refreshIdentityBlock', (newMode) => {
-				this.update();
-			}, Piggyback.MODE_AFTER);
+			if(anchor != this._identityIcons) {
+				delete this._identityIcons;
+				this._identityIcons = anchor;
+			}
 			
-			// change the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
-			Piggyback.add('identityBox', gIdentityHandler, 'handleIdentityButtonEvent', function(event) {
-				let light = skyLights.get('identityBox');
-				let anchor = (isAncestor(event.target, light)) ? light : $('identity-icons');
-				
-				if(anchor != this._identityIcons) {
-					delete this._identityIcons;
-					this._identityIcons = anchor;
-				}
-				
-				return true;
-			}, Piggyback.MODE_BEFORE);
-		}
+			return true;
+		}, Piggyback.MODE_BEFORE);
 		
 		Listeners.add(gIdentityPopup, 'popupshowing', this);
 		Listeners.add(gIdentityPopup, 'popuphiding', this);
@@ -95,19 +77,11 @@ this.identityBox = {
 		if(!this.initialized) { return; }
 		this.initialized = false;
 		
-		if(Services.vc.compare(Services.appinfo.version, "42.0a1") < 0) {
-			delete gIdentityHandler._mode;
-			gIdentityHandler._mode = gIdentityHandler.__mode;
-			delete gIdentityHandler.__mode;
-			
-			toCode.revert(gIdentityHandler, 'gIdentityHandler.handleIdentityButtonEvent');
-		} else {
-			Piggyback.revert('identityBox', gIdentityHandler, 'refreshIdentityBlock');
-			Piggyback.revert('identityBox', gIdentityHandler, 'handleIdentityButtonEvent');
-			
-			delete gIdentityHandler._identityIcons;
-			gIdentityHandler._identityIcons = $('identity-icons');
-		}
+		Piggyback.revert('identityBox', gIdentityHandler, 'refreshIdentityBlock');
+		Piggyback.revert('identityBox', gIdentityHandler, 'handleIdentityButtonEvent');
+		
+		delete gIdentityHandler._identityIcons;
+		gIdentityHandler._identityIcons = $('identity-icons');
 		
 		Listeners.remove(gIdentityPopup, 'popupshowing', this);
 		Listeners.remove(gIdentityPopup, 'popuphiding', this);

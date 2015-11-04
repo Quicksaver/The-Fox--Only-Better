@@ -6,7 +6,7 @@
 	background: url(chrome://browser/skin/Toolbar-background-noise.png) hsl(0,0%,83%);
 }
 @media (-moz-mac-yosemite-theme) {
-	#main-window[theFoxOnlyBetter-FF42] #theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
+	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
 		background-image: none;
 	}
 }
@@ -25,7 +25,7 @@
 	background-image: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 }
 @media (-moz-mac-yosemite-theme) {
-	#main-window[theFoxOnlyBetter-FF42] #navigator-toolbox > toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#TabsToolbar):not(#nav-bar):not(:-moz-lwtheme) {
+	#navigator-toolbox > toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#TabsToolbar):not(#nav-bar):not(:-moz-lwtheme) {
 		background-image: linear-gradient(hsl(0,0%,93%), hsl(0,0%,83%));
 	}
 }
