@@ -11,9 +11,13 @@
 	border-color: rgba(0,0,0,.3);
 }
 
-#theFoxOnlyBetter-slimChrome-slimmer {
+window:not([theFoxOnlyBetter-FF44]) #theFoxOnlyBetter-slimChrome-slimmer {
 	background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.25));
 	box-shadow: 0 1px 0 rgba(255,255,255,.3) inset;
+}
+
+window[theFoxOnlyBetter-FF44] #theFoxOnlyBetter-slimChrome-slimmer {
+	box-shadow: 0 1px 0 rgba(255,255,255,.4) inset;
 }
 
 #TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
@@ -42,14 +46,18 @@
 	background-color: -moz-dialog;
 }
 
-#navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+window:not([theFoxOnlyBetter-FF44]) #navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
 	background-image: linear-gradient(rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
 }
 
-#navigator-toolbox > #RSSTICKERToolbar,
-#navigator-toolbox > #puzzleBars-top-bar {
+window:not([theFoxOnlyBetter-FF44]) #navigator-toolbox > #RSSTICKERToolbar,
+window:not([theFoxOnlyBetter-FF44]) #navigator-toolbox > #puzzleBars-top-bar {
 	background-image: linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,0));
 	background-size: auto auto;
+}
+
+window[theFoxOnlyBetter-FF44] #navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-image: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4));
 }
 
 #theFoxOnlyBetter-slimChrome-container #nav-bar {
@@ -149,9 +157,18 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 	border-bottom: 1px solid ThreeDShadow;
 }
 
+#main-window[theFoxOnlyBetter-FF43] #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars {
+	border-color: rgba(0,0,0,.3);
+}
+
 svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
 svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
 	stroke: ThreeDShadow;
+}
+
+#main-window[theFoxOnlyBetter-FF43] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path:-moz-lwtheme,
+#main-window[theFoxOnlyBetter-FF43] svg|*#theFoxOnlyBetter-slimChrome-svg-after-path:-moz-lwtheme {
+	stroke: rgba(0,0,0,.3);
 }
 
 #theFoxOnlyBetter-slimChrome-container[numToolbars="1"] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,

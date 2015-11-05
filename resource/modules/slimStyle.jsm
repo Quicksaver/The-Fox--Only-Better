@@ -1,4 +1,4 @@
-// VERSION 2.0.10
+// VERSION 2.0.11
 
 this.__defineGetter__('DevEdition', function() { return window.DevEdition; });
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
@@ -84,9 +84,11 @@ this.slimStyle = {
 	AUSTRALIS_BORDER_COORD_Y5: 1,
 	
 	// some gradients for use with personas
-	bgGradientWINNT: 'rgba(253,253,253,0.4) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
-	bgGradientDARWIN: 'rgba(253,253,253,0.45), rgba(253,253,253,0.45)',
+	bgGradientWINNT: 'rgba('+((Services.vc.compare(Services.appinfo.version, "44.0a1") >= 0) ? '255,255,255,.35' : '253,253,253,0.4')+') 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
 	bgGradientLINUX: 'rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
+	bgFlatWINNT: 'rgba(255,255,255,.4), rgba(255,255,255,.4)',
+	bgFlatLINUX: 'rgba(255,255,255,.4), rgba(255,255,255,.4)',
+	bgFlatDARWIN: 'rgba(253,253,253,0.45), rgba(253,253,253,0.45)',
 	
 	handleEvent: function(e) {
 		switch(e.type) {
@@ -355,10 +357,12 @@ this.slimStyle = {
 			var australisOffsetXLeft = -document.documentElement.clientWidth +slimChrome.lastStyle.left +this.AUSTRALIS_BORDER_WIDTH +borderStart -1;
 		}
 		
-		var bgGradient = (WINNT) ? this.bgGradientWINNT : (DARWIN) ? this.bgGradientDARWIN : this.bgGradientLINUX;
+		let bgGradient = (WINNT) ? this.bgGradientWINNT : (DARWIN) ? this.bgFlatDARWIN : this.bgGradientLINUX;
+		let bgFlat = (WINNT) ? this.bgFlatWINNT : (DARWIN) ? this.bgFlatDARWIN : this.bgFlatLINUX;
 		/* Compatibility with CTR's "Navigation Toolbar: Remove Background Color": with lwthemes it should show the image, not the gradient */
 		if(CTR && Prefs.nonavbarbg && CTR.fxdefaulttheme) {
 			bgGradient = 'transparent, transparent';
+			bgFlat = 'transparent, transparent';
 		}
 		
 		let sscode = '\
@@ -370,15 +374,34 @@ this.slimStyle = {
 					background-color: ' + this.lwtheme.bgColor + ' !important;\n\
 					color: ' + this.lwtheme.color + ' !important;\n\
 				}\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-toolbars-after {\n\
 					background-image: linear-gradient('+((DARWIN) ? bgGradient : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n\
 				}\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
 					background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-toolbars-after {\n\
+					background-image: linear-gradient('+((DARWIN) ? bgFlat : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+					background-image: linear-gradient('+bgFlat+'), ' + this.lwtheme.bgImage + ' !important;\n\
+				}\n\
+				@media	(-moz-os-version: windows-xp),\n\
+					(-moz-os-version: windows-vista),\n\
+					(-moz-os-version: windows-win7) {\n\
+					window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+					window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+					window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-slimmer:not([collapsed]) ~ #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+						background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n\
+					}\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars {\n\
 					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+offsetX+'px top '+offsetY+'px !important;\n\
@@ -443,6 +466,7 @@ Modules.LOADMODULE = function() {
 	
 	// for styling changes in the latest versions
 	toggleAttribute(document.documentElement, objName+'-FF43', Services.vc.compare(Services.appinfo.version, "43.0a1") >= 0);
+	toggleAttribute(document.documentElement, objName+'-FF44', Services.vc.compare(Services.appinfo.version, "44.0a1") >= 0);
 	
 	slimStyle.apply();
 };
@@ -456,6 +480,7 @@ Modules.UNLOADMODULE = function() {
 	Observers.remove(slimStyle, "lightweight-theme-preview-requested");
 	
 	removeAttribute(document.documentElement, objName+'-FF43');
+	removeAttribute(document.documentElement, objName+'-FF44');
 	
 	Prefs.unlisten('slimStyle', slimStyle);
 	Prefs.unlisten('nonavbarbg', slimStyle);

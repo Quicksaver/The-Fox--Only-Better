@@ -1,7 +1,7 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @namespace svg url(http://www.w3.org/2000/svg);
 
-#theFoxOnlyBetter-slimChrome-slimmer {
+window:not([theFoxOnlyBetter-FF44]) #theFoxOnlyBetter-slimChrome-slimmer {
 	background-image: linear-gradient(rgba(253,253,253,0.45), rgba(253,253,253,0.4));
 	background-clip: padding-box;
 }
@@ -16,8 +16,11 @@
 	(-moz-os-version: windows-win7),
 	(-moz-os-version: windows-win8) {
 	
-	#theFoxOnlyBetter-slimChrome-slimmer {
+	window:not([theFoxOnlyBetter-FF44]) #theFoxOnlyBetter-slimChrome-slimmer {
 		box-shadow: 0 1px 0 rgba(253,253,253,0.45) inset;
+	}
+	window[theFoxOnlyBetter-FF44] #theFoxOnlyBetter-slimChrome-slimmer {
+		box-shadow: 0 1px 0 rgba(255,255,255,.4) inset;
 	}
 	
 	#TabsToolbar:not([collapsed="true"]) + #theFoxOnlyBetter-slimChrome-slimmer {
@@ -40,13 +43,18 @@
 	background-color: -moz-dialog;
 }
 
-#navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+window:not([theFoxOnlyBetter-FF44]) #navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
 	background-image: linear-gradient(rgba(253,253,253,0.4) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
 }
 
-#navigator-toolbox > #RSSTICKERToolbar,
-#navigator-toolbox > #puzzleBars-top-bar {
+window:not([theFoxOnlyBetter-FF44]) #navigator-toolbox > #RSSTICKERToolbar,
+window:not([theFoxOnlyBetter-FF44]) #navigator-toolbox > #puzzleBars-top-bar {
 	background-image: linear-gradient(rgba(253,253,253,0.4), rgba(255,255,255,0));
+	background-size: auto auto;
+}
+
+window[theFoxOnlyBetter-FF44] #navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-image: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4));
 	background-size: auto auto;
 }
 
@@ -54,8 +62,31 @@
 	background-image: none;
 	margin-top: 0;
 	box-shadow: none;
-	/* !important needed for bug 8426282 */
+	/* !important needed for bug 1008424 */
 	border-top: none !important;
+}
+
+@media	(-moz-os-version: windows-xp),
+	(-moz-os-version: windows-vista),
+	(-moz-os-version: windows-win7) {
+	
+	window[theFoxOnlyBetter-FF44] #navigator-toolbox > toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#toolbar-menubar):not(#TabsToolbar):not(#nav-bar) {
+		background-image: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.35));
+	}
+	
+	window[theFoxOnlyBetter-FF44] #navigator-toolbox > toolbar#RSSTICKERToolbar:not(#toolbar-menubar):not(#TabsToolbar):not(#nav-bar),
+	window[theFoxOnlyBetter-FF44] #navigator-toolbox > toolbar#puzzleBars-top-bar:not(#toolbar-menubar):not(#TabsToolbar):not(#nav-bar) {
+		background-image: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.0));
+	}
+	
+	window[theFoxOnlyBetter-FF44] #navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+		background-image: linear-gradient(rgba(255,255,255,.35) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0));
+	}
+	
+	#theFoxOnlyBetter-slimChrome-container #nav-bar {
+		/* !important needed for bug 1184651 */
+		background-image: none !important;
+	}
 }
 
 @media (-moz-windows-default-theme) {
@@ -274,9 +305,21 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 		(-moz-os-version: windows-win7) {
 	
 		#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
-			border-bottom-color: #aaaccf;
+			border-bottom-color: #aabccf;
 		}
 	}
+	
+	@media	(-moz-os-version: windows-win8),
+		(-moz-os-version: windows-win10) {
+	
+		#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
+			border-color: #c2c2c2;
+		}
+	}
+}
+
+#main-window[theFoxOnlyBetter-FF43] #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:-moz-lwtheme {
+	border-color: rgba(0,0,0,.3);
 }
 
 svg|*#theFoxOnlyBetter-slimChrome-svg-before-path,
@@ -303,6 +346,20 @@ svg|*#theFoxOnlyBetter-slimChrome-svg-after-path {
 			stroke: #aabccf;
 		}
 	}
+	
+	@media	(-moz-os-version: windows-win8),
+		(-moz-os-version: windows-win10) {
+	
+		svg|*#theFoxOnlyBetter-slimChrome-svg-before-path:not(:-moz-lwtheme),
+		svg|*#theFoxOnlyBetter-slimChrome-svg-after-path:not(:-moz-lwtheme) {
+			stroke: #c2c2c2;
+		}
+	}
+}
+
+#main-window[theFoxOnlyBetter-FF43] svg|*#theFoxOnlyBetter-slimChrome-svg-before-path:-moz-lwtheme,
+#main-window[theFoxOnlyBetter-FF43] svg|*#theFoxOnlyBetter-slimChrome-svg-after-path:-moz-lwtheme {
+	stroke: rgba(0,0,0,.3);
 }
 
 /* animations */
