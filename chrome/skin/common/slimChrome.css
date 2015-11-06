@@ -262,7 +262,7 @@ window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition] svg|*#theFoxOnl
 
 #navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container:not([mini]):not([hover]) {
 	transition: opacity 0s linear .5s, transform .5s linear 0s;
-	transform: rotateX(-90deg);
+	transform: perspective(1500px) rotate3d(1, 0, 0, -90deg);
 }
 
 #navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container[mini]:not([hover]),
@@ -272,10 +272,7 @@ window[devtoolstheme="light"] #navigator-toolbox[slimDevEdition] svg|*#theFoxOnl
 
 #navigator-toolbox[slimAnimation="hinge"] #theFoxOnlyBetter-slimChrome-container {
 	transform-origin: top;
-}
-
-#navigator-toolbox[slimAnimation="hinge"]  {
-	perspective: 1500px;
+	transform: perspective(1500px);
 }
 
 /* some widget animations fixes */

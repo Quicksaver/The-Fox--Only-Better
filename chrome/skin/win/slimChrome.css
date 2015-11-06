@@ -167,7 +167,7 @@ window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onl
 
 /* tab drop indicator would be cutoff, see bug 886281 and 936076 */
 @media (-moz-windows-glass) {
-	#navigator-toolbox[dropIndicatorFix]:not([slimAnimation="hinge"]):not(:-moz-lwtheme) {
+	#navigator-toolbox[dropIndicatorFix]:not(:-moz-lwtheme) {
 		overflow: visible;
 	}
 	#navigator-toolbox:not([dropIndicatorFix]):not(:-moz-lwtheme) .tab-drop-indicator {
