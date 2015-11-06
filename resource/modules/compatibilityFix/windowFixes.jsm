@@ -1,4 +1,4 @@
-// VERSION 1.0.20
+// VERSION 1.0.21
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
@@ -43,6 +43,10 @@ Modules.LOADMODULE = function() {
 		Modules.loadIf('compatibilityFix/diigoTb', (addon && addon.isActive));
 	});
 	
+	AddonManager.getAddonByID("AllAboutLocationBar@Minimalist", function(addon) {
+		Modules.loadIf('compatibilityFix/AALB', (addon && addon.isActive));
+	});
+	
 	Modules.load('compatibilityFix/UIEnhancer');
 };
 
@@ -61,5 +65,6 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/hackBar');
 	Modules.unload('compatibilityFix/AniWeather');
 	Modules.unload('compatibilityFix/diigoTb');
+	Modules.unload('compatibilityFix/AALB');
 	Modules.unload('compatibilityFix/UIEnhancer');
 };
