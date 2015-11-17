@@ -1,4 +1,4 @@
-// VERSION 3.0.7
+// VERSION 3.0.8
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -40,6 +40,7 @@ this.popups = {
 	
 	handleEvent: function(e) {
 		switch(e.type) {
+			case 'popupshowing':
 			case 'popupshown':
 				// don't do anything on tooltips! the UI might collapse altogether
 				if(!e.target || e.target.nodeName == 'window' || e.target.nodeName == 'tooltip') { return; }
@@ -99,6 +100,15 @@ this.popups = {
 						// trigger could be either in the toolbars themselves or in the overflow panel
 						hold = isAncestor(trigger, slimChrome.container) || isAncestor(trigger, overflowList);
 					}
+				}
+				
+				// Similarly to the 'click' handler below,
+				// popups shouldn't flash or jump around because the toolbars are temporarily hidden before the popup is fully shown.
+				if(e.type == 'popupshowing') {
+					if(hold && trueAttribute(slimChrome.container, 'hover')) {
+						slimChrome.initialShow(500);
+					}
+					break;
 				}
 				
 				// some menus, like NoScript's button menu, like to open multiple times (I think), or at least they don't actually open the first time... or something...
@@ -226,6 +236,7 @@ this.popups = {
 	
 	init: function() {
 		// if a menu or a panel is opened from the toolbox, keep it shown
+		Listeners.add(window, 'popupshowing', this);
 		Listeners.add(window, 'popupshown', this);
 		Listeners.add(slimChrome.container, 'willSetMiniChrome', this);
 		Listeners.add(slimChrome.container, 'FinishedSlimChromeWidth', this);
@@ -239,6 +250,7 @@ this.popups = {
 		
 		dispatch(slimChrome.container, { type: 'UnloadingSlimChromePopups', cancelable: false });
 		
+		Listeners.remove(window, 'popupshowing', this);
 		Listeners.remove(window, 'popupshown', this);
 		Listeners.remove(slimChrome.container, 'willSetMiniChrome', this);
 		Listeners.remove(slimChrome.container, 'FinishedSlimChromeWidth', this);
