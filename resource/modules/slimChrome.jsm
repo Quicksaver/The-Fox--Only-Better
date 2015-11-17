@@ -1,4 +1,4 @@
-// VERSION 2.0.22
+// VERSION 2.0.23
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -875,7 +875,7 @@ this.slimChrome = {
 		// Taking this from TPP, making the same assumptions.
 		// don't use Timers, because if we use multiple initialShow()'s it could get stuck open
 		// we keep a reference to the timer, because otherwise sometimes it would not trigger (go figure...), hopefully this helps with that
-		var thisShowing = aSync(() => {
+		let thisShowing = aSync(() => {
 			if(this.initialShowings.has(thisShowing)) {
 				this.initialShowings.delete(thisShowing);
 			}

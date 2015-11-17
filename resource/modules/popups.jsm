@@ -1,4 +1,4 @@
-// VERSION 3.0.6
+// VERSION 3.0.7
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -173,6 +173,14 @@ this.popups = {
 				}
 				break;
 			
+			case 'click':
+				// When pressing a button in the toolbar while keeping the mouse moving, it's possible the mouse would leave the toolbar
+				// before a popup is opened. So the toolbar would temporarily start to hide because it is only stuck open *after*
+				// the popup is finished opening. This would cause some visual glitches in the popups, like them flashing, showing only the borders,
+				// or jumping to the top-left edge of the window.
+				slimChrome.initialShow(500);
+				break;
+			
 			case 'willSetMiniChrome':
 				// e.detail is if setting or unsetting mini state
 				if(e.detail) { this.blocked = false; }
@@ -221,6 +229,7 @@ this.popups = {
 		Listeners.add(window, 'popupshown', this);
 		Listeners.add(slimChrome.container, 'willSetMiniChrome', this);
 		Listeners.add(slimChrome.container, 'FinishedSlimChromeWidth', this);
+		Listeners.add(slimChrome.container, 'click', this);
 		
 		dispatch(slimChrome.container, { type: 'LoadedSlimChromePopups', cancelable: false });
 	},
@@ -233,6 +242,7 @@ this.popups = {
 		Listeners.remove(window, 'popupshown', this);
 		Listeners.remove(slimChrome.container, 'willSetMiniChrome', this);
 		Listeners.remove(slimChrome.container, 'FinishedSlimChromeWidth', this);
+		Listeners.remove(slimChrome.container, 'click', this);
 	}
 };
 
