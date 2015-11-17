@@ -1,4 +1,4 @@
-// VERSION 1.4.4
+// VERSION 1.4.5
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -71,6 +71,15 @@ this.bookmarkedItem = {
 		Timers.init('bookmarkedItemAttrWatcher', () => { this.update(); }, 0);
 	},
 	
+	observe: function(aSubject, aTopic, aData) {
+		this.toggleButtonInMiniBar(aData);
+	},
+	
+	// only show the star button in the mini bar if its sky light is enabled, they're meant to complement each other after all	
+	toggleButtonInMiniBar: function(aData) {
+		toggleAttribute(this.button, 'showInMiniBar', aData.settings.get('bookmarkedItem').enable);
+	},
+	
 	init: function() {
 		if(this.initialized) { return; }
 		this.initialized = true;
@@ -84,11 +93,17 @@ this.bookmarkedItem = {
 		Watchers.addAttributeWatcher(this.broadcaster, 'buttontooltiptext', this, false, false);
 		
 		this.update(true);
+		
+		DnDprefs.addHandler('skyLightsPlacements', this);
+		this.toggleButtonInMiniBar(DnDprefs.getPref('skyLightsPlacements'));
 	},
 	
 	deinit: function() {
 		if(!this.initialized) { return; }
 		this.initialized = false;
+		
+		DnDprefs.removeHandler('skyLightsPlacements', this);
+		removeAttribute(this.button, 'showInMiniBar');
 		
 		Timers.cancel('bookmarkedItemAttrWatcher');
 		
@@ -104,9 +119,6 @@ this.bookmarkedItem = {
 	},
 	
 	popupInit: function() {
-		// this shouldn't depend on the Sky Light being initialized
-		setAttribute(this.button, 'showInMiniBar', 'true');
-		
 		popups.mini.add('editBookmarkPanel');
 		
 		// the editBookmarkPanel is only created when first called
@@ -118,8 +130,6 @@ this.bookmarkedItem = {
 	},
 	
 	popupDeinit: function() {
-		removeAttribute(this.button, 'showInMiniBar');
-		
 		popups.mini.delete('editBookmarkPanel');
 		
 		Listeners.remove(this.editPanel, 'AskingForNodeOwner', this);
