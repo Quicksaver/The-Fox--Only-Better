@@ -1,4 +1,4 @@
-content   thefoxonlybetter                    chrome/content/
+content   thefoxonlybetter                    chrome/content/   contentaccessible=yes
 resource  thefoxonlybetter                    resource/
 
 locale    thefoxonlybetter-en   en-US         chrome/locale/en-US/
