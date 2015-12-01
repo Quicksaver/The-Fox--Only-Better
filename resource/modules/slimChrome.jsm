@@ -1,4 +1,4 @@
-// VERSION 2.0.23
+// VERSION 2.0.24
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -74,8 +74,7 @@ this.slimChrome = {
 	initialLoading: true,
 	
 	receiveMessage: function(m) {
-		// +1 is for the ':' after objName
-		let name = m.name.substr(objName.length +1);
+		let name = Messenger.messageName(m);
 		
 		switch(name) {
 			case 'focusPasswords':

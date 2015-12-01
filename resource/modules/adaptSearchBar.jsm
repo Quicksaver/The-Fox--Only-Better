@@ -1,4 +1,4 @@
-// VERSION 1.0.0
+// VERSION 1.0.1
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -6,8 +6,7 @@ this.adaptSearchBar = {
 	initialized: false,
 	
 	receiveMessage: function(m) {
-		// +1 is for the ':' after objName
-		let name = m.name.substr(objName.length +1);
+		let name = Messenger.messageName(m);
 		
 		switch(name) {
 			case 'AdaptSearchBar:Value':
