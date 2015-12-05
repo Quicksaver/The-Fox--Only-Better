@@ -1,4 +1,4 @@
-// VERSION 2.0.24
+// VERSION 2.0.25
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -137,7 +137,7 @@ this.slimChrome = {
 					aSync(() => {
 						let notification = gBrowser.getNotificationBox().getNotificationWithValue('translation');
 						if(notification) {
-							let button = $ª(notification, 'translate');
+							let button = $Âª(notification, 'translate');
 							if(button) {
 								button.focus();
 							}
@@ -461,7 +461,7 @@ this.slimChrome = {
 		if(TabsToolbar && !TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden') {
 			// This is also needed when the tabs are on the left, the width of the findbar doesn't follow with the rest of the window for some reason
 			if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left' || TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
-				let TabsSplitter = $ª($('content'), 'treestyletab-splitter', 'class');
+				let TabsSplitter = $Âª($('content'), 'treestyletab-splitter', 'class');
 				this.moveStyle.width -= TabsToolbar.clientWidth;
 				this.moveStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
 				if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left') {
@@ -564,7 +564,7 @@ this.slimChrome = {
 					
 					// the searchbar's engine selection popup is a bit of a special case; the mouseover events repeat for the actual searchbar
 					if(parent.localName == 'searchbar' && e.type == 'mouseover') {
-						let searchPopup = $ª(parent, 'searchbar-popup');
+						let searchPopup = $Âª(parent, 'searchbar-popup');
 						if(searchPopup && searchPopup.state == 'open') {
 							if(e.screenY >= searchPopup.boxObject.screenY
 							&& e.screenY <= searchPopup.boxObject.screenY +searchPopup.boxObject.height
