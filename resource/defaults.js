@@ -27,13 +27,13 @@ prefList = {
 	slimStyle: 'australis',
 	slimAnimation: 'rollout',
 	slimOnlyOverContent: false, // hidden pref to enable old Slim Chrome look, with this enabled the toolbars won't cover the sidebar
-	
+
 	skyLights: true,
 	skyLightsHide: true,
 	skyLightsPlacements: '',
-	
+
 	adaptSearchBar: true,
-	
+
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,
 	slimChromeShift: false,
@@ -54,7 +54,7 @@ function startAddon(window) {
 function onStartup(aReason) {
 	Modules.load('compatibilityFix/sandboxFixes');
 	Modules.load('keysets');
-	
+
 	// Apply the add-on to every window opened and to be opened
 	Windows.callOnAll(startAddon, 'navigator:browser');
 	Windows.register(startAddon, 'domwindowopened', 'navigator:browser');
@@ -63,7 +63,7 @@ function onStartup(aReason) {
 function onShutdown(aReason) {
 	// remove the add-on from all windows
 	Windows.callOnAll(removeObject, null, null, true);
-	
+
 	Modules.unload('keysets');
 	Modules.unload('compatibilityFix/sandboxFixes');
 }

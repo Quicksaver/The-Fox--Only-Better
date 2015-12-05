@@ -38,7 +38,7 @@ Modules.LOADMODULE = function() {
 				return;
 			}
 		}
-		
+
 		let openSearchPageIfFieldIsNotActive = function(aSearchBar) {
 			if(!aSearchBar || document.activeElement != aSearchBar.textbox.inputField) {
 				if(!focusOmnibar) {
@@ -48,10 +48,10 @@ Modules.LOADMODULE = function() {
 				}
 			}
 		};
-		
+
 		let searchBar = this.searchBar;
 		let placement = CustomizableUI.getPlacementOfWidget("search-container");
-		
+
 		if(placement) {
 			// show the chrome if the search bar is somewhere in there, before we do anything else
 			if(typeof(slimChrome) != 'undefined'
@@ -61,19 +61,19 @@ Modules.LOADMODULE = function() {
 				slimChrome.initialShow(1500);
 				return;
 			}
-			
+
 			let focusSearchBar = () => {
 				searchBar = this.searchBar;
 				searchBar.select();
 				openSearchPageIfFieldIsNotActive(searchBar);
 			};
-			
+
 			if(placement.area == CustomizableUI.AREA_PANEL) {
 				// The panel is not constructed until the first time it is shown.
 				window.PanelUI.show().then(focusSearchBar);
 				return;
 			}
-			
+
 			if(placement.area == CustomizableUI.AREA_NAVBAR && searchBar && searchBar.parentNode.getAttribute("overflowedItem") == "true") {
 				let navBar = document.getElementById(CustomizableUI.AREA_NAVBAR);
 				navBar.overflowable.show().then(() => {
@@ -82,7 +82,7 @@ Modules.LOADMODULE = function() {
 				return;
 			}
 		}
-		
+
 		if(searchBar) {
 			// we unload when fullScreen, so this isn't needed
 			//if(window.fullScreen)
@@ -91,12 +91,12 @@ Modules.LOADMODULE = function() {
 		}
 		openSearchPageIfFieldIsNotActive(searchBar);
 	});
-	
+
 	Listeners.add(window, 'FinishedSlimChromeWidth', focusSearchOnWidthFinished);
 };
 
 Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'FinishedSlimChromeWidth', focusSearchOnWidthFinished);
-	
+
 	Piggyback.revert('focusSearch', BrowserSearch, 'webSearch');
 };

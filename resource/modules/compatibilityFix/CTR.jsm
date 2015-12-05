@@ -6,7 +6,7 @@ this.CTRbackForward = function() {
 
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ backforward: false }, 'classicthemerestorer');
-	
+
 	Prefs.listen('backforward', CTRbackForward);
 	CTRbackForward();
 };

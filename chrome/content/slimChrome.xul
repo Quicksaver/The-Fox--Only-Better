@@ -4,7 +4,7 @@
 <overlay id="slimChrome-overlay"
 	xmlns:svg="http://www.w3.org/2000/svg"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	
+
 	<toolbox id="navigator-toolbox" slimChrome="true">
 		<toolbar id="objName-slimChrome-slimmer"
 			waitForSS="chrome://objPathString/skin/slimChrome.css chrome://objPathString-os/skin/slimChrome.css"
@@ -13,19 +13,19 @@
 			insertbefore="customToolbars"
 			customizable="false"
 			ignoreCUI="true"/>
-			
+
 		<hbox id="objName-slimChrome-container"
 			waitForSS="chrome://objPathString/skin/slimChrome.css chrome://objPathString-os/skin/slimChrome.css"
 			insertafter="objName-slimChrome-slimmer"
 			noPointerEvents="true">
-			
+
 			<box id="objName-slimChrome-toolbars-before" context="toolbar-context-menu">
 				<svg:svg id="objName-slimChrome-svg-before"
 					width="100%"
 					height="100%"
 					preserveAspectRatio="none slice"
 					viewBox="0 0 1 1">
-					
+
 					<svg:path id="objName-slimChrome-svg-before-path" fill="transparent" d=""/>
 				</svg:svg>
 			</box>
@@ -36,14 +36,14 @@
 					height="100%"
 					preserveAspectRatio="none slice"
 					viewBox="0 0 1 1">
-					
+
 					<svg:path id="objName-slimChrome-svg-after-path" fill="transparent" d=""/>
 				</svg:svg>
 			</box>
 			<box id="objName-slimChrome-toolbars-bottom" context="toolbar-context-menu"/>
 		</hbox>
 	</toolbox>
-	
+
 	<vbox id="browser-panel">
 		<svg:svg id="objName-slimChrome-clipPath" height="0">
 			<svg:clipPath id="objName-slimChrome-clipPath-urlbar-wrapper" clipPathUnits="userSpaceOnUse">
@@ -57,5 +57,5 @@
 			</svg:clipPath>
 		</svg:svg>
 	</vbox>
-	
+
 </overlay>

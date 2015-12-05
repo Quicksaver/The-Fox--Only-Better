@@ -9,7 +9,7 @@ this.treeStyleTab = {
 					slimChrome.move();
 				}
 				break;
-			
+
 			case 'WillShowSlimChrome':
 				// only show the chrome if the tabs are on top
 				if(isAncestor(e.detail.target, TabsToolbar) && TabsToolbar.getAttribute('treestyletab-tabbar-position') != "top") {
@@ -17,7 +17,7 @@ this.treeStyleTab = {
 					e.stopPropagation();
 				}
 				break;
-			
+
 			case 'SlimChromeNormalActiveArea':
 				if(TabsToolbar.getAttribute('treestyletab-tabbar-position') != 'top') {
 					e.preventDefault();

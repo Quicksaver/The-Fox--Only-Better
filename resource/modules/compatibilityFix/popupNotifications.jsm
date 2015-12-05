@@ -4,31 +4,31 @@ this.__defineGetter__('PopupNotifications', function() { return window.PopupNoti
 
 this.popupNotifications = {
 	_originalGetter: null,
-	
+
 	get panel() { return $('notification-popup'); },
-	
+
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'AskingForNodeOwner':
 				e.detail = 'notification-popup-box';
 				e.stopPropagation();
 				break;
-			
+
 			case 'LoadedSlimChromePopups':
 				this.init();
 				break;
-			
+
 			case 'UnloadingSlimChromePopups':
 				this.deinit();
 				break;
 		}
 	},
-	
+
 	init: function() {
 		popups.mini.add('notification-popup');
-		
+
 		Listeners.add(this.panel, 'AskingForNodeOwner', this);
-		
+
 		// Only need to modify the PopupNotifications object for this window has already been initialized (i.e. its getter no longer exists)
 		this._originalGetter = Object.getOwnPropertyDescriptor(window, "PopupNotifications").get;
 		if(!this._originalGetter) {
@@ -39,24 +39,24 @@ this.popupNotifications = {
 			window.__defineGetter__('PopupNotifications', () => {
 				// the following deletes this getter and actually creates the PopupNotifications instance in this window
 				this._originalGetter();
-				
+
 				// we don't need this anymore
 				this._originalGetter = null;
-				
+
 				// now we can modify it
 				this.lazyInit();
-				
+
 				// and of course return the instance as this is still a lazy getter
 				return PopupNotifications;
 			});
 		}
 	},
-	
+
 	deinit: function() {
 		popups.mini.delete('notification-popup');
-		
+
 		Listeners.remove(this.panel, 'AskingForNodeOwner', this);
-		
+
 		if(!this._originalGetter) {
 			this.lazyDeinit();
 		}
@@ -65,7 +65,7 @@ this.popupNotifications = {
 			this._originalGetter = null;
 		}
 	},
-	
+
 	lazyInit: function() {
 		// this property is only set right before the panel will be opened
 		PopupNotifications.__currentAnchorElement = PopupNotifications._currentAnchorElement;
@@ -73,7 +73,7 @@ this.popupNotifications = {
 		PopupNotifications.__defineGetter__('_currentAnchorElement', function() { return this.__currentAnchorElement; });
 		PopupNotifications.__defineSetter__('_currentAnchorElement', function(v) {
 			this.__currentAnchorElement = v;
-			
+
 			// the mini bar is not shown yet, so show it before the panel actually opens, prevents some jumping around,
 			// but only if the anchor is actually in the hidden toolbars
 			if(Prefs.includeNavBar
@@ -82,11 +82,11 @@ this.popupNotifications = {
 			&& !trueAttribute(slimChrome.container, 'mini')) {
 				slimChrome.quickShowMini();
 			}
-			
+
 			return v;
 		});
 	},
-	
+
 	lazyDeinit: function() {
 		delete PopupNotifications._currentAnchorElement;
 		PopupNotifications._currentAnchorElement = PopupNotifications.__currentAnchorElement;
@@ -97,7 +97,7 @@ this.popupNotifications = {
 Modules.LOADMODULE = function() {
 	Listeners.add(window, 'LoadedSlimChromePopups', popupNotifications);
 	Listeners.add(window, 'UnloadingSlimChromePopups', popupNotifications);
-	
+
 	if(self.popups) {
 		popupNotifications.init();
 	}
@@ -106,7 +106,7 @@ Modules.LOADMODULE = function() {
 Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'LoadedSlimChromePopups', popupNotifications);
 	Listeners.remove(window, 'UnloadingSlimChromePopups', popupNotifications);
-	
+
 	if(self.popups) {
 		popupNotifications.deinit();
 	}

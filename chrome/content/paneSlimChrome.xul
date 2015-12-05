@@ -2,7 +2,7 @@
 <?xml-stylesheet href="chrome://thefoxonlybetter/skin/options.css" type="text/css"?>
 <!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/options.dtd">
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-			
+
 	<richlistbox id="categories">
 		<richlistitem id="category-slimChrome"
 			class="category"
@@ -10,12 +10,12 @@
 			tooltiptext="&pane.slimChrome.label;"
 			position="1"
 			align="center">
-			
+
 			<image class="category-icon"/>
 			<label class="category-name" flex="1" value="&pane.slimChrome.label;"/>
 		</richlistitem>
 	</richlistbox>
-	
+
 	<prefpane id="mainPrefPane">
 		<preferences>
 			<preference id="pref-slimChrome" name="extensions.thefoxonlybetter.slimChrome" type="bool"/>
@@ -34,11 +34,11 @@
 			<preference id="pref-slimChromeShift" name="extensions.thefoxonlybetter.slimChromeShift" type="bool"/>
 			<preference id="pref-slimChromeAlt" name="extensions.thefoxonlybetter.slimChromeAlt" type="bool"/>
 		</preferences>
-		
+
 		<hbox id="header-slimChrome" class="header" collapsed="true" data-category="paneSlimChrome">
 			<label class="header-name">&pane.slimChrome.label;</label>
 		</hbox>
-		
+
 		<groupbox align="start" id="paneSlimChrome-main" collapsed="true" data-category="paneSlimChrome">
 			<checkbox label="&opt.slimChrome.label;"
 				helpbox="paneSlimChrome-main-helptext"
@@ -56,7 +56,7 @@
 				<description>&opt.includeNavBar.tooltip;</description>
 			</vbox>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSlimChrome-mini" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.mini.label;"/>
 			<checkbox label="&opt.miniOnAllInput.label;"
@@ -92,7 +92,7 @@
 				<description>&opt.miniOnPinnedTabs.tooltip;</description>
 			</vbox>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSlimChrome-mouse" collapsed="true" data-category="paneSlimChrome">
 			<caption>
 				<checkbox label="&opt.useMouse.label;"
@@ -144,7 +144,7 @@
 				<description>&opt.delayOut.tooltip;</description>
 			</vbox>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSlimChrome-style" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.appearance.label;"/>
 			<radiogroup id="slimStyleRadio"
@@ -171,7 +171,7 @@
 				<description>&opt.style.full.tooltip;</description>
 			</vbox>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSlimChrome-animation" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.animation.label;"/>
 			<radiogroup id="slimAnimationRadio"
@@ -201,7 +201,7 @@
 				<description>&opt.animation.hinge.tooltip;</description>
 			</vbox>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSlimChrome-shortcut" collapsed="true" data-category="paneSlimChrome">
 			<caption label="&cat.slimChromeKeyset.label;"/>
 			<hbox jump="slimChromeKeycode,&cat.slimChromeKeyset.label;">

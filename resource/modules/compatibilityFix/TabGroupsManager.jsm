@@ -3,7 +3,7 @@
 this.TGM = {
 	id: 'TabGroupsManagerToolbar',
 	get bar () { return $(this.id); },
-	
+
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'LoadedSlimChrome':
@@ -11,7 +11,7 @@ this.TGM = {
 				break;
 		}
 	},
-	
+
 	observe: function(aSubject, aTopic, aData) {
 		switch(aSubject) {
 			case 'groupBarOrdinal':
@@ -20,22 +20,22 @@ this.TGM = {
 				break;
 		}
 	},
-	
+
 	replace: function() {
 		if(isAncestor(this.bar, slimChrome.container)) {
 			gNavToolbox.appendChild(this.bar);
 		}
-		
+
 		// we don't want a doubled menu item for this toolbar
 		var i = gNavToolbox.externalToolbars.indexOf(this.bar);
 		if(i > -1) {
 			gNavToolbox.externalToolbars.splice(i, 1);
 		}
 	},
-	
+
 	ordinal: function() {
 		var ordinal = Math.max(Prefs.groupBarOrdinal, Prefs.tabBarOrdinal) +1;
-		
+
 		let sscode = '\
 			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
 			@-moz-document url("'+document.baseURI+'") {\n\
@@ -44,7 +44,7 @@ this.TGM = {
 				  -moz-box-ordinal-group: '+ordinal+';\n\
 				}\n\
 			}';
-		
+
 		Styles.load('tgmOrdinal_'+_UUID, sscode, true);
 	}
 };
@@ -52,12 +52,12 @@ this.TGM = {
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ groupBarOrdinal: 100, tabBarOrdinal:101 }, 'tabgroupsmanager');
 	slimChromeExceptions.add(TGM.id);
-	
+
 	Prefs.listen('groupBarOrdinal', TGM);
 	Prefs.listen('tabBarOrdinal', TGM);
-	
+
 	Listeners.add(window, 'LoadedSlimChrome', TGM);
-	
+
 	TGM.ordinal();
 	if(typeof(slimChrome) != 'undefined' && slimChrome.container) {
 		TGM.replace();
@@ -66,11 +66,11 @@ Modules.LOADMODULE = function() {
 
 Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'LoadedSlimChrome', TGM);
-	
+
 	Prefs.unlisten('groupBarOrdinal', TGM);
 	Prefs.unlisten('tabBarOrdinal', TGM);
-	
+
 	slimChromeExceptions.delete(TGM.id);
-	
+
 	Styles.unload('tgmOrdinal_'+_UUID);
 };

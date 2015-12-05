@@ -17,11 +17,11 @@ this.handleEvent = function(e) {
 		case 'fullscreen':
 			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
 			break;
-		
+
 		case 'beforecustomization':
 			toggleSlimChrome(true);
 			break;
-		
+
 		case 'aftercustomization':
 			toggleSlimChrome(false);
 			break;
@@ -34,11 +34,11 @@ this.observe = function(aSubject, aTopic, aData) {
 			toggleSlimChrome();
 			togglePopups();
 			break;
-			
+
 		case 'autohide':
 			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
 			break;
-		
+
 		case 'adaptSearchBar':
 			toggleAdaptSearchBar();
 			break;
@@ -59,7 +59,7 @@ this.toggleSlimChromePref = function() {
 
 this.toggleSlimChrome = function(noLoad) {
 	toggleAttribute(slimChromeBroadcaster, 'checked', Prefs.slimChrome);
-	
+
 	if(noLoad === undefined) {
 		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
 		noLoad = (fullScreen && !mozFullScreen && fullScreenAutohide) || customizing;
@@ -77,19 +77,19 @@ this.toggleAdaptSearchBar = function() {
 
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ autohide: true }, 'fullscreen', 'browser');
-	
+
 	Overlays.overlayWindow(window, 'TheFOB', self);
-	
+
 	Modules.load('compatibilityFix/windowFixes');
-	
+
 	Prefs.listen('slimChrome', self);
 	Prefs.listen('autohide', self);
 	Prefs.listen('adaptSearchBar', self);
-	
+
 	Listeners.add(window, 'fullscreen', self);
 	Listeners.add(window, 'beforecustomization', self);
 	Listeners.add(window, 'aftercustomization', self);
-	
+
 	togglePopups();
 	toggleSlimChrome();
 	toggleAdaptSearchBar();
@@ -99,16 +99,16 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'fullscreen', self);
 	Listeners.remove(window, 'beforecustomization', self);
 	Listeners.remove(window, 'aftercustomization', self);
-	
+
 	Prefs.unlisten('slimChrome', self);
 	Prefs.unlisten('autohide', self);
 	Prefs.unlisten('adaptSearchBar', self);
-	
+
 	Modules.unload('adaptSearchBar');
 	Modules.unload('slimChrome');
 	Modules.unload('popups');
-	
+
 	Modules.unload('compatibilityFix/windowFixes');
-	
+
 	Overlays.removeOverlayWindow(window, 'TheFOB');
 };

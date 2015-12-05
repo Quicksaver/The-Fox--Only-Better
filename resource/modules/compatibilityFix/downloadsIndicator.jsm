@@ -5,7 +5,7 @@ this.__defineGetter__('DownloadsCommon', function() { return window.DownloadsCom
 
 this.downloadsIndicator = {
 	notification: null,
-	
+
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'FinishedSlimChromeWidth':
@@ -14,14 +14,14 @@ this.downloadsIndicator = {
 					this.notification = null;
 				}
 				break;
-			
+
 			case 'popupshowing':
 				if(e.target.id == 'downloadsPanel') {
 					Listeners.remove(window, 'popupshowing', this);
 					Listeners.add(e.target, 'AskingForNodeOwner', this);
 				}
 				break;
-			
+
 			case 'AskingForNodeOwner':
 				e.detail = 'downloads-button';
 				e.stopPropagation();
@@ -37,7 +37,7 @@ Modules.LOADMODULE = function() {
 			downloadsIndicator.notification = aType;
 			return false;
 		}
-		
+
 		// only pause animation if the button is in the slimChromeContainer
 		if(typeof(slimChrome) != 'undefined'
 		&& this._initialized && DownloadsCommon.animateNotifications
@@ -52,21 +52,21 @@ Modules.LOADMODULE = function() {
 				slimChrome.initialShow();
 				return false;
 			}
-			
+
 			// container is not hidden, so keep showing it until animation is done at least
 			slimChrome.initialShow(1500);
 		}
-		
+
 		return true;
 	}, Piggyback.MODE_BEFORE);
-	
+
 	// the downloadsPanel is only created when first called
 	if($('downloadsPanel')) {
 		Listeners.add($('downloadsPanel'), 'AskingForNodeOwner', downloadsIndicator);
 	} else {
 		Listeners.add(window, 'popupshowing', downloadsIndicator);
 	}
-	
+
 	Listeners.add(window, 'FinishedSlimChromeWidth', downloadsIndicator);
 };
 
@@ -74,6 +74,6 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'FinishedSlimChromeWidth', downloadsIndicator);
 	Listeners.remove($('downloadsPanel'), 'AskingForNodeOwner', downloadsIndicator);
 	Listeners.remove(window, 'popupshowing', downloadsIndicator);
-	
+
 	Piggyback.revert('downloadsIndicator', DownloadsIndicatorView, 'showEventNotification');
 };

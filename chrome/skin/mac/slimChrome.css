@@ -180,13 +180,13 @@ window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #b
 		border-color: hsla(0,0%,0%,.35) hsla(0,0%,0%,.25) hsla(0,0%,0%,.2);
 		box-shadow: inset 0 1px 0 hsla(0,0%,100%,.2), inset 0 0 1px hsla(0,0%,100%,.1), 0 1px 0 hsla(0,0%,100%,.2);
 	}
-	
+
 	#navigator-toolbox[slimStyle="compact"] #back-button:hover:active:not(:-moz-lwtheme) {
 		background-image: linear-gradient(hsla(0,0%,60%,.37), hsla(0,0%,100%,.35) 95%);
 		border-color: hsla(0,0%,0%,.43) hsla(0,0%,0%,.25) hsla(0,0%,0%,.37);
 		box-shadow: inset 0 1px 0 hsla(0,0%,0%,.02), inset 0 1px 2px hsla(0,0%,0%,.2), 0 1px 0 hsla(0,0%,100%,.2);
 	}
-	
+
 	#navigator-toolbox[slimStyle="compact"] #back-button:-moz-window-inactive:not(:-moz-lwtheme) {
 		background-image: none;
 		border-color: hsla(0,0%,0%,.2);

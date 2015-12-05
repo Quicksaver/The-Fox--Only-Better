@@ -2,7 +2,7 @@
 <?xml-stylesheet href="chrome://objPathString/skin/skyLights.css" type="text/css"?>
 <?xml-stylesheet href="chrome://objPathString-os/skin/skyLights.css" type="text/css"?>
 <overlay id="skyLights-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	
+
 	<toolbox id="navigator-toolbox">
 		<toolbar id="objName-skyLights-container"
 			waitForSS="chrome://objPathString/skin/skyLights.css chrome://objPathString-os/skin/skyLights.css"
@@ -11,7 +11,7 @@
 			customizable="false"
 			ignoreCUI="true"/>
 	</toolbox>
-	
+
 	<toolbar id="objName-slimChrome-slimmer" skyLights="true"/>
-	
+
 </overlay>

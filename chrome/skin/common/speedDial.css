@@ -1,6 +1,6 @@
 /* compatibility with Speed Dial add-on: opening the Speed Dial tab would make it very difficult to close the top chrome if it was focused */
 @-moz-document url("chrome://speeddial/content/speeddial.xul") {
-	
+
 	#speeddialTabbox-panelContainer { -moz-user-focus: normal; }
-	
+
 }

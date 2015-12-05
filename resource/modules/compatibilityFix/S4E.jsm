@@ -2,9 +2,9 @@
 
 this.S4E = {
 	state: false,
-	
+
 	get progress () { return $('urlbar-progress-alt'); },
-	
+
 	handleEvent: function(e) {
 		switch(e.type) {
 			// focusing forces a Top style, but bluring sometimes doesn't revert back to the original style,
@@ -30,10 +30,10 @@ this.S4E = {
 				break;
 		}
 	},
-	
+
 	attrWatcher: function() {
 		if(!Prefs.includeNavBar) { return; }
-		
+
 		var current = this.progress && !this.progress.hidden && !this.progress.collapsed;
 		this.state = current;
 		if(typeof(slimChrome) != 'undefined') {
@@ -50,13 +50,13 @@ this.S4E = {
 
 Modules.LOADMODULE = function() {
 	Prefs.setDefaults({ ['progress.urlbar']: 1 }, 'status4evar', '');
-	
+
 	Styles.load('S4E', 'S4E');
-	
+
 	Watchers.addAttributeWatcher(S4E.progress, 'hidden', S4E, false, false);
 	Watchers.addAttributeWatcher(S4E.progress, 'collapsed', S4E, false, false);
 	Watchers.addAttributeWatcher(S4E.progress, 'value', S4E, false, false);
-	
+
 	Listeners.add(window, 'LoadedSlimChrome', S4E);
 	Listeners.add(window, 'UnloadedSlimChrome', S4E);
 	Listeners.add(gURLBar, 'blur', S4E, true);
@@ -67,12 +67,12 @@ Modules.UNLOADMODULE = function() {
 	Watchers.removeAttributeWatcher(S4E.progress, 'hidden', S4E, false, false);
 	Watchers.removeAttributeWatcher(S4E.progress, 'collapsed', S4E, false, false);
 	Watchers.removeAttributeWatcher(S4E.progress, 'value', S4E, false, false);
-	
+
 	Listeners.remove(window, 'LoadedSlimChrome', S4E);
 	Listeners.remove(window, 'UnloadedSlimChrome', S4E);
 	Listeners.remove(gURLBar, 'blur', S4E, true);
 	Listeners.remove(gURLBar, 'focus', S4E, true);
-	
+
 	if(UNLOADED) {
 		Styles.unload('S4E');
 	}

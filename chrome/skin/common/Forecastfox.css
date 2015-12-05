@@ -1,8 +1,8 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @-moz-document url("chrome://browser/content/browser.xul") {
-	
+
 	/* some of its icon styles can stretch the toolbar it's on, which causes some kind of overflow issue in the slimChrome container */
-	
+
 	#theFoxOnlyBetter-slimChrome-container #forecastfox-toolbar {
 		display: flex;
 	}

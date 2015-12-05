@@ -2,7 +2,7 @@
 
 this.UIEnhancer = {
 	id: 'UIEnhancer@girishsharma',
-	
+
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'LoadedSlimChrome':
@@ -14,7 +14,7 @@ this.UIEnhancer = {
 				break;
 		}
 	},
-	
+
 	observe: function(aSubject, aTopic, aData) {
 		if(Prefs.slimChrome) {
 			this.listen();
@@ -22,33 +22,33 @@ this.UIEnhancer = {
 			this.unlisten();
 		}
 	},
-	
+
 	onEnabled: function(addon) {
 		if(addon.id == this.id) { this.enable(); }
 	},
-	
+
 	onDisabled: function(addon) {
 		if(addon.id == this.id) { this.disable(); }
 	},
-	
+
 	listen: function() {
 		AddonManager.addAddonListener(this);
 		AddonManager.getAddonByID(this.id, (addon) => {
 			if(addon && addon.isActive) { this.enable(); }
 		});
 	},
-	
+
 	unlisten: function() {
 		AddonManager.removeAddonListener(this);
 		this.disable();
 	},
-	
+
 	enable: function() {
 		Prefs.setDefaults({ enhanceURLBar: true }, 'UIEnhancer');
-		
+
 		Listeners.add(window, 'LoadedSlimChrome', this);
 	},
-	
+
 	disable: function() {
 		Listeners.remove(window, 'LoadedSlimChrome', this);
 	}
@@ -56,7 +56,7 @@ this.UIEnhancer = {
 
 Modules.LOADMODULE = function() {
 	Prefs.listen('slimChrome', UIEnhancer);
-	
+
 	if(Prefs.slimChrome) {
 		UIEnhancer.listen();
 	}
@@ -64,6 +64,6 @@ Modules.LOADMODULE = function() {
 
 Modules.UNLOADMODULE = function() {
 	UIEnhancer.unlisten();
-	
+
 	Prefs.unlisten('slimChrome', UIEnhancer);
 };

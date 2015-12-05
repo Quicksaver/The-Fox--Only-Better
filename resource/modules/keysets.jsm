@@ -9,11 +9,11 @@ this.slimKey = {
 		get shift () { return Prefs.slimChromeShift; },
 		get alt () { return Prefs.slimChromeAlt; }
 	},
-	
+
 	observe: function(aSubject, aTopic, aData) {
 		this.set();
 	},
-	
+
 	set: function() {
 		if(this.key.keycode != 'none') { Keysets.register(this.key); }
 		else { Keysets.unregister(this.key); }
@@ -22,7 +22,7 @@ this.slimKey = {
 
 Modules.LOADMODULE = function() {
 	slimKey.set();
-	
+
 	Prefs.listen('slimChromeKeycode', slimKey);
 	Prefs.listen('slimChromeAccel', slimKey);
 	Prefs.listen('slimChromeShift', slimKey);
@@ -34,6 +34,6 @@ Modules.UNLOADMODULE = function() {
 	Prefs.unlisten('slimChromeAccel', slimKey);
 	Prefs.unlisten('slimChromeShift', slimKey);
 	Prefs.unlisten('slimChromeAlt', slimKey);
-	
+
 	Keysets.unregister(slimKey.key);
 };

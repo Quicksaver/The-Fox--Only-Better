@@ -8,10 +8,10 @@
 	position: fixed;
 	/* this was hard to figure out, don't change this or the lights won't appear in the correct place */
 	display: flex;
-	
+
 	-moz-padding-start: 65px;
 	z-index: 405;
-	
+
 	/* god damn stupid crappy hell! the top chrome is near impossible to modify properly... now I have to use a stupid toolbar node instead of a simple box... */
 	/* hooray for !important tags... */
 	background: none !important;
@@ -21,7 +21,7 @@
 	min-height: 0 !important;
 	overflow: visible !important;
 	-moz-binding: url("chrome://global/content/bindings/toolbar.xml#toolbar") !important;
-	
+
 	opacity: 1;
 	visibility: visible;
 	transition: visibility 0s linear 0s, opacity .1s linear 0s !important;

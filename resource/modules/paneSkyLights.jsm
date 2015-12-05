@@ -2,7 +2,7 @@
 
 this.identityBoxState = {
 	get state() { return $('state-identityBoxLight'); },
-	
+
 	observe: function(aSubject, aTopic, aData) {
 		switch(aSubject) {
 			case 'skyLights':
@@ -10,20 +10,20 @@ this.identityBoxState = {
 					this.update(DnDprefs.getPref('skyLightsPlacements'));
 				});
 				break;
-			
+
 			case 'skyLightsPlacements':
 				this.update(aData);
 				break;
 		}
 	},
-	
+
 	update: function(aData) {
 		let enabled = Prefs.skyLights;
 		if(enabled) {
 			let settings = aData && aData.settings.get('identityBox');
 			enabled = settings && settings.enable;
 		}
-		
+
 		this.state.value = enabled;
 	}
 };
@@ -34,7 +34,7 @@ this.showSkyLights = function() {
 	let requirements = $('paneSkyLights-requirements');
 	let nodes = $$(':not(.header)[data-category="paneSkyLights"]');
 	let show = Prefs.slimChrome && Prefs.includeNavBar;
-	
+
 	requirements.hidden = show;
 	for(let node of nodes) {
 		if(node == requirements) { continue; }
@@ -47,7 +47,7 @@ Modules.LOADMODULE = function() {
 	Prefs.listen('includeNavBar', showSkyLights);
 	Prefs.listen('skyLights', identityBoxState);
 	DnDprefs.addHandler('skyLightsPlacements', identityBoxState);
-	
+
 	showSkyLights();
 	identityBoxState.update(DnDprefs.getPref('skyLightsPlacements'));
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/TheFOB.dtd">
 <overlay id="TheFOB-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	
+
 	<broadcasterset id="mainBroadcasterSet">
 		<broadcaster id="objName-slimChrome-broadcaster"
 			autoCheck="false"
@@ -11,7 +11,7 @@
 			accesskey="&theFOB.toggleSlimChrome.accesskey;"
 			oncommand="objName.toggleSlimChromePref();" />
 	</broadcasterset>
-	
+
 	<menupopup id="toolbar-context-menu">
 		<menuseparator id="objName-contextSeparator" insertbefore="puzzleBars-contextSeparator"/>
 		<menuitem id="objName-context-slimChrome" insertbefore="puzzleBars-contextSeparator" observes="objName-slimChrome-broadcaster"/>
@@ -21,5 +21,5 @@
 			accesskey="&theFOB.options.accesskey;"
 			oncommand="objName.openOptions();"/>
 	</menupopup>
-	
+
 </overlay>

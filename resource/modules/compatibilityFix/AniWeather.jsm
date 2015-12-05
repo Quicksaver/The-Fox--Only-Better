@@ -9,11 +9,11 @@ Modules.LOADMODULE = function() {
 			let sscode = '\
 				@namespace url(http://www.w3.org/1999/xhtml);\n\
 				#weatherLauncher { margin-top: '+slimChrome.container.clientHeight+'px !important; }\n';
-			
+
 			Styles.load('aniWeahter_'+_UUID, sscode, true);
 		}
 	}, Piggyback.MODE_AFTER);
-	
+
 	Piggyback.add('AniWeather', AniWeatherBrowserAgent, 'cancelReport', function() {
 		Styles.unload('aniWeahter_'+_UUID);
 	}, Piggyback.MODE_AFTER);

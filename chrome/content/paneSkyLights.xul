@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/options.dtd">
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-			
+
 	<richlistbox id="categories">
 		<richlistitem id="category-skyLights"
 			class="category"
@@ -9,12 +9,12 @@
 			tooltiptext="&pane.skyLights.label;"
 			position="2"
 			align="center">
-			
+
 			<image class="category-icon"/>
 			<label class="category-name" flex="1" value="&pane.skyLights.label;"/>
 		</richlistitem>
 	</richlistbox>
-	
+
 	<prefpane id="mainPrefPane">
 		<preferences>
 			<preference id="pref-skyLights" name="extensions.thefoxonlybetter.skyLights" type="bool"/>
@@ -23,15 +23,15 @@
 			<!-- uninitialized preference that reports the final visibility state of the identityBox sky light, for use by the dependson attributes -->
 			<preference id="state-identityBoxLight" type="bool"/>
 		</preferences>
-		
+
 		<hbox id="header-skyLights" class="header" collapsed="true" data-category="paneSkyLights">
 			<label class="header-name">&pane.skyLights.label;</label>
 		</hbox>
-		
+
 		<groupbox align="start" id="paneSkyLights-requirements" collapsed="true" data-category="paneSkyLights">
 			<description>&opt.skyLights.requirements.description;</description>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSkyLights-main" collapsed="true" data-category="paneSkyLights">
 			<checkbox label="&opt.skyLights.label;"
 				helpbox="paneSkyLights-main-helptext"
@@ -43,7 +43,7 @@
 				<description style="margin-top:1em;">&opt.skyLights.tooltip.b;</description>
 			</vbox>
 		</groupbox>
-		
+
 		<groupbox align="start" id="paneSkyLights-general" collapsed="true" data-category="paneSkyLights">
 			<caption label="&cat.general.label;"/>
 			<checkbox label="&opt.skyLightsHide.label;"
@@ -52,7 +52,7 @@
 				dependson="pref-skyLights"
 				delayPreference="pref-skyLightsHide"/>
 		</groupbox>
-		
+
 		<groupbox align="stretch" id="paneSkyLights-customize" collapsed="true" data-category="paneSkyLights">
 			<caption label="&cat.skyLightsPlacements.label;"/>
 			<vbox id="skyLights-customize"
