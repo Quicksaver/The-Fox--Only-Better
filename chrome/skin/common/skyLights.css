@@ -70,3 +70,7 @@ window[chromehidden~="toolbar"]:not([chromehidden~="location"]) #theFoxOnlyBette
 window[chromehidden~="toolbar"]:not([chromehidden~="location"]) #theFoxOnlyBetter-skyLights-container {
 	display: flex !important;
 }
+
+window[inDOMFullscreen] #theFoxOnlyBetter-skyLights-container {
+	visibility: collapse;
+}
