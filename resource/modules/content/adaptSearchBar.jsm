@@ -1,4 +1,4 @@
-// VERSION 1.0.1
+// VERSION 1.0.2
 
 this.adaptSearchBar = {
 	_inputField: null,
@@ -67,15 +67,11 @@ this.adaptSearchBar = {
 	handleEvent: function(e) {
 		//LOG('e:'+e.type+' '+this._inputField.value);
 
-		// I wonder how this could even happen, but safeguarding anyway
-		if(!this._inputField) {
-			e.target.removeEventListener('input', this);
-			e.target.removeEventListener('load', this);
-			return;
-		}
-
 		switch(e.type) {
 			case 'input':
+				// I wonder how this could even happen, but safeguarding anyway
+				if(!this.checkInputField()) { break; }
+
 				// child/accessory nodes? we don't really care
 				if(e.target != this._inputField) { break; }
 
@@ -83,11 +79,27 @@ this.adaptSearchBar = {
 				break;
 
 			case 'load':
+				// I wonder how this could even happen, but safeguarding anyway
+				if(!this.checkInputField()) { break; }
+
 				// if this fires we assume to already have associated an inputField node,
 				// we just want to make sure the value in the search bar reflects the value of the field in case it has changed in the meantime
 				if(e.target != document) { break; }
 
 				this.sendValue();
+				break;
+
+			case 'DOMContentLoaded':
+				// this is the content document of the loaded page.
+				let doc = e.originalTarget;
+				//LOG('DOMContentLoaded:'+(doc instanceof content.HTMLDocument)+' '+(doc != document));
+
+				if(doc instanceof content.HTMLDocument) {
+					// There's no need to check anything other than the currently loaded document
+					if(doc != document) { break; }
+
+					this.checkURL();
+				}
 				break;
 		}
 	},
@@ -114,16 +126,11 @@ this.adaptSearchBar = {
 		this.sendValue();
 	},
 
-	onDOMContentLoaded: function(e) {
-		// this is the content document of the loaded page.
-		let doc = e.originalTarget;
-		//LOG('DOMContentLoaded:'+(doc instanceof content.HTMLDocument)+' '+(doc != document));
-
-		if(doc instanceof content.HTMLDocument) {
-			// There's no need to check anything other than the currently loaded document
-			if(doc != document) { return; }
-
-			this.checkURL();
+	checkInputField: function() {
+		if(!this._inputField) {
+			e.target.removeEventListener('input', this);
+			e.target.removeEventListener('load', this);
+			return false;
 		}
 	},
 

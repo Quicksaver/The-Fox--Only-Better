@@ -1,4 +1,4 @@
-// VERSION 2.0.25
+// VERSION 2.0.26
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -1244,7 +1244,7 @@ Modules.LOADMODULE = function() {
 
 	slimChrome.browserListener = slimChrome.browserListener.bind(slimChrome);
 
-	Messenger.loadInWindow(window, 'slimChrome');
+	Messenger.loadInWindow(window, 'slimChrome', false);
 
 	Overlays.overlayWindow(window, 'slimChrome', slimChrome);
 

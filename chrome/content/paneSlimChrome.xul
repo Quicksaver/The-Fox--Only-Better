@@ -33,6 +33,7 @@
 			<preference id="pref-slimChromeAccel" name="extensions.thefoxonlybetter.slimChromeAccel" type="bool"/>
 			<preference id="pref-slimChromeShift" name="extensions.thefoxonlybetter.slimChromeShift" type="bool"/>
 			<preference id="pref-slimChromeAlt" name="extensions.thefoxonlybetter.slimChromeAlt" type="bool"/>
+			<preference id="pref-slimChromeCtrl" name="extensions.thefoxonlybetter.slimChromeCtrl" type="bool"/>
 		</preferences>
 
 		<hbox id="header-slimChrome" class="header" collapsed="true" data-category="paneSlimChrome">
@@ -208,6 +209,7 @@
 				<checkbox class="smallindent" keysetAccel="slimChrome" delayPreference="pref-slimChromeAccel"/>
 				<checkbox class="smallindent" keysetAlt="slimChrome" delayPreference="pref-slimChromeAlt"/>
 				<checkbox class="smallindent" keysetShift="slimChrome" delayPreference="pref-slimChromeShift"/>
+				<checkbox class="smallindent" keysetCtrl="slimChrome" delayPreference="pref-slimChromeCtrl"/>
 				<menulist class="smallindent" keyset="slimChrome" delayPreference="pref-slimChromeKeycode"/>
 			</hbox>
 		</groupbox>

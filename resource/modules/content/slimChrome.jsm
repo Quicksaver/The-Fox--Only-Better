@@ -1,4 +1,4 @@
-// VERSION 2.0.4
+// VERSION 2.0.5
 
 this.slimChrome = {
 	miniActive: false,
@@ -12,6 +12,10 @@ this.slimChrome = {
 
 			case 'blur':
 				this.focusPasswords(e.target, false);
+				break;
+
+			case 'DOMContentLoaded':
+				this.onDOMContentLoaded();
 				break;
 		}
 	},

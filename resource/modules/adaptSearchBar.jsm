@@ -1,4 +1,4 @@
-// VERSION 1.0.1
+// VERSION 1.0.2
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -49,7 +49,7 @@ this.adaptSearchBar = {
 
 		Listeners.add(gBrowser.tabContainer, 'TabSelect', adaptSearchBar);
 
-		Messenger.loadInWindow(window, 'adaptSearchBar');
+		Messenger.loadInWindow(window, 'adaptSearchBar', false);
 	},
 
 	deinit: function() {

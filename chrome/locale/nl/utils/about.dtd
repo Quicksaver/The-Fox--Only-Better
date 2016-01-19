@@ -1,6 +1,6 @@
 <!ENTITY about.paneTitle "Over">
 <!ENTITY about.version "Versie {v}">
-<!ENTITY about.versionDivider " - ">
+<!ENTITY about.versionDivider "-">
 <!ENTITY about.uptodate "actueel, gefeliciteerd!">
 <!ENTITY about.needsupdate "update beschikbaar!">
 <!ENTITY about.description "Lees hieronder de “Versieopmerkingen” en “Bekende problemen” voor deze versie. Ik hoor graag van gevonden problemen of suggesties voor toekomstige versies.">

@@ -1,4 +1,4 @@
-// VERSION 1.3.4
+// VERSION 1.4.0
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -34,11 +34,18 @@ prefList = {
 
 	adaptSearchBar: true,
 
+	// for internal use
+	migratedKeysets: false,
+
 	slimChromeKeycode: 'VK_F9',
 	slimChromeAccel: false,
 	slimChromeShift: false,
-	slimChromeAlt: false
+	slimChromeAlt: false,
+	slimChromeCtrl: false
 };
+
+// If we're initializing in a content process, we don't care about the rest
+if(isContent) { throw 'isContent'; }
 
 paneList = [
 	[ 'paneSlimChrome', true ],

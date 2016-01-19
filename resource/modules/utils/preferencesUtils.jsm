@@ -1,4 +1,4 @@
-// VERSION 2.4.9
+// VERSION 2.4.12
 Modules.UTILS = true;
 
 // dependsOn - object that adds a dependson attribute functionality to xul preference elements.
@@ -267,6 +267,7 @@ this.delayPreferences = {
 // 	<checkbox keysetAccel="keyName" delayPreference="pref-to-accel"/>
 //	<checkbox keysetAlt="keyName" delayPreference="pref-to-alt"/>
 //	<checkbox keysetShift="keyName" delayPreference="pref-to-shift"/>
+//	<checkbox keysetCtrl="keyName" delayPreference="pref-to-ctrl"/> <-- will be shown on OSX only
 //	<menulist keyset="keyName" delayPreference="pref-to-keycode"/>
 this.keys = {
 	all: [],
@@ -293,11 +294,14 @@ this.keys = {
 				accelBox: $$('[keysetAccel="'+id+'"]')[0],
 				shiftBox: $$('[keysetShift="'+id+'"]')[0],
 				altBox: $$('[keysetAlt="'+id+'"]')[0],
+				ctrlBox: $$('[keysetCtrl="'+id+'"]')[0],
 				get disabled () { return trueAttribute(this.node, 'disabled'); },
 				get keycode () { return this.node.value; },
+				set keycode (v) { return this.node.value = v; },
 				get accel () { return this.accelBox.checked; },
 				get shift () { return this.shiftBox.checked; },
 				get alt () { return this.altBox.checked; },
+				get ctrl () { return DARWIN && this.ctrlBox.checked; },
 				get menu () { return this.node.firstChild; }
 			};
 
@@ -308,6 +312,7 @@ this.keys = {
 			Listeners.add(key.accelBox, 'command', this);
 			Listeners.add(key.shiftBox, 'command', this);
 			Listeners.add(key.altBox, 'command', this);
+			Listeners.add(key.ctrlBox, 'command', this);
 		}
 
 		this.fillKeycodes();
@@ -319,6 +324,7 @@ this.keys = {
 			Listeners.remove(key.accelBox, 'command', this);
 			Listeners.remove(key.shiftBox, 'command', this);
 			Listeners.remove(key.altBox, 'command', this);
+			Listeners.remove(key.ctrlBox, 'command', this);
 		}
 	},
 
@@ -1034,7 +1040,7 @@ this.controllers = {
 
 		if(mode == Ci.nsIFilePicker.modeSave) {
 			let date = new Date();
-			let dateStr = date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate()+'-'+date.getHours()+'-'+date.getMinutes()+'-'+date.getSeconds();
+			let dateStr = date.getFullYear()+'-'+(date.getMonth() +1)+'-'+date.getDate()+'-'+date.getHours()+'-'+date.getMinutes()+'-'+date.getSeconds();
 			fp.defaultString = prefix+'-'+dateStr;
 		}
 
