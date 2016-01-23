@@ -65,6 +65,8 @@
 <!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
 <!ENTITY opt.awesomeBar.suggestSearch.label "Search suggestions">
 <!ENTITY opt.awesomeBar.suggestSearch.tooltip "As you type in the location bar, related search suggestions will be shown in the results popup, alongside suggestions from history and bookmarks.">
+<!ENTITY opt.awesomeBar.suggestSearchInPB.label "Also provide search suggestions in private windows">
+<!ENTITY opt.awesomeBar.suggestSearchInPB.tooltip "By default, search suggestions are not shown in private browsing because these are fetched remotely by querying your default search engine.">
 <!ENTITY opt.awesomeBar.gotoSearch.label "Manage your search engines">
 <!ENTITY opt.awesomeBar.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
 

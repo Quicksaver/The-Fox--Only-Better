@@ -6,6 +6,8 @@
  * http://mxr.mozilla.org/mozilla-central/source/toolkit/components/places/UnifiedComplete.js
  * modified only where relevant to implement some of the add-on's features. */
 
+// VERSION 1.0.1
+
 "use strict";
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -481,6 +483,16 @@ XPCOMUtils.defineLazyGetter(this, "Prefs", () => {
 	Services.prefs.addObserver("keyword.enabled", store, true);
 
 	return Object.seal(store);
+});
+
+/**
+ * This helper keeps track of our add-on specific preferences.
+ */
+XPCOMUtils.defineLazyGetter(this, "AwesomerPrefs", () => {
+	let prefs = new Preferences("extensions.thefoxonlybetter.");
+	return {
+		get suggestSearchesInPB () { return prefs.get('suggestSearchesInPB'); }
+	};
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -979,7 +991,7 @@ Search.prototype = {
 		let searchString = this._searchTokens.join(" ").substr(0, Prefs.maxCharsForSearchSuggestions);
 		// Avoid fetching suggestions if they are not required, private browsing
 		// mode is enabled, or the search string may expose sensitive information.
-		if(!this.hasBehavior("searches") || this._inPrivateWindow || this._prohibitSearchSuggestionsFor(searchString)) {
+		if(!this.hasBehavior("searches") || (!AwesomerPrefs.suggestSearchesInPB && this._inPrivateWindow) || this._prohibitSearchSuggestionsFor(searchString)) {
 			return;
 		}
 

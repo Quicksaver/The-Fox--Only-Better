@@ -1,4 +1,4 @@
-// VERSION 1.0.0
+// VERSION 1.0.1
 
 this.UnifiedComplete = {
 	sandbox: null,
@@ -10,7 +10,8 @@ this.UnifiedComplete = {
 
 	// We only register and load our component if it's needed for any of our custom behavior. Otherwise the native autocomplete component is used.
 	useOverride: function() {
-		return	Prefs.unifiedcomplete; // No point if user doesn't want it in the first place. Normally this should always be true though.
+		return Prefs.unifiedcomplete // No point if user doesn't want it in the first place. Normally this should always be true though.
+			&& Prefs.suggestSearchesInPB;
 	},
 
 	observe: function(aSubject, aTopic, aData) {

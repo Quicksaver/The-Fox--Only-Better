@@ -19,6 +19,7 @@
 		<preferences>
 			<preference id="pref-suggestSearchesEnabled" name="extensions.thefoxonlybetter.suggestSearchesEnabled" type="bool"/>
 			<preference id="pref-suggestSearches" name="extensions.thefoxonlybetter.suggestSearches" type="bool"/>
+			<preference id="pref-suggestSearchesInPB" name="extensions.thefoxonlybetter.suggestSearchesInPB" type="bool"/>
 			<preference id="pref-adaptSearchBar" name="extensions.thefoxonlybetter.adaptSearchBar" type="bool"/>
 		</preferences>
 
@@ -34,6 +35,12 @@
 				jump="suggestionsSearch"
 				delayPreference="pref-suggestSearches"
 				oncommand="objName.suggestSearches.apply();"/>
+			<checkbox label="&opt.awesomeBar.suggestSearchInPB.label;"
+				class="indent"
+				helptext="&opt.awesomeBar.suggestSearchInPB.tooltip;"
+				jump="suggestionsSearchInPB"
+				dependson="pref-suggestSearches"
+				delayPreference="pref-suggestSearchesInPB"/>
 			<button id="paneAwesomeBar-gotoSearch"
 				label="&opt.awesomeBar.gotoSearch.label;"
 				helptext="&opt.awesomeBar.gotoSearch.tooltip;"

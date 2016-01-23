@@ -1,4 +1,4 @@
-// VERSION 1.4.2
+// VERSION 1.4.3
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -34,6 +34,7 @@ prefList = {
 
 	suggestSearchesEnabled: true,
 	suggestSearches: true,
+	suggestSearchesInPB: false,
 
 	adaptSearchBar: true,
 
