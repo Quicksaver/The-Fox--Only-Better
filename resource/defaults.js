@@ -1,4 +1,4 @@
-// VERSION 1.4.1
+// VERSION 1.4.2
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -68,6 +68,7 @@ function onStartup(aReason) {
 
 	Modules.load('compatibilityFix/sandboxFixes');
 	Modules.load('keysets');
+	Modules.load('UnifiedComplete');
 
 	// Apply the add-on to every window opened and to be opened
 	Windows.callOnAll(startAddon, 'navigator:browser');
@@ -78,6 +79,7 @@ function onShutdown(aReason) {
 	// remove the add-on from all windows
 	Windows.callOnAll(removeObject, null, null, true);
 
+	Modules.unload('UnifiedComplete');
 	Modules.unload('keysets');
 	Modules.unload('compatibilityFix/sandboxFixes');
 }

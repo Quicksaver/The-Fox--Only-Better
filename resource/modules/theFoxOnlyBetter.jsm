@@ -1,8 +1,9 @@
-// VERSION 2.0.6
+// VERSION 2.0.7
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
 this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
+this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 this.__defineGetter__('overflowList', function() { return $('widget-overflow-list'); });
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
@@ -81,6 +82,7 @@ Modules.LOADMODULE = function() {
 	Overlays.overlayWindow(window, 'TheFOB', self);
 
 	Modules.load('compatibilityFix/windowFixes');
+	Modules.load('AwesomerUnifiedComplete');
 
 	Prefs.listen('slimChrome', self);
 	Prefs.listen('autohide', self);
@@ -108,6 +110,7 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('slimChrome');
 	Modules.unload('popups');
 
+	Modules.unload('AwesomerUnifiedComplete');
 	Modules.unload('compatibilityFix/windowFixes');
 
 	Overlays.removeOverlayWindow(window, 'TheFOB');

@@ -1,4 +1,4 @@
-// VERSION 2.0.26
+// VERSION 2.0.27
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -8,7 +8,6 @@ this.__defineGetter__('MenuBar', function() { return $('toolbar-menubar'); });
 this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesToolbarHelper; });
 this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
-this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
 this.ensureNotAllDisabled = function() {
@@ -961,6 +960,8 @@ this.slimChrome = {
 
 		// make sure the urlbar keeps its value
 		window.URLBarSetURI();
+
+		dispatch(gNavBar, { type: 'SlimChromeMovedNavBar', cancelable: false });
 	},
 
 	initOverflowable: function(toolbar) {
