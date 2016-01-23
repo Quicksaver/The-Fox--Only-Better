@@ -1,4 +1,4 @@
-// VERSION 1.4.0
+// VERSION 1.4.1
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -32,6 +32,9 @@ prefList = {
 	skyLightsHide: true,
 	skyLightsPlacements: '',
 
+	suggestSearchesEnabled: true,
+	suggestSearches: true,
+
 	adaptSearchBar: true,
 
 	// for internal use
@@ -50,7 +53,7 @@ if(isContent) { throw 'isContent'; }
 paneList = [
 	[ 'paneSlimChrome', true ],
 	[ 'paneSkyLights', true ],
-	[ 'paneExperimental' ]
+	[ 'paneAwesomeBar', true ]
 ];
 
 function startAddon(window) {
@@ -59,6 +62,10 @@ function startAddon(window) {
 }
 
 function onStartup(aReason) {
+	// These preferences are proxies for the following native Firefox preferences.
+	Prefs.proxyNative('suggestSearchesEnabled', 'suggest.enabled', true, 'search', 'browser');
+	Prefs.proxyNative('suggestSearches', 'suggest.searches', false, 'urlbar', 'browser');
+
 	Modules.load('compatibilityFix/sandboxFixes');
 	Modules.load('keysets');
 

@@ -2,7 +2,7 @@
 #categories .category[value="paneAbout"] image { -moz-image-region: rect(0px 24px 24px 0px); }
 #categories .category[value="paneSlimChrome"] image { -moz-image-region: rect(0px 48px 24px 24px); }
 #categories .category[value="paneSkyLights"] image { -moz-image-region: rect(0px 72px 24px 48px); }
-#categories .category[value="paneExperimental"] image { -moz-image-region: rect(0px 96px 24px 72px); }
+#categories .category[value="paneAwesomeBar"] image { -moz-image-region: rect(0px 96px 24px 72px); }
 
 #delaysBox hbox[flex="1"] {
 	min-width: 3em;

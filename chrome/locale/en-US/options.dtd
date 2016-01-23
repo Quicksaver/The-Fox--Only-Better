@@ -1,5 +1,6 @@
 <!ENTITY pane.slimChrome.label "Slim Chrome">
 <!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.awesomeBar.label "Awesome Bar">
 <!ENTITY pane.experimental.label "Experimental">
 
 <!ENTITY cat.general.label "General">
@@ -61,7 +62,12 @@
 
 <!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 
+<!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
+<!ENTITY opt.awesomeBar.suggestSearch.label "Search suggestions">
+<!ENTITY opt.awesomeBar.suggestSearch.tooltip "As you type in the location bar, related search suggestions will be shown in the results popup, alongside suggestions from history and bookmarks.">
+<!ENTITY opt.awesomeBar.gotoSearch.label "Manage your search engines">
+<!ENTITY opt.awesomeBar.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
+
 <!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
 <!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
 <!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
-<!ENTITY opt.adaptSearchBar.description.b "Note that this is only a prototype feature. A few extras are still planned, most notably the ability to define your own custom rules for other search pages to work. For now, if you'd like to see the Search Bar adapt to other search engines, you'll have to request it through the add-on's support page.">
