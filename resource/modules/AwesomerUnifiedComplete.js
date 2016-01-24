@@ -6,7 +6,7 @@
  * http://mxr.mozilla.org/mozilla-central/source/toolkit/components/places/UnifiedComplete.js
  * modified only where relevant to implement some of the add-on's features. */
 
-// VERSION 1.0.2
+// VERSION 1.0.3
 
 "use strict";
 
@@ -265,6 +265,8 @@ function LOG(str) {
 	console.log('AwesomerUnifiedComplete :: CHROME :: '+str);
 }
 
+var runOnShutdown = [];
+
 /**
  * Storage object for switch-to-tab entries.
  * This takes care of caching and registering open pages, that will be reused
@@ -466,8 +468,7 @@ XPCOMUtils.defineLazyGetter(this, "Prefs", () => {
 		_ignoreNotifications: false,
 		observe(subject, topic, data) {
 			// Avoid re-entrancy when flipping linked preferences.
-			if(this._ignoreNotifications)
-				return;
+			if(this._ignoreNotifications) { return; }
 			this._ignoreNotifications = true;
 			loadPrefs(subject, topic, data);
 			this._ignoreNotifications = false;
@@ -482,6 +483,12 @@ XPCOMUtils.defineLazyGetter(this, "Prefs", () => {
 	prefs.observe("", store);
 	Services.prefs.addObserver("keyword.enabled", store, true);
 
+	// Make sure we clear the observers when disabling.
+	runOnShutdown.push(function() {
+		prefs.ignore("", store);
+		Services.prefs.removeObserver("keyword.enabled", store);
+	});
+
 	return Object.seal(store);
 });
 
@@ -489,10 +496,34 @@ XPCOMUtils.defineLazyGetter(this, "Prefs", () => {
  * This helper keeps track of our add-on specific preferences.
  */
 XPCOMUtils.defineLazyGetter(this, "AwesomerPrefs", () => {
-	let prefs = new Preferences("extensions.thefoxonlybetter.");
-	return {
-		get suggestSearchesInPB () { return prefs.get('suggestSearchesInPB'); }
+	let branch = "extensions.thefoxonlybetter.";
+	let track = new Set([ 'suggestSearchesInPB' ]);
+
+	let prefs = new Preferences(branch);
+	let store = {
+		observe: function(aSubject, aTopic, aData) {
+			if(!aData) { return; }
+
+			let name = aData.substr(branch.length);
+			if(track.has(name)) {
+				this[name] = prefs.get(name);
+			}
+		},
+
+		QueryInterface: XPCOMUtils.generateQI([ Ci.nsIObserver, Ci.nsISupportsWeakReference ])
 	};
+
+	for(let name of track) {
+		store[name] = prefs.get(name);
+	}
+	prefs.observe("", store);
+
+	// Make sure we clear the observers when disabling.
+	runOnShutdown.push(function() {
+		prefs.ignore("", store);
+	});
+
+	return store;
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1806,6 +1837,13 @@ UnifiedComplete.prototype = {
 
 				yield SwitchToTabStorage.initDatabase(conn);
 
+				runOnShutdown.push(function() {
+					// This runs when disabling the add-on, there's no need to wait for it to finish.
+					// When/if re-enabling, it will start over with a new connection anyway.
+					SwitchToTabStorage.shutdown();
+					conn.close();
+				});
+
 				return conn;
 			}.bind(this)).then(null, ex => {
 				dump("Couldn't get database handle: " + ex + "\n");
@@ -1948,6 +1986,10 @@ UnifiedComplete.prototype = {
 	},
 
 	_unload: function() {
+		while(runOnShutdown.length > 0) {
+			runOnShutdown.pop()();
+		}
+
 		if(gFactory) {
 			Cm.QueryInterface(Ci.nsIComponentRegistrar).unregisterFactory(this.classID, gFactory);
 			gFactory = null;
