@@ -1,10 +1,10 @@
-// VERSION 1.0.0
+// VERSION 1.0.1
 
 this.AwsesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
 
 	onUnifiedComplete: function() {
-		if(useOverride) {
+		if(this.useOverride) {
 			this.init();
 		} else {
 			this.uninit();
@@ -33,8 +33,29 @@ this.AwsesomerUnifiedComplete = {
 			gURLBar.setAttribute('autocompletesearch', args.join(" "));
 			gURLBar.mSearchNames = null;
 
-			// Make sure we keepit initialized when Slim Chrome resets the binding.
+			// Make sure we keep it initialized when Slim Chrome resets the binding.
 			Listeners.add(gNavBar, 'SlimChromeMovedNavBar', this);
+		}
+
+		// Make sure any opened pages already registered with _unifiedComplete are removed from the original instance (no point in memory hogging).
+		for(let browser of gBrowser.browsers) {
+			if(browser.registeredOpenURI) {
+				gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI);
+			}
+		}
+
+		// Replace the original unifiedComplete instance, so that new pages are registered with our instance.
+		Object.defineProperty(gBrowser, '_unifiedComplete', {
+			configurable: true,
+			enumerable: true,
+			value: Cc["@mozilla.org/autocomplete/search;1?name=awesomerunifiedcomplete"].getService(Ci.mozIPlacesAutoComplete)
+		});
+
+		// Re-register already opened pages.
+		for(let browser of gBrowser.browsers) {
+			if(browser.registeredOpenURI) {
+				gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
+			}
 		}
 	},
 
@@ -63,6 +84,24 @@ this.AwsesomerUnifiedComplete = {
 
 			gURLBar.setAttribute('autocompletesearch', args.join(" "));
 			gURLBar.mSearchNames = null;
+		}
+
+		for(let browser of gBrowser.browsers) {
+			if(browser.registeredOpenURI) {
+				gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI);
+			}
+		}
+
+		Object.defineProperty(gBrowser, '_unifiedComplete', {
+			configurable: true,
+			enumerable: true,
+			value: Cc["@mozilla.org/autocomplete/search;1?name=unifiedcomplete"].getService(Ci.mozIPlacesAutoComplete)
+		});
+
+		for(let browser of gBrowser.browsers) {
+			if(browser.registeredOpenURI) {
+				gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
+			}
 		}
 	}
 };
