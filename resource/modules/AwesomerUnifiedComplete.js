@@ -6,7 +6,7 @@
  * http://mxr.mozilla.org/mozilla-central/source/toolkit/components/places/UnifiedComplete.js
  * modified only where relevant to implement some of the add-on's features. */
 
-// VERSION 1.0.1
+// VERSION 1.0.2
 
 "use strict";
 
@@ -259,7 +259,7 @@ XPCOMUtils.defineLazyModuleGetter(this, "PlacesRemoteTabsAutocompleteProvider", 
 XPCOMUtils.defineLazyServiceGetter(this, "textURIService", "@mozilla.org/intl/texttosuburi;1", "nsITextToSubURI");
 
 // easy and useful helpers for when I'm debugging
-XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/devtools/Console.jsm");
+XPCOMUtils.defineLazyModuleGetter(this, "console", "resource://gre/modules/Console.jsm");
 function LOG(str) {
 	if(!str) { str = typeof(str)+': '+str; }
 	console.log('AwesomerUnifiedComplete :: CHROME :: '+str);

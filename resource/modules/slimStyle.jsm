@@ -1,4 +1,4 @@
-// VERSION 2.0.12
+// VERSION 2.0.13
 
 this.__defineGetter__('DevEdition', function() { return window.DevEdition; });
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
@@ -84,7 +84,7 @@ this.slimStyle = {
 	AUSTRALIS_BORDER_COORD_Y5: 1,
 
 	// some gradients for use with personas
-	bgGradientWINNT: 'rgba('+((Services.vc.compare(Services.appinfo.version, "44.0a1") >= 0) ? '255,255,255,.35' : '253,253,253,0.4')+') 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
+	bgGradientWINNT: 'rgba(255,255,255,.35) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
 	bgGradientLINUX: 'rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
 	bgFlatWINNT: 'rgba(255,255,255,.4), rgba(255,255,255,.4)',
 	bgFlatLINUX: 'rgba(255,255,255,.4), rgba(255,255,255,.4)',
@@ -374,32 +374,22 @@ this.slimStyle = {
 					background-color: ' + this.lwtheme.bgColor + ' !important;\n\
 					color: ' + this.lwtheme.color + ' !important;\n\
 				}\n\
-				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #'+objName+'-slimChrome-toolbars-after {\n\
-					background-image: linear-gradient('+((DARWIN) ? bgGradient : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n\
-				}\n\
-				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"]:not(['+objName+'-FF44]) #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
-					background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n\
-				}\n\
-				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #'+objName+'-slimChrome-toolbars-after {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
 					background-image: linear-gradient('+((DARWIN) ? bgFlat : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n\
 				}\n\
-				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
 					background-image: linear-gradient('+bgFlat+'), ' + this.lwtheme.bgImage + ' !important;\n\
 				}\n\
 				@media	(-moz-os-version: windows-xp),\n\
 					(-moz-os-version: windows-vista),\n\
 					(-moz-os-version: windows-win7) {\n\
-					window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
-					window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
-					window['+objName+'_UUID="'+_UUID+'"]['+objName+'-FF44] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
 						background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n\
 					}\n\
 				}\n\
@@ -464,10 +454,6 @@ Modules.LOADMODULE = function() {
 	Observers.add(slimStyle, "lightweight-theme-styling-update");
 	Observers.add(slimStyle, "lightweight-theme-preview-requested");
 
-	// for styling changes in the latest versions
-	toggleAttribute(document.documentElement, objName+'-FF43', Services.vc.compare(Services.appinfo.version, "43.0a1") >= 0);
-	toggleAttribute(document.documentElement, objName+'-FF44', Services.vc.compare(Services.appinfo.version, "44.0a1") >= 0);
-
 	slimStyle.apply();
 };
 
@@ -478,9 +464,6 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'EnsureSlimChrome', slimStyle);
 	Observers.remove(slimStyle, "lightweight-theme-styling-update");
 	Observers.remove(slimStyle, "lightweight-theme-preview-requested");
-
-	removeAttribute(document.documentElement, objName+'-FF43');
-	removeAttribute(document.documentElement, objName+'-FF44');
 
 	Prefs.unlisten('slimStyle', slimStyle);
 	Prefs.unlisten('nonavbarbg', slimStyle);
