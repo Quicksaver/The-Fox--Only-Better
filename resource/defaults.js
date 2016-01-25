@@ -1,4 +1,4 @@
-// VERSION 1.4.4
+// VERSION 1.4.5
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -31,6 +31,8 @@ prefList = {
 	skyLights: true,
 	skyLightsHide: true,
 	skyLightsPlacements: '',
+
+	awesomerURLBar: true,
 
 	suggestHistory: true,
 	suggestBookmark: true,

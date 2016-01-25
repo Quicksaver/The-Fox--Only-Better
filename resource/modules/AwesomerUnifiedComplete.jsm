@@ -1,6 +1,6 @@
-// VERSION 1.0.2
+// VERSION 1.0.3
 
-this.AwsesomerUnifiedComplete = {
+this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
 
 	onUnifiedComplete: function() {
@@ -124,14 +124,24 @@ this.AwsesomerUnifiedComplete = {
 	}
 };
 
+this.toggleAdaptSearchBar = function() {
+	Modules.loadIf('adaptSearchBar', Prefs.adaptSearchBar);
+};
+
 Modules.LOADMODULE = function() {
-	UnifiedComplete.register(AwsesomerUnifiedComplete);
-	if(AwsesomerUnifiedComplete.useOverride) {
-		AwsesomerUnifiedComplete.init();
+	UnifiedComplete.register(AwesomerUnifiedComplete);
+	if(AwesomerUnifiedComplete.useOverride) {
+		AwesomerUnifiedComplete.init();
 	}
+
+	Prefs.listen('adaptSearchBar', toggleAdaptSearchBar);
+	toggleAdaptSearchBar();
 };
 
 Modules.UNLOADMODULE = function() {
-	UnifiedComplete.unregister(AwsesomerUnifiedComplete);
-	AwsesomerUnifiedComplete.uninit();
+	Prefs.unlisten('adaptSearchBar', toggleAdaptSearchBar);
+	Modules.unload('adaptSearchBar');
+
+	UnifiedComplete.unregister(AwesomerUnifiedComplete);
+	AwesomerUnifiedComplete.uninit();
 };

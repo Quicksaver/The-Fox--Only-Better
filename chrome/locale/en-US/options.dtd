@@ -62,6 +62,9 @@
 
 <!ENTITY cat.slimChromeKeyset.label "Keyboard shortcut for enabling or disabling">
 
+<!ENTITY cat.awesomeBar.enable.label "Enhance my Awesome Bar">
+<!ENTITY cat.awesomeBar.enable.tooltip "Your location bar can help you more than you realize! Configure its suggestions and web search behavior here.">
+
 <!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
 <!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
 <!ENTITY opt.awesomeBar.maxSuggest.label "Total suggestions">

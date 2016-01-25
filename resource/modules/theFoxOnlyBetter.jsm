@@ -1,4 +1,4 @@
-// VERSION 2.0.7
+// VERSION 2.0.8
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -43,6 +43,10 @@ this.observe = function(aSubject, aTopic, aData) {
 		case 'adaptSearchBar':
 			toggleAdaptSearchBar();
 			break;
+
+		case 'awesomerURLBar':
+			toggleAwesomerUnifiedComplete();
+			break;
 	}
 };
 
@@ -72,8 +76,8 @@ this.togglePopups = function() {
 	Modules.loadIf('popups', Prefs.slimChrome);
 };
 
-this.toggleAdaptSearchBar = function() {
-	Modules.loadIf('adaptSearchBar', Prefs.adaptSearchBar);
+this.toggleAwesomerUnifiedComplete = function() {
+	Modules.loadIf('AwesomerUnifiedComplete', Prefs.awesomerURLBar);
 };
 
 Modules.LOADMODULE = function() {
@@ -82,11 +86,10 @@ Modules.LOADMODULE = function() {
 	Overlays.overlayWindow(window, 'TheFOB', self);
 
 	Modules.load('compatibilityFix/windowFixes');
-	Modules.load('AwesomerUnifiedComplete');
 
 	Prefs.listen('slimChrome', self);
 	Prefs.listen('autohide', self);
-	Prefs.listen('adaptSearchBar', self);
+	Prefs.listen('awesomerURLBar', self);
 
 	Listeners.add(window, 'fullscreen', self);
 	Listeners.add(window, 'beforecustomization', self);
@@ -94,7 +97,7 @@ Modules.LOADMODULE = function() {
 
 	togglePopups();
 	toggleSlimChrome();
-	toggleAdaptSearchBar();
+	toggleAwesomerUnifiedComplete();
 };
 
 Modules.UNLOADMODULE = function() {
@@ -104,13 +107,12 @@ Modules.UNLOADMODULE = function() {
 
 	Prefs.unlisten('slimChrome', self);
 	Prefs.unlisten('autohide', self);
-	Prefs.unlisten('adaptSearchBar', self);
+	Prefs.unlisten('awesomerURLBar', self);
 
-	Modules.unload('adaptSearchBar');
+	Modules.unload('AwesomerUnifiedComplete');
 	Modules.unload('slimChrome');
 	Modules.unload('popups');
 
-	Modules.unload('AwesomerUnifiedComplete');
 	Modules.unload('compatibilityFix/windowFixes');
 
 	Overlays.removeOverlayWindow(window, 'TheFOB');
