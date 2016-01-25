@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/options.dtd">
-<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+			xmlns:html="http://www.w3.org/1999/xhtml">
 
 	<richlistbox id="categories">
 		<richlistitem id="category-awesomeBar"
@@ -18,8 +19,16 @@
 	<prefpane id="mainPrefPane">
 		<preferences>
 			<preference id="pref-suggestSearchesEnabled" name="extensions.thefoxonlybetter.suggestSearchesEnabled" type="bool"/>
+			<preference id="pref-suggestHistory" name="extensions.thefoxonlybetter.suggestHistory" type="bool"/>
+			<preference id="pref-suggestBookmark" name="extensions.thefoxonlybetter.suggestBookmark" type="bool"/>
+			<preference id="pref-suggestOpenpage" name="extensions.thefoxonlybetter.suggestOpenpage" type="bool"/>
 			<preference id="pref-suggestSearches" name="extensions.thefoxonlybetter.suggestSearches" type="bool"/>
 			<preference id="pref-suggestSearchesInPB" name="extensions.thefoxonlybetter.suggestSearchesInPB" type="bool"/>
+			<preference id="pref-maxSuggest" name="extensions.thefoxonlybetter.maxSuggest" type="int"/>
+			<preference id="pref-maxSuggestHistory" name="extensions.thefoxonlybetter.maxSuggestHistory" type="int"/>
+			<preference id="pref-maxSuggestBookmark" name="extensions.thefoxonlybetter.maxSuggestBookmark" type="int"/>
+			<preference id="pref-maxSuggestOpenpage" name="extensions.thefoxonlybetter.maxSuggestOpenpage" type="int"/>
+			<preference id="pref-maxSuggestSearches" name="extensions.thefoxonlybetter.maxSuggestSearches" type="int"/>
 			<preference id="pref-adaptSearchBar" name="extensions.thefoxonlybetter.adaptSearchBar" type="bool"/>
 		</preferences>
 
@@ -29,31 +38,154 @@
 
 		<groupbox align="start" id="paneAwesomeBar-autoComplete" collapsed="true" data-category="paneAwesomeBar">
 			<caption label="&cat.awesomeBar.suggest.label;"/>
-			<checkbox id="paneAwesomeBar-suggestSearch"
-				label="&opt.awesomeBar.suggestSearch.label;"
-				helptext="&opt.awesomeBar.suggestSearch.tooltip;"
-				jump="suggestionsSearch"
-				delayPreference="pref-suggestSearches"
-				oncommand="objName.suggestSearches.apply();"/>
-			<checkbox label="&opt.awesomeBar.suggestSearchInPB.label;"
+			<html:table>
+				<html:tr>
+					<html:td>
+						<label value="&opt.awesomeBar.maxSuggest.label;"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							jump="maxSuggest"/>
+					</html:td>
+					<html:td style="-moz-padding-start:1em;">
+						<hbox align="center">
+							<label value="&opt.awesomeBar.limitSuggest.label;"/>
+							<textbox type="number"
+								size="1"
+								min="1"
+								max="50"
+								style="text-align:center;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								delayPreference="pref-maxSuggest"/>
+						</hbox>
+					</html:td>
+				</html:tr>
+				<html:tr>
+					<html:td>
+						<checkbox id="paneAwesomeBar-suggestHistory"
+							label="&opt.awesomeBar.suggestHistory.label;"
+							jump="suggestHistory"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							delayPreference="pref-suggestHistory"/>
+					</html:td>
+					<html:td style="-moz-padding-start:1em;">
+						<hbox align="center">
+							<label value="&opt.awesomeBar.limitSuggest.label;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestHistory"/>
+							<textbox type="number"
+								size="1"
+								min="1"
+								max="50"
+								style="text-align:center;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestHistory"
+								delayPreference="pref-maxSuggestHistory"/>
+						</hbox>
+					</html:td>
+				</html:tr>
+				<html:tr>
+					<html:td>
+						<checkbox id="paneAwesomeBar-suggestBookmark"
+							label="&opt.awesomeBar.suggestBookmark.label;"
+							jump="suggestBookmark"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							delayPreference="pref-suggestBookmark"/>
+					</html:td>
+					<html:td style="-moz-padding-start:1em;">
+						<hbox align="center">
+							<label value="&opt.awesomeBar.limitSuggest.label;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestBookmark"/>
+							<textbox type="number"
+								size="1"
+								min="1"
+								max="50"
+								style="text-align:center;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestBookmark"
+								delayPreference="pref-maxSuggestBookmark"/>
+						</hbox>
+					</html:td>
+				</html:tr>
+				<html:tr>
+					<html:td>
+						<checkbox id="paneAwesomeBar-suggestOpenpage"
+							label="&opt.awesomeBar.suggestOpenpage.label;"
+							jump="suggestOpenpage"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							delayPreference="pref-suggestOpenpage"/>
+					</html:td>
+					<html:td style="-moz-padding-start:1em;">
+						<hbox align="center">
+							<label value="&opt.awesomeBar.limitSuggest.label;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestOpenpage"/>
+							<textbox type="number"
+								size="1"
+								min="1"
+								max="50"
+								style="text-align:center;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestOpenpage"
+								delayPreference="pref-maxSuggestOpenpage"/>
+						</hbox>
+					</html:td>
+				</html:tr>
+				<html:tr>
+					<html:td>
+						<checkbox id="paneAwesomeBar-suggestSearches"
+							label="&opt.awesomeBar.suggestSearches.label;"
+							jump="suggestSearches"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							delayPreference="pref-suggestSearches"/>
+					</html:td>
+					<html:td style="-moz-padding-start:1em;">
+						<hbox align="center">
+							<label value="&opt.awesomeBar.limitSuggest.label;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestSearches"/>
+							<textbox type="number"
+								size="1"
+								min="1"
+								max="50"
+								style="text-align:center;"
+								helpbox="paneAwesomeBar-autoComplete-helptext"
+								dependson="pref-suggestSearches"
+								delayPreference="pref-maxSuggestSearches"/>
+						</hbox>
+					</html:td>
+				</html:tr>
+			</html:table>
+			<checkbox label="&opt.awesomeBar.suggestSearchesInPB.label;"
 				class="indent"
-				helptext="&opt.awesomeBar.suggestSearchInPB.tooltip;"
-				jump="suggestionsSearchInPB"
+				helpbox="paneAwesomeBar-autoComplete-helptext"
+				jump="suggestSearchesInPB"
 				dependson="pref-suggestSearches"
 				delayPreference="pref-suggestSearchesInPB"/>
+			<vbox id="paneAwesomeBar-autoComplete-helptext" collapsed="true">
+				<description>&cat.awesomeBar.suggest.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.awesomeBar.suggestHistory.label;</description>
+				<description>&opt.awesomeBar.suggestHistory.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.awesomeBar.suggestBookmark.label;</description>
+				<description>&opt.awesomeBar.suggestBookmark.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.awesomeBar.suggestOpenpage.label;</description>
+				<description>&opt.awesomeBar.suggestOpenpage.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.awesomeBar.suggestSearches.label;</description>
+				<description>&opt.awesomeBar.suggestSearches.tooltip;</description>
+				<description style="margin-top:1em;">&opt.awesomeBar.suggestSearchesInPB.tooltip;</description>
+			</vbox>
+		</groupbox>
+
+		<groupbox align="start" id="paneAwesomeBar-searchbar" collapsed="true" data-category="paneAwesomeBar">
+			<caption label="&cat.searchbar.label;"/>
 			<button id="paneAwesomeBar-gotoSearch"
 				label="&opt.awesomeBar.gotoSearch.label;"
 				helptext="&opt.awesomeBar.gotoSearch.tooltip;"
 				oncommand="objName.gotoSearch();"/>
-		</groupbox>
-
-		<groupbox align="start" id="paneAwesomeBar-searchbar" collapsed="true" data-category="paneAwesomeBar">
-			<caption>
-				<checkbox label="&opt.adaptSearchBar.label;"
-					helptext="&opt.adaptSearchBar.tooltip;"
-					jump="adaptSearchBar"
-					delayPreference="pref-adaptSearchBar"/>
-			</caption>
+			<checkbox label="&opt.adaptSearchBar.label;"
+				class="topIndent"
+				helptext="&opt.adaptSearchBar.tooltip;"
+				jump="adaptSearchBar"
+				delayPreference="pref-adaptSearchBar"/>
 			<description>&opt.adaptSearchBar.description.a;</description>
 		</groupbox>
 	</prefpane>

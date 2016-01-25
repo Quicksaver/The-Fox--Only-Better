@@ -1,4 +1,4 @@
-// VERSION 1.0.1
+// VERSION 1.0.2
 
 this.UnifiedComplete = {
 	sandbox: null,
@@ -10,8 +10,8 @@ this.UnifiedComplete = {
 
 	// We only register and load our component if it's needed for any of our custom behavior. Otherwise the native autocomplete component is used.
 	useOverride: function() {
-		return Prefs.unifiedcomplete // No point if user doesn't want it in the first place. Normally this should always be true though.
-			&& Prefs.suggestSearchesInPB;
+		// No point if user doesn't want it in the first place. Normally this should always be true though.
+		return Prefs.unifiedcomplete;
 	},
 
 	observe: function(aSubject, aTopic, aData) {
@@ -62,6 +62,14 @@ this.UnifiedComplete = {
 };
 
 Modules.LOADMODULE = function() {
+	// These preferences are proxies for the following native Firefox preferences.
+	Prefs.proxyNative('suggestSearchesEnabled', 'suggest.enabled', true, 'search', 'browser');
+	Prefs.proxyNative('suggestSearches', 'suggest.searches', false, 'urlbar', 'browser');
+	Prefs.proxyNative('suggestHistory', 'suggest.history', true, 'urlbar', 'browser');
+	Prefs.proxyNative('suggestBookmark', 'suggest.bookmark', true, 'urlbar', 'browser');
+	Prefs.proxyNative('suggestOpenpage', 'suggest.openpage', true, 'urlbar', 'browser');
+	Prefs.proxyNative('maxSuggest', 'maxRichResults', 12, 'urlbar', 'browser');
+
 	Prefs.setDefaults({ unifiedcomplete: true }, 'urlbar', 'browser');
 
 	Prefs.listen('unifiedcomplete', UnifiedComplete);

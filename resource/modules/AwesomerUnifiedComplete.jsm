@@ -1,4 +1,4 @@
-// VERSION 1.0.1
+// VERSION 1.0.2
 
 this.AwsesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -18,6 +18,18 @@ this.AwsesomerUnifiedComplete = {
 				this.init();
 				break;
 		}
+	},
+
+	observe: function(aSubject, aTopic, aData) {
+		switch(aSubject) {
+			case "maxRichResults":
+				this.resetPopupMaxResults();
+				break;
+		}
+	},
+
+	resetPopupMaxResults: function() {
+		gURLBar.popup._maxResults = 0;
 	},
 
 	init: function() {
@@ -57,6 +69,9 @@ this.AwsesomerUnifiedComplete = {
 				gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
 			}
 		}
+
+		Prefs.listen("maxRichResults", this);
+		this.resetPopupMaxResults();
 	},
 
 	uninit: function() {
@@ -103,6 +118,9 @@ this.AwsesomerUnifiedComplete = {
 				gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
 			}
 		}
+
+		Prefs.unlisten("maxRichResults", this);
+		this.resetPopupMaxResults();
 	}
 };
 

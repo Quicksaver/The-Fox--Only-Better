@@ -6,7 +6,7 @@
  * http://mxr.mozilla.org/mozilla-central/source/toolkit/components/places/UnifiedComplete.js
  * modified only where relevant to implement some of the add-on's features. */
 
-// VERSION 1.0.3
+// VERSION 1.1.0
 
 "use strict";
 
@@ -71,6 +71,8 @@ const TELEMETRY_1ST_RESULT = "PLACES_AUTOCOMPLETE_1ST_RESULT_TIME_MS";
 const TELEMETRY_6_FIRST_RESULTS = "PLACES_AUTOCOMPLETE_6_FIRST_RESULTS_TIME_MS";
 // The default frecency value used when inserting matches with unknown frecency.
 const FRECENCY_DEFAULT = 1000;
+// The default frecency value used when inserting search suggestions (unknown frecency).
+const FRECENCY_SEARCH_ENGINE = 250;
 
 // Remote matches are appended when local matches are below a given frecency
 // threshold (FRECENCY_DEFAULT) as soon as they arrive.  However we'll
@@ -497,7 +499,13 @@ XPCOMUtils.defineLazyGetter(this, "Prefs", () => {
  */
 XPCOMUtils.defineLazyGetter(this, "AwesomerPrefs", () => {
 	let branch = "extensions.thefoxonlybetter.";
-	let track = new Set([ 'suggestSearchesInPB' ]);
+	let track = new Set([
+		'suggestSearchesInPB',
+		'maxSuggestHistory',
+		'maxSuggestBookmark',
+		'maxSuggestOpenpage',
+		'maxSuggestSearches'
+	]);
 
 	let prefs = new Preferences(branch);
 	let store = {
@@ -744,6 +752,12 @@ function Search(searchString, searchParam, autocompleteListener, resultListener,
 
 	// Counts the number of inserted local matches.
 	this._localMatchesCount = 0;
+	// Counts the number of history matches.
+	this._historyMatchesCount = 0;
+	// Counts the number of bookmark matches.
+	this._bookmarkMatchesCount = 0;
+	// Counts the number of "switch to tab" matches.
+	this._openpageMatchesCount = 0;
 	// Counts the number of inserted remote matches.
 	this._remoteMatchesCount = 0;
 }
@@ -940,10 +954,14 @@ Search.prototype = {
 			if(!this.pending) { return; }
 		}
 
-		// If we do not have enough results, and our match type is
-		// MATCH_BOUNDARY_ANYWHERE, search again with MATCH_ANYWHERE to get more
-		// results.
-		if(this._matchBehavior == MATCH_BOUNDARY_ANYWHERE && this._localMatchesCount < Prefs.maxRichResults) {
+		// If we do not have enough results, and our match type is MATCH_BOUNDARY_ANYWHERE,
+		// search again with MATCH_ANYWHERE to get more results.
+		if(this._matchBehavior == MATCH_BOUNDARY_ANYWHERE
+		&& this._localMatchesCount < Prefs.maxRichResults
+		&& (	this._historyMatchesCount < AwesomerPrefs.maxSuggestHistory
+			|| this._bookmarkMatchesCount < AwesomerPrefs.maxSuggestBookmark
+			|| this._openpageMatchesCount < AwesomerPrefs.maxSuggestOpenpage
+		)) {
 			this._matchBehavior = MATCH_ANYWHERE;
 			for(let [query, params] of [ this._adaptiveQuery, this._searchQuery ]) {
 				yield conn.executeCached(query, params, this._onResultRow.bind(this));
@@ -1029,7 +1047,7 @@ Search.prototype = {
 		this._searchSuggestionController = PlacesSearchAutocompleteProvider.getSuggestionController(
 			searchString,
 			this._inPrivateWindow,
-			Prefs.maxRichResults
+			AwesomerPrefs.maxSuggestSearches
 		);
 		let promise = this._searchSuggestionController.fetchCompletePromise.then(() => {
 			// The search has been canceled already.
@@ -1039,7 +1057,7 @@ Search.prototype = {
 				// The original string is used to properly compare with the next search.
 				this._lastLowResultsSearchSuggestion = this._originalSearchString;
 			}
-			while(this.pending && this._remoteMatchesCount < Prefs.maxRichResults) {
+			while(this.pending && this._remoteMatchesCount < AwesomerPrefs.maxSuggestSearches) {
 				let [match, suggestion] = this._searchSuggestionController.consume();
 				if(!suggestion) { break; }
 
@@ -1244,7 +1262,7 @@ Search.prototype = {
 			comment: match.engineName,
 			icon: match.iconUrl,
 			style: "action searchengine",
-			frecency: FRECENCY_DEFAULT,
+			frecency: FRECENCY_SEARCH_ENGINE,
 			remote: !!suggestion
 		});
 	},
@@ -1361,10 +1379,33 @@ Search.prototype = {
 				match = this._processRow(row);
 				break;
 		}
-		this._addMatch(match);
+		let add = this._addingHeuristicFirstMatch;
+		if(!add) {
+			switch(match.style) {
+				case "action switchtab":
+					add = this._openpageMatchesCount < AwesomerPrefs.maxSuggestOpenpage;
+					break;
+				case "bookmark":
+				case "bookmark-tag":
+					add = this._bookmarkMatchesCount < AwesomerPrefs.maxSuggestBookmark;
+					break;
+				case "favicon":
+				default: // history entries usually come through here, although they can also have "favicon" already set as well
+					add = this._historyMatchesCount < AwesomerPrefs.maxSuggestHistory;
+					break;
+			}
+		}
+		if(add && this._localMatchesCount < Prefs.maxRichResults) {
+			this._addMatch(match);
+		}
 		// If the search has been canceled by the user or by _addMatch, or we
 		// fetched enough results, we can stop the underlying Sqlite query.
-		if(!this.pending || this._localMatchesCount == Prefs.maxRichResults) {
+		if(!this.pending
+		|| this._localMatchesCount == Prefs.maxRichResults
+		|| (	this._historyMatchesCount == AwesomerPrefs.maxSuggestHistory
+			&& this._bookmarkMatchesCount == AwesomerPrefs.maxSuggestBookmark
+			&& this._openpageMatchesCount == AwesomerPrefs.maxSuggestOpenpage
+		)) {
 			throw StopIteration;
 		}
 	},
@@ -1435,7 +1476,7 @@ Search.prototype = {
 			this._remoteMatchesCount++;
 		} else {
 			// This is a local match.
-			if(match.frecency > FRECENCY_DEFAULT || this._localMatchesCount < MINIMUM_LOCAL_MATCHES) {
+			if(match.frecency > FRECENCY_SEARCH_ENGINE || this._localMatchesCount < MINIMUM_LOCAL_MATCHES) {
 				// Append before remote matches.
 				index = this._remoteMatchesStartIndex;
 				this._remoteMatchesStartIndex++
@@ -1444,6 +1485,18 @@ Search.prototype = {
 				index = this._localMatchesCount + this._remoteMatchesCount;
 			}
 			this._localMatchesCount++;
+			switch(match.style) {
+				case "action switchtab":
+					this._openpageMatchesCount++;
+					break;
+				case "bookmark":
+				case "bookmark-tag":
+					this._bookmarkMatchesCount++;
+					break;
+				case "favicon": // history
+					this._historyMatchesCount++;
+					break;
+			}
 		}
 		return index;
 	},

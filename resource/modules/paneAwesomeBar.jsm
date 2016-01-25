@@ -1,4 +1,4 @@
-// VERSION 1.0.0
+// VERSION 1.0.1
 
 this.gotoSearch = function() {
 	let gWindow = window
@@ -26,7 +26,7 @@ this.gotoSearch = function() {
 };
 
 this.suggestSearches = {
-	get checkbox () { return $('paneAwesomeBar-suggestSearch'); },
+	get checkbox () { return $('paneAwesomeBar-suggestSearches'); },
 
 	apply: function() {
 		let checked = this.checkbox.checked;

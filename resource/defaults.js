@@ -1,4 +1,4 @@
-// VERSION 1.4.3
+// VERSION 1.4.4
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -32,9 +32,18 @@ prefList = {
 	skyLightsHide: true,
 	skyLightsPlacements: '',
 
-	suggestSearchesEnabled: true,
+	suggestHistory: true,
+	suggestBookmark: true,
+	suggestOpenpage: true,
 	suggestSearches: true,
+	suggestSearchesEnabled: true,
 	suggestSearchesInPB: false,
+
+	maxSuggest: 12,
+	maxSuggestHistory: 12,
+	maxSuggestBookmark: 12,
+	maxSuggestOpenpage: 12,
+	maxSuggestSearches: 5,
 
 	adaptSearchBar: true,
 
@@ -63,10 +72,6 @@ function startAddon(window) {
 }
 
 function onStartup(aReason) {
-	// These preferences are proxies for the following native Firefox preferences.
-	Prefs.proxyNative('suggestSearchesEnabled', 'suggest.enabled', true, 'search', 'browser');
-	Prefs.proxyNative('suggestSearches', 'suggest.searches', false, 'urlbar', 'browser');
-
 	Modules.load('compatibilityFix/sandboxFixes');
 	Modules.load('keysets');
 	Modules.load('UnifiedComplete');
