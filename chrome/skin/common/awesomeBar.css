@@ -5,27 +5,56 @@
 	background-color: hsla(210,4%,10%,.07);
 }
 
-#urlbar-search-settings {
+#theFoxOnlyBetter-urlbar-search-hottext {
+	text-align: center;
+	margin: 8px;
+}
+
+#urlbar-search-footer button {
 	-moz-appearance: none;
 	-moz-user-focus: ignore;
 	margin: 0;
-	padding: 8px 20px;
+	padding: 6px 15px;
+	min-width: 0;
+}
+
+#urlbar-search-settings {
 	list-style-image: url("chrome://browser/skin/Toolbar.png");
 	-moz-image-region: rect(0px, 468px, 18px, 450px);
 }
 
-#urlbar-search-settings:hover {
+#urlbar-search-footer button:hover {
 	background-color: hsla(210,4%,10%,.07);
 }
 
-#urlbar-search-settings:hover:active {
+#urlbar-search-footer button:hover:active {
 	background-color: hsla(210,4%,10%,.12);
 }
 
-/* until the search engines themselves have hidpi icons, this makes no sense */
+/* For now I'm controlling the amount of visible icons like this,
+   if there are too many, just hide them. */
+#theFoxOnlyBetter-urlbar-search-engines {
+	overflow: hidden;
+}
+
+#theFoxOnlyBetter-urlbar-search-engines button .button-icon {
+	height: 18px;
+}
+
+#theFoxOnlyBetter-urlbar-search-engines button .button-icon .addengine-badge {
+	width: 16px;
+	height: 16px;
+	margin: -7px -10px 7px 8px;
+	list-style-image: url("chrome://browser/skin/badge-add-engine.png");
+}
+
 @media (min-resolution: 1.1dppx) {
 	#urlbar-search-settings {
 		list-style-image: url("chrome://browser/skin/Toolbar@2x.png");
 		-moz-image-region: rect(0, 936px, 36px, 900px);
 	}
-}*/
+
+	#theFoxOnlyBetter-urlbar-search-engines button .button-icon {
+		height: 36px;
+	}
+}

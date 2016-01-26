@@ -1,6 +1,10 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 
-#urlbar-search-settings {
+#theFoxOnlyBetter-urlbar-search-hottext {
+	color: GrayText;
+}
+
+#urlbar-search-footer button {
 	border: 0;
 	background: transparent;
 }

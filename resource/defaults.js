@@ -1,4 +1,4 @@
-// VERSION 1.4.5
+// VERSION 1.4.6
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -46,6 +46,8 @@ prefList = {
 	maxSuggestBookmark: 12,
 	maxSuggestOpenpage: 12,
 	maxSuggestSearches: 5,
+
+	searchEnginesInURLBar: true,
 
 	adaptSearchBar: true,
 

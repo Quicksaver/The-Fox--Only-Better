@@ -1,1 +1,5 @@
-/* empty file */
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+#theFoxOnlyBetter-urlbar-search-hottext {
+	color: GrayText;
+}

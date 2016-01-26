@@ -1,4 +1,4 @@
-// VERSION 1.0.4
+// VERSION 1.1.0
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -129,17 +129,187 @@ this.AwesomerUnifiedComplete = {
 	}
 };
 
+this.AwesomerBar = {
+	kXULNS: "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
+
+	get popup () { return $('PopupAutoCompleteRichResult'); },
+	get footer () { return $('urlbar-search-footer'); },
+	get oneOffList () { return $(objName+'-urlbar-search-engines'); },
+	get hottext () { return $(objName+'-urlbar-search-hottext'); },
+
+	_searchBundle: null,
+	get searchBundle () {
+		if(!this._bundle) {
+			this._searchBundle = Services.strings.createBundle("chrome://browser/locale/search.properties");
+		}
+		return this._searchBundle;
+	},
+
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'popupshowing':
+				this.onPopupShowing();
+				break;
+
+			case 'mouseover':
+				this.setHottext(e.originalTarget);
+				break;
+
+			case 'mouseout':
+				this.clearHottext();
+				break;
+		}
+	},
+
+	observe: function(aSubject, aTopic, aData) {
+		switch(aSubject) {
+			case 'searchEnginesInURLBar':
+				this.toggle();
+				break;
+		}
+	},
+
+	// this is all closed off in the searchbar's binding handler, so I have to replicate it here and adapt it to the location bar:
+	// http://mxr.mozilla.org/mozilla-central/source/browser/components/search/content/search.xml#1158
+	onPopupShowing: function() {
+		// Clear the hottext label for now.
+		this.clearHottext();
+
+		// Clear the list of one-off buttons, we rebuild it each time.
+		let list = this.oneOffList;
+		while(list.firstChild) {
+			list.firstChild.remove();
+		}
+
+		// We also show the current (default) search engine in this list, since the option to show the typed text is not visible every time (bug 1175646)
+		let hiddenList = Prefs.hiddenOneOffs ? Prefs.hiddenOneOffs.split(",") : [];
+		let engines = Services.search.getVisibleEngines().filter(e => hiddenList.indexOf(e.name) == -1);
+		for(let engine of engines) {
+			let button = document.createElementNS(this.kXULNS, "button");
+			button.id = "urlbar-engine-one-off-item-" + engine.name.replace(/ /g, '-');
+			let uri = (engine.iconURI) ? engine.iconURI.spec : "chrome://browser/skin/search-engine-placeholder.png";
+			button.setAttribute("image", uri);
+			button.setAttribute("class", "searchbar-engine-one-off-item");
+			button.setAttribute("tooltiptext", engine.name);
+			button.setAttribute("hottext", Strings.get("awesomeBar", "searchwith", [ ["%engineName%", engine.name ] ]));
+			button.engine = engine;
+
+			button.handleEvent = function(e) {
+				switch(e.type) {
+					case "click":
+						// We want middle clicks to go through as well
+						if(e.button != 1) { break; }
+
+					case "command": {
+						let uri;
+						let input = gBrowser.userTypedValue;
+						if(!input) {
+							// When the user hasn't made any input, open the search engine's homepage
+							uri = this.engine.searchForm;
+						} else {
+							let engineName = this.engine.name;
+							let searchQuery = gURLBar.value;
+							uri = "moz-action:searchengine," + JSON.stringify({ engineName, input, searchQuery });
+						}
+						gURLBar.value = uri;
+						gURLBar.handleCommand(e);
+						break;
+					}
+				}
+			};
+			button.addEventListener("click", button);
+			button.addEventListener("command", button);
+
+			list.appendChild(button);
+		}
+
+		// Handle opensearch items.
+		let addEngines = gBrowser.selectedBrowser.engines;
+		if(addEngines && addEngines.length) {
+			for(let engine of addEngines) {
+				let button = document.createElementNS(this.kXULNS, "button");
+				let label = this.searchBundle.formatStringFromName("cmd_addFoundEngine", [engine.title], 1);
+				button.id = "urlbar-add-engine-" + engine.title.replace(/ /g, '-');
+				button.setAttribute("class", "addengine-item");
+				button.setAttribute("hottext", label);
+				button.setAttribute("pack", "start");
+				button.setAttribute("crop", "end");
+				button.setAttribute("tooltiptext", engine.uri);
+				button.setAttribute("uri", engine.uri);
+				if(engine.icon) {
+					button.setAttribute("image", engine.icon);
+				}
+				button.setAttribute("title", engine.title);
+
+				button.handleEvent = function(e) {
+					switch(e.type) {
+						case "command": {
+							// On success, rebuild the engines icons (there's no need to hide and show the popup just for this).
+							let callback = {
+								onSuccess: function(engine) {
+									AwesomerBar.onPopupShowing();
+								},
+								onError: function(errorCode) {
+									Cu.reportError("Error adding search engine: " + errorCode);
+								}
+							};
+							Services.search.addEngine(this.getAttribute("uri"), null, this.getAttribute("image"), false, callback);
+						}
+					}
+				};
+				button.addEventListener("command", button);
+
+				list.appendChild(button);
+			}
+		}
+
+	},
+
+	setHottext: function(node) {
+		let text = node && (node.getAttribute('hottext') || node.getAttribute('tooltiptext'));
+		if(text) {
+			this.hottext.value = text;
+		}
+	},
+
+	clearHottext: function() {
+		this.hottext.value = '';
+	},
+
+	toggle: function(unload) {
+		if(!unload && Prefs.searchEnginesInURLBar) {
+			Overlays.overlayWindow(window, 'awesomeBar', this);
+		} else {
+			Overlays.removeOverlayWindow(window, 'awesomeBar');
+		}
+	},
+
+	onLoad: function() {
+		Prefs.setDefaults({ hiddenOneOffs: '' }, 'search', 'browser');
+		Listeners.add(this.popup, 'popupshowing', this);
+		Listeners.add(this.footer, 'mouseover', this);
+		Listeners.add(this.footer, 'mouseout', this);
+	},
+
+	onUnload: function() {
+		Listeners.remove(this.popup, 'popupshowing', this);
+		Listeners.remove(this.footer, 'mouseover', this);
+		Listeners.remove(this.footer, 'mouseout', this);
+	}
+};
+
 this.toggleAdaptSearchBar = function() {
 	Modules.loadIf('adaptSearchBar', Prefs.adaptSearchBar);
 };
 
 Modules.LOADMODULE = function() {
-	Overlays.overlayWindow(window, 'awesomeBar');
-
 	UnifiedComplete.register(AwesomerUnifiedComplete);
 	if(AwesomerUnifiedComplete.useOverride) {
 		AwesomerUnifiedComplete.init();
 	}
+
+	Prefs.listen('searchEnginesInURLBar', AwesomerBar);
+	AwesomerBar.toggle();
 
 	Prefs.listen('adaptSearchBar', toggleAdaptSearchBar);
 	toggleAdaptSearchBar();
@@ -149,8 +319,9 @@ Modules.UNLOADMODULE = function() {
 	Prefs.unlisten('adaptSearchBar', toggleAdaptSearchBar);
 	Modules.unload('adaptSearchBar');
 
+	Prefs.unlisten('searchEnginesInURLBar', AwesomerBar);
+	AwesomerBar.toggle(true);
+
 	UnifiedComplete.unregister(AwesomerUnifiedComplete);
 	AwesomerUnifiedComplete.uninit();
-
-	Overlays.removeOverlayWindow(window, 'awesomeBar');
 };

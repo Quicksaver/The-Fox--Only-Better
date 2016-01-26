@@ -67,22 +67,25 @@
 
 <!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
 <!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
-<!ENTITY opt.awesomeBar.maxSuggest.label "Total suggestions">
-<!ENTITY opt.awesomeBar.limitSuggest.label "limit">
-<!ENTITY opt.awesomeBar.suggestHistory.label "History">
-<!ENTITY opt.awesomeBar.suggestHistory.tooltip "Suggests pages from your browsing history.">
-<!ENTITY opt.awesomeBar.suggestBookmark.label "Bookmarks">
-<!ENTITY opt.awesomeBar.suggestBookmark.tooltip "Suggests bookmarked pages.">
-<!ENTITY opt.awesomeBar.suggestOpenpage.label "Open tabs">
-<!ENTITY opt.awesomeBar.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
-<!ENTITY opt.awesomeBar.suggestSearches.label "Search suggestions">
-<!ENTITY opt.awesomeBar.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
-<!ENTITY opt.awesomeBar.suggestSearchesInPB.label "Also provide search suggestions in private windows">
-<!ENTITY opt.awesomeBar.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
+<!ENTITY opt.maxSuggest.label "Total suggestions">
+<!ENTITY opt.limitSuggest.label "limit">
+<!ENTITY opt.suggestHistory.label "History">
+<!ENTITY opt.suggestHistory.tooltip "Suggests pages from your browsing history.">
+<!ENTITY opt.suggestBookmark.label "Bookmarks">
+<!ENTITY opt.suggestBookmark.tooltip "Suggests bookmarked pages.">
+<!ENTITY opt.suggestOpenpage.label "Open tabs">
+<!ENTITY opt.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
+<!ENTITY opt.suggestSearches.label "Search suggestions">
+<!ENTITY opt.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
+<!ENTITY opt.suggestSearchesInPB.label "Also provide search suggestions in private windows">
+<!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
+
 
 <!ENTITY cat.searchbar.label "Search bar">
-<!ENTITY opt.awesomeBar.gotoSearch.label "Manage your search engines">
-<!ENTITY opt.awesomeBar.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
+<!ENTITY opt.searchEnginesInURLBar.label "Show search engines in the location bar">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "Place your search engines in the suggestions panel of the location bar, so that you can use whichever engine you want at any time in it.">
+<!ENTITY opt.gotoSearch.label "Manage your search engines">
+<!ENTITY opt.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
 <!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
 <!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
 <!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
