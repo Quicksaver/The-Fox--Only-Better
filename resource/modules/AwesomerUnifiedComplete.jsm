@@ -1,4 +1,4 @@
-// VERSION 1.0.3
+// VERSION 1.0.4
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -30,6 +30,11 @@ this.AwesomerUnifiedComplete = {
 
 	resetPopupMaxResults: function() {
 		gURLBar.popup._maxResults = 0;
+	},
+
+	searchSettingsBtnCommand: function() {
+		//BrowserUITelemetry.countSearchSettingsEvent('urlbar-awesomer');
+		openOptions({ pane: 'paneAwesomeBar' });
 	},
 
 	init: function() {
@@ -129,6 +134,8 @@ this.toggleAdaptSearchBar = function() {
 };
 
 Modules.LOADMODULE = function() {
+	Overlays.overlayWindow(window, 'awesomeBar');
+
 	UnifiedComplete.register(AwesomerUnifiedComplete);
 	if(AwesomerUnifiedComplete.useOverride) {
 		AwesomerUnifiedComplete.init();
@@ -144,4 +151,6 @@ Modules.UNLOADMODULE = function() {
 
 	UnifiedComplete.unregister(AwesomerUnifiedComplete);
 	AwesomerUnifiedComplete.uninit();
+
+	Overlays.removeOverlayWindow(window, 'awesomeBar');
 };

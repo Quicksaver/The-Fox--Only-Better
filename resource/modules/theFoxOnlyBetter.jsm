@@ -1,4 +1,4 @@
-// VERSION 2.0.8
+// VERSION 2.0.9
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -54,8 +54,8 @@ this.onLoad = function() {
 	toggleSlimChrome();
 };
 
-this.openOptions = function() {
-	PrefPanes.open(window);
+this.openOptions = function(options) {
+	PrefPanes.open(window, options);
 };
 
 this.toggleSlimChromePref = function() {

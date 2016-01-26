@@ -1,0 +1,31 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+#urlbar-search-footer {
+	border-top: 1px solid hsla(210,4%,10%,.14);
+	background-color: hsla(210,4%,10%,.07);
+}
+
+#urlbar-search-settings {
+	-moz-appearance: none;
+	-moz-user-focus: ignore;
+	margin: 0;
+	padding: 8px 20px;
+	list-style-image: url("chrome://browser/skin/Toolbar.png");
+	-moz-image-region: rect(0px, 468px, 18px, 450px);
+}
+
+#urlbar-search-settings:hover {
+	background-color: hsla(210,4%,10%,.07);
+}
+
+#urlbar-search-settings:hover:active {
+	background-color: hsla(210,4%,10%,.12);
+}
+
+/* until the search engines themselves have hidpi icons, this makes no sense */
+@media (min-resolution: 1.1dppx) {
+	#urlbar-search-settings {
+		list-style-image: url("chrome://browser/skin/Toolbar@2x.png");
+		-moz-image-region: rect(0, 936px, 36px, 900px);
+	}
+}*/

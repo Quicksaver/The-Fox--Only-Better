@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://objPathString/skin/awesomeBar.css" type="text/css"?>
+<?xml-stylesheet href="chrome://objPathString-os/skin/awesomeBar.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/TheFOB.dtd">
+<overlay id="awesomeBar-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<panel id="PopupAutoCompleteRichResult">
+		<hbox id="urlbar-search-footer" flex="1" align="stretch" pack="start">
+			<hbox id="objName-search-engines" flex="1" align="start" insertbefore="urlbar-search-settings"/>
+			<button id="urlbar-search-settings"
+				label=""
+				tooltiptext="&theFOB.searchSettings.tooltip;"
+				oncommand="objName.AwesomerUnifiedComplete.searchSettingsBtnCommand();"/>
+		</hbox>
+	</panel>
+
+</overlay>
