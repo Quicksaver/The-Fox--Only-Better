@@ -1,4 +1,4 @@
-// VERSION 1.1.1
+// VERSION 1.1.2
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -354,21 +354,27 @@ this.AwesomerBar = {
 		}
 		if(!current) { return; }
 
-		switch(e.key) {
-			case "ArrowUp":
-				current = current.previousSibling;
-				if(!current) {
-					current = list.lastChild;
-				}
-				break;
+		// Some buttons may be there to add engines, so we can't select those with the keyboard obviously.
+		let start = current;
+		do {
+			switch(e.key) {
+				case "ArrowUp":
+					current = current.previousSibling;
+					if(!current) {
+						current = list.lastChild;
+					}
+					break;
 
-			case "ArrowDown":
-				current = current.nextSibling;
-				if(!current) {
-					current = list.firstChild;
-				}
-				break;
+				case "ArrowDown":
+					current = current.nextSibling;
+					if(!current) {
+						current = list.firstChild;
+					}
+					break;
+			}
+			if(current == start) { return; }
 		}
+		while(current && !current.engine);
 
 		if(current) {
 			e.preventDefault();

@@ -28,7 +28,7 @@
 }
 
 #urlbar-search-footer button:hover:active,
-#urlbar-search-footer button:not(:hover):not(:active)[active] {
+#urlbar-search-footer button[active] {
 	background-color: hsla(210,4%,10%,.12);
 }
 
