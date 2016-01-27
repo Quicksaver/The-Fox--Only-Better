@@ -1,4 +1,4 @@
-// VERSION 1.1.0
+// VERSION 1.1.1
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -145,6 +145,8 @@ this.AwesomerBar = {
 		return this._searchBundle;
 	},
 
+	currentEngine: null,
+
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'popupshowing':
@@ -158,13 +160,25 @@ this.AwesomerBar = {
 			case 'mouseout':
 				this.clearHottext();
 				break;
+
+			case 'keypress':
+				this.onKeypress(e);
+				break;
 		}
 	},
 
 	observe: function(aSubject, aTopic, aData) {
-		switch(aSubject) {
-			case 'searchEnginesInURLBar':
-				this.toggle();
+		switch(aTopic) {
+			case "nsPref:changed":
+				switch(aSubject) {
+					case "searchEnginesInURLBar":
+						this.toggle();
+						break;
+				}
+				break;
+
+			case "browser-search-engine-modified":
+				this.updateCurrentEngine();
 				break;
 		}
 	},
@@ -197,6 +211,12 @@ this.AwesomerBar = {
 			button.handleEvent = function(e) {
 				switch(e.type) {
 					case "click":
+						// Right-clicking an engine should make it the current engine and show suggestions from it
+						if(e.button == 2) {
+							Services.search.currentEngine = this.engine;
+							break;
+						}
+
 						// We want middle clicks to go through as well
 						if(e.button != 1) { break; }
 
@@ -263,17 +283,100 @@ this.AwesomerBar = {
 			}
 		}
 
+		this.updateCurrentEngine();
+	},
+
+	updateCurrentEngine: function() {
+		// don't bother of course
+		let state = this.popup.state;
+		if(state != 'open' && state != 'showing') { return; }
+
+		let current = Services.search.currentEngine;
+		let list = this.oneOffList;
+		for(let child of list.childNodes) {
+			if(child.engine === current) {
+				setAttribute(child, 'active', 'true');
+				this.hottext.emptyValue = current.description || current.name;
+			} else {
+				removeAttribute(child, 'active');
+			}
+		}
+
+		this.updateHottext();
+
+		// no point of course
+		if(this.currentEngine == current) { return; }
+		this.currentEngine = current;
+
+		// Re-do the suggestions to reflect the new engine choice.
+		let text = gBrowser.userTypedValue;
+		if(text) {
+			this.popup.input.controller.startSearch(text);
+		}
 	},
 
 	setHottext: function(node) {
 		let text = node && (node.getAttribute('hottext') || node.getAttribute('tooltiptext'));
 		if(text) {
-			this.hottext.value = text;
+			this.hottext.overrideValue = text;
+			this.updateHottext();
 		}
 	},
 
 	clearHottext: function() {
-		this.hottext.value = '';
+		this.hottext.overrideValue = '';
+		this.updateHottext();
+	},
+
+	updateHottext: function() {
+		let hottext = this.hottext;
+		hottext.value = hottext.overrideValue || hottext.emptyValue || '';
+	},
+
+	// Press Ctrl+Up and Ctrl+Down to change the current search engine while typing in the location bar.
+	onKeypress: function(e) {
+		// don't bother of course
+		let state = this.popup.state;
+		if(state != 'open' && state != 'showing') { return; }
+
+		let accel = (DARWIN ? e.metaKey : e.ctrlKey);
+		if(!accel || e.altKey || e.shiftKey || (DARWIN && e.ctrlKey)) { return; }
+
+		if(e.key != "ArrowUp" && e.key != "ArrowDown") { return; }
+
+		let current;
+		let list = this.oneOffList;
+		for(let child of list.childNodes) {
+			if(child.engine === this.currentEngine) {
+				current = child;
+				break;
+			}
+		}
+		if(!current) { return; }
+
+		switch(e.key) {
+			case "ArrowUp":
+				current = current.previousSibling;
+				if(!current) {
+					current = list.lastChild;
+				}
+				break;
+
+			case "ArrowDown":
+				current = current.nextSibling;
+				if(!current) {
+					current = list.firstChild;
+				}
+				break;
+		}
+
+		if(current) {
+			e.preventDefault();
+			e.stopPropagation();
+			if(this.currentEngine != current.engine) {
+				Services.search.currentEngine = current.engine;
+			}
+		}
 	},
 
 	toggle: function(unload) {
@@ -286,15 +389,24 @@ this.AwesomerBar = {
 
 	onLoad: function() {
 		Prefs.setDefaults({ hiddenOneOffs: '' }, 'search', 'browser');
+
+		this.currentEngine = Services.search.currentEngine;
+
 		Listeners.add(this.popup, 'popupshowing', this);
 		Listeners.add(this.footer, 'mouseover', this);
 		Listeners.add(this.footer, 'mouseout', this);
+		Listeners.add(gURLBar, 'keypress', this, true);
+
+		Observers.add(this, "browser-search-engine-modified");
 	},
 
 	onUnload: function() {
 		Listeners.remove(this.popup, 'popupshowing', this);
 		Listeners.remove(this.footer, 'mouseover', this);
 		Listeners.remove(this.footer, 'mouseout', this);
+		Listeners.remove(gURLBar, 'keypress', this, true);
+
+		Observers.remove(this, "browser-search-engine-modified");
 	}
 };
 
