@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://objPathString/skin/adaptSearchBar.css" type="text/css"?>
+<overlay id="adaptSearchBar-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"/>

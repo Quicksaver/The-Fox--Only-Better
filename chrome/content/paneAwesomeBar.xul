@@ -32,6 +32,7 @@
 			<preference id="pref-maxSuggestOpenpage" name="extensions.thefoxonlybetter.maxSuggestOpenpage" type="int"/>
 			<preference id="pref-maxSuggestSearches" name="extensions.thefoxonlybetter.maxSuggestSearches" type="int"/>
 			<preference id="pref-adaptSearchBar" name="extensions.thefoxonlybetter.adaptSearchBar" type="bool"/>
+			<preference id="pref-showOnlyNonEmptySearchBar" name="extensions.thefoxonlybetter.showOnlyNonEmptySearchBar" type="bool"/>
 		</preferences>
 
 		<hbox id="header-awesomeBar" class="header" collapsed="true" data-category="paneAwesomeBar">
@@ -211,11 +212,25 @@
 			</vbox>
 			<checkbox label="&opt.adaptSearchBar.label;"
 				class="topIndent"
-				helptext="&opt.adaptSearchBar.tooltip;"
+				helpbox="paneAwesomeBar-adaptSearchBar-helptext"
 				jump="adaptSearchBar"
 				dependson="pref-awesomerURLBar"
 				delayPreference="pref-adaptSearchBar"/>
+			<checkbox label="&opt.showOnlyNonEmptySearchBar.label;"
+				class="indent"
+				helpbox="paneAwesomeBar-adaptSearchBar-helptext"
+				jump="adaptSearchBar"
+				dependson="pref-awesomerURLBar,pref-searchEnginesInURLBar,pref-adaptSearchBar"
+				delayPreference="pref-showOnlyNonEmptySearchBar"/>
 			<description>&opt.adaptSearchBar.description.a;</description>
+			<vbox id="paneAwesomeBar-adaptSearchBar-helptext" collapsed="true">
+				<description style="font-weight:bold;">&opt.adaptSearchBar.label;</description>
+				<description>&opt.adaptSearchBar.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.showOnlyNonEmptySearchBar.label;</description>
+				<description>&opt.showOnlyNonEmptySearchBar.tooltip.a;</description>
+				<description>&opt.showOnlyNonEmptySearchBar.tooltip.b;</description>
+				<description>&opt.showOnlyNonEmptySearchBar.tooltip.c;</description>
+			</vbox>
 		</groupbox>
 	</prefpane>
 </overlay>
