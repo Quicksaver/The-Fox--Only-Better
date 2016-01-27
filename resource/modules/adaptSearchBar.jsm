@@ -1,4 +1,4 @@
-// VERSION 1.1.0
+// VERSION 1.1.1
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -156,8 +156,6 @@ this.adaptSearchBar = {
 
 	toggleShowOnlyNonEmptySearchBar: function(unload) {
 		if(!unload && this.nonEmptyMode) {
-			Overlays.overlayWindow(window, 'adaptSearchBar');
-
 			Listeners.add(gURLBar, 'focus', this);
 			Listeners.add(gURLBar, 'blur', this);
 			Listeners.add(gSearchBar, 'focus', this, true);
@@ -173,8 +171,6 @@ this.adaptSearchBar = {
 
 			this.updateSearchBar();
 		} else {
-			Overlays.removeOverlayWindow(window, 'adaptSearchBar');
-
 			Listeners.remove(gURLBar, 'focus', this);
 			Listeners.remove(gURLBar, 'blur', this);
 			Listeners.remove(gSearchBar, 'focus', this, true);
