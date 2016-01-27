@@ -1,4 +1,4 @@
-// VERSION 1.0.2
+// VERSION 1.0.3
 
 this.adaptSearchBar = {
 	_inputField: null,
@@ -277,6 +277,10 @@ this.adaptSearchBar = {
 
 	sendValue: function(input) {
 		Timers.init('sendValue', () => {
+			// Because it's on a timer, we may no longer have access to this object if the frame changes location sometimes (between remote and non-remote for instance)
+			try { this._inputField.value; }
+			catch(ex) { return; }
+
 			let value = null;
 			if(this._inputField && typeof(this._inputField.value) == 'string') {
 				value = this._inputField.value;
