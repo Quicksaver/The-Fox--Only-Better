@@ -1,4 +1,4 @@
-// VERSION 1.0.3
+// VERSION 1.0.4
 
 this.adaptSearchBar = {
 	_inputField: null,
@@ -61,6 +61,25 @@ this.adaptSearchBar = {
 			hosts: [ /^(([a-z0-9\.-])*\.)?wikipedia.org$/ ],
 			paths: [ /^\/w\/()/, /^\/wiki\/Special:Search\?/ ],
 			inputIds: [ 'searchText' ]
+		} ],
+		[ 'Facebook', {
+			// AFAIK only facebook.com matters
+			hosts: [ /^(([a-z0-9\.-])*\.)?facebook.com$/ ],
+			paths: [ /^\/search\/[a-z0-9]*\/\?/ ],
+			inputIds: [ 'q' ],
+			inputSelectors: [ 'input[name="q"]' ]
+		} ],
+		[ 'IMDb', {
+			// This should work with both the normal and the pro site
+			hosts: [ /^(([a-z0-9\.-])*\.)?imdb.com$/ ],
+			paths: [ /^\/find\?/ ],
+			inputIds: [ 'navbar-query', 'searchField' ]
+		} ],
+		[ 'YouTube', {
+			// Only this matters here
+			hosts: [ /^(([a-z0-9\.-])*\.)?youtube.com$/ ],
+			paths: [ /^\/results\?/ ],
+			inputIds: [ 'masthead-search-term' ]
 		} ]
 	]),
 
@@ -228,7 +247,7 @@ this.adaptSearchBar = {
 								//LOG('input:'+input.localName);
 
 								// and is it a valid input node?
-								if(input.localName != 'input') { return; }
+								if(input.localName != 'input') { continue; }
 
 								// woohoo we have an input field, we want the value in it to be reflected in the search bar now
 								this.useInput(input, engine);
