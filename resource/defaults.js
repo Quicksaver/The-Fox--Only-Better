@@ -1,4 +1,4 @@
-// VERSION 1.4.9
+// VERSION 1.4.10
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -47,7 +47,7 @@ prefList = {
 	maxSuggestOpenpage: 12,
 	maxSuggestSearches: 5,
 
-	awesomerStyle: "rich",
+	awesomerStyle: "frog",
 	awesomerColor: "default",
 	richMaxSearchRows: 6,
 	richMaxDropMarkerRows: 14,
@@ -58,7 +58,7 @@ prefList = {
 
 	searchEnginesInURLBar: true,
 	adaptSearchBar: true,
-	showOnlyNonEmptySearchBar: false,
+	showOnlyNonEmptySearchBar: true,
 
 	// for internal use
 	migratedKeysets: false,
