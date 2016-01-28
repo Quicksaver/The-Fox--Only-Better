@@ -60,8 +60,71 @@
 	}
 }
 
-/* For the hiding the search bar when its empty feature. */
+/* Hide the search bar when its empty. */
+
 #nav-bar[hideSearchBar] #urlbar-search-splitter,
 #nav-bar[hideSearchBar] #search-container {
 	visibility: collapse;
+}
+
+/* Styles and colors of the urlbar panel. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem {
+	-moz-box-orient: horizontal;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-url-box {
+	-moz-box-flex: 1;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[actiontype="keyword"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[actiontype="searchengine"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[actiontype="visiturl"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[type~="autofill"] .ac-title-box {
+	transform: none;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-site-icon {
+	margin-bottom: 0;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistbox {
+	background-size: 28px auto;
+	background: transparent linear-gradient(to right, hsla(0,0%,95%,.5) 27px, hsla(0,0%,83%,.5) 28px, transparent 0) repeat-y;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem * {
+	font: menu;
+	font-family: "Segoe ui", sans-serif;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[actiontype="keyword"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[actiontype="searchengine"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[actiontype="visiturl"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[type~="autofill"] .ac-title-box {
+	transform: none;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"]) .ac-url-box {
+	visibility: collapse;
+	opacity: 0;
+	transform: translateX(-.65em);
+	-moz-margin-start: 5px;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .ac-site-icon {
+	margin-bottom: 0;
+	-moz-margin-end: 10px;
+	-moz-margin-start: 6px;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem .ac-url-box {
+	font-size: 95.5%;
+	transition: opacity .21s linear 0.02s, transform .21s ease-out 0.02s;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .ac-url-text,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .ac-action-text {
+	color: GrayText;
 }

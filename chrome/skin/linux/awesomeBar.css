@@ -8,3 +8,9 @@
 	border: 0;
 	background: transparent;
 }
+
+/* Styles and colors of the urlbar panel. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-url-box {
+	margin-top: 0;
+}

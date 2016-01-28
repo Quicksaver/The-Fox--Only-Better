@@ -1,4 +1,4 @@
-// VERSION 1.0.1
+// VERSION 1.1.0
 
 this.gotoSearch = function() {
 	let gWindow = window
@@ -40,7 +40,41 @@ this.suggestSearches = {
 	}
 };
 
+this.awesomerStyleDependencies = {
+	get radio () { return $('paneAwesomeBar-style'); },
+
+	handleEvent: function() {
+		this.apply(this.radio.value);
+	},
+
+	observe: function() {
+		this.apply(Prefs.awesomerStyle);
+	},
+
+	apply: function(current) {
+		let nodes = $$('[awesomerStyle]');
+		for(let node of nodes) {
+			node.collapsed = node.getAttribute('awesomerStyle') != current;
+		}
+	},
+
+	init: function() {
+		Prefs.listen('awesomerStyle', this);
+		Listeners.add(this.radio, "command", this);
+		this.apply(Prefs.awesomerStyle);
+	},
+
+	uninit: function() {
+		Prefs.unlisten('awesomerStyle', this);
+		Listeners.remove(this.radio, "command", this);
+	}
+};
 
 Modules.LOADMODULE = function() {
 	suggestSearches.apply();
+	awesomerStyleDependencies.init();
+};
+
+Modules.UNLOADMODULE = function() {
+	awesomerStyleDependencies.uninit();
 };

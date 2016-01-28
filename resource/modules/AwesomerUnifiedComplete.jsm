@@ -1,4 +1,4 @@
-// VERSION 1.1.3
+// VERSION 1.2.0
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -150,6 +150,22 @@ this.AwesomerBar = {
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'popupshowing':
+				// When using the slim style, we need to set a specific width on one of the nodes of each item,
+				// it's unfortunate that we can't just use percentages directly in the main stylesheeet (simply doesn't work).
+				if(Prefs.awesomerStyle == 'slim') {
+					let width = Math.max(200, Math.ceil(this.popup.boxObject.width /2));
+					let sscode = '\
+						@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+						@-moz-document url("'+document.baseURI+'") {\n\
+							window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="slim"] .ac-title-box {\n\
+								min-width: '+width+'px;\n\
+								max-width: '+width+'px;\n\
+							}\n\
+						}';
+					Styles.load('awesomerStyleSlim_'+_UUID, sscode, true);
+				} else {
+					Styles.unload('awesomerStyleSlim_'+_UUID);
+				}
 				this.onPopupShowing();
 				break;
 
@@ -173,6 +189,16 @@ this.AwesomerBar = {
 				switch(aSubject) {
 					case "searchEnginesInURLBar":
 						this.toggle();
+						break;
+
+					case "awesomerStyle":
+						this.styleAndColor();
+						// no break, we also need to update the max rows when the style changes
+
+					case "richMaxSearchRows":
+					case "slimMaxSearchRows":
+					case "frogMaxSearchRows":
+						this.setMaxRows();
 						break;
 				}
 				break;
@@ -385,6 +411,21 @@ this.AwesomerBar = {
 		}
 	},
 
+	styleAndColor: function() {
+		setAttribute(this.popup, 'awesomerStyle', Prefs.awesomerStyle);
+
+		// Make sure the popup knows its rows height has changed, it should recalculate each row's height.
+		gURLBar.popup._rowHeight = 0;
+	},
+
+	setMaxRows: function() {
+		if(gURLBar.popup._normalMaxRows >= 0) {
+			gURLBar.popup._normalMaxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
+		} else {
+			gURLBar.maxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
+		}
+	},
+
 	toggle: function(unload) {
 		if(!unload && Prefs.searchEnginesInURLBar) {
 			Overlays.overlayWindow(window, 'awesomeBar', this);
@@ -404,6 +445,127 @@ this.AwesomerBar = {
 
 		this.currentEngine = Services.search.currentEngine;
 
+		// The rows don't have the same height in every style, the original method doesn't know how to handle that.
+		Piggyback.add('awesomerStyle', this.popup, 'adjustHeight', function() {
+			// Figure out how many rows to show
+			let rows = this.richlistbox.childNodes;
+			let numRows = Math.min(this._matchCount, this.maxRows, rows.length);
+
+			this.removeAttribute("height");
+
+			// Default the height to 0 if we have no rows to show
+			let height = 0;
+			if(numRows) {
+				switch(Prefs.awesomerStyle) {
+					case "frog":
+						if(!this._rowHeight) {
+							let selectedRow = this.richlistbox.selectedItem;
+							let normalRow = rows[0];
+							if(normalRow == selectedRow) {
+								normalRow = normalRow.nextSibling;
+							}
+
+							let heights = {};
+							if(selectedRow) {
+								heights.selected = selectedRow.getBoundingClientRect().height;
+							}
+							if(normalRow) {
+								heights.normal = normalRow.getBoundingClientRect().height;
+							}
+
+							// We got both sizes, awesome. Use them as usual
+							if(selectedRow && normalRow) {
+								this._rowHeight = heights;
+							}
+
+							// If we have a selected row but no normal rows, then we only have the one row. It works actually.
+							else if(selectedRow) {
+								height = heights.selected;
+								this.richlistbox.style.maxHeight = heights.selected + "px";
+							}
+
+							// If we only have unselected rows, try to cope for now by adding space for one extra row.
+							else {
+								height = heights.normal * (numRows +1);
+								this.richlistbox.style.maxHeight = (heights.normal * (this.maxRows +1)) + "px";
+							}
+
+							let transition = getComputedStyle(this.richlistbox).transitionProperty;
+							this._rlbAnimated = transition && transition != "none";
+						}
+
+						if(this._rowHeight) {
+							// Calculate the height to have the first row to last row shown
+							height = this._rowHeight.selected + (this._rowHeight.normal * (numRows -1));
+
+							// Set a fixed max-height to avoid flicker when growing the panel.
+							this.richlistbox.style.maxHeight = (this._rowHeight.selected + (this._rowHeight.normal * (this.maxRows -1))) + "px";
+						}
+						break;
+
+					default:
+						if(!this._rowHeight) {
+							let firstRowRect = rows[0].getBoundingClientRect();
+							this._rowHeight = firstRowRect.height;
+
+							let transition = getComputedStyle(this.richlistbox).transitionProperty;
+							this._rlbAnimated = transition && transition != "none";
+						}
+
+						// Calculate the height to have the first row to last row shown
+						height = this._rowHeight * numRows;
+
+						// Set a fixed max-height to avoid flicker when growing the panel.
+						this.richlistbox.style.maxHeight = (this._rowHeight * this.maxRows) + "px";
+						break;
+				}
+			}
+
+			let animate = this._rlbAnimated && this.getAttribute("dontanimate") != "true";
+			let currentHeight = this.richlistbox.getBoundingClientRect().height;
+			let setHeight = () => {
+				if(animate) {
+					this.richlistbox.removeAttribute("height");
+					this.richlistbox.style.height = height + "px";
+				} else {
+					this.richlistbox.style.removeProperty("height");
+					this.richlistbox.height = height;
+				}
+			};
+			if(height > currentHeight) {
+				// Grow immediately.
+				setHeight();
+			} else {
+				// Delay shrinking to avoid flicker.
+				Timers.init('awesomerShrinkTimeout', () => {
+					this._collapseUnusedItems();
+					setHeight();
+				}, this.mInput.shrinkDelay);
+			}
+		});
+
+		// Make this method compatible with the piggyback above
+		Piggyback.add('awesomerStyle', this.popup, '_invalidate', function() {
+			Timers.cancel('awesomerShrinkTimeout');
+			return true;
+		}, Piggyback.MODE_BEFORE);
+
+		gURLBar._maxDropMarkerRows = gURLBar.maxDropMarkerRows;
+		Object.defineProperty(gURLBar, 'maxDropMarkerRows', {
+			configurable: true,
+			enumerable: true,
+			get: function() { return Prefs[Prefs.awesomerStyle+'MaxDropMarkerRows']; }
+		});
+
+		Prefs.listen('awesomerStyle', this);
+		this.styleAndColor();
+
+		gURLBar._backupMaxRows = (gURLBar.popup._normalMaxRows >= 0) ? gURLBar.popup._normalMaxRows : gURLBar.maxRows;
+		Prefs.listen('richMaxSearchRows', this);
+		Prefs.listen('slimMaxSearchRows', this);
+		Prefs.listen('frogMaxSearchRows', this);
+		this.setMaxRows();
+
 		Listeners.add(this.popup, 'popupshowing', this);
 		Listeners.add(this.footer, 'mouseover', this);
 		Listeners.add(this.footer, 'mouseout', this);
@@ -413,6 +575,32 @@ this.AwesomerBar = {
 	},
 
 	onUnload: function() {
+		Prefs.unlisten('awesomerStyle', this);
+		Styles.unload('awesomerStyleSlim_'+_UUID);
+		removeAttribute(this.popup, 'awesomerStyle');
+		this.popup._rowHeight = 0;
+
+		Piggyback.revert('awesomerStyle', this.popup, 'adjustHeight');
+		Piggyback.revert('awesomerStyle', this.popup, '_invalidate');
+
+		Object.defineProperty(gURLBar, 'maxDropMarkerRows', {
+			configurable: true,
+			enumerable: true,
+			value: gURLBar._maxDropMarkerRows,
+			writable: false
+		});
+		delete gURLBar._maxDropMarkerRows;
+
+		Prefs.unlisten('richMaxSearchRows', this);
+		Prefs.unlisten('slimMaxSearchRows', this);
+		Prefs.unlisten('frogMaxSearchRows', this);
+		if(gURLBar.popup._normalMaxRows >= 0) {
+			gURLBar.popup._normalMaxRows = gURLBar._backupMaxRows;
+		} else {
+			gURLBar.maxRows = gURLBar._backupMaxRows;
+		}
+		delete gURLBar._backupMaxRows;
+
 		Listeners.remove(this.popup, 'popupshowing', this);
 		Listeners.remove(this.footer, 'mouseover', this);
 		Listeners.remove(this.footer, 'mouseout', this);

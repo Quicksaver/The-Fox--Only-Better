@@ -31,6 +31,13 @@
 			<preference id="pref-maxSuggestBookmark" name="extensions.thefoxonlybetter.maxSuggestBookmark" type="int"/>
 			<preference id="pref-maxSuggestOpenpage" name="extensions.thefoxonlybetter.maxSuggestOpenpage" type="int"/>
 			<preference id="pref-maxSuggestSearches" name="extensions.thefoxonlybetter.maxSuggestSearches" type="int"/>
+			<preference id="pref-awesomerStyle" name="extensions.thefoxonlybetter.awesomerStyle" type="string"/>
+			<preference id="pref-richMaxSearchRows" name="extensions.thefoxonlybetter.richMaxSearchRows" type="int"/>
+			<preference id="pref-richMaxDropMarkerRows" name="extensions.thefoxonlybetter.richMaxDropMarkerRows" type="int"/>
+			<preference id="pref-slimMaxSearchRows" name="extensions.thefoxonlybetter.slimMaxSearchRows" type="int"/>
+			<preference id="pref-slimMaxDropMarkerRows" name="extensions.thefoxonlybetter.slimMaxDropMarkerRows" type="int"/>
+			<preference id="pref-frogMaxSearchRows" name="extensions.thefoxonlybetter.frogMaxSearchRows" type="int"/>
+			<preference id="pref-frogMaxDropMarkerRows" name="extensions.thefoxonlybetter.frogMaxDropMarkerRows" type="int"/>
 			<preference id="pref-adaptSearchBar" name="extensions.thefoxonlybetter.adaptSearchBar" type="bool"/>
 			<preference id="pref-showOnlyNonEmptySearchBar" name="extensions.thefoxonlybetter.showOnlyNonEmptySearchBar" type="bool"/>
 		</preferences>
@@ -189,6 +196,102 @@
 				<description style="font-weight:bold; margin-top:1em;">&opt.suggestSearches.label;</description>
 				<description>&opt.suggestSearches.tooltip;</description>
 				<description style="margin-top:1em;">&opt.suggestSearchesInPB.tooltip;</description>
+			</vbox>
+		</groupbox>
+
+		<groupbox align="start" id="paneAwesomeBar-rows" collapsed="true" data-category="paneAwesomeBar">
+			<caption label="&cat.rows.label;"/>
+			<radiogroup id="paneAwesomeBar-style"
+				jump="awesomerStyle"
+				dependson="pref-awesomerURLBar"
+				delayPreference="pref-awesomerStyle">
+
+				<hbox align="center" helpbox="paneAwesomeBar-style-helptext">
+					<label dependson="pref-awesomerURLBar" value="&opt.awesomerStyle.label;" class="smallindent"/>
+					<radio dependson="pref-awesomerURLBar" label="&opt.awesomerStyle.rich.label;" class="smallindent" value="rich"/>
+					<radio dependson="pref-awesomerURLBar" label="&opt.awesomerStyle.slim.label;" class="smallindent" value="slim"/>
+					<radio dependson="pref-awesomerURLBar" label="&opt.awesomerStyle.frog.label;" class="smallindent" value="frog"/>
+				</hbox>
+			</radiogroup>
+			<vbox id="paneAwesomeBar-style-helptext" collapsed="true">
+				<description style="font-weight:bold;">&opt.awesomerStyle.rich.label;</description>
+				<description>&opt.awesomerStyle.rich.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.awesomerStyle.slim.label;</description>
+				<description>&opt.awesomerStyle.slim.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.awesomerStyle.frog.label;</description>
+				<description>&opt.awesomerStyle.frog.tooltip;</description>
+			</vbox>
+			<hbox align="center"
+				jump="maxSearchRows"
+				helpbox="paneAwesomeBar-maxRows-helptext">
+				<label value="&opt.maxSearchRows.label;" class="smallindent"/>
+				<textbox type="number"
+					awesomerStyle="rich"
+					collapsed="true"
+					size="1"
+					min="1"
+					max="40"
+					style="text-align:center;"
+					dependson="pref-awesomerURLBar,pref-awesomerStyle:rich"
+					delayPreference="pref-richMaxSearchRows"/>
+				<textbox type="number"
+					awesomerStyle="slim"
+					collapsed="true"
+					size="1"
+					min="1"
+					max="40"
+					style="text-align:center;"
+					dependson="pref-awesomerURLBar,pref-awesomerStyle:slim"
+					delayPreference="pref-slimMaxSearchRows"/>
+				<textbox type="number"
+					awesomerStyle="frog"
+					collapsed="true"
+					size="1"
+					min="1"
+					max="40"
+					style="text-align:center;"
+					dependson="pref-awesomerURLBar,pref-awesomerStyle:frog"
+					delayPreference="pref-frogMaxSearchRows"/>
+			</hbox>
+			<hbox align="center"
+				jump="maxDropMarkerRows"
+				helpbox="paneAwesomeBar-maxRows-helptext">
+				<label value="&opt.maxDropMarkerRows.label;" class="smallindent"/>
+				<textbox type="number"
+					awesomerStyle="rich"
+					collapsed="true"
+					size="1"
+					min="1"
+					max="40"
+					style="text-align:center;"
+					dependson="pref-awesomerURLBar,pref-awesomerStyle:rich"
+					delayPreference="pref-richMaxDropMarkerRows"/>
+				<textbox type="number"
+					awesomerStyle="slim"
+					collapsed="true"
+					size="1"
+					min="1"
+					max="40"
+					style="text-align:center;"
+					dependson="pref-awesomerURLBar,pref-awesomerStyle:slim"
+					delayPreference="pref-slimMaxDropMarkerRows"/>
+				<textbox type="number"
+					awesomerStyle="frog"
+					collapsed="true"
+					size="1"
+					min="1"
+					max="40"
+					style="text-align:center;"
+					dependson="pref-awesomerURLBar,pref-awesomerStyle:frog"
+					delayPreference="pref-frogMaxDropMarkerRows"/>
+			</hbox>
+			<vbox id="paneAwesomeBar-maxRows-helptext" collapsed="true">
+				<description>&opt.maxRows.tooltip.a;</description>
+				<description style="margin-top:1em;">&opt.maxRows.tooltip.b;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.maxSearchRows.label;</description>
+				<description>&opt.maxSearchRows.tooltip;</description>
+				<description style="font-weight:bold; margin-top:1em;">&opt.maxDropMarkerRows.label;</description>
+				<description>&opt.maxDropMarkerRows.tooltip;</description>
 			</vbox>
 		</groupbox>
 

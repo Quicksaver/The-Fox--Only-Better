@@ -80,6 +80,21 @@
 <!ENTITY opt.suggestSearchesInPB.label "Also provide search suggestions in private windows">
 <!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
 
+<!ENTITY cat.rows.label "Suggestions panel">
+<!ENTITY opt.awesomerStyle.label "Item style">
+<!ENTITY opt.awesomerStyle.rich.label "Rich">
+<!ENTITY opt.awesomerStyle.rich.tooltip "The Firefox default. Shows you all the information in an easy to read and visualize format.">
+<!ENTITY opt.awesomerStyle.slim.label "Slim">
+<!ENTITY opt.awesomerStyle.slim.tooltip "Compact the items, so that they occupy less space. Some long titles or addresses may be cropped down to fit.">
+<!ENTITY opt.awesomerStyle.frog.label "Froggy">
+<!ENTITY opt.awesomerStyle.frog.tooltip "Slims the items down even further by showing only the title of the page. Move the mouse over any item to expand it and show its address.">
+<!ENTITY opt.maxRows.tooltip.a "Determine the maximum height of the suggestions panel according to the number of items that will fit. All extra items will be accessible by scrolling down the list.">
+<!ENTITY opt.maxRows.tooltip.b "Each style available above will show different values here, since each will have a different item size.">
+<!ENTITY opt.maxSearchRows.label "Visible items when searching">
+<!ENTITY opt.maxSearchRows.tooltip "The items shown as you type in the location bar.">
+<!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
+<!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
+
 <!ENTITY cat.searchbar.label "Search bar">
 <!ENTITY opt.searchEnginesInURLBar.label "Show search engines in the location bar">
 <!ENTITY opt.searchEnginesInURLBar.tooltip "Place your search engines in the suggestions panel of the location bar, so that you can use whichever engine you want at any time in it.">

@@ -8,3 +8,15 @@
 	border: 0;
 	background: transparent;
 }
+
+/* Styles and colors of the urlbar panel. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-url-box {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"]) .ac-title-box {
+	margin-bottom: 4px;
+}
