@@ -1,4 +1,4 @@
-// VERSION 1.4.8
+// VERSION 1.4.9
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -48,6 +48,7 @@ prefList = {
 	maxSuggestSearches: 5,
 
 	awesomerStyle: "rich",
+	awesomerColor: "default",
 	richMaxSearchRows: 6,
 	richMaxDropMarkerRows: 14,
 	slimMaxSearchRows: 10,

@@ -94,6 +94,16 @@
 <!ENTITY opt.maxSearchRows.tooltip "The items shown as you type in the location bar.">
 <!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
 <!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
+<!ENTITY opt.awesomerColor.label "Color theme">
+<!ENTITY opt.default.label "Default">
+<!ENTITY opt.bubblegum.label "Bubblegum">
+<!ENTITY opt.grass.label "Grass">
+<!ENTITY opt.lavender.label "Lavender">
+<!ENTITY opt.noir.label "Noir">
+<!ENTITY opt.ruby.label "Ruby">
+<!ENTITY opt.sea.label "Sea">
+<!ENTITY opt.sky.label "Sky">
+<!ENTITY opt.taupe.label "Taupe">
 
 <!ENTITY cat.searchbar.label "Search bar">
 <!ENTITY opt.searchEnginesInURLBar.label "Show search engines in the location bar">

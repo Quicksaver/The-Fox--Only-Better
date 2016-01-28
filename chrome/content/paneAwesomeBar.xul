@@ -31,6 +31,7 @@
 			<preference id="pref-maxSuggestOpenpage" name="extensions.thefoxonlybetter.maxSuggestOpenpage" type="int"/>
 			<preference id="pref-maxSuggestSearches" name="extensions.thefoxonlybetter.maxSuggestSearches" type="int"/>
 			<preference id="pref-awesomerStyle" name="extensions.thefoxonlybetter.awesomerStyle" type="string"/>
+			<preference id="pref-awesomerColor" name="extensions.thefoxonlybetter.awesomerColor" type="string"/>
 			<preference id="pref-richMaxSearchRows" name="extensions.thefoxonlybetter.richMaxSearchRows" type="int"/>
 			<preference id="pref-richMaxDropMarkerRows" name="extensions.thefoxonlybetter.richMaxDropMarkerRows" type="int"/>
 			<preference id="pref-slimMaxSearchRows" name="extensions.thefoxonlybetter.slimMaxSearchRows" type="int"/>
@@ -277,6 +278,22 @@
 				<description style="font-weight:bold; margin-top:1em;">&opt.maxDropMarkerRows.label;</description>
 				<description>&opt.maxDropMarkerRows.tooltip;</description>
 			</vbox>
+			<hbox align="center" jump="awesomerColor">
+				<label value="&opt.awesomerColor.label;"/>
+				<menulist class="showcolor" delayPreference="pref-awesomerColor">
+					<menupopup>
+						<menuitem value="default" label="&opt.default.label;"/>
+						<menuitem value="bubblegum" label="&opt.bubblegum.label;"/>
+						<menuitem value="grass" label="&opt.grass.label;"/>
+						<menuitem value="lavender" label="&opt.lavender.label;"/>
+						<menuitem value="noir" label="&opt.noir.label;"/>
+						<menuitem value="ruby" label="&opt.ruby.label;"/>
+						<menuitem value="sea" label="&opt.sea.label;"/>
+						<menuitem value="sky" label="&opt.sky.label;"/>
+						<menuitem value="taupe" label="&opt.taupe.label;"/>
+					</menupopup>
+				</menulist>
+			</hbox>
 		</groupbox>
 
 		<groupbox align="start" id="paneAwesomeBar-searchbar" collapsed="true" data-category="paneAwesomeBar">

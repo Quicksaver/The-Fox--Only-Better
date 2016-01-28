@@ -1,4 +1,4 @@
-// VERSION 1.2.0
+// VERSION 1.2.1
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -192,13 +192,17 @@ this.AwesomerBar = {
 						break;
 
 					case "awesomerStyle":
-						this.styleAndColor();
+						this.setStyle();
 						// no break, we also need to update the max rows when the style changes
 
 					case "richMaxSearchRows":
 					case "slimMaxSearchRows":
 					case "frogMaxSearchRows":
 						this.setMaxRows();
+						break;
+
+					case "awesomerColor":
+						this.setColor();
 						break;
 				}
 				break;
@@ -411,19 +415,23 @@ this.AwesomerBar = {
 		}
 	},
 
-	styleAndColor: function() {
+	setStyle: function() {
 		setAttribute(this.popup, 'awesomerStyle', Prefs.awesomerStyle);
 
 		// Make sure the popup knows its rows height has changed, it should recalculate each row's height.
-		gURLBar.popup._rowHeight = 0;
+		this.popup._rowHeight = 0;
 	},
 
 	setMaxRows: function() {
-		if(gURLBar.popup._normalMaxRows >= 0) {
-			gURLBar.popup._normalMaxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
+		if(this.popup._normalMaxRows >= 0) {
+			this.popup._normalMaxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
 		} else {
 			gURLBar.maxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
 		}
+	},
+
+	setColor: function() {
+		setAttribute(this.popup, 'awesomerColor', Prefs.awesomerColor);
 	},
 
 	toggle: function(unload) {
@@ -558,9 +566,11 @@ this.AwesomerBar = {
 		});
 
 		Prefs.listen('awesomerStyle', this);
-		this.styleAndColor();
+		Prefs.listen('awesomerColor', this);
+		this.setStyle();
+		this.setColor();
 
-		gURLBar._backupMaxRows = (gURLBar.popup._normalMaxRows >= 0) ? gURLBar.popup._normalMaxRows : gURLBar.maxRows;
+		gURLBar._backupMaxRows = (this.popup._normalMaxRows >= 0) ? this.popup._normalMaxRows : gURLBar.maxRows;
 		Prefs.listen('richMaxSearchRows', this);
 		Prefs.listen('slimMaxSearchRows', this);
 		Prefs.listen('frogMaxSearchRows', this);
@@ -576,8 +586,10 @@ this.AwesomerBar = {
 
 	onUnload: function() {
 		Prefs.unlisten('awesomerStyle', this);
+		Prefs.unlisten('awesomerColor', this);
 		Styles.unload('awesomerStyleSlim_'+_UUID);
 		removeAttribute(this.popup, 'awesomerStyle');
+		removeAttribute(this.popup, 'awesomerColor');
 		this.popup._rowHeight = 0;
 
 		Piggyback.revert('awesomerStyle', this.popup, 'adjustHeight');
@@ -594,8 +606,8 @@ this.AwesomerBar = {
 		Prefs.unlisten('richMaxSearchRows', this);
 		Prefs.unlisten('slimMaxSearchRows', this);
 		Prefs.unlisten('frogMaxSearchRows', this);
-		if(gURLBar.popup._normalMaxRows >= 0) {
-			gURLBar.popup._normalMaxRows = gURLBar._backupMaxRows;
+		if(this.popup._normalMaxRows >= 0) {
+			this.popup._normalMaxRows = gURLBar._backupMaxRows;
 		} else {
 			gURLBar.maxRows = gURLBar._backupMaxRows;
 		}
