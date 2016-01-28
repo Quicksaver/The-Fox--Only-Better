@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE overlay SYSTEM "chrome://thefoxonlybetter/locale/options.dtd">
-<overlay	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-			xmlns:html="http://www.w3.org/1999/xhtml">
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
 	<richlistbox id="categories">
 		<richlistitem id="category-awesomeBar"
@@ -55,130 +54,115 @@
 
 		<groupbox align="start" id="paneAwesomeBar-autoComplete" collapsed="true" data-category="paneAwesomeBar">
 			<caption label="&cat.awesomeBar.suggest.label;"/>
-			<html:table>
-				<html:tr>
-					<html:td>
-						<label value="&opt.maxSuggest.label;"
-							helpbox="paneAwesomeBar-autoComplete-helptext"
-							jump="maxSuggest"
+			<vbox>
+				<hbox align="center" jump="maxSuggest">
+					<label value="&opt.maxSuggest.label;"
+						class="smallindent"
+						flex="1"
+						helpbox="paneAwesomeBar-autoComplete-helptext"
+						dependson="pref-awesomerURLBar"/>
+					<hbox align="center">
+						<label value="&opt.limitSuggest.label;"
 							dependson="pref-awesomerURLBar"/>
-					</html:td>
-					<html:td style="-moz-padding-start:1em;">
-						<hbox align="center">
-							<label value="&opt.limitSuggest.label;"
-								dependson="pref-awesomerURLBar"/>
-							<textbox type="number"
-								size="1"
-								min="1"
-								max="50"
-								style="text-align:center;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar"
-								delayPreference="pref-maxSuggest"/>
-						</hbox>
-					</html:td>
-				</html:tr>
-				<html:tr>
-					<html:td>
-						<checkbox id="paneAwesomeBar-suggestHistory"
-							label="&opt.suggestHistory.label;"
-							jump="suggestHistory"
+						<textbox type="number"
+							size="1"
+							min="1"
+							max="50"
+							style="text-align:center;"
 							helpbox="paneAwesomeBar-autoComplete-helptext"
 							dependson="pref-awesomerURLBar"
-							delayPreference="pref-suggestHistory"/>
-					</html:td>
-					<html:td style="-moz-padding-start:1em;">
-						<hbox align="center">
-							<label value="&opt.limitSuggest.label;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestHistory"/>
-							<textbox type="number"
-								size="1"
-								min="1"
-								max="50"
-								style="text-align:center;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestHistory"
-								delayPreference="pref-maxSuggestHistory"/>
-						</hbox>
-					</html:td>
-				</html:tr>
-				<html:tr>
-					<html:td>
-						<checkbox id="paneAwesomeBar-suggestBookmark"
-							label="&opt.suggestBookmark.label;"
-							jump="suggestBookmark"
+							delayPreference="pref-maxSuggest"/>
+					</hbox>
+				</hbox>
+				<hbox align="center" jump="suggestHistory">
+					<checkbox id="paneAwesomeBar-suggestHistory"
+						label="&opt.suggestHistory.label;"
+						class="smallindent"
+						flex="1"
+						helpbox="paneAwesomeBar-autoComplete-helptext"
+						dependson="pref-awesomerURLBar"
+						delayPreference="pref-suggestHistory"/>
+					<hbox align="center">
+						<label value="&opt.limitSuggest.label;"
 							helpbox="paneAwesomeBar-autoComplete-helptext"
-							dependson="pref-awesomerURLBar"
-							delayPreference="pref-suggestBookmark"/>
-					</html:td>
-					<html:td style="-moz-padding-start:1em;">
-						<hbox align="center">
-							<label value="&opt.limitSuggest.label;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestBookmark"/>
-							<textbox type="number"
-								size="1"
-								min="1"
-								max="50"
-								style="text-align:center;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestBookmark"
-								delayPreference="pref-maxSuggestBookmark"/>
-						</hbox>
-					</html:td>
-				</html:tr>
-				<html:tr>
-					<html:td>
-						<checkbox id="paneAwesomeBar-suggestOpenpage"
-							label="&opt.suggestOpenpage.label;"
-							jump="suggestOpenpage"
+							dependson="pref-awesomerURLBar,pref-suggestHistory"/>
+						<textbox type="number"
+							size="1"
+							min="1"
+							max="50"
+							style="text-align:center;"
 							helpbox="paneAwesomeBar-autoComplete-helptext"
-							dependson="pref-awesomerURLBar"
-							delayPreference="pref-suggestOpenpage"/>
-					</html:td>
-					<html:td style="-moz-padding-start:1em;">
-						<hbox align="center">
-							<label value="&opt.limitSuggest.label;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestOpenpage"/>
-							<textbox type="number"
-								size="1"
-								min="1"
-								max="50"
-								style="text-align:center;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestOpenpage"
-								delayPreference="pref-maxSuggestOpenpage"/>
-						</hbox>
-					</html:td>
-				</html:tr>
-				<html:tr>
-					<html:td>
-						<checkbox id="paneAwesomeBar-suggestSearches"
-							label="&opt.suggestSearches.label;"
-							jump="suggestSearches"
+							dependson="pref-awesomerURLBar,pref-suggestHistory"
+							delayPreference="pref-maxSuggestHistory"/>
+					</hbox>
+				</hbox>
+				<hbox align="center" jump="suggestBookmark">
+					<checkbox id="paneAwesomeBar-suggestBookmark"
+						label="&opt.suggestBookmark.label;"
+						class="smallindent"
+						flex="1"
+						helpbox="paneAwesomeBar-autoComplete-helptext"
+						dependson="pref-awesomerURLBar"
+						delayPreference="pref-suggestBookmark"/>
+					<hbox align="center">
+						<label value="&opt.limitSuggest.label;"
 							helpbox="paneAwesomeBar-autoComplete-helptext"
-							dependson="pref-awesomerURLBar"
-							delayPreference="pref-suggestSearches"/>
-					</html:td>
-					<html:td style="-moz-padding-start:1em;">
-						<hbox align="center">
-							<label value="&opt.limitSuggest.label;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestSearches"/>
-							<textbox type="number"
-								size="1"
-								min="1"
-								max="50"
-								style="text-align:center;"
-								helpbox="paneAwesomeBar-autoComplete-helptext"
-								dependson="pref-awesomerURLBar,pref-suggestSearches"
-								delayPreference="pref-maxSuggestSearches"/>
-						</hbox>
-					</html:td>
-				</html:tr>
-			</html:table>
+							dependson="pref-awesomerURLBar,pref-suggestBookmark"/>
+						<textbox type="number"
+							size="1"
+							min="1"
+							max="50"
+							style="text-align:center;"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							dependson="pref-awesomerURLBar,pref-suggestBookmark"
+							delayPreference="pref-maxSuggestBookmark"/>
+					</hbox>
+				</hbox>
+				<hbox align="center" jump="suggestOpenpage">
+					<checkbox id="paneAwesomeBar-suggestOpenpage"
+						label="&opt.suggestOpenpage.label;"
+						class="smallindent"
+						flex="1"
+						helpbox="paneAwesomeBar-autoComplete-helptext"
+						dependson="pref-awesomerURLBar"
+						delayPreference="pref-suggestOpenpage"/>
+					<hbox align="center">
+						<label value="&opt.limitSuggest.label;"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							dependson="pref-awesomerURLBar,pref-suggestOpenpage"/>
+						<textbox type="number"
+							size="1"
+							min="1"
+							max="50"
+							style="text-align:center;"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							dependson="pref-awesomerURLBar,pref-suggestOpenpage"
+							delayPreference="pref-maxSuggestOpenpage"/>
+					</hbox>
+				</hbox>
+				<hbox align="center" jump="suggestSearches">
+					<checkbox id="paneAwesomeBar-suggestSearches"
+						label="&opt.suggestSearches.label;"
+						class="smallindent"
+						flex="1"
+						helpbox="paneAwesomeBar-autoComplete-helptext"
+						dependson="pref-awesomerURLBar"
+						delayPreference="pref-suggestSearches"/>
+					<hbox align="center">
+						<label value="&opt.limitSuggest.label;"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							dependson="pref-awesomerURLBar,pref-suggestSearches"/>
+						<textbox type="number"
+							size="1"
+							min="1"
+							max="50"
+							style="text-align:center;"
+							helpbox="paneAwesomeBar-autoComplete-helptext"
+							dependson="pref-awesomerURLBar,pref-suggestSearches"
+							delayPreference="pref-maxSuggestSearches"/>
+					</hbox>
+				</hbox>
+			</vbox>
 			<checkbox label="&opt.suggestSearchesInPB.label;"
 				class="indent"
 				helpbox="paneAwesomeBar-autoComplete-helptext"
