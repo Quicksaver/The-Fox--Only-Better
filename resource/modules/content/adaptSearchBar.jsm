@@ -1,4 +1,4 @@
-// VERSION 1.0.4
+// VERSION 1.0.5
 
 this.adaptSearchBar = {
 	_inputField: null,
@@ -123,6 +123,14 @@ this.adaptSearchBar = {
 		}
 	},
 
+	onLocationChange: function(aWebProgress, aRequest, aURI) {
+		// DOMContentLoaded events don't necessarily fire when going back and forth in tab history.
+		if(document.readyState != 'complete') { return; }
+
+		// Since the event handler won't fire, we need to call this here.
+		this.checkURL();
+	},
+
 	onStateChange: function(aWebProgress, aRequest, aStateFlags, aStatus) {
 		// Some AJAX pages (i.e. google, see https://github.com/Quicksaver/The-Fox--Only-Better/issues/116) can remove and re-add the search field,
 		// so even if we keep a reference to the inputField, it will be nulled when the page updates itself.
@@ -177,7 +185,6 @@ this.adaptSearchBar = {
 
 	reset: function() {
 		this._inputField = null;
-		this._value = null;
 		this._listenForStateChange = false;
 	},
 
@@ -298,7 +305,7 @@ this.adaptSearchBar = {
 		Timers.init('sendValue', () => {
 			// Because it's on a timer, we may no longer have access to this object if the frame changes location sometimes (between remote and non-remote for instance)
 			try { this._inputField.value; }
-			catch(ex) { return; }
+			catch(ex) { this._inputField = null; }
 
 			let value = null;
 			if(this._inputField && typeof(this._inputField.value) == 'string') {
