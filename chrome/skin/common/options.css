@@ -29,14 +29,19 @@
 menulist.showcolor .menulist-icon,
 menulist.showcolor menuitem .menu-iconic-left {
 	display: -moz-box;
+	visibility: visible;
 	-moz-margin-end: 10px;
 	background-color: white;
+	background-clip: content-box;
 }
 menulist.showcolor .menulist-icon,
 menulist.showcolor menuitem .menu-iconic-icon {
 	height: 14px;
 	width: 22px;
 	border: 1px solid darkgrey;
+}
+menulist.showcolor menuitem .menu-iconic-icon {
+	margin: 0;
 }
 menulist.showcolor[value="default"] .menulist-icon,
 menulist.showcolor menuitem[value="default"] .menu-iconic-icon {
