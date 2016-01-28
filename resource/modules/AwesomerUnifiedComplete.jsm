@@ -1,4 +1,4 @@
-// VERSION 1.1.2
+// VERSION 1.1.3
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -394,6 +394,12 @@ this.AwesomerBar = {
 	},
 
 	onLoad: function() {
+		// Make sure we don't trigger a synchronous search service usage.
+		// See https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIBrowserSearchService.
+		Services.search.init(() => { this.onInit(); });
+	},
+
+	onInit: function() {
 		Prefs.setDefaults({ hiddenOneOffs: '' }, 'search', 'browser');
 
 		this.currentEngine = Services.search.currentEngine;
