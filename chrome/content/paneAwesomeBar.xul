@@ -332,8 +332,8 @@
 				<description>&opt.adaptSearchBar.tooltip;</description>
 				<description style="font-weight:bold; margin-top:1em;">&opt.showOnlyNonEmptySearchBar.label;</description>
 				<description>&opt.showOnlyNonEmptySearchBar.tooltip.a;</description>
-				<description>&opt.showOnlyNonEmptySearchBar.tooltip.b;</description>
-				<description>&opt.showOnlyNonEmptySearchBar.tooltip.c;</description>
+				<description style="margin-top:1em;">&opt.showOnlyNonEmptySearchBar.tooltip.b;</description>
+				<description style="margin-top:1em;">&opt.showOnlyNonEmptySearchBar.tooltip.c;</description>
 			</vbox>
 		</groupbox>
 	</prefpane>
