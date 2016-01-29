@@ -32,10 +32,13 @@
 	background-color: hsla(210,4%,10%,.12);
 }
 
-/* For now I'm controlling the amount of visible icons like this,
-   if there are too many, just hide them. */
+#theFoxOnlyBetter-urlbar-search-engines-container {
+	display: flex;
+}
+
 #theFoxOnlyBetter-urlbar-search-engines {
-	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 #theFoxOnlyBetter-urlbar-search-engines button .button-icon {

@@ -6,8 +6,12 @@
 
 	<panel id="PopupAutoCompleteRichResult">
 		<hbox id="urlbar-search-footer" flex="1" align="stretch" pack="start">
-			<hbox id="objName-urlbar-search-engines" align="start" insertbefore="urlbar-search-settings"/>
-			<label id="objName-urlbar-search-hottext" flex="1" crop="end" insertbefore="urlbar-search-settings"/>
+			<hbox id="objName-urlbar-search-engines-container" align="start" insertbefore="urlbar-search-settings">
+				<hbox id="objName-urlbar-search-engines"/>
+			</hbox>
+			<hbox id="objName-urlbar-search-hottext-container" flex="1" align="center" insertbefore="urlbar-search-settings">
+				<label id="objName-urlbar-search-hottext" flex="1" crop="end"/>
+			</hbox>
 			<button id="urlbar-search-settings"
 				label=""
 				tooltiptext="&theFOB.searchSettings.tooltip;"

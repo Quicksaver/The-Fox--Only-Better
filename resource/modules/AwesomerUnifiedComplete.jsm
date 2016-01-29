@@ -1,4 +1,4 @@
-// VERSION 1.2.1
+// VERSION 1.2.2
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -132,6 +132,10 @@ this.AwesomerUnifiedComplete = {
 this.AwesomerBar = {
 	kXULNS: "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul",
 
+	// To make sure there are at least 4 engines in a single row and there are a maximum of 4 rows, if not just cut out any extra engines.
+	kMinEnginesPerRow: 4,
+	kMaxEngineRows: 4,
+
 	get popup () { return $('PopupAutoCompleteRichResult'); },
 	get footer () { return $('urlbar-search-footer'); },
 	get oneOffList () { return $(objName+'-urlbar-search-engines'); },
@@ -150,22 +154,6 @@ this.AwesomerBar = {
 	handleEvent: function(e) {
 		switch(e.type) {
 			case 'popupshowing':
-				// When using the slim style, we need to set a specific width on one of the nodes of each item,
-				// it's unfortunate that we can't just use percentages directly in the main stylesheeet (simply doesn't work).
-				if(Prefs.awesomerStyle == 'slim') {
-					let width = Math.max(200, Math.ceil(this.popup.boxObject.width /2));
-					let sscode = '\
-						@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
-						@-moz-document url("'+document.baseURI+'") {\n\
-							window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="slim"] .ac-title-box {\n\
-								min-width: '+width+'px;\n\
-								max-width: '+width+'px;\n\
-							}\n\
-						}';
-					Styles.load('awesomerStyleSlim_'+_UUID, sscode, true);
-				} else {
-					Styles.unload('awesomerStyleSlim_'+_UUID);
-				}
 				this.onPopupShowing();
 				break;
 
@@ -189,20 +177,6 @@ this.AwesomerBar = {
 				switch(aSubject) {
 					case "searchEnginesInURLBar":
 						this.toggle();
-						break;
-
-					case "awesomerStyle":
-						this.setStyle();
-						// no break, we also need to update the max rows when the style changes
-
-					case "richMaxSearchRows":
-					case "slimMaxSearchRows":
-					case "frogMaxSearchRows":
-						this.setMaxRows();
-						break;
-
-					case "awesomerColor":
-						this.setColor();
 						break;
 				}
 				break;
@@ -313,6 +287,37 @@ this.AwesomerBar = {
 			}
 		}
 
+		// This is how we implement multi-line search engines in the location bar, we simply limit the max-width of the engines container,
+		// based on the total panel width:
+		// - 180px minimum width should leave enough space for at least 3 buttons.
+		// - leave 13.5em width for the status label, 14em in hidpi
+		// - leave another 57px for the settings button, 75px in hidpi
+		// For instance, in a panel that's 850px wide, this should fit 11 search engine icons comfortably.
+		let maxwidth = Math.max(180, this.popup.boxObject.width);
+		let minwidth = 57 *this.kMinEnginesPerRow; // rough default approximation of each engine button width
+		let maxheight = 35 *this.kMaxEngineRows; // rough default approximantion of each engine button height
+		if(list.firstChild) {
+			minwidth = list.firstChild.boxObject.width *this.kMinEnginesPerRow;
+			maxheight = list.firstChild.boxObject.height *this.kMaxEngineRows;
+		}
+		let sscode = '\
+			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+			@-moz-document url("'+document.baseURI+'") {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-urlbar-search-engines,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-urlbar-search-engines-container {\n\
+					max-height: '+maxheight+'px;\n\
+					min-width: '+minwidth+'px;\n\
+					max-width: calc('+maxwidth+'px - 13.5em - 57px);\n\
+				}\n\
+				@media (min-resolution: 1.1dppx) {\n\
+					window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-urlbar-search-engines,\n\
+					window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-urlbar-search-engines-container {\n\
+						max-width: calc('+maxwidth+'px - 14em - 75px);\n\
+					}\n\
+				}\n\
+			}';
+		Styles.load('searchEnginesInURLBar_'+_UUID, sscode, true);
+
 		this.updateCurrentEngine();
 	},
 
@@ -415,25 +420,6 @@ this.AwesomerBar = {
 		}
 	},
 
-	setStyle: function() {
-		setAttribute(this.popup, 'awesomerStyle', Prefs.awesomerStyle);
-
-		// Make sure the popup knows its rows height has changed, it should recalculate each row's height.
-		this.popup._rowHeight = 0;
-	},
-
-	setMaxRows: function() {
-		if(this.popup._normalMaxRows >= 0) {
-			this.popup._normalMaxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
-		} else {
-			gURLBar.maxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
-		}
-	},
-
-	setColor: function() {
-		setAttribute(this.popup, 'awesomerColor', Prefs.awesomerColor);
-	},
-
 	toggle: function(unload) {
 		if(!unload && Prefs.searchEnginesInURLBar) {
 			Overlays.overlayWindow(window, 'awesomeBar', this);
@@ -453,6 +439,102 @@ this.AwesomerBar = {
 
 		this.currentEngine = Services.search.currentEngine;
 
+		Listeners.add(this.popup, 'popupshowing', this);
+		Listeners.add(this.footer, 'mouseover', this);
+		Listeners.add(this.footer, 'mouseout', this);
+		Listeners.add(gURLBar, 'keypress', this, true);
+
+		Observers.add(this, "browser-search-engine-modified");
+	},
+
+	onUnload: function() {
+		Styles.unload('searchEnginesInURLBar_'+_UUID);
+
+		Listeners.remove(this.popup, 'popupshowing', this);
+		Listeners.remove(this.footer, 'mouseover', this);
+		Listeners.remove(this.footer, 'mouseout', this);
+		Listeners.remove(gURLBar, 'keypress', this, true);
+
+		Observers.remove(this, "browser-search-engine-modified");
+	}
+};
+
+this.suggestionsPanel = {
+	get popup () { return $('PopupAutoCompleteRichResult'); },
+
+	handleEvent: function(e) {
+		switch(e.type) {
+			case 'popupshowing':
+				// When using the slim style, we need to set a specific width on one of the nodes of each item,
+				// it's unfortunate that we can't just use percentages directly in the main stylesheet (simply doesn't work).
+				let width = Math.max(200, Math.ceil(this.popup.boxObject.width /2));
+				let sscode = '\
+					@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+					@-moz-document url("'+document.baseURI+'") {\n\
+						window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="slim"] .ac-title-box {\n\
+							min-width: '+width+'px;\n\
+							max-width: '+width+'px;\n\
+						}\n\
+					}';
+				Styles.load('awesomerStyleSlim_'+_UUID, sscode, true);
+				break;
+		}
+	},
+
+	observe: function(aSubject, aTopic, aData) {
+		switch(aSubject) {
+			case "awesomerStyle":
+				this.toggleListeners();
+				this.setStyle();
+				// no break, we also need to update the max rows when the style changes
+
+			case "richMaxSearchRows":
+			case "slimMaxSearchRows":
+			case "frogMaxSearchRows":
+				this.setMaxRows();
+				break;
+
+			case "awesomerColor":
+				this.setColor();
+				break;
+		}
+	},
+
+	setStyle: function() {
+		setAttribute(this.popup, 'awesomerStyle', Prefs.awesomerStyle);
+
+		// Make sure the popup knows its rows height has changed, it should recalculate each row's height.
+		this.popup._rowHeight = 0;
+	},
+
+	setMaxRows: function() {
+		if(this.popup._normalMaxRows >= 0) {
+			this.popup._normalMaxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
+		} else {
+			gURLBar.maxRows = Prefs[Prefs.awesomerStyle+'MaxSearchRows'];
+		}
+	},
+
+	setColor: function() {
+		setAttribute(this.popup, 'awesomerColor', Prefs.awesomerColor);
+	},
+
+	toggleListeners: function() {
+		if(Prefs.awesomerStyle == 'slim') {
+			Listeners.add(this.popup, 'popupshowing', this);
+		} else {
+			this.unsetListeners();
+		}
+	},
+
+	unsetListeners: function() {
+		Listeners.remove(this.popup, 'popupshowing', this);
+
+		// Mkae sure we also unload the stylesheet, as it won't be needed anymore.
+		Styles.unload('awesomerStyleSlim_'+_UUID);
+	},
+
+	init: function() {
 		// The rows don't have the same height in every style, the original method doesn't know how to handle that.
 		Piggyback.add('awesomerStyle', this.popup, 'adjustHeight', function() {
 			// Figure out how many rows to show
@@ -576,18 +658,12 @@ this.AwesomerBar = {
 		Prefs.listen('frogMaxSearchRows', this);
 		this.setMaxRows();
 
-		Listeners.add(this.popup, 'popupshowing', this);
-		Listeners.add(this.footer, 'mouseover', this);
-		Listeners.add(this.footer, 'mouseout', this);
-		Listeners.add(gURLBar, 'keypress', this, true);
-
-		Observers.add(this, "browser-search-engine-modified");
+		this.toggleListeners();
 	},
 
-	onUnload: function() {
+	uninit: function() {
 		Prefs.unlisten('awesomerStyle', this);
 		Prefs.unlisten('awesomerColor', this);
-		Styles.unload('awesomerStyleSlim_'+_UUID);
 		removeAttribute(this.popup, 'awesomerStyle');
 		removeAttribute(this.popup, 'awesomerColor');
 		this.popup._rowHeight = 0;
@@ -613,12 +689,7 @@ this.AwesomerBar = {
 		}
 		delete gURLBar._backupMaxRows;
 
-		Listeners.remove(this.popup, 'popupshowing', this);
-		Listeners.remove(this.footer, 'mouseover', this);
-		Listeners.remove(this.footer, 'mouseout', this);
-		Listeners.remove(gURLBar, 'keypress', this, true);
-
-		Observers.remove(this, "browser-search-engine-modified");
+		this.unsetListeners();
 	}
 };
 
@@ -635,6 +706,8 @@ Modules.LOADMODULE = function() {
 	Prefs.listen('searchEnginesInURLBar', AwesomerBar);
 	AwesomerBar.toggle();
 
+	suggestionsPanel.init();
+
 	Prefs.listen('adaptSearchBar', toggleAdaptSearchBar);
 	toggleAdaptSearchBar();
 };
@@ -642,6 +715,8 @@ Modules.LOADMODULE = function() {
 Modules.UNLOADMODULE = function() {
 	Prefs.unlisten('adaptSearchBar', toggleAdaptSearchBar);
 	Modules.unload('adaptSearchBar');
+
+	suggestionsPanel.uninit();
 
 	Prefs.unlisten('searchEnginesInURLBar', AwesomerBar);
 	AwesomerBar.toggle(true);
