@@ -1,4 +1,4 @@
-// VERSION 1.2.2
+// VERSION 1.2.3
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -138,6 +138,7 @@ this.AwesomerBar = {
 
 	get popup () { return $('PopupAutoCompleteRichResult'); },
 	get footer () { return $('urlbar-search-footer'); },
+	get searchPopup () { return $('PopupSearchAutoComplete'); },
 	get oneOffList () { return $(objName+'-urlbar-search-engines'); },
 	get hottext () { return $(objName+'-urlbar-search-hottext'); },
 
@@ -167,6 +168,43 @@ this.AwesomerBar = {
 
 			case 'keypress':
 				this.onKeypress(e);
+				break;
+
+			// These are clicks in the search bar's engine icons. For consistency, right-clicks in those will do the same as
+			// right-clicking engines in the location bar: instead of showing a context menu, it sets the engine as the current one.
+			// This can be disabled using a hidden preference though if necessary.
+			case 'click':
+				// Does the user even want to modify the right click behavior?
+				// 0 is use context menu, 1 is right click to set default.
+				if(!Prefs.rightClickEngines) { return; }
+
+				// We're only interested in right-clicks here.
+				if(e.button != 2) { return; }
+
+				// 2 means shift+right click
+				if(Prefs.rightClickEngines == 2 && !e.shiftKey) { return; }
+
+				// We only want to alter the behavior of one-off search icons.
+				let target = e.originalTarget;
+				if(!target.classList.contains('searchbar-engine-one-off-item') || !target.engine) { return; }
+
+				// Alright, we're through, so cancel showing the context menu, and select the default engine directly.
+				e.preventDefault();
+				e.stopPropagation();
+
+				// The binding in search.xml doesn't expose the building routine of the panel. So we have to do it here like it does.
+				let selectEngine = target.engine;
+				let currentEngine = Services.search.currentEngine;
+
+				// Make the target button of the context menu reflect the current search engine first.
+				// Doing this as opposed to rebuilding all the one-off buttons avoids flicker.
+				target.id = "searchbar-engine-one-off-item-" + currentEngine.name.replace(/ /g, '-');
+				let uri = (currentEngine.iconURI) ? currentEngine.iconURI.spec : "chrome://browser/skin/search-engine-placeholder.png";
+				target.setAttribute("image", uri);
+				target.setAttribute("tooltiptext", currentEngine.name);
+				target.engine = currentEngine;
+
+				Services.search.currentEngine = selectEngine;
 				break;
 		}
 	},
@@ -442,6 +480,7 @@ this.AwesomerBar = {
 		Listeners.add(this.popup, 'popupshowing', this);
 		Listeners.add(this.footer, 'mouseover', this);
 		Listeners.add(this.footer, 'mouseout', this);
+		Listeners.add(this.searchPopup, 'click', this, true);
 		Listeners.add(gURLBar, 'keypress', this, true);
 
 		Observers.add(this, "browser-search-engine-modified");
@@ -453,6 +492,7 @@ this.AwesomerBar = {
 		Listeners.remove(this.popup, 'popupshowing', this);
 		Listeners.remove(this.footer, 'mouseover', this);
 		Listeners.remove(this.footer, 'mouseout', this);
+		Listeners.remove(this.searchPopup, 'click', this, true);
 		Listeners.remove(gURLBar, 'keypress', this, true);
 
 		Observers.remove(this, "browser-search-engine-modified");

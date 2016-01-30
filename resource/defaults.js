@@ -1,4 +1,4 @@
-// VERSION 1.4.10
+// VERSION 1.4.11
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -59,6 +59,7 @@ prefList = {
 	searchEnginesInURLBar: true,
 	adaptSearchBar: true,
 	showOnlyNonEmptySearchBar: true,
+	rightClickEngines: 1,
 
 	// for internal use
 	migratedKeysets: false,
