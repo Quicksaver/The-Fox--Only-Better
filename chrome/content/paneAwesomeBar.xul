@@ -279,7 +279,7 @@
 				<description>&opt.maxDropMarkerRows.tooltip;</description>
 			</vbox>
 			<hbox align="center" jump="awesomerColor">
-				<label value="&opt.awesomerColor.label;"/>
+				<label value="&opt.awesomerColor.label;" class="smallindent"/>
 				<menulist class="showcolor" delayPreference="pref-awesomerColor">
 					<menupopup>
 						<menuitem value="default" label="&opt.default.label;"/>
