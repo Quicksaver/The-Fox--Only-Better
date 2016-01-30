@@ -10,7 +10,7 @@
 				<hbox id="objName-urlbar-search-engines"/>
 			</hbox>
 			<hbox id="objName-urlbar-search-hottext-container" flex="1" align="center" insertbefore="urlbar-search-settings">
-				<label id="objName-urlbar-search-hottext" flex="1" crop="end"/>
+				<description id="objName-urlbar-search-hottext" flex="1" crop="end"/>
 			</hbox>
 			<button id="urlbar-search-settings"
 				label=""

@@ -5,9 +5,13 @@
 	background-color: hsla(210,4%,10%,.07);
 }
 
+#theFoxOnlyBetter-urlbar-search-hottext-container {
+	overflow: hidden;
+	padding: 0 8px;
+}
+
 #theFoxOnlyBetter-urlbar-search-hottext {
 	text-align: center;
-	margin: 8px;
 }
 
 #urlbar-search-footer button {

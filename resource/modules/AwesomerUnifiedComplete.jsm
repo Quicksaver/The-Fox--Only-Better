@@ -1,4 +1,4 @@
-// VERSION 1.2.6
+// VERSION 1.2.7
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -411,7 +411,7 @@ this.AwesomerBar = {
 
 	updateHottext: function() {
 		let hottext = this.hottext;
-		hottext.value = hottext.overrideValue || hottext.emptyValue || '';
+		hottext.textContent = hottext.overrideValue || hottext.emptyValue || '';
 	},
 
 	// Press Ctrl+Up and Ctrl+Down to change the current search engine while typing in the location bar.
