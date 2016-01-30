@@ -1,4 +1,4 @@
-// VERSION 1.2.4
+// VERSION 1.2.5
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -175,14 +175,20 @@ this.AwesomerBar = {
 			// This can be disabled using a hidden preference though if necessary.
 			case 'click':
 				// Does the user even want to modify the right click behavior?
-				// 0 is use context menu, 1 is right click to set default.
-				if(!Prefs.rightClickEngines) { return; }
+				// 0 uses original context menu behavior,
+				// 1 right click to set default,
+				// 2 right click shows context menu, shift+right click sets as default
+				// 3 left click does one-off, shift+left click sets as default
+				if(Prefs.rightClickEngines == 0) { return; }
+
+				// 2 and 3 require shift
+				if(Prefs.rightClickEngines > 1 && !e.shiftKey) { return; }
 
 				// We're only interested in right-clicks here.
-				if(e.button != 2) { return; }
+				if(Prefs.rightClickEngines < 3 && e.button != 2) { return; }
 
-				// 2 means shift+right click
-				if(Prefs.rightClickEngines == 2 && !e.shiftKey) { return; }
+				// Otherwise really only want left clicks only
+				if(Prefs.rightClickEngines == 3 && e.button != 0) { return; }
 
 				// We only want to alter the behavior of one-off search icons.
 				let target = e.originalTarget;
