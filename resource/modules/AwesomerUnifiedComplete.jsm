@@ -1,4 +1,4 @@
-// VERSION 1.2.3
+// VERSION 1.2.4
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -687,21 +687,25 @@ this.suggestionsPanel = {
 			get: function() { return Prefs[Prefs.awesomerStyle+'MaxDropMarkerRows']; }
 		});
 
-		Prefs.listen('awesomerStyle', this);
-		Prefs.listen('awesomerColor', this);
-		this.setStyle();
-		this.setColor();
-
 		gURLBar._backupMaxRows = (this.popup._normalMaxRows >= 0) ? this.popup._normalMaxRows : gURLBar.maxRows;
+
 		Prefs.listen('richMaxSearchRows', this);
 		Prefs.listen('slimMaxSearchRows', this);
 		Prefs.listen('frogMaxSearchRows', this);
+		Prefs.listen('awesomerStyle', this);
+		Prefs.listen('awesomerColor', this);
+
+		this.setStyle();
+		this.setColor();
 		this.setMaxRows();
 
 		this.toggleListeners();
 	},
 
 	uninit: function() {
+		Prefs.unlisten('richMaxSearchRows', this);
+		Prefs.unlisten('slimMaxSearchRows', this);
+		Prefs.unlisten('frogMaxSearchRows', this);
 		Prefs.unlisten('awesomerStyle', this);
 		Prefs.unlisten('awesomerColor', this);
 		removeAttribute(this.popup, 'awesomerStyle');
@@ -719,9 +723,6 @@ this.suggestionsPanel = {
 		});
 		delete gURLBar._maxDropMarkerRows;
 
-		Prefs.unlisten('richMaxSearchRows', this);
-		Prefs.unlisten('slimMaxSearchRows', this);
-		Prefs.unlisten('frogMaxSearchRows', this);
 		if(this.popup._normalMaxRows >= 0) {
 			this.popup._normalMaxRows = gURLBar._backupMaxRows;
 		} else {
