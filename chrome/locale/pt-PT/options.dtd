@@ -1,5 +1,6 @@
 <!ENTITY pane.slimChrome.label "Interface Reduzida">
 <!ENTITY pane.skyLights.label "Luzes no Céu">
+<!ENTITY pane.awesomeBar.label "Barra Fantástica">
 <!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Geral">
 <!ENTITY opt.slimChrome.label "Activar a Interface Reduzida">
@@ -53,7 +54,55 @@
 <!ENTITY opt.animation.hinge.label "Efeito dobradiça do GiT">
 <!ENTITY opt.animation.hinge.tooltip "Efeito especial de dobradiça, criado por Geek in Training. Se gosta deste efeito devia agradecer-lhe!">
 <!ENTITY cat.slimChromeKeyset.label "Atalho de teclado para activar e desactivar">
-<!ENTITY opt.adaptSearchBar.label "Barra de Procura Adaptável">
-<!ENTITY opt.adaptSearchBar.tooltip "Mantém a Barra de Procura sincronizada com as tuas procuras na web. A Barra de Procura reflete o termo usado ao navegar os resultados do motor de busca.">
+<!ENTITY cat.awesomeBar.enable.label "Melhorar a minha Barra Fantástica">
+<!ENTITY cat.awesomeBar.enable.tooltip "A tua barra de endereço pode ajudar-te mais do que possas pensar! Configura aqui as suas sugestões e o seu comportamento de pesquisa web.">
+<!ENTITY cat.awesomeBar.suggest.label "Ao usar a barra de endereço, fornecer:">
+<!ENTITY cat.awesomeBar.suggest.tooltip "À medida que escreves na barra de endereço, um painel mostra-te uma lista de sugestões de endereços relacionados com o texto inserido.">
+<!ENTITY opt.maxSuggest.label "Sugestões totais">
+<!ENTITY opt.limitSuggest.label "limite">
+<!ENTITY opt.suggestHistory.label "Histórico">
+<!ENTITY opt.suggestHistory.tooltip "Sugere páginas do teu histórico de navegação.">
+<!ENTITY opt.suggestBookmark.label "Marcadores">
+<!ENTITY opt.suggestBookmark.tooltip "Sugere páginas dos teus marcadores.">
+<!ENTITY opt.suggestOpenpage.label "Separadores abertos">
+<!ENTITY opt.suggestOpenpage.tooltip "Procura entre os teus separadores abertos para ver se algum está relacionado.">
+<!ENTITY opt.suggestSearches.label "Sugestões de procura">
+<!ENTITY opt.suggestSearches.tooltip "Pede ao teu motor de busca predefinido algumas sugestões de pesquisa relacionadas.">
+<!ENTITY opt.suggestSearchesInPB.label "Mostrar sugestões de pesquisa em janelas privadas">
+<!ENTITY opt.suggestSearchesInPB.tooltip "Por defeito, sugestões de pesquisa não são mostradas em janelas privadas porque estas são adquiridas ao aceder remotamente o teu motor de busca predefinido.">
+<!ENTITY cat.rows.label "Painel de sugestões">
+<!ENTITY opt.awesomerStyle.label "Estilo dos items">
+<!ENTITY opt.awesomerStyle.rich.label "Rico">
+<!ENTITY opt.awesomerStyle.rich.tooltip "O normal do Firefox. Mostra-te toda a informação num formato de fácil leitura e visualização.">
+<!ENTITY opt.awesomerStyle.slim.label "Estreito">
+<!ENTITY opt.awesomerStyle.slim.tooltip "Compacta os items, para ocuparem menos espaço. Alguns títulos ou endereços longos poderão ser cortados para caberem.">
+<!ENTITY opt.awesomerStyle.frog.label "Saltitão">
+<!ENTITY opt.awesomerStyle.frog.tooltip "Encolhe os items ainda mais, mostrando apenas o título da página. Move o cursor sobre qualquer item para o expandir e mostrar o seu endereço.">
+<!ENTITY opt.maxRows.tooltip.a "Determina a altura máxima do painel de sugestões de acordo com o número de items que irão encaixar. Todos os items extra serão acessíveis ao rolar para baixo a lista.">
+<!ENTITY opt.maxRows.tooltip.b "Cada estilo disponivel acima irá mostrar aqui valores diferentes, uma vez que os items terão um tamanho diferente com cada um.">
+<!ENTITY opt.maxSearchRows.label "Items visíveis ao procurar">
+<!ENTITY opt.maxSearchRows.tooltip "Os items mostrados à medida que escreves na barra de endereço.">
+<!ENTITY opt.maxDropMarkerRows.label "Items visíveis ao mostrar o histórico">
+<!ENTITY opt.maxDropMarkerRows.tooltip "Os items mostrados ao clicar na seta de abertura da barra de endereço.">
+<!ENTITY opt.awesomerColor.label "Estilo colorido">
+<!ENTITY opt.default.label "Padrão">
+<!ENTITY opt.bubblegum.label "Pastilha elástica">
+<!ENTITY opt.grass.label "Relva">
+<!ENTITY opt.lavender.label "Alfazema">
+<!ENTITY opt.noir.label "Noir">
+<!ENTITY opt.ruby.label "Rubi">
+<!ENTITY opt.sea.label "Mar">
+<!ENTITY opt.sky.label "Céu">
+<!ENTITY opt.taupe.label "Bege">
+<!ENTITY cat.searchbar.label "Barra de pesquisa">
+<!ENTITY opt.searchEnginesInURLBar.label "Mostrar motores de busca na barra de endereço">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "Coloca os teus motores de busca no painel de sugestões da barra de endereço, para que possas utilizar qualquer um em qualquer altura.">
+<!ENTITY opt.gotoSearch.label "Gere os teus motores de busca">
+<!ENTITY opt.gotoSearch.tooltip "Escolhe o teu motor de busca predefinido, escolhe motores de busca um-clique, e define palavras chave para os teus motores de busca para os utilizares facilmente na tua barra de endereço.">
+<!ENTITY opt.adaptSearchBar.label "Barra de procura adaptável">
+<!ENTITY opt.adaptSearchBar.tooltip "Mantém a barra de procura sincronizada com as tuas procuras na web. A barra de procura reflete o termo usado ao navegar os resultados do motor de busca.">
 <!ENTITY opt.adaptSearchBar.description.a "Podes encontrar uma lista de motores de busca compatíveis na página principal do extra. Atualmente, esta funcionalidade deverá funcionar com os motores de busca mais comuns.">
-<!ENTITY opt.adaptSearchBar.description.b "Repara que esta é apenas uma funcionalidade protótipo. Ainda estão planeados alguns extras, sendo mais notável a possibilidade de definir regras customizadas para que funcione com outras páginas de procura. Por agora, se quiseres ver a Barra de Procura adaptar-se a outros motores de busca, terás de o requisitar através da página de suporte do extra.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "Só mostrar a barra de pesquisa quando não está vazia">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "A barra de pesquisa apenas estará visivel em páginas de resultados de pesquisas, e mostra qual o termo usado para a pesquisa nessa página.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Clicá-la foca antes a barra de endereço, que podes usar do mesmo modo que a barra de pesquisa. Do mesmo modo, tentar abrir o seu painel de sugestões abre antes o painel da barra de endereço.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "Isto só irá funcionar se estiver no seu local original, junto à barra de endereço.">

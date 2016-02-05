@@ -1,5 +1,6 @@
 <!ENTITY pane.slimChrome.label "Chrome verkleinen">
 <!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.awesomeBar.label "Awesome Bar">
 <!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Algemeen">
 <!ENTITY opt.slimChrome.label "Chrome verkleinen inschakelen">
@@ -53,7 +54,55 @@
 <!ENTITY opt.animation.hinge.label "GiT’s scharniereffect">
 <!ENTITY opt.animation.hinge.tooltip "Speciaal scharniereffect, gemaakt door Geek in Training. Als u het mooi vindt kunt u hem bedanken!">
 <!ENTITY cat.slimChromeKeyset.label "Sneltoets voor in- of uitschakelen">
-<!ENTITY opt.adaptSearchBar.label "Adaptable Search Bar">
-<!ENTITY opt.adaptSearchBar.tooltip "Keeps your Search Bar synchronized with your web searches. The Search Bar will always reflect the term used when browsing any results page from a search engine.">
+<!ENTITY cat.awesomeBar.enable.label "Enhance my Awesome Bar">
+<!ENTITY cat.awesomeBar.enable.tooltip "Your location bar can help you more than you realize! Configure its suggestions and web search behavior here.">
+<!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
+<!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
+<!ENTITY opt.maxSuggest.label "Total suggestions">
+<!ENTITY opt.limitSuggest.label "limit">
+<!ENTITY opt.suggestHistory.label "History">
+<!ENTITY opt.suggestHistory.tooltip "Suggests pages from your browsing history.">
+<!ENTITY opt.suggestBookmark.label "Bookmarks">
+<!ENTITY opt.suggestBookmark.tooltip "Suggests bookmarked pages.">
+<!ENTITY opt.suggestOpenpage.label "Open tabs">
+<!ENTITY opt.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
+<!ENTITY opt.suggestSearches.label "Search suggestions">
+<!ENTITY opt.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
+<!ENTITY opt.suggestSearchesInPB.label "Also provide search suggestions in private windows">
+<!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
+<!ENTITY cat.rows.label "Suggestions panel">
+<!ENTITY opt.awesomerStyle.label "Item style">
+<!ENTITY opt.awesomerStyle.rich.label "Rich">
+<!ENTITY opt.awesomerStyle.rich.tooltip "The Firefox default. Shows you all the information in an easy to read and visualize format.">
+<!ENTITY opt.awesomerStyle.slim.label "Slim">
+<!ENTITY opt.awesomerStyle.slim.tooltip "Compact the items, so that they occupy less space. Some long titles or addresses may be cropped down to fit.">
+<!ENTITY opt.awesomerStyle.frog.label "Froggy">
+<!ENTITY opt.awesomerStyle.frog.tooltip "Slims the items down even further by showing only the title of the page. Move the mouse over any item to expand it and show its address.">
+<!ENTITY opt.maxRows.tooltip.a "Determine the maximum height of the suggestions panel according to the number of items that will fit. All extra items will be accessible by scrolling down the list.">
+<!ENTITY opt.maxRows.tooltip.b "Each style available above will show different values here, since each will have a different item size.">
+<!ENTITY opt.maxSearchRows.label "Visible items when searching">
+<!ENTITY opt.maxSearchRows.tooltip "The items shown as you type in the location bar.">
+<!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
+<!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
+<!ENTITY opt.awesomerColor.label "Color theme">
+<!ENTITY opt.default.label "Default">
+<!ENTITY opt.bubblegum.label "Bubblegum">
+<!ENTITY opt.grass.label "Grass">
+<!ENTITY opt.lavender.label "Lavender">
+<!ENTITY opt.noir.label "Noir">
+<!ENTITY opt.ruby.label "Ruby">
+<!ENTITY opt.sea.label "Sea">
+<!ENTITY opt.sky.label "Sky">
+<!ENTITY opt.taupe.label "Taupe">
+<!ENTITY cat.searchbar.label "Search bar">
+<!ENTITY opt.searchEnginesInURLBar.label "Show search engines in the location bar">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "Place your search engines in the suggestions panel of the location bar, so that you can use whichever engine you want at any time in it.">
+<!ENTITY opt.gotoSearch.label "Manage your search engines">
+<!ENTITY opt.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
+<!ENTITY opt.adaptSearchBar.label "Adaptable search bar">
+<!ENTITY opt.adaptSearchBar.tooltip "Keeps your search bar synchronized with your web searches. The search bar will always reflect the term used when browsing any results page from a search engine.">
 <!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
-<!ENTITY opt.adaptSearchBar.description.b "Note that this is only a prototype feature. A few extras are still planned, most notably the ability to define your own custom rules for other search pages to work. For now, if you'd like to see the Search Bar adapt to other search engines, you'll have to request it through the add-on's support page.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "Show search bar only when it's not empty">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "The search bar will be visible only on search results pages, letting you know what you searched for in that page.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Clicking it will bring focus to the location bar instead, which you can use in the same way as the search bar. Likewise, trying to open its suggestions panel will open the location bar's panel instead.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "This only works when it's in its default placement, next to the location bar.">

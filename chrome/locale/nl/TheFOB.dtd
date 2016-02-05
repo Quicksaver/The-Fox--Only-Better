@@ -1,4 +1,5 @@
 <!ENTITY theFOB.toggleSlimChrome.label "Chrome verkleinen">
 <!ENTITY theFOB.toggleSlimChrome.accesskey "l">
-<!ENTITY theFOB.options.label "Options for Beyond Australis">
+<!ENTITY theFOB.options.label "Opties voor Beyond Australis">
 <!ENTITY theFOB.options.accesskey "y">
+<!ENTITY theFOB.searchSettings.tooltip "Zoekinstellingen wijzigen">

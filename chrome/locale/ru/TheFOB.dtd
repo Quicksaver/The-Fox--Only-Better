@@ -2,3 +2,4 @@
 <!ENTITY theFOB.toggleSlimChrome.accesskey "l">
 <!ENTITY theFOB.options.label "Настройки дополнения За пределами Australis">
 <!ENTITY theFOB.options.accesskey "y">
+<!ENTITY theFOB.searchSettings.tooltip "Change Search Settings">

@@ -2,3 +2,4 @@
 <!ENTITY theFOB.toggleSlimChrome.accesskey "b">
 <!ENTITY theFOB.options.label "Opciones para Beyond Australis">
 <!ENTITY theFOB.options.accesskey "y">
+<!ENTITY theFOB.searchSettings.tooltip "Cambiar configuración de búsqueda">

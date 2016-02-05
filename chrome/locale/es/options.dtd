@@ -1,5 +1,6 @@
 <!ENTITY pane.slimChrome.label "Chrome esbelto">
 <!ENTITY pane.skyLights.label "Claraboyas">
+<!ENTITY pane.awesomeBar.label "Barra de direcciones">
 <!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Habilitar chrome esbelto">
@@ -53,7 +54,55 @@
 <!ENTITY opt.animation.hinge.label "Efecto bisagra de GiT">
 <!ENTITY opt.animation.hinge.tooltip "Efecto bisagra, creado por Geek in Training. ¡Si le gusta debería agradecérselo a él!">
 <!ENTITY cat.slimChromeKeyset.label "Atajo de teclado para habilitar o deshabilitar">
+<!ENTITY cat.awesomeBar.enable.label "Mejorar mi barra de direcciones">
+<!ENTITY cat.awesomeBar.enable.tooltip "¡Su barra de direcciones puede ayudarle más de lo que usted cree! Configure sus sugerencias y el comportamiento de la búsqueda web aquí.">
+<!ENTITY cat.awesomeBar.suggest.label "Cuando use la barra de direcciones, proporciona:">
+<!ENTITY cat.awesomeBar.suggest.tooltip "Según escriba en la barra de direcciones, aparecerá un panel con una lista de enlaces sugeridos a abrir relacionados con las palabras introducidas.">
+<!ENTITY opt.maxSuggest.label "Sugerencias totales">
+<!ENTITY opt.limitSuggest.label "límite">
+<!ENTITY opt.suggestHistory.label "Historial">
+<!ENTITY opt.suggestHistory.tooltip "Sugiere páginas de su historial de búsqueda.">
+<!ENTITY opt.suggestBookmark.label "Marcadores">
+<!ENTITY opt.suggestBookmark.tooltip "Sugiere páginas en marcadores.">
+<!ENTITY opt.suggestOpenpage.label "Pestañas abiertas">
+<!ENTITY opt.suggestOpenpage.tooltip "Revisa sus pestañas abiertas para ver si cualquiera de ellas coincide.">
+<!ENTITY opt.suggestSearches.label "Sugerencias de búsqueda">
+<!ENTITY opt.suggestSearches.tooltip "Consulta su motor de búsqueda predeterminado en busca de sugerencias relacionadas que buscar.">
+<!ENTITY opt.suggestSearchesInPB.label "También proporciona sugerencias de búsqueda en ventanas privadas">
+<!ENTITY opt.suggestSearchesInPB.tooltip "Por defecto, las sugerencias de búsqueda no se muestran en ventanas privadas porque estas se descargan remotamente consultando a su motor de búsqueda predeterminado.">
+<!ENTITY cat.rows.label "Panel de sugerencias">
+<!ENTITY opt.awesomerStyle.label "Estilo del elemento">
+<!ENTITY opt.awesomerStyle.rich.label "Rico">
+<!ENTITY opt.awesomerStyle.rich.tooltip "El estilo predeterminado de Firefox. Le muestra toda la información en un formato fácil de leer y visualizar.">
+<!ENTITY opt.awesomerStyle.slim.label "Reducido">
+<!ENTITY opt.awesomerStyle.slim.tooltip "Compacta los elementos de forma que ocupan menos espacio. Algunos títulos o direcciones largas puede que se recorten para ajustarlas.">
+<!ENTITY opt.awesomerStyle.frog.label "Agazapado">
+<!ENTITY opt.awesomerStyle.frog.tooltip "Reduce los elementos incluso más, mostrando sólo el título de la página. Mueva el ratón sobre cualquier elemento para expandirlo y mostrar su dirección.">
+<!ENTITY opt.maxRows.tooltip.a "Determina la altura máxima del panel de sugerencias de acuerdo al número de elementos que incluirá. Todos los elementos extra serán accesibles al desplazarse por la lista.">
+<!ENTITY opt.maxRows.tooltip.b "Cada estilo disponible arriba mostrará aquí diferentes valores, ya que cada uno tendrá un tamaño de elemento distinto.">
+<!ENTITY opt.maxSearchRows.label "Elementos visibles al buscar">
+<!ENTITY opt.maxSearchRows.tooltip "Los elementos mostrados según escribe en la barra de direcciones.">
+<!ENTITY opt.maxDropMarkerRows.label "Elementos visibles mostrando el historial">
+<!ENTITY opt.maxDropMarkerRows.tooltip "Los elementos mostrados cuando hace clic en la flecha de despliegue en la barra de direcciones.">
+<!ENTITY opt.awesomerColor.label "Coloración">
+<!ENTITY opt.default.label "Predeterminada">
+<!ENTITY opt.bubblegum.label "Chicle">
+<!ENTITY opt.grass.label "Césped">
+<!ENTITY opt.lavender.label "Lavanda">
+<!ENTITY opt.noir.label "Negro">
+<!ENTITY opt.ruby.label "Rubí">
+<!ENTITY opt.sea.label "Mar">
+<!ENTITY opt.sky.label "Cielo">
+<!ENTITY opt.taupe.label "Pardo">
+<!ENTITY cat.searchbar.label "Barra de búsqueda">
+<!ENTITY opt.searchEnginesInURLBar.label "Mostrar motores de búsqueda en la barra de direcciones">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "Sitúa sus motores de búsqueda en el panel de sugerencias de la barra de direcciones, de forma que en cualquier momento pueda usar cualquier motor que desee en él.">
+<!ENTITY opt.gotoSearch.label "Administrar motores de búsqueda">
+<!ENTITY opt.gotoSearch.tooltip "Escoja su motor de búsqueda predeterminado, escoja motores de búsqueda a un clic, y defina palabras clave para sus motores de búsqueda para usarlos fácilmente desde la barra de direcciones.">
 <!ENTITY opt.adaptSearchBar.label "Barra de búsqueda adaptable">
 <!ENTITY opt.adaptSearchBar.tooltip "Mantiene sincronizado su recuadro de búsqueda con sus búsquedas en páginas web. El recuadro de búsqueda siempre reflejará el término usado al navegar por cualquier página de resultados de un motor de búsqueda.">
 <!ENTITY opt.adaptSearchBar.description.a "Puede encontrar una lista de motores de búsqueda compatibles en la página principal del complemento. Actualmente debería funcionar con la mayoría de motores comunes de búsqueda.">
-<!ENTITY opt.adaptSearchBar.description.b "Observe que esto es sólo un prototipo de característica. Aún están planeados unos pocos extras, el más notable la capacidad de definir sus propias reglas de personalización para que funcione con otras páginas de búsqueda. Por ahora, si desea ver que el recuadro de búsqueda se adapte a otros motores de búsqueda, tendrá que solicitarlo a través de la página de soporte.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "Mostrar barra de búsqueda sólo cuando no esté vacía.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "La barra de búsqueda sólo será visible en páginas de resultados de búsqueda, permitiéndole saber qué es lo que buscó en esa página.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Al hacer clic sobre ella traerá en su lugar el foco a la barra de direcciones, que puede usar del mismo modo que la barra de búsqueda. De forma parecida, al tratar de abrir su panel de sugerencias abrirá en su lugar el panel de la barra de direcciones.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "Esto sólo funciona cuando está en su posición predeterminada, junto a la barra de direcciones.">
