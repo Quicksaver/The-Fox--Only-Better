@@ -1,4 +1,4 @@
-// VERSION 1.2.7
+// VERSION 1.2.8
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -35,7 +35,7 @@ this.AwesomerUnifiedComplete = {
 	searchSettingsBtnCommand: function() {
 		// The original button in the nightly builds registers each click, so we must do the same since it's still the same button.
 		// From discussion in #telemetry, it's acceptable to also do the same for release builds, since the results can be filtered by version.
-		BrowserUITelemetry.countSearchSettingsEvent('urlbar');
+		window.BrowserUITelemetry.countSearchSettingsEvent('urlbar');
 		openOptions({ pane: 'paneAwesomeBar' });
 	},
 
