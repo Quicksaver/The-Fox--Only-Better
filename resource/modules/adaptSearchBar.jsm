@@ -1,11 +1,11 @@
-// VERSION 1.1.1
+// VERSION 1.1.2
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
 this.adaptSearchBar = {
 	initialized: false,
 
-	get nonEmptyMode () { return Prefs.searchEnginesInURLBar && Prefs.showOnlyNonEmptySearchBar; },
+	get nonEmptyMode () { return Prefs.awesomerURLBar && Prefs.searchEnginesInURLBar && Prefs.showOnlyNonEmptySearchBar; },
 
 	receiveMessage: function(m) {
 		let name = Messenger.messageName(m);
@@ -62,6 +62,7 @@ this.adaptSearchBar = {
 		switch(aSubject) {
 			case 'showOnlyNonEmptySearchBar':
 			case 'searchEnginesInURLBar':
+			case 'awesomerURLBar':
 				this.toggleShowOnlyNonEmptySearchBar();
 				break;
 		}
@@ -95,6 +96,7 @@ this.adaptSearchBar = {
 
 		Prefs.listen('showOnlyNonEmptySearchBar', this);
 		Prefs.listen('searchEnginesInURLBar', this);
+		Prefs.listen('awesomerURLBar', this);
 		this.toggleShowOnlyNonEmptySearchBar();
 	},
 
@@ -104,6 +106,7 @@ this.adaptSearchBar = {
 
 		Prefs.unlisten('showOnlyNonEmptySearchBar', this);
 		Prefs.unlisten('searchEnginesInURLBar', this);
+		Prefs.unlisten('awesomerURLBar', this);
 		this.toggleShowOnlyNonEmptySearchBar(true);
 
 		Messenger.unlistenWindow(window, 'AdaptSearchBar:Value', adaptSearchBar);

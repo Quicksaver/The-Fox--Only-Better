@@ -318,7 +318,6 @@
 				class="topIndent"
 				helpbox="paneAwesomeBar-adaptSearchBar-helptext"
 				jump="adaptSearchBar"
-				dependson="pref-awesomerURLBar"
 				delayPreference="pref-adaptSearchBar"/>
 			<checkbox label="&opt.showOnlyNonEmptySearchBar.label;"
 				class="indent"

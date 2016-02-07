@@ -1,4 +1,4 @@
-// VERSION 1.2.9
+// VERSION 1.2.10
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -761,10 +761,6 @@ this.suggestionsPanel = {
 	}
 };
 
-this.toggleAdaptSearchBar = function() {
-	Modules.loadIf('adaptSearchBar', Prefs.adaptSearchBar);
-};
-
 Modules.LOADMODULE = function() {
 	UnifiedComplete.register(AwesomerUnifiedComplete);
 	if(AwesomerUnifiedComplete.useOverride) {
@@ -775,15 +771,9 @@ Modules.LOADMODULE = function() {
 	AwesomerBar.toggle();
 
 	suggestionsPanel.init();
-
-	Prefs.listen('adaptSearchBar', toggleAdaptSearchBar);
-	toggleAdaptSearchBar();
 };
 
 Modules.UNLOADMODULE = function() {
-	Prefs.unlisten('adaptSearchBar', toggleAdaptSearchBar);
-	Modules.unload('adaptSearchBar');
-
 	suggestionsPanel.uninit();
 
 	Prefs.unlisten('searchEnginesInURLBar', AwesomerBar);
