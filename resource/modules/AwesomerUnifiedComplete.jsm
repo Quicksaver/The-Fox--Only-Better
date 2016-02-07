@@ -1,4 +1,4 @@
-// VERSION 1.2.8
+// VERSION 1.2.9
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -526,6 +526,11 @@ this.suggestionsPanel = {
 					}';
 				Styles.load('awesomerStyleSlim_'+_UUID, sscode, true);
 				break;
+
+			case 'LoadedSlimChrome':
+			case 'UnloadedSlimChrome':
+				this.setupURLBar();
+				break;
 		}
 	},
 
@@ -580,6 +585,24 @@ this.suggestionsPanel = {
 
 		// Mkae sure we also unload the stylesheet, as it won't be needed anymore.
 		Styles.unload('awesomerStyleSlim_'+_UUID);
+	},
+
+	setupURLBar: function() {
+		if(!gURLBar._maxDropMarkerRows) {
+			gURLBar._maxDropMarkerRows = gURLBar.maxDropMarkerRows;
+		}
+
+		// Always define this when calling this method, because it comes from an XBL binding it likes to reset back to the default field value.
+		Object.defineProperty(gURLBar, 'maxDropMarkerRows', {
+			configurable: true,
+			enumerable: true,
+			get: function() { return Prefs[Prefs.awesomerStyle+'MaxDropMarkerRows']; }
+		});
+
+		if(!gURLBar._backupMaxRows) {
+			gURLBar._backupMaxRows = (this.popup._normalMaxRows >= 0) ? this.popup._normalMaxRows : gURLBar.maxRows;
+		}
+		this.setMaxRows();
 	},
 
 	init: function() {
@@ -688,29 +711,25 @@ this.suggestionsPanel = {
 			return true;
 		}, Piggyback.MODE_BEFORE);
 
-		gURLBar._maxDropMarkerRows = gURLBar.maxDropMarkerRows;
-		Object.defineProperty(gURLBar, 'maxDropMarkerRows', {
-			configurable: true,
-			enumerable: true,
-			get: function() { return Prefs[Prefs.awesomerStyle+'MaxDropMarkerRows']; }
-		});
-
-		gURLBar._backupMaxRows = (this.popup._normalMaxRows >= 0) ? this.popup._normalMaxRows : gURLBar.maxRows;
-
 		Prefs.listen('richMaxSearchRows', this);
 		Prefs.listen('slimMaxSearchRows', this);
 		Prefs.listen('frogMaxSearchRows', this);
 		Prefs.listen('awesomerStyle', this);
 		Prefs.listen('awesomerColor', this);
 
+		Listeners.add(window, 'LoadedSlimChrome', this);
+		Listeners.add(window, 'UnloadedSlimChrome', this);
+
 		this.setStyle();
 		this.setColor();
-		this.setMaxRows();
+		this.setupURLBar();
 
 		this.toggleListeners();
 	},
 
 	uninit: function() {
+		Listeners.remove(window, 'LoadedSlimChrome', this);
+		Listeners.remove(window, 'UnloadedSlimChrome', this);
 		Prefs.unlisten('richMaxSearchRows', this);
 		Prefs.unlisten('slimMaxSearchRows', this);
 		Prefs.unlisten('frogMaxSearchRows', this);
@@ -726,15 +745,15 @@ this.suggestionsPanel = {
 		Object.defineProperty(gURLBar, 'maxDropMarkerRows', {
 			configurable: true,
 			enumerable: true,
-			value: gURLBar._maxDropMarkerRows,
+			value: gURLBar._maxDropMarkerRows || 14,
 			writable: false
 		});
 		delete gURLBar._maxDropMarkerRows;
 
 		if(this.popup._normalMaxRows >= 0) {
-			this.popup._normalMaxRows = gURLBar._backupMaxRows;
+			this.popup._normalMaxRows = gURLBar._backupMaxRows || -1;
 		} else {
-			gURLBar.maxRows = gURLBar._backupMaxRows;
+			gURLBar.maxRows = gURLBar._backupMaxRows || 6;
 		}
 		delete gURLBar._backupMaxRows;
 
