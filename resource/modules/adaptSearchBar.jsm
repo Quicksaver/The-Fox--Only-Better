@@ -1,4 +1,4 @@
-// VERSION 1.1.2
+// VERSION 1.1.3
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -50,6 +50,8 @@ this.adaptSearchBar = {
 				break;
 
 			case 'blur':
+				if(!this.nonEmptyMode) { break; }
+
 				// When bluring the location bar, we should revert its search value back to the current location if the user didn't change it.
 				if(!this.maybeHideSearchBar() && (!gURLBar.value || gURLBar.value == gSearchBar.value)) {
 					gURLBar.handleRevert();
