@@ -1,3 +1,7 @@
+.header-name {
+	-moz-user-select: text;
+}
+
 #categories .category image { list-style-image: url("chrome://thefoxonlybetter/skin/panes.png"); }
 #categories .category[value="paneAbout"] image { -moz-image-region: rect(0px 24px 24px 0px); }
 #categories .category[value="paneSlimChrome"] image { -moz-image-region: rect(0px 48px 24px 24px); }
