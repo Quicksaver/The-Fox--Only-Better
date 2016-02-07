@@ -1,4 +1,4 @@
-// VERSION 1.0.3
+// VERSION 1.0.4
 
 this.UnifiedComplete = {
 	sandbox: null,
@@ -67,12 +67,12 @@ this.UnifiedComplete = {
 			this.sandbox = null;
 			this.callListeners();
 
-			Prefs.unProxyNative('suggestSearchesEnabled', 'suggest.enabled');
-			Prefs.unProxyNative('suggestSearches', 'suggest.searches');
-			Prefs.unProxyNative('suggestHistory', 'suggest.history');
-			Prefs.unProxyNative('suggestBookmark', 'suggest.bookmark');
-			Prefs.unProxyNative('suggestOpenpage', 'suggest.openpage');
-			Prefs.unProxyNative('maxSuggest', 'maxRichResults');
+			Prefs.unProxyNative('suggest.enabled');
+			Prefs.unProxyNative('suggest.searches');
+			Prefs.unProxyNative('suggest.history');
+			Prefs.unProxyNative('suggest.bookmark');
+			Prefs.unProxyNative('suggest.openpage');
+			Prefs.unProxyNative('maxRichResults');
 		}
 	}
 };
