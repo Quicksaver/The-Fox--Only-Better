@@ -1,6 +1,14 @@
 {
-	"current":"1.4.1",
+	"current":"1.4.2",
 	"releases": {
+		"1.4.2":{
+			"date":"February 7, 2016",
+			"notes":[
+				["changed","The Adaptable Search Bar should still be usable when not enhancing the awesome bar"],
+				["bugfix","Search icons in location bar would appear distorted in HiDPI screens / higher zoom factor resolution settings"],
+				["bugfix","\"Visible items showing history\" setting didn't work"]
+			]
+		},
 		"1.4.1":{
 			"date":"February 6, 2016",
 			"notes":[
