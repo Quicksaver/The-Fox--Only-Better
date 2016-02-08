@@ -1,6 +1,13 @@
 {
-	"current":"1.4.2",
+	"current":"1.4.3",
 	"releases": {
+		"1.4.3":{
+			"date":"February 8, 2016",
+			"notes":[
+				["bugfix","Suggestion items styles and color themes wouldn't work when \"Show search engines in the location bar\" was disabled (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/148>issue #148</a>)"],
+				["bugfix","Suggestion items color themes selector shouldn't be accessible if not enhancing the awesome bar"]
+			]
+		},
 		"1.4.2":{
 			"date":"February 7, 2016",
 			"notes":[
