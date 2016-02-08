@@ -280,7 +280,9 @@
 			</vbox>
 			<hbox align="center" jump="awesomerColor">
 				<label value="&opt.awesomerColor.label;" class="smallindent"/>
-				<menulist class="showcolor" delayPreference="pref-awesomerColor">
+				<menulist class="showcolor"
+					dependson="pref-awesomerURLBar"
+					delayPreference="pref-awesomerColor">
 					<menupopup>
 						<menuitem value="default" label="&opt.default.label;"/>
 						<menuitem value="bubblegum" label="&opt.bubblegum.label;"/>
