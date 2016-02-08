@@ -1,0 +1,7 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* Styles and colors of the urlbar panel. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-url-box {
+	margin-top: 0;
+}

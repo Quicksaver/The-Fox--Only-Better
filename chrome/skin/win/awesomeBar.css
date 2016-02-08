@@ -8,27 +8,3 @@
 	border: 0;
 	background: transparent;
 }
-
-/* Styles and colors of the urlbar panel. */
-
-#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-title-box,
-#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-url-box {
-	margin-top: 4px;
-	margin-bottom: 4px;
-}
-
-#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"]) .ac-title-box {
-	margin-bottom: 4px;
-}
-
-@media	(-moz-os-version: windows-vista) and (-moz-windows-default-theme),
-	(-moz-os-version: windows-win7) and (-moz-windows-default-theme) {
-
-	/* We have to remove the rounded outline that is added in this case, so that the color themes apply correctly. */
-	#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .autocomplete-richlistitem[selected="true"] {
-		background-image: none;
-		background-clip: border-box;
-		border-radius: 0;
-		outline: none;
-	}
-}

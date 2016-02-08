@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://objPathString/skin/suggestionsPanel.css" type="text/css"?>
+<?xml-stylesheet href="chrome://objPathString-os/skin/suggestionsPanel.css" type="text/css"?>
+<overlay id="suggestionsPanel-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"/>

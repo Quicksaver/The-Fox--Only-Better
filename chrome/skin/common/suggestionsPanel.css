@@ -1,0 +1,137 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* Styles and colors of the urlbar panel. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem {
+	-moz-box-orient: horizontal;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-url-box {
+	-moz-box-flex: 1;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[actiontype="keyword"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[actiontype="searchengine"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[actiontype="visiturl"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem[type~="autofill"] .ac-title-box {
+	transform: none;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="slim"] .autocomplete-richlistitem .ac-site-icon {
+	margin-bottom: 0;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistbox {
+	background-size: 28px auto;
+	background: transparent linear-gradient(to right, hsla(0,0%,95%,.5) 27px, hsla(0,0%,83%,.5) 28px, transparent 0) repeat-y;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem * {
+	font: menu;
+	font-family: "Segoe ui", sans-serif;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[actiontype="keyword"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[actiontype="searchengine"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[actiontype="visiturl"] .ac-title-box,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"])[type~="autofill"] .ac-title-box {
+	transform: none;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"]) .ac-url-box {
+	visibility: collapse;
+	opacity: 0;
+	transform: translateX(-.65em);
+	-moz-margin-start: 5px;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .ac-site-icon {
+	margin-bottom: 0;
+	-moz-margin-end: 10px;
+	-moz-margin-start: 6px;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem .ac-url-box {
+	font-size: 95.5%;
+	transition: opacity .21s linear 0.02s, transform .21s ease-out 0.02s;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .ac-url-text,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .ac-action-text,
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-url-text,
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-action-text {
+	color: GrayText;
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .autocomplete-richlistitem[selected="true"] {
+	color: inherit;
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .autocomplete-richlistitem {
+	background-clip: border-box;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="bubblegum"] .ac-extra {
+	color: hsla(320,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="bubblegum"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(320,100%,50%,.18);
+	box-shadow: inset hsla(320,100%,91%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="grass"] .ac-extra {
+	color: hsla(95,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="grass"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(95,100%,50%,.18);
+	box-shadow: inset hsla(95,100%,91%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="lavender"] .ac-extra {
+	color: hsla(256,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="lavender"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(256,100%,50%,.18);
+	box-shadow: inset hsla(256,100%,91%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="noir"] .ac-extra {
+	color: hsla(0,0%,20%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="noir"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(0,0%,15%,.18);
+	box-shadow: inset hsla(0,0%,81%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="ruby"] .ac-extra {
+	color: hsla(0,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="ruby"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(0,100%,50%,.18);
+	box-shadow: inset hsla(0,100%,91%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="sea"] .ac-extra {
+	color: hsla(190,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="sea"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(190,100%,50%,.18);
+	box-shadow: inset hsla(190,100%,91%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="sky"] .ac-extra {
+	color: hsla(210,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="sky"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(210,100%,50%,.18);
+	box-shadow: inset hsla(210,100%,91%,.5) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="taupe"] .ac-extra {
+	color: hsla(43,15%,44%,1);
+}
+#PopupAutoCompleteRichResult[awesomerColor="taupe"] .autocomplete-richlistitem[selected="true"] {
+	background-color: hsla(43,100%,50%,.18);
+	box-shadow: inset hsla(43,100%,91%,.5) 0 0 0 1px;
+}

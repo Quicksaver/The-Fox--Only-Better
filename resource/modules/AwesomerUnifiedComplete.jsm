@@ -1,4 +1,4 @@
-// VERSION 1.2.10
+// VERSION 1.2.11
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -606,6 +606,8 @@ this.suggestionsPanel = {
 	},
 
 	init: function() {
+		Overlays.overlayWindow(window, 'suggestionsPanel');
+
 		// The rows don't have the same height in every style, the original method doesn't know how to handle that.
 		Piggyback.add('awesomerStyle', this.popup, 'adjustHeight', function() {
 			// Figure out how many rows to show
@@ -728,6 +730,8 @@ this.suggestionsPanel = {
 	},
 
 	uninit: function() {
+		Overlays.removeOverlayWindow(window, 'suggestionsPanel');
+
 		Listeners.remove(window, 'LoadedSlimChrome', this);
 		Listeners.remove(window, 'UnloadedSlimChrome', this);
 		Prefs.unlisten('richMaxSearchRows', this);
