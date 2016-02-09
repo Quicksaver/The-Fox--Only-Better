@@ -1,4 +1,4 @@
-// VERSION 1.1.4
+// VERSION 1.1.5
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -155,7 +155,8 @@ this.adaptSearchBar = {
 			if(!this.nonEmptyMode && searchbar.value) { return; }
 		}
 
-		if(searchbar.value != value) {
+		// Only change the searchbar's value if the user isn't typing in it.
+		if(searchbar.value != value && (!searchbar.value || document.activeElement != searchbar._textbox.inputField)) {
 			searchbar.value = value;
 		}
 
