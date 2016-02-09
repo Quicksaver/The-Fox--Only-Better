@@ -65,9 +65,10 @@
 	}
 }
 
-/* Hide the search bar when its empty. */
+/* Hide the search bar when its empty and it's directly in the nav-bar
+   (not in the overflow panel). */
 
-#nav-bar[hideSearchBar] #urlbar-search-splitter,
-#nav-bar[hideSearchBar] #search-container {
+#nav-bar[hideSearchBar] #nav-bar-customization-target > #urlbar-search-splitter,
+#nav-bar[hideSearchBar] #nav-bar-customization-target > #search-container {
 	visibility: collapse;
 }

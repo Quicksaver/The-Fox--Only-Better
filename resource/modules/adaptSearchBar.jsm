@@ -1,11 +1,14 @@
-// VERSION 1.1.3
+// VERSION 1.1.4
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
 this.adaptSearchBar = {
 	initialized: false,
+	placement: null,
 
-	get nonEmptyMode () { return Prefs.awesomerURLBar && Prefs.searchEnginesInURLBar && Prefs.showOnlyNonEmptySearchBar; },
+	get nonEmptyMode () {
+		return this.initialized && Prefs.awesomerURLBar && Prefs.searchEnginesInURLBar && Prefs.showOnlyNonEmptySearchBar && this.placement == CustomizableUI.AREA_NAVBAR;
+	},
 
 	receiveMessage: function(m) {
 		let name = Messenger.messageName(m);
@@ -32,14 +35,7 @@ this.adaptSearchBar = {
 					case gSearchBar:
 						e.preventDefault();
 						e.stopPropagation();
-						// When the search bar isn't empty (always in this case? unless some add-on triggers this somehow)
-						// use its value in the location bar as well
-						if(gSearchBar.value) {
-							gURLBar.value = gSearchBar.value;
-							gURLBar.valueIsTyped = false;
-							gURLBar.userTypedValue = null;
-						}
-						gURLBar.focus();
+						this.focusURLBar();
 						break;
 
 					// Always hide the search bar if the cursor is in the location bar.
@@ -70,6 +66,18 @@ this.adaptSearchBar = {
 		}
 	},
 
+	getSearchPlacement: function() {
+		let placement = CustomizableUI.getPlacementOfWidget("search-container");
+		this.placement = placement && placement.area;
+	},
+
+	onAreaNodeRegistered: function(aArea) {
+		// The panel is lazy loaded, so if the search bar is there, this is when we should initialize it.
+		if(aArea == CustomizableUI.AREA_PANEL) {
+			this.init();
+		}
+	},
+
 	onWidgetAdded: function(aWidgetId) {
 		if(aWidgetId == 'search-container') {
 			this.init();
@@ -90,6 +98,7 @@ this.adaptSearchBar = {
 		if(!gSearchBar) { return; }
 
 		this.initialized = true;
+		this.getSearchPlacement();
 
 		Listeners.add(gBrowser.tabContainer, 'TabSelect', adaptSearchBar);
 
@@ -159,6 +168,17 @@ this.adaptSearchBar = {
 		return hide;
 	},
 
+	focusURLBar: function() {
+		// When the search bar isn't empty (always in this case? unless some add-on triggers this somehow)
+		// use its value in the location bar as well
+		if(gSearchBar.value) {
+			gURLBar.value = gSearchBar.value;
+			gURLBar.valueIsTyped = false;
+			gURLBar.userTypedValue = null;
+		}
+		gURLBar.focus();
+	},
+
 	toggleShowOnlyNonEmptySearchBar: function(unload) {
 		if(!unload && this.nonEmptyMode) {
 			Listeners.add(gURLBar, 'focus', this);
@@ -178,9 +198,11 @@ this.adaptSearchBar = {
 		} else {
 			Listeners.remove(gURLBar, 'focus', this);
 			Listeners.remove(gURLBar, 'blur', this);
-			Listeners.remove(gSearchBar, 'focus', this, true);
 
-			Piggyback.revert('adaptSearchBar', gSearchBar, 'openSuggestionsPanel');
+			if(gSearchBar) {
+				Listeners.remove(gSearchBar, 'focus', this, true);
+				Piggyback.revert('adaptSearchBar', gSearchBar, 'openSuggestionsPanel');
+			}
 
 			removeAttribute(gNavBar, 'hideSearchBar');
 		}

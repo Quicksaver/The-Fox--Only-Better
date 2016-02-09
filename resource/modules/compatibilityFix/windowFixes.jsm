@@ -1,18 +1,14 @@
-// VERSION 1.0.21
+// VERSION 1.0.22
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
 	Modules.load('compatibilityFix/bookmarkedItem');
-	Modules.load('compatibilityFix/focusSearch');
+	Modules.load('compatibilityFix/BrowserSearch');
 	Modules.load('compatibilityFix/identityBox');
 	Modules.load('compatibilityFix/popupNotifications');
 
 	AddonManager.getAddonByID('treestyletab@piro.sakura.ne.jp', function(addon) {
 		Modules.loadIf('compatibilityFix/TreeStyleTab', (addon && addon.isActive));
-	});
-
-	AddonManager.getAddonByID("omnibar@ajitk.com", function(addon) {
-		Modules.loadIf('compatibilityFix/omnibar', (addon && addon.isActive));
 	});
 
 	AddonManager.getAddonByID("{1f91cde0-c040-11da-a94d-0800200c9a66}", function(addon) {
@@ -53,11 +49,10 @@ Modules.LOADMODULE = function() {
 Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/downloadsIndicator');
 	Modules.unload('compatibilityFix/bookmarkedItem');
-	Modules.unload('compatibilityFix/focusSearch');
+	Modules.unload('compatibilityFix/BrowserSearch');
 	Modules.unload('compatibilityFix/identityBox');
 	Modules.unload('compatibilityFix/popupNotifications');
 	Modules.unload('compatibilityFix/TreeStyleTab');
-	Modules.unload('compatibilityFix/omnibar');
 	Modules.unload('compatibilityFix/RSSTicker');
 	Modules.unload('compatibilityFix/TabGroupsManager');
 	Modules.unload('compatibilityFix/S4E');
