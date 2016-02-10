@@ -1,0 +1,23 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@-moz-document url("chrome://browser/content/browser.xul") {
+
+	#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistbox {
+		background: none !important;
+	}
+
+	#urlbar-search-settings,
+	#theFoxOnlyBetter-urlbar-search-engines button {
+		border-radius: 0px !important;
+		box-shadow: none !important;
+	}
+
+	#urlbar-search-footer button:hover {
+		background-color: rgba(255,255,255,0.1) !important;
+	}
+
+	#urlbar-search-footer button:hover:active,
+	#urlbar-search-footer button[active] {
+		background-color: rgba(255,255,255,0.2) !important;
+	}
+
+}
