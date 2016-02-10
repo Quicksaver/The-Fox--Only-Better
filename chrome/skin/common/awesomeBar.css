@@ -23,8 +23,7 @@
 }
 
 #urlbar-search-settings {
-	list-style-image: url("chrome://browser/skin/Toolbar.png");
-	-moz-image-region: rect(0px, 468px, 18px, 450px);
+	list-style-image: url("chrome://thefoxonlybetter/skin/searchSettings.png");
 }
 
 #urlbar-search-footer button:hover {
@@ -60,8 +59,7 @@
 
 @media (min-resolution: 1.1dppx) {
 	#urlbar-search-settings {
-		list-style-image: url("chrome://browser/skin/Toolbar@2x.png");
-		-moz-image-region: rect(0, 936px, 36px, 900px);
+		list-style-image: url("chrome://thefoxonlybetter/skin/searchSettings@2x.png");
 	}
 }
 
