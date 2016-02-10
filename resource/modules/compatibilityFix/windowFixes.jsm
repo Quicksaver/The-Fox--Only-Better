@@ -1,4 +1,4 @@
-// VERSION 1.0.22
+// VERSION 1.0.23
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
@@ -43,6 +43,10 @@ Modules.LOADMODULE = function() {
 		Modules.loadIf('compatibilityFix/AALB', (addon && addon.isActive));
 	});
 
+	AddonManager.getAddonByID("searchsite@DW-dev", function(addon) {
+		Modules.loadIf('compatibilityFix/SearchSite', (addon && addon.isActive));
+	});
+
 	Modules.load('compatibilityFix/UIEnhancer');
 };
 
@@ -61,5 +65,6 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/AniWeather');
 	Modules.unload('compatibilityFix/diigoTb');
 	Modules.unload('compatibilityFix/AALB');
+	Modules.unload('compatibilityFix/SearchSite');
 	Modules.unload('compatibilityFix/UIEnhancer');
 };
