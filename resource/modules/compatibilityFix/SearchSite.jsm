@@ -1,4 +1,4 @@
-// VERSION 1.0.0
+// VERSION 1.0.1
 
 this.__defineGetter__('searchSite', function() { return window.searchSite; });
 
@@ -29,7 +29,10 @@ this.SearchSite = {
 			case 'focus':
 			case 'input':
 			case 'blur':
-				this.btn.hidden = !gURLBar.value || (!gURLBar.valueIsTyped && gURLBar.value != gSearchBar._textbox.value);
+			case 'keydown':
+				if(!Timers.SearchSite) {
+					Timers.init('SearchSite', () => { this.buttonVisibility(); });
+				}
 				break;
 		}
 	},
@@ -54,6 +57,10 @@ this.SearchSite = {
 		if(aWidgetId == 'search-container') {
 			this.toggle();
 		}
+	},
+
+	buttonVisibility: function() {
+		this.btn.hidden = !gURLBar.value || (!gURLBar.valueIsTyped && gURLBar.value != gSearchBar._textbox.value);
 	},
 
 	toggle: function() {
@@ -93,6 +100,8 @@ this.SearchSite = {
 		Listeners.add(gURLBar, 'focus', this);
 		Listeners.add(gURLBar, 'input', this);
 		Listeners.add(gURLBar, 'blur', this);
+		// Some special keys, like Esc, modify the urlbar's value but don't trigger an input event.
+		Listeners.add(gURLBar, 'keydown', this);
 	},
 
 	uninit: function() {
@@ -114,6 +123,7 @@ this.SearchSite = {
 		Listeners.remove(gURLBar, 'focus', this);
 		Listeners.remove(gURLBar, 'input', this);
 		Listeners.remove(gURLBar, 'blur', this);
+		Listeners.remove(gURLBar, 'keydown', this);
 	}
 };
 
