@@ -1,4 +1,4 @@
-// VERSION 1.0.5
+// VERSION 1.0.6
 
 this.adaptSearchBar = {
 	_inputField: null,
@@ -80,6 +80,12 @@ this.adaptSearchBar = {
 			hosts: [ /^(([a-z0-9\.-])*\.)?youtube.com$/ ],
 			paths: [ /^\/results\?/ ],
 			inputIds: [ 'masthead-search-term' ]
+		} ],
+		[ 'Baidu', {
+			// Considering I don't understand a thing in that site as I don't speak chinese, I hope this works as well as it seems like it does.
+			hosts: [ /^(([a-z0-9\.-])*\.)?baidu.com$/ ],
+			paths: [ /^\/(s|ns|f|q|v|m)\?/, /^\/(f\/)?search(\?|\/)/ ],
+			inputIds: [ 'kw', 'wd1', 'ww', 'bdvSearchInput' ]
 		} ]
 	]),
 
