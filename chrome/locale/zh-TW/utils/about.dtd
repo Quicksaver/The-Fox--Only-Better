@@ -5,6 +5,7 @@
 <!ENTITY about.needsupdate "有更新版本!">
 <!ENTITY about.description "欲瞭解此版本之&quot;版本資訊&quot;和&quot;已知問題&quot;，請查看下方。若有任何運作上的問題或對未來版本功能上的建議，歡迎回報。">
 <!ENTITY about.descriptionB "此附加元件為免費提供使用，但維護的工作(比如:解決臭蟲、增加新功能和維護與新版本Firefox相容性等)要長久持續並不容易，因此若您喜愛這個附加元件，請不吝支持它的開發工作以及&quot;提供協助&quot;!">
+<!ENTITY about.descriptionC "Also watch the latest episode in my web series about life with a Firefox, made for all of you, the most supportive users a developer could ask for! Just point at the bouncing icon at the bottom corner of this page. Love it. Hate it. Share it.">
 <!ENTITY about.allVersions "顯示所有先前版本資訊">
 <!ENTITY about.notifyOnUpdates "在下次更新時顯示此分頁">
 <!ENTITY about.development "開發資訊">
@@ -20,3 +21,7 @@
 <!ENTITY about.profile "那些可在我的個人資訊中找到">
 <!ENTITY about.share "分享到">
 <!ENTITY about.friends "拉入更多朋友一起體驗最棒的瀏覽器">
+<!ENTITY about.hidePromo "X">
+<!ENTITY about.hideThisPromo "show again when there's a new episode">
+<!ENTITY about.hideAllPromos "never show me promos like this">
+<!ENTITY about.clicktowatch "watch on YouTube">

@@ -5,6 +5,7 @@
 <!ENTITY about.needsupdate "доступно обновление!">
 <!ENTITY about.description "Прочтите &quot;Примечания к выпуску&quot; и &quot;Известные проблемы&quot; для этой версии. Дайте мне знать если у вас имеются какие либо проблемы или предложения.">
 <!ENTITY about.descriptionB "Это дополнение бесплатно, но исправление ошибок, добавление новых функций и обеспечение совместимости с новыми версиями Firefox довольно трудоемкий процесс. Если Вам нравится это дополнение, вы можете помочь его дальнейшему развитию. Как говорится,  &quot;Вы можете помочь&quot;!">
+<!ENTITY about.descriptionC "Also watch the latest episode in my web series about life with a Firefox, made for all of you, the most supportive users a developer could ask for! Just point at the bouncing icon at the bottom corner of this page. Love it. Hate it. Share it.">
 <!ENTITY about.allVersions "Показать заметки о всех предыдущих версиях">
 <!ENTITY about.notifyOnUpdates "Показать эту вкладку при следующем обновлении">
 <!ENTITY about.development "Статус разработки">
@@ -20,3 +21,7 @@
 <!ENTITY about.profile "Найти их в моем профиле">
 <!ENTITY about.share "Поделиться!">
 <!ENTITY about.friends "Не будь эгоистом с крутым браузером. Расскажи друзьям, дай им возможность почувствовать свою исключительность!">
+<!ENTITY about.hidePromo "X">
+<!ENTITY about.hideThisPromo "show again when there's a new episode">
+<!ENTITY about.hideAllPromos "never show me promos like this">
+<!ENTITY about.clicktowatch "watch on YouTube">
