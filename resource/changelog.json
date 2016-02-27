@@ -1,6 +1,21 @@
 {
-	"current":"1.4.3",
+	"current":"1.4.4",
 	"releases": {
+		"1.4.4":{
+			"date":"February 27, 2016",
+			"notes":[
+				["new","Support Baido search results pages in the adaptable search bar"],
+				["updated","fr, nl, zh-CN and zh-TW locales"],
+				["removed","Compatibility with <a=https://addons.mozilla.org/firefox/addon/omnibar/>Omnibar</a> as it is no longer being developed and has become largely unnecessary (it should still mostly work if you want it though); if there is something in Omnibar that you like that this add-on doesn't have yet just let me know"],
+				["bugfix","Ctrl+K should focus the location bar when only showing the adaptable search bar when it's not empty (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/151>issue #151</a>)"],
+				["bugfix","While typing in the search bar, its value shouldn't adapt to the query used in a results page (adaptable search bar)"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org«/firefox/addon/search-site/>Search Site</a>, show its icon in the location bar so it can be used there when the search bar is set to only appear when not empty (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/152>issue #152</a>)"],
+				["bugfix","On some themes and system the search settings button in the location bar's panel wouldn't have an icon (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/149>issue #149</a>)"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/ft-deepdark/>FT DeepDark</a>, made some visual tweaks to the search engines in the location bar"],
+				["bugfix","(OSX and Linux) the add-on's preferences would be exported into a file without the \".json\" extension that the add-on couldn't immediately recognize afterwards"],
+				["general","Added a small section to this page to promote my new web series \"A dude and his Firefox\"; it will be completely out of your way unless you point at the icon at the bottom corner, and you can dismiss it completely by clicking its close button."]
+			]
+		},
 		"1.4.3":{
 			"date":"February 8, 2016",
 			"notes":[
