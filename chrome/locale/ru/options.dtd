@@ -1,7 +1,6 @@
 <!ENTITY pane.slimChrome.label "Slim Chrome">
 <!ENTITY pane.skyLights.label "Sky Lights">
 <!ENTITY pane.awesomeBar.label "Awesome Bar">
-<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Основное">
 <!ENTITY opt.slimChrome.label "Включить Slim Chrome">
 <!ENTITY opt.slimChrome.tooltip "Упрощает интерфейс и увеличивает рабочее пространство, скрывая верхнюю панель инструментов, пока она не используется.">

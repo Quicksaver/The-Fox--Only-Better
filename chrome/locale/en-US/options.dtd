@@ -1,7 +1,6 @@
 <!ENTITY pane.slimChrome.label "Slim Chrome">
 <!ENTITY pane.skyLights.label "Sky Lights">
 <!ENTITY pane.awesomeBar.label "Awesome Bar">
-<!ENTITY pane.experimental.label "Experimental">
 
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Enable Slim Chrome">

@@ -1,13 +1,13 @@
 <!ENTITY preferences.button "Préférences">
 <!ENTITY preferences.undo.label "Annuler">
 <!ENTITY preferences.redo.label "Rétablir">
-<!ENTITY preferences.undoredo.tooltip "Quickly revert any change made to the add-on's preferences, including importing from a file and restoring defaults.">
+<!ENTITY preferences.undoredo.tooltip "Annulez rapidement toutes les modifications effectuées sur les préférences de l'extension; y compris l'importation depuis un fichier et la restauration des paramètres par défaut.">
 <!ENTITY preferences.import.label "Importer depuis le fichier…">
-<!ENTITY preferences.import.tooltip "Load add-on preferences from a previously exported file on your computer.">
+<!ENTITY preferences.import.tooltip "Charger les préférences de l'extension depuis un fichier exporté précédemment sur votre ordinateur.">
 <!ENTITY preferences.export.label "Exporter vers le fichier…">
-<!ENTITY preferences.export.tooltip "Save your add-on preferences into an external file for safekeeping.">
+<!ENTITY preferences.export.tooltip "Enregistrer vos préférences pour cette extension dans un fichier externe pour les garder en lieu sûr.">
 <!ENTITY preferences.reset.label "Restaurer les paramètres par défaut">
-<!ENTITY preferences.reset.tooltip.a "All preferences are rolled back to their default values, as if the add-on was fresh installed.">
-<!ENTITY preferences.reset.tooltip.b "Button placements in toolbars are unaffected, to revert those use the Restore Defaults button in Customize view instead.">
-<!ENTITY preferences.jumpto.label "Jump to preference...">
-<!ENTITY preferences.jumpto.tooltip "Type in a word and you'll be taken to the first preference that contains it.">
+<!ENTITY preferences.reset.tooltip.a "Toutes les préférences sont restaurées à leur valeur par défaut, comme si l'extension venait d'être installée.">
+<!ENTITY preferences.reset.tooltip.b "La position des boutons dans les barres d'outils ne sont pas affectés, pour revenir en arrière il faut utiliser le bouton de restauration par défaut dans la vue personnalisée.">
+<!ENTITY preferences.jumpto.label "Aller aux préférences…">
+<!ENTITY preferences.jumpto.tooltip "Saisissez un mot et vous verrez la première préférence qui l'inclut.">

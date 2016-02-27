@@ -1,7 +1,6 @@
 <!ENTITY pane.slimChrome.label "精簡介面">
 <!ENTITY pane.skyLights.label "曙光">
-<!ENTITY pane.awesomeBar.label "Awesome Bar">
-<!ENTITY pane.experimental.label "實驗功能">
+<!ENTITY pane.awesomeBar.label "智慧位址列">
 <!ENTITY cat.general.label "一般設定">
 <!ENTITY opt.slimChrome.label "啟用精簡介面">
 <!ENTITY opt.slimChrome.tooltip "瀏覽器介面設計流線化，並於未使用時隱藏頂部工具列，最大化網頁閱讀空間。">
@@ -54,55 +53,55 @@
 <!ENTITY opt.animation.hinge.label "GiT轉板特效">
 <!ENTITY opt.animation.hinge.tooltip "瀏覽工具列以門板旋轉方式出現於視窗(感謝Geek in Training提供)">
 <!ENTITY cat.slimChromeKeyset.label "功能啟用/關閉快捷鍵">
-<!ENTITY cat.awesomeBar.enable.label "Enhance my Awesome Bar">
-<!ENTITY cat.awesomeBar.enable.tooltip "Your location bar can help you more than you realize! Configure its suggestions and web search behavior here.">
-<!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
-<!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
-<!ENTITY opt.maxSuggest.label "Total suggestions">
-<!ENTITY opt.limitSuggest.label "limit">
-<!ENTITY opt.suggestHistory.label "History">
-<!ENTITY opt.suggestHistory.tooltip "Suggests pages from your browsing history.">
-<!ENTITY opt.suggestBookmark.label "Bookmarks">
-<!ENTITY opt.suggestBookmark.tooltip "Suggests bookmarked pages.">
-<!ENTITY opt.suggestOpenpage.label "Open tabs">
-<!ENTITY opt.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
-<!ENTITY opt.suggestSearches.label "Search suggestions">
-<!ENTITY opt.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
-<!ENTITY opt.suggestSearchesInPB.label "Also provide search suggestions in private windows">
-<!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
-<!ENTITY cat.rows.label "Suggestions panel">
-<!ENTITY opt.awesomerStyle.label "Item style">
-<!ENTITY opt.awesomerStyle.rich.label "Rich">
-<!ENTITY opt.awesomerStyle.rich.tooltip "The Firefox default. Shows you all the information in an easy to read and visualize format.">
-<!ENTITY opt.awesomerStyle.slim.label "Slim">
-<!ENTITY opt.awesomerStyle.slim.tooltip "Compact the items, so that they occupy less space. Some long titles or addresses may be cropped down to fit.">
-<!ENTITY opt.awesomerStyle.frog.label "Froggy">
-<!ENTITY opt.awesomerStyle.frog.tooltip "Slims the items down even further by showing only the title of the page. Move the mouse over any item to expand it and show its address.">
-<!ENTITY opt.maxRows.tooltip.a "Determine the maximum height of the suggestions panel according to the number of items that will fit. All extra items will be accessible by scrolling down the list.">
-<!ENTITY opt.maxRows.tooltip.b "Each style available above will show different values here, since each will have a different item size.">
-<!ENTITY opt.maxSearchRows.label "Visible items when searching">
-<!ENTITY opt.maxSearchRows.tooltip "The items shown as you type in the location bar.">
-<!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
-<!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
-<!ENTITY opt.awesomerColor.label "Color theme">
-<!ENTITY opt.default.label "Default">
-<!ENTITY opt.bubblegum.label "Bubblegum">
-<!ENTITY opt.grass.label "Grass">
-<!ENTITY opt.lavender.label "Lavender">
-<!ENTITY opt.noir.label "Noir">
-<!ENTITY opt.ruby.label "Ruby">
-<!ENTITY opt.sea.label "Sea">
-<!ENTITY opt.sky.label "Sky">
-<!ENTITY opt.taupe.label "Taupe">
-<!ENTITY cat.searchbar.label "Search bar">
-<!ENTITY opt.searchEnginesInURLBar.label "Show search engines in the location bar">
-<!ENTITY opt.searchEnginesInURLBar.tooltip "Place your search engines in the suggestions panel of the location bar, so that you can use whichever engine you want at any time in it.">
-<!ENTITY opt.gotoSearch.label "Manage your search engines">
-<!ENTITY opt.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
+<!ENTITY cat.awesomeBar.enable.label "增強我的智慧位址列">
+<!ENTITY cat.awesomeBar.enable.tooltip "讓位址列提供比你想得還多的便利功能！這裡提供客製化位址列建議和搜尋方式的設定。">
+<!ENTITY cat.awesomeBar.suggest.label "智慧位址列建議清單中設定包含：">
+<!ENTITY cat.awesomeBar.suggest.tooltip "當你鍵入位址列的同時，會顯示清單視窗根據輸入的內容提供相關的建議網址項目">
+<!ENTITY opt.maxSuggest.label "全部建議項目">
+<!ENTITY opt.limitSuggest.label "限量">
+<!ENTITY opt.suggestHistory.label "歷史紀錄">
+<!ENTITY opt.suggestHistory.tooltip "從歷史紀錄中汲取建議頁面">
+<!ENTITY opt.suggestBookmark.label "書籤">
+<!ENTITY opt.suggestBookmark.tooltip "從書籤中汲取建議頁面">
+<!ENTITY opt.suggestOpenpage.label "開啟中分頁">
+<!ENTITY opt.suggestOpenpage.tooltip "在開啟中分頁尋找是否有符合的頁面">
+<!ENTITY opt.suggestSearches.label "搜尋建議">
+<!ENTITY opt.suggestSearches.tooltip "向預設搜尋引擎要求搜尋建議">
+<!ENTITY opt.suggestSearchesInPB.label "在隱私視窗中也提供搜尋建議">
+<!ENTITY opt.suggestSearchesInPB.tooltip "在預設設定下，由於搜尋建議需另外向搜尋引擎提出搜尋要求，故隱私視窗中進行搜尋不會出現搜尋建議">
+<!ENTITY cat.rows.label "清單視窗">
+<!ENTITY opt.awesomerStyle.label "清單項目格式">
+<!ENTITY opt.awesomerStyle.rich.label "預設">
+<!ENTITY opt.awesomerStyle.rich.tooltip "以易於閱讀的方式顯示所有建議項目的資訊">
+<!ENTITY opt.awesomerStyle.slim.label "緊密">
+<!ENTITY opt.awesomerStyle.slim.tooltip "將建議項目資訊以緊湊的排版呈現，建議項目若為長標題或長網址將會自動裁編">
+<!ENTITY opt.awesomerStyle.frog.label "精簡">
+<!ENTITY opt.awesomerStyle.frog.tooltip "僅顯示建議項目的標題，當游標移到該項目上方顯示網址">
+<!ENTITY opt.maxRows.tooltip.a "建議清單的縱向顯示長度受到顯示的清單項目數量影響，多餘的項目將會影藏直到捲軸下向拉方顯示出來">
+<!ENTITY opt.maxRows.tooltip.b "由於不同清單項目格式有不同的項目大小，故此處數目會有差異">
+<!ENTITY opt.maxSearchRows.label "搜尋建議顯示項目數量">
+<!ENTITY opt.maxSearchRows.tooltip "當在位址列上輸入時顯示的清單項目">
+<!ENTITY opt.maxDropMarkerRows.label "歷史紀錄顯示項目數量">
+<!ENTITY opt.maxDropMarkerRows.tooltip "當按下下拉式按鈕顯示的清單項目">
+<!ENTITY opt.awesomerColor.label "顏色風格">
+<!ENTITY opt.default.label "預設">
+<!ENTITY opt.bubblegum.label "泡泡糖">
+<!ENTITY opt.grass.label "綠草">
+<!ENTITY opt.lavender.label "薰衣草">
+<!ENTITY opt.noir.label "純黑">
+<!ENTITY opt.ruby.label "紅寶石">
+<!ENTITY opt.sea.label "海洋">
+<!ENTITY opt.sky.label "天空">
+<!ENTITY opt.taupe.label "灰褐">
+<!ENTITY cat.searchbar.label "搜尋列">
+<!ENTITY opt.searchEnginesInURLBar.label "在位址列上顯示搜尋引擎">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "將搜尋引擎放置於位址列的建議結果清單上以方便快速切換">
+<!ENTITY opt.gotoSearch.label "管理搜尋引擎">
+<!ENTITY opt.gotoSearch.tooltip "選擇你的預設搜尋引擎，選擇點擊搜尋引擎並設定快捷鍵以方便在位址列上切換使用">
 <!ENTITY opt.adaptSearchBar.label "整合型搜尋列">
 <!ENTITY opt.adaptSearchBar.tooltip "使搜尋列與網頁搜尋同步，搜尋列將會隨時顯示當前搜尋頁面所使用的搜尋關鍵字">
 <!ENTITY opt.adaptSearchBar.description.a "目前本功能支援大多數常用的搜尋引擎，完整的支援搜尋引擎清單可至附加元件的首頁查看">
-<!ENTITY opt.showOnlyNonEmptySearchBar.label "Show search bar only when it's not empty">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "The search bar will be visible only on search results pages, letting you know what you searched for in that page.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Clicking it will bring focus to the location bar instead, which you can use in the same way as the search bar. Likewise, trying to open its suggestions panel will open the location bar's panel instead.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "This only works when it's in its default placement, next to the location bar.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "只有當非空白時才顯示搜尋列">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "只有在當前為搜尋引擎提供的結果頁面時才顯示搜尋列，作為提醒搜尋的目標的作用">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "位址列可提供搜尋列相同功能，在上面點擊游標亦會自動移到位址列上，而原本在搜尋列上的建議搜尋功能也合併到位址列的建議清單當中">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "上述功能僅有搜尋列置放在預設位置，也就是緊鄰位址列的地方，才會生效">

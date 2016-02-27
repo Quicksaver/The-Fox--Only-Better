@@ -1,7 +1,6 @@
 <!ENTITY pane.slimChrome.label "Interface Reduzida">
 <!ENTITY pane.skyLights.label "Luzes no Céu">
 <!ENTITY pane.awesomeBar.label "Barra Fantástica">
-<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Geral">
 <!ENTITY opt.slimChrome.label "Activar a Interface Reduzida">
 <!ENTITY opt.slimChrome.tooltip "Simplifica a interface do navegador e maximiza o espaço de visualização de conteúdo, escondendo convenientemente as barras de ferramentas do topo quando não são necessárias.">

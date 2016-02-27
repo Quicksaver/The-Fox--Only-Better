@@ -1,15 +1,14 @@
 <!ENTITY pane.slimChrome.label "Chrome verkleinen">
-<!ENTITY pane.skyLights.label "Sky Lights">
+<!ENTITY pane.skyLights.label "Daklichten">
 <!ENTITY pane.awesomeBar.label "Awesome Bar">
-<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "Algemeen">
 <!ENTITY opt.slimChrome.label "Chrome verkleinen inschakelen">
 <!ENTITY opt.slimChrome.tooltip "Stroomlijnt de interface en maximaliseert de ruimte voor inhoud, door de bovenste werkbalken te verbergen als u ze niet nodig hebt.">
 <!ENTITY opt.includeNavBar.label "Navigatiebalk ook verbergen">
 <!ENTITY opt.includeNavBar.tooltip "Verbergt de navigatiebalk met de overige werkbalken. Als dit is uitgeschakeld zal de navigatiebalk net als voorheen altijd zichtbaar zijn.">
-<!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
-<!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
-<!ENTITY opt.skyLights.requirements.description "In order to use Sky Lights, you need to enable Slim Chrome, as well as its &quot;Also hide the navigation bar&quot; option.">
+<!ENTITY cat.skyLightsPlacements.label "Uw lichten kiezen en ordenen">
+<!ENTITY cat.skyLightsPlacements.tooltip "Versleep de Daklichten om ze in de gewenste volgorde te zetten. Om een Daklicht uit te schakelen kunt u het hier uitvinken; het wordt dan niet weergegeven.">
+<!ENTITY opt.skyLights.requirements.description "Om Daklichten te gebruiken dient u Chrome verkleinen in te schakelen, net als de optie ‘Navigatiebalk ook verbergen’.">
 <!ENTITY opt.skyLights.label "Daklichten inschakelen">
 <!ENTITY opt.skyLights.tooltip.a "Daklichten geven u informatie over de momenteel bezochte webpagina, middels een alternatief en niet hinderlijk visueel middel bovenin het scherm.">
 <!ENTITY opt.skyLights.tooltip.b "Ze zorgen ervoor dat u altijd weet waar u bent en wat u veilig kunt doen!">
@@ -22,8 +21,8 @@
 <!ENTITY opt.miniOnChangeLocation.tooltip "Sterk aanbevolen! De minibalk verschijnt wanneer het huidige tabblad wijzigt naar een andere locatie (andere webhost), of wanneer u een achtergrondtabblad dat intussen van locatie is veranderd selecteert.">
 <!ENTITY opt.miniOnTabSelect.label "selecteren van een ander tabblad">
 <!ENTITY opt.miniOnTabSelect.tooltip "Geeft de minibalk weer telkens als u van tabblad wijzigt, om u uw huidige locatie op elke tabblad te laten weten.">
-<!ENTITY opt.miniOnPinnedTabs.label "Show the mini bar on pinned tabs">
-<!ENTITY opt.miniOnPinnedTabs.tooltip "Apply the above rules to pinned tabs as well.">
+<!ENTITY opt.miniOnPinnedTabs.label "Minibalk op vastgezette tabbladen weergeven">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Bovenstaande regels ook op vastgezette tabbladen toepassen.">
 <!ENTITY opt.useMouse.label "Chrome weergeven als muis bovenzijde aanwijst">
 <!ENTITY opt.useMouse.tooltip.a "De werkbalken reageren op muisbewegingen en zullen verschijnen als de muis erboven hangt en verdwijnen als de muisaanwijzer weg is.">
 <!ENTITY opt.useMouse.tooltip.b "Als dit is uitgeschakeld kunt u de werkbalken alleen benaderen door op F6 te drukken om de locatiebalk focus te geven, of wanneer een paneel dat aan één van de verborgen werkbalken is verankerd opent.">
@@ -54,55 +53,55 @@
 <!ENTITY opt.animation.hinge.label "GiT’s scharniereffect">
 <!ENTITY opt.animation.hinge.tooltip "Speciaal scharniereffect, gemaakt door Geek in Training. Als u het mooi vindt kunt u hem bedanken!">
 <!ENTITY cat.slimChromeKeyset.label "Sneltoets voor in- of uitschakelen">
-<!ENTITY cat.awesomeBar.enable.label "Enhance my Awesome Bar">
-<!ENTITY cat.awesomeBar.enable.tooltip "Your location bar can help you more than you realize! Configure its suggestions and web search behavior here.">
-<!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
-<!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
-<!ENTITY opt.maxSuggest.label "Total suggestions">
-<!ENTITY opt.limitSuggest.label "limit">
-<!ENTITY opt.suggestHistory.label "History">
-<!ENTITY opt.suggestHistory.tooltip "Suggests pages from your browsing history.">
-<!ENTITY opt.suggestBookmark.label "Bookmarks">
-<!ENTITY opt.suggestBookmark.tooltip "Suggests bookmarked pages.">
-<!ENTITY opt.suggestOpenpage.label "Open tabs">
-<!ENTITY opt.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
-<!ENTITY opt.suggestSearches.label "Search suggestions">
-<!ENTITY opt.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
-<!ENTITY opt.suggestSearchesInPB.label "Also provide search suggestions in private windows">
-<!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
-<!ENTITY cat.rows.label "Suggestions panel">
-<!ENTITY opt.awesomerStyle.label "Item style">
-<!ENTITY opt.awesomerStyle.rich.label "Rich">
-<!ENTITY opt.awesomerStyle.rich.tooltip "The Firefox default. Shows you all the information in an easy to read and visualize format.">
-<!ENTITY opt.awesomerStyle.slim.label "Slim">
-<!ENTITY opt.awesomerStyle.slim.tooltip "Compact the items, so that they occupy less space. Some long titles or addresses may be cropped down to fit.">
-<!ENTITY opt.awesomerStyle.frog.label "Froggy">
-<!ENTITY opt.awesomerStyle.frog.tooltip "Slims the items down even further by showing only the title of the page. Move the mouse over any item to expand it and show its address.">
-<!ENTITY opt.maxRows.tooltip.a "Determine the maximum height of the suggestions panel according to the number of items that will fit. All extra items will be accessible by scrolling down the list.">
-<!ENTITY opt.maxRows.tooltip.b "Each style available above will show different values here, since each will have a different item size.">
-<!ENTITY opt.maxSearchRows.label "Visible items when searching">
-<!ENTITY opt.maxSearchRows.tooltip "The items shown as you type in the location bar.">
-<!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
-<!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
-<!ENTITY opt.awesomerColor.label "Color theme">
-<!ENTITY opt.default.label "Default">
-<!ENTITY opt.bubblegum.label "Bubblegum">
-<!ENTITY opt.grass.label "Grass">
-<!ENTITY opt.lavender.label "Lavender">
-<!ENTITY opt.noir.label "Noir">
-<!ENTITY opt.ruby.label "Ruby">
-<!ENTITY opt.sea.label "Sea">
-<!ENTITY opt.sky.label "Sky">
+<!ENTITY cat.awesomeBar.enable.label "Mijn Awesome Bar verbeteren">
+<!ENTITY cat.awesomeBar.enable.tooltip "Uw locatiebalk kan u meer helpen dan u denkt! Stel hier de suggesties en het webzoekgedrag in.">
+<!ENTITY cat.awesomeBar.suggest.label "Geef bij gebruik van de locatiebalk:">
+<!ENTITY cat.awesomeBar.suggest.tooltip "Terwijl u in de locatiebalk typt verschijnt er een paneel met een lijst gesuggereerde koppelingen die u kunt volgen, gerelateerd aan de ingevoerde woorden.">
+<!ENTITY opt.maxSuggest.label "Totaal aantal suggesties">
+<!ENTITY opt.limitSuggest.label "grens">
+<!ENTITY opt.suggestHistory.label "Geschiedenis">
+<!ENTITY opt.suggestHistory.tooltip "Suggereert pagina’s uit uw navigatiegeschiedenis.">
+<!ENTITY opt.suggestBookmark.label "Bladwijzers">
+<!ENTITY opt.suggestBookmark.tooltip "Suggereert Bladwijzerpagina’s.">
+<!ENTITY opt.suggestOpenpage.label "Openstaande tabbladen">
+<!ENTITY opt.suggestOpenpage.tooltip "Kijkt in uw openstaande tabbladen om te bezien of er een overeenkomst is.">
+<!ENTITY opt.suggestSearches.label "Zoeksuggesties">
+<!ENTITY opt.suggestSearches.tooltip "Gebruik uw standaard zoekmachine voor de doorzoeken gerelateerde zoeksuggesties.">
+<!ENTITY opt.suggestSearchesInPB.label "Ook in privévensters zoeksuggesties geven">
+<!ENTITY opt.suggestSearchesInPB.tooltip "Standaard worden zoeksuggesties niet weergegeven in privévensters omdat ze van afstand worden opgehaald door uw standaard zoekmachine te bevragen.">
+<!ENTITY cat.rows.label "Suggestiepaneel">
+<!ENTITY opt.awesomerStyle.label "Itemstijl">
+<!ENTITY opt.awesomerStyle.rich.label "Rijk">
+<!ENTITY opt.awesomerStyle.rich.tooltip "Firefox-standaard. Geeft alle informatie weer in een eenvoudig te lezen en te visualiseren opmaak.">
+<!ENTITY opt.awesomerStyle.slim.label "Slank">
+<!ENTITY opt.awesomerStyle.slim.tooltip "Items compacteren, zodat ze minder ruimte innemen. Sommige lange titels of adressen kunnen worden ingekort om ze passend te maken.">
+<!ENTITY opt.awesomerStyle.frog.label "Compact">
+<!ENTITY opt.awesomerStyle.frog.tooltip "Maakt de items nog kleiner door alleen de paginatitel weer te geven. Beweeg de muis over een item om dit uit laten klappen en het adres weer te laten geven.">
+<!ENTITY opt.maxRows.tooltip.a "Bepaal de maximale hoogte van het suggestiepaneel aan de hand van het aantal items dat zal passen. Alle extra items zijn toegankelijk door in de lijst te scrollen.">
+<!ENTITY opt.maxRows.tooltip.b "Elke hierboven beschikbare stijl geeft hier andere waarden, aangezien ze verschillende itemgroottes hebben.">
+<!ENTITY opt.maxSearchRows.label "Zichtbare items bij zoeken">
+<!ENTITY opt.maxSearchRows.tooltip "De weergegeven items terwijl u typt in de locatiebalk.">
+<!ENTITY opt.maxDropMarkerRows.label "Zichtbare items uit geschiedenis">
+<!ENTITY opt.maxDropMarkerRows.tooltip "De weergegeven items als u op de pijl in de locatiebalk klikt.">
+<!ENTITY opt.awesomerColor.label "Kleurthema">
+<!ENTITY opt.default.label "Standaard">
+<!ENTITY opt.bubblegum.label "Kauwgum">
+<!ENTITY opt.grass.label "Gras">
+<!ENTITY opt.lavender.label "Lavendel">
+<!ENTITY opt.noir.label "Zwart">
+<!ENTITY opt.ruby.label "Rood">
+<!ENTITY opt.sea.label "Zee">
+<!ENTITY opt.sky.label "Lucht">
 <!ENTITY opt.taupe.label "Taupe">
-<!ENTITY cat.searchbar.label "Search bar">
-<!ENTITY opt.searchEnginesInURLBar.label "Show search engines in the location bar">
-<!ENTITY opt.searchEnginesInURLBar.tooltip "Place your search engines in the suggestions panel of the location bar, so that you can use whichever engine you want at any time in it.">
-<!ENTITY opt.gotoSearch.label "Manage your search engines">
-<!ENTITY opt.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
-<!ENTITY opt.adaptSearchBar.label "Adaptable search bar">
-<!ENTITY opt.adaptSearchBar.tooltip "Keeps your search bar synchronized with your web searches. The search bar will always reflect the term used when browsing any results page from a search engine.">
-<!ENTITY opt.adaptSearchBar.description.a "You can find a list of compatible search engines in the add-on's homepage. Currently it should work with most common search engines.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.label "Show search bar only when it's not empty">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "The search bar will be visible only on search results pages, letting you know what you searched for in that page.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Clicking it will bring focus to the location bar instead, which you can use in the same way as the search bar. Likewise, trying to open its suggestions panel will open the location bar's panel instead.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "This only works when it's in its default placement, next to the location bar.">
+<!ENTITY cat.searchbar.label "Zoekbalk">
+<!ENTITY opt.searchEnginesInURLBar.label "Zoekmachines in de locatiebalk weergeven">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "Uw zoekmachines in het suggestiepaneel van de locatiebalk plaatsen, zodat u op elk moment elke gewenste zoekmachine kunt gebruiken.">
+<!ENTITY opt.gotoSearch.label "Uw zoekmachines beheren">
+<!ENTITY opt.gotoSearch.tooltip "Kies uw standaard zoekmachine, kies éénklik-zoekmachines, en definieer sleutelwoorden voor uw zoekmachines zodat u de eenvoudig vanuit de locatiebalk kunt gebruiken.">
+<!ENTITY opt.adaptSearchBar.label "Aanpasbare zoekbalk">
+<!ENTITY opt.adaptSearchBar.tooltip "Houdt uw zoekbalk gesynchroniseerd met uw zoekopdrachten. De zoekbalk geeft altijd de term weer die wordt gebruikt als u een resultatenpagina van een zoekmachine volgt.">
+<!ENTITY opt.adaptSearchBar.description.a "U kunt een lijst met compatibele zoekmachines vinden op de startpagina van de add-on. Momenteel zou dit moeten werken met de meest gebruikte zoekmachine.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "Zoekbalk alleen weergeven wanneer deze niet leeg is.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "De zoekbalk is alleen bij zoekresultaatpagina’s zichtbaar, zodat u kunt zien waarnaar u op die pagina hebt gezocht.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Door er op te klikken wordt gefocust op de locatiebalk, die u net als de zoekbalk kunt gebruiken. Analoog hieraan zal openen van het suggestiepaneel het paneel van de locatiebalk openen.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "Dit werkt alleen wanneer deze op de standaardplaats staat, naast de locatiebalk.">

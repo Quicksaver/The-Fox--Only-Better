@@ -1,11 +1,10 @@
 <!ENTITY pane.slimChrome.label "Interface Réduite">
 <!ENTITY pane.skyLights.label "Sky Lights">
-<!ENTITY pane.awesomeBar.label "Awesome Bar">
-<!ENTITY pane.experimental.label "Experimental">
+<!ENTITY pane.awesomeBar.label "Barre intelligente">
 <!ENTITY cat.general.label "Général">
 <!ENTITY opt.slimChrome.label "Activer l'Interface Réduite">
 <!ENTITY opt.slimChrome.tooltip "Simplifie l'interface et maximise l'espace d'affichage du contenu, en cachant les barres d'outils supérieures lorsque vous n'en avez pas besoin.">
-<!ENTITY opt.includeNavBar.label "Also hide the navigation bar">
+<!ENTITY opt.includeNavBar.label "Masquer aussi la barre de navigation">
 <!ENTITY opt.includeNavBar.tooltip "Cache la barre d'adresse avec les autres barres d'outils. Si cette option est désactivée, la barre d'adresse sera toujours visible en haut de l'interface comme auparavant.">
 <!ENTITY cat.skyLightsPlacements.label "Choose and order your lights">
 <!ENTITY cat.skyLightsPlacements.tooltip "Drag and drop the Sky Lights to position them in the order you wish. To completely disable any individual Sky Light, simply uncheck it here and it won't be shown at all.">
@@ -59,18 +58,18 @@
 <!ENTITY cat.awesomeBar.suggest.label "When using the location bar, provide:">
 <!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
 <!ENTITY opt.maxSuggest.label "Total suggestions">
-<!ENTITY opt.limitSuggest.label "limit">
-<!ENTITY opt.suggestHistory.label "History">
+<!ENTITY opt.limitSuggest.label "limite">
+<!ENTITY opt.suggestHistory.label "Historique">
 <!ENTITY opt.suggestHistory.tooltip "Suggests pages from your browsing history.">
-<!ENTITY opt.suggestBookmark.label "Bookmarks">
+<!ENTITY opt.suggestBookmark.label "Marque-pages">
 <!ENTITY opt.suggestBookmark.tooltip "Suggests bookmarked pages.">
-<!ENTITY opt.suggestOpenpage.label "Open tabs">
+<!ENTITY opt.suggestOpenpage.label "Onglets ouverts">
 <!ENTITY opt.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
-<!ENTITY opt.suggestSearches.label "Search suggestions">
+<!ENTITY opt.suggestSearches.label "Suggestions de recherche">
 <!ENTITY opt.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
 <!ENTITY opt.suggestSearchesInPB.label "Also provide search suggestions in private windows">
 <!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
-<!ENTITY cat.rows.label "Suggestions panel">
+<!ENTITY cat.rows.label "Panneau des suggestions">
 <!ENTITY opt.awesomerStyle.label "Item style">
 <!ENTITY opt.awesomerStyle.rich.label "Rich">
 <!ENTITY opt.awesomerStyle.rich.tooltip "The Firefox default. Shows you all the information in an easy to read and visualize format.">
@@ -85,7 +84,7 @@
 <!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
 <!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
 <!ENTITY opt.awesomerColor.label "Color theme">
-<!ENTITY opt.default.label "Default">
+<!ENTITY opt.default.label "Par défaut">
 <!ENTITY opt.bubblegum.label "Bubblegum">
 <!ENTITY opt.grass.label "Grass">
 <!ENTITY opt.lavender.label "Lavender">

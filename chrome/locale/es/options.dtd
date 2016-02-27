@@ -1,7 +1,6 @@
 <!ENTITY pane.slimChrome.label "Chrome esbelto">
 <!ENTITY pane.skyLights.label "Claraboyas">
 <!ENTITY pane.awesomeBar.label "Barra de direcciones">
-<!ENTITY pane.experimental.label "Experimental">
 <!ENTITY cat.general.label "General">
 <!ENTITY opt.slimChrome.label "Habilitar chrome esbelto">
 <!ENTITY opt.slimChrome.tooltip "Estiliza la interfaz gráfica (chrome) y maximiza el espacio de visualización del contenido, ocultando convenientemente las barras de herramientas de la parte superior, mientras no las necesita.">

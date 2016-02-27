@@ -1,7 +1,6 @@
 <!ENTITY pane.slimChrome.label "精简界面">
 <!ENTITY pane.skyLights.label "天窗">
 <!ENTITY pane.awesomeBar.label "智能地址栏">
-<!ENTITY pane.experimental.label "实验">
 <!ENTITY cat.general.label "常规">
 <!ENTITY opt.slimChrome.label "启用精简界面功能">
 <!ENTITY opt.slimChrome.tooltip "在您不需要的时候隐藏顶部工具栏，使得用户界面更具流线型，同时最大化网页显示面积。">
@@ -57,52 +56,52 @@
 <!ENTITY cat.awesomeBar.enable.label "增强我的智能地址栏">
 <!ENTITY cat.awesomeBar.enable.tooltip "您的地址栏可以做到很多事情。在这里可以配置它的建议和搜索功能。">
 <!ENTITY cat.awesomeBar.suggest.label "在使用地址栏时，提供：">
-<!ENTITY cat.awesomeBar.suggest.tooltip "As you type in the location bar, a panel appears with a list of suggested links to follow related to the input words.">
+<!ENTITY cat.awesomeBar.suggest.tooltip "当您在地址栏中输入时，一个面板将显示与您的输入相关的建议链接列表。">
 <!ENTITY opt.maxSuggest.label "建议总数">
 <!ENTITY opt.limitSuggest.label "限制">
 <!ENTITY opt.suggestHistory.label "历史记录">
-<!ENTITY opt.suggestHistory.tooltip "Suggests pages from your browsing history.">
+<!ENTITY opt.suggestHistory.tooltip "建议您的浏览记录中的页面。">
 <!ENTITY opt.suggestBookmark.label "书签">
 <!ENTITY opt.suggestBookmark.tooltip "建议已加入书签的页面。">
 <!ENTITY opt.suggestOpenpage.label "已打开的标签页">
-<!ENTITY opt.suggestOpenpage.tooltip "Looks through your open tabs to see if any of them matches.">
+<!ENTITY opt.suggestOpenpage.tooltip "看到与您的输入匹配的已打开标签页。">
 <!ENTITY opt.suggestSearches.label "搜索建议">
-<!ENTITY opt.suggestSearches.tooltip "Query your default search engine for related suggestions to search for.">
+<!ENTITY opt.suggestSearches.tooltip "使用您的默认搜索引擎查询您的输入内容，找到相关的搜索建议，便于您用其搜索。">
 <!ENTITY opt.suggestSearchesInPB.label "在隐私浏览窗口中也提供搜索建议">
-<!ENTITY opt.suggestSearchesInPB.tooltip "By default, search suggestions are not shown in private windows because these are fetched remotely by querying your default search engine.">
+<!ENTITY opt.suggestSearchesInPB.tooltip "默认情况下，搜索建议不会在隐私浏览窗口中提供，因为获取它需要将您输入的内容传送到远程的您的默认搜索引擎。">
 <!ENTITY cat.rows.label "建议面板">
 <!ENTITY opt.awesomerStyle.label "项目样式">
 <!ENTITY opt.awesomerStyle.rich.label "丰富">
-<!ENTITY opt.awesomerStyle.rich.tooltip "The Firefox default. Shows you all the information in an easy to read and visualize format.">
+<!ENTITY opt.awesomerStyle.rich.tooltip "Firefox 的默认样式。以简明、易读的格式为您显示许多信息。">
 <!ENTITY opt.awesomerStyle.slim.label "精简">
-<!ENTITY opt.awesomerStyle.slim.tooltip "Compact the items, so that they occupy less space. Some long titles or addresses may be cropped down to fit.">
-<!ENTITY opt.awesomerStyle.frog.label "忘记">
-<!ENTITY opt.awesomerStyle.frog.tooltip "Slims the items down even further by showing only the title of the page. Move the mouse over any item to expand it and show its address.">
-<!ENTITY opt.maxRows.tooltip.a "Determine the maximum height of the suggestions panel according to the number of items that will fit. All extra items will be accessible by scrolling down the list.">
-<!ENTITY opt.maxRows.tooltip.b "Each style available above will show different values here, since each will have a different item size.">
-<!ENTITY opt.maxSearchRows.label "Visible items when searching">
-<!ENTITY opt.maxSearchRows.tooltip "The items shown as you type in the location bar.">
-<!ENTITY opt.maxDropMarkerRows.label "Visible items showing history">
-<!ENTITY opt.maxDropMarkerRows.tooltip "The items shown when you click the dropmarker in the location bar.">
+<!ENTITY opt.awesomerStyle.slim.tooltip "紧凑的项目列表，节省它们占用的空间。一些较长的标题和地址可能被适度裁剪。">
+<!ENTITY opt.awesomerStyle.frog.label "蛙跳">
+<!ENTITY opt.awesomerStyle.frog.tooltip "缩减每个项目的尺寸，只显示页面标题。移动鼠标到任何项目即可展开并显示它的地址。">
+<!ENTITY opt.maxRows.tooltip.a "建议面板的最大高度将根据项目数自动适配。所有多出的项目将需要向下滚动列表以访问。">
+<!ENTITY opt.maxRows.tooltip.b "上述每个样式都将在这里显示不同的值，因为每个都有不同的项目尺寸。">
+<!ENTITY opt.maxSearchRows.label "搜索时可见项目">
+<!ENTITY opt.maxSearchRows.tooltip "当您在地址栏中输入时可见的项目。">
+<!ENTITY opt.maxDropMarkerRows.label "显示历史时可见项目">
+<!ENTITY opt.maxDropMarkerRows.tooltip "当您点击地址栏的小箭头时可见的项目。">
 <!ENTITY opt.awesomerColor.label "颜色主题">
 <!ENTITY opt.default.label "默认">
-<!ENTITY opt.bubblegum.label "泡泡">
+<!ENTITY opt.bubblegum.label "泡泡糖">
 <!ENTITY opt.grass.label "青草">
 <!ENTITY opt.lavender.label "薰衣草">
-<!ENTITY opt.noir.label "Noir">
+<!ENTITY opt.noir.label "淡黑">
 <!ENTITY opt.ruby.label "红宝石">
 <!ENTITY opt.sea.label "大海">
 <!ENTITY opt.sky.label "天空">
 <!ENTITY opt.taupe.label "灰褐色">
 <!ENTITY cat.searchbar.label "搜索栏">
 <!ENTITY opt.searchEnginesInURLBar.label "在地址栏中显示搜索引擎">
-<!ENTITY opt.searchEnginesInURLBar.tooltip "Place your search engines in the suggestions panel of the location bar, so that you can use whichever engine you want at any time in it.">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "将您的搜索引擎放到地址栏的建议面板，便于您在需要时任意选择要用的一个引擎。">
 <!ENTITY opt.gotoSearch.label "管理您的搜索引擎">
-<!ENTITY opt.gotoSearch.tooltip "Choose your default search engine, choose one-click search engines, and define keywords for your search engines to easily use them from the location bar.">
+<!ENTITY opt.gotoSearch.tooltip "选择您的默认搜索引擎，选择一键搜索引擎，以及为您的搜索引擎定义关键词（便于从地址栏中调用它们）。">
 <!ENTITY opt.adaptSearchBar.label "自适应搜索栏">
-<!ENTITY opt.adaptSearchBar.tooltip "保持您的搜索栏与您的网络搜索相同步。当浏览某个搜索引擎的任何结果页面时，搜索栏将始终对所使用的词语作出反应。">
+<!ENTITY opt.adaptSearchBar.tooltip "保持您的搜索栏与您的网络搜索相同步。当浏览某个搜索引擎的任何结果页面时，搜索栏将始终对新使用的关键词作出反应。">
 <!ENTITY opt.adaptSearchBar.description.a "您可以在本附加组件的首页找到兼容的搜索引擎的列表。目前它在大多数常用的搜索引擎上可用。">
-<!ENTITY opt.showOnlyNonEmptySearchBar.label "只在非空时显示搜索栏">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "The search bar will be visible only on search results pages, letting you know what you searched for in that page.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Clicking it will bring focus to the location bar instead, which you can use in the same way as the search bar. Likewise, trying to open its suggestions panel will open the location bar's panel instead.">
-<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "This only works when it's in its default placement, next to the location bar.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "仅当存在搜索时显示搜索栏">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "搜索栏将只在搜索结果的页面显示时出现，便于您了解您正在该页面上进行搜索。">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "点击它将变为聚焦到地址栏，您在那里可以用类似的方式使用搜索栏。同样，在那里输入而开启的建议面板是打开地址栏的面板。">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "这只在搜索栏处在默认位置时有效，即地址栏的旁边。">
