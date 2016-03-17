@@ -6,7 +6,7 @@
  * http://mxr.mozilla.org/mozilla-central/source/toolkit/components/places/UnifiedComplete.js
  * modified only where relevant to implement some of the add-on's features. */
 
-// VERSION 1.1.2
+// VERSION 1.1.3
 
 "use strict";
 
@@ -256,12 +256,8 @@ XPCOMUtils.defineLazyModuleGetter(this, "OS", "resource://gre/modules/osfile.jsm
 XPCOMUtils.defineLazyModuleGetter(this, "PromiseUtils", "resource://gre/modules/PromiseUtils.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "Task", "resource://gre/modules/Task.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "PlacesSearchAutocompleteProvider", "resource://gre/modules/PlacesSearchAutocompleteProvider.jsm");
-var gFx45 = false;
+XPCOMUtils.defineLazyModuleGetter(this, "PlacesRemoteTabsAutocompleteProvider", "resource://gre/modules/PlacesRemoteTabsAutocompleteProvider.jsm");
 var gFx47 = (Services.vc.compare(Services.appinfo.version, "47.0a1") >= 0);
-if(Services.vc.compare(Services.appinfo.version, "45.0a1") >= 0) {
-	gFx45 = true;
-	XPCOMUtils.defineLazyModuleGetter(this, "PlacesRemoteTabsAutocompleteProvider", "resource://gre/modules/PlacesRemoteTabsAutocompleteProvider.jsm");
-}
 
 XPCOMUtils.defineLazyServiceGetter(this, "textURIService", "@mozilla.org/intl/texttosuburi;1", "nsITextToSubURI");
 
@@ -962,7 +958,7 @@ Search.prototype = {
 			if(!this.pending) { return; }
 		}
 
-		if(gFx45 && this._enableActions && this.hasBehavior("openpage")) {
+		if(this._enableActions && this.hasBehavior("openpage")) {
 			yield this._matchRemoteTabs();
 			if(!this.pending) { return; }
 		}
