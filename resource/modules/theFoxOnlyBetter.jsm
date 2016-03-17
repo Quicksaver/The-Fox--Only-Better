@@ -1,4 +1,4 @@
-// VERSION 2.0.10
+// VERSION 2.0.11
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -6,9 +6,12 @@ this.__defineGetter__('gNavBar', function() { return $('nav-bar'); });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 this.__defineGetter__('overflowList', function() { return $('widget-overflow-list'); });
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
+
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
 this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
+// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
 this.__defineGetter__('fullScreenAutohide', function() { return !DARWIN && Prefs.autohide; });
+this.__defineGetter__('inFullScreen', function() { return fullScreen && !mozFullScreen && fullScreenAutohide; });
 
 // set this here, so I can modify it through other modules without reseting it when slimChrome un/loads
 this.slimChromeExceptions = new Set(['addon-bar']);
@@ -16,7 +19,7 @@ this.slimChromeExceptions = new Set(['addon-bar']);
 this.handleEvent = function(e) {
 	switch(e.type) {
 		case 'fullscreen':
-			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
+			toggleSlimChrome();
 			break;
 
 		case 'beforecustomization':
@@ -37,7 +40,7 @@ this.observe = function(aSubject, aTopic, aData) {
 			break;
 
 		case 'autohide':
-			toggleSlimChrome(fullScreen && !mozFullScreen && fullScreenAutohide);
+			toggleSlimChrome();
 			break;
 
 		case 'adaptSearchBar':
@@ -62,14 +65,10 @@ this.toggleSlimChromePref = function() {
 	Prefs.slimChrome = !Prefs.slimChrome;
 };
 
-this.toggleSlimChrome = function(noLoad) {
+this.toggleSlimChrome = function(isCustomizing = customizing) {
 	toggleAttribute(slimChromeBroadcaster, 'checked', Prefs.slimChrome);
 
-	if(noLoad === undefined) {
-		// Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
-		noLoad = (fullScreen && !mozFullScreen && fullScreenAutohide) || customizing;
-	}
-	Modules.loadIf('slimChrome', Prefs.slimChrome && !noLoad);
+	Modules.loadIf('slimChrome', Prefs.slimChrome && !inFullScreen && !isCustomizing);
 };
 
 this.togglePopups = function() {
