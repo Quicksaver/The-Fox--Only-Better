@@ -1,4 +1,4 @@
-// VERSION 2.0.11
+// VERSION 2.0.12
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -7,10 +7,11 @@ this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
 this.__defineGetter__('overflowList', function() { return $('widget-overflow-list'); });
 this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 
+this.__defineGetter__('FullScreen', function() { return window.FullScreen; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
 this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
 // Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
-this.__defineGetter__('fullScreenAutohide', function() { return !DARWIN && Prefs.autohide; });
+this.__defineGetter__('fullScreenAutohide', function() { return !FullScreen.useLionFullScreen && Prefs.autohide; });
 this.__defineGetter__('inFullScreen', function() { return fullScreen && !mozFullScreen && fullScreenAutohide; });
 
 // set this here, so I can modify it through other modules without reseting it when slimChrome un/loads
@@ -68,7 +69,14 @@ this.toggleSlimChromePref = function() {
 this.toggleSlimChrome = function(isCustomizing = customizing) {
 	toggleAttribute(slimChromeBroadcaster, 'checked', Prefs.slimChrome);
 
+	let wasEnabled = !!self.slimChrome;
 	Modules.loadIf('slimChrome', Prefs.slimChrome && !inFullScreen && !isCustomizing);
+
+	// Sometimes entering fullscreen wouldn't fully hide the toolbars at first because
+	// their height wouldn't be correctly calc'ed to apply to the toolbox's negative margin.
+	if(wasEnabled && inFullScreen && FullScreen._isChromeCollapsed) {
+		gNavToolbox.style.marginTop = -gNavToolbox.getBoundingClientRect().height + "px";
+	}
 };
 
 this.togglePopups = function() {
