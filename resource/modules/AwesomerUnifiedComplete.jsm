@@ -1,4 +1,4 @@
-// VERSION 1.2.11
+// VERSION 1.2.12
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -278,7 +278,7 @@ this.AwesomerBar = {
 							uri = this.engine.searchForm;
 						} else {
 							let engineName = this.engine.name;
-							let searchQuery = gURLBar.value;
+							let searchQuery = gURLBar.textValue || gURLBar.value;
 							uri = "moz-action:searchengine," + JSON.stringify({ engineName, input, searchQuery });
 						}
 						gURLBar.value = uri;
