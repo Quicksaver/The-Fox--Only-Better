@@ -1,4 +1,4 @@
-// VERSION 1.2.12
+// VERSION 1.2.13
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -531,6 +531,23 @@ this.suggestionsPanel = {
 			case 'UnloadedSlimChrome':
 				this.setupURLBar();
 				break;
+
+			// used to capture right clicks in suggestions and paste their value to the urlbar
+			case 'click': {
+				if(e.button != 2) { break; }
+
+				let item = this.popup.richlistbox && this.popup.richlistbox.currentItem;
+				if(!item || !isAncestor(e.originalTarget, item)) { break; }
+
+				let url = item.getAttribute('displayurl') || item.getAttribute('url');
+				let parse = gURLBar._parseActionUrl(url);
+				if(parse && parse.params && parse.params.input) {
+					url = parse.params.input;
+				}
+				gURLBar.value = url;
+				gURLBar.select();
+				break;
+			}
 		}
 	},
 
@@ -721,6 +738,7 @@ this.suggestionsPanel = {
 
 		Listeners.add(window, 'LoadedSlimChrome', this);
 		Listeners.add(window, 'UnloadedSlimChrome', this);
+		Listeners.add(this.popup, 'click', this);
 
 		this.setStyle();
 		this.setColor();
@@ -734,6 +752,7 @@ this.suggestionsPanel = {
 
 		Listeners.remove(window, 'LoadedSlimChrome', this);
 		Listeners.remove(window, 'UnloadedSlimChrome', this);
+		Listeners.remove(this.popup, 'click', this);
 		Prefs.unlisten('richMaxSearchRows', this);
 		Prefs.unlisten('slimMaxSearchRows', this);
 		Prefs.unlisten('frogMaxSearchRows', this);
