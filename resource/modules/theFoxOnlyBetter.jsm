@@ -1,4 +1,4 @@
-// VERSION 2.0.12
+// VERSION 2.0.13
 
 this.__defineGetter__('slimChromeBroadcaster', function() { return $(objName+'-slimChrome-broadcaster'); });
 this.__defineGetter__('gNavToolbox', function() { return window.gNavToolbox; });
@@ -9,10 +9,15 @@ this.__defineGetter__('gBrowser', function() { return window.gBrowser; });
 
 this.__defineGetter__('FullScreen', function() { return window.FullScreen; });
 this.__defineGetter__('fullScreen', function() { return window.fullScreen; });
-this.__defineGetter__('mozFullScreen', function() { return document.mozFullScreen; });
+this.__defineGetter__('fullscreenElement', function() {
+	if(Services.vc.compare(Services.appinfo.version, "47.0a1") < 0) {
+		return document.mozFullScreen;
+	}
+	return document.fullscreenElement;
+});
 // Firefox for OS X doesn't automatically hide the toolbars like it does for other OS's in fullScreen
 this.__defineGetter__('fullScreenAutohide', function() { return !FullScreen.useLionFullScreen && Prefs.autohide; });
-this.__defineGetter__('inFullScreen', function() { return fullScreen && !mozFullScreen && fullScreenAutohide; });
+this.__defineGetter__('inFullScreen', function() { return fullScreen && !fullscreenElement && fullScreenAutohide; });
 
 // set this here, so I can modify it through other modules without reseting it when slimChrome un/loads
 this.slimChromeExceptions = new Set(['addon-bar']);

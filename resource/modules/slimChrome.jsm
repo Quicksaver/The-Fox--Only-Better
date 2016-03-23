@@ -1,4 +1,4 @@
-// VERSION 2.0.27
+// VERSION 2.0.28
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -297,7 +297,7 @@ this.slimChrome = {
 				if(e.relatedTarget) { break; }
 
 				// also, don't capture this if we're in HTML5 fullscreen mode and in Mac OS X, as it's just weird
-				if(DARWIN && mozFullScreen) { break; }
+				if(DARWIN && fullscreenElement) { break; }
 
 				// the mouse hovered the tabs context menu, so there's no need to keep the chrome open for this
 				if(e.explicitOriginalTarget && e.explicitOriginalTarget.id == 'tabContextMenu') { break; }
