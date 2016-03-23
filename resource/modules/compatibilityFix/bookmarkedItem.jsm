@@ -1,4 +1,4 @@
-// VERSION 1.4.6
+// VERSION 1.4.7
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -167,18 +167,24 @@ this.bookmarkedItem = {
 				// only left-clicks on the light should bookmark the page
 				if(e.button != 0) { return; }
 
-				let isBookmarked = BookmarkingUI._itemIds.length > 0;
-
 				// Ignore clicks on the star if we are updating its state.
-				if(!BookmarkingUI._pendingStmt) {
-					if(isBookmarked) {
-						this._anchor = bookmarkedItem.light;
+				if(BookmarkingUI._pendingStmt) { return; }
+
+				let isBookmarked = BookmarkingUI._itemIds.length > 0;
+				if(!isBookmarked) {
+					// With Firefox 47, the edit bookmark panel is immediately opened on the first click. See 1219794.
+					if(Services.vc.compare(Services.appinfo.version, "47.0a1") >= 0) {
+						isBookmarked = true;
 					} else {
 						// blink the light three times to show that the page was bookmarked
 						skyLights.update('bookmarkedItem', { alert: 2 });
 					}
-					PlacesCommandHook.bookmarkCurrentPage(isBookmarked);
 				}
+
+				if(isBookmarked) {
+					this._anchor = bookmarkedItem.light;
+				}
+				PlacesCommandHook.bookmarkCurrentPage(isBookmarked);
 			};
 		}
 
