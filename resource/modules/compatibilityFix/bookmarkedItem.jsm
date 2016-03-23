@@ -1,4 +1,4 @@
-// VERSION 1.4.5
+// VERSION 1.4.6
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -84,6 +84,11 @@ this.bookmarkedItem = {
 		if(this.initialized) { return; }
 		this.initialized = true;
 
+		// It should always update the broadcaster when we're using the sky light, as it acts as another star button.
+		Piggyback.add('bookmarkedItem', BookmarkingUI, '_shouldUpdateStarState', function() {
+			return true;
+		}, Piggyback.MODE_REPLACE);
+
 		setAttribute(this.key, 'originalcommand', this.key.getAttribute('command'));
 		removeAttribute(this.key, 'command');
 		setAttribute(this.key, 'oncommand', ';'); // the command event won't fire if there isn't "something" to "command"
@@ -113,6 +118,8 @@ this.bookmarkedItem = {
 		Listeners.remove(this.key, 'command', this);
 
 		this.remove();
+
+		Piggyback.revert('bookmarkedItem', BookmarkingUI, '_shouldUpdateStarState');
 
 		Watchers.removeAttributeWatcher(this.broadcaster, 'starred', this, false, false);
 		Watchers.removeAttributeWatcher(this.broadcaster, 'buttontooltiptext', this, false, false);
