@@ -1,12 +1,15 @@
-// VERSION 1.4.7
+// VERSION 1.4.8
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
 this.__defineGetter__('PlacesCommandHook', function() { return window.PlacesCommandHook; });
+this.__defineGetter__('abHere2', function() { return window.abHere2; });
 
 this.bookmarkedItem = {
 	initialized: false,
-	_anchor: false,
+	_anchor: null,
+	_abHere2Handling: null,
+	_abHere2ShowNotification: false,
 
 	get button() { return BookmarkingUI.button; },
 	get broadcaster() { return BookmarkingUI.broadcaster; },
@@ -160,6 +163,36 @@ this.bookmarkedItem = {
 
 			// adapted from BookmarkingUI.onCommand() - http://mxr.mozilla.org/mozilla-central/source/browser/base/content/browser-places.js#1630
 			props.action = (e) => {
+				// Try to follow Add Bookmark Here 2's options when clicking the sky light,
+				// since any changes in behavior to the star button should be reflected in the light.
+				if(abHere2) {
+					this._abHere2Handling = bookmarkedItem.light;
+
+					// Simulate a click in the star button, basically fool the method's checks.
+					let fake = {
+						button: e.button,
+						originalTarget: {
+							hasAttribute: function() { return true; }
+						},
+						currentTarget: {
+							hasAttribute: function() { return false; },
+							getAttribute: function() { return starred; }
+						}
+					};
+
+					let handled = abHere2.handleStarButtonClick(fake);
+					if(handled && this._abHere2ShowNotification) {
+						// blink the light three times to show that the page was bookmarked
+						skyLights.update('bookmarkedItem', { alert: 2 });
+						this._abHere2ShowNotification = false;
+					}
+
+					this._abHere2Handling = null;
+
+					// If abHere2 handled the click, there's nothing else to do.
+					if(handled) { return; }
+				}
+
 				// don't do anything if the star button isn't meant to do anything either
 				let disabled = trueAttribute(this.broadcaster, 'stardisabled');
 				if(disabled) { return; }
@@ -197,7 +230,20 @@ this.bookmarkedItem = {
 };
 
 Modules.LOADMODULE = function() {
+	Piggyback.add('bookmarkedItem', PlacesCommandHook, 'bookmarkCurrentPage', function(aShowEditUI, aParent) {
+		// If Add Bookmark Here 2 opens the page bookmarked panel, see if it should open in the sky light.
+		if(aShowEditUI && bookmarkedItem._abHere2Handling) {
+			bookmarkedItem._anchor = bookmarkedItem.light;
+		}
+		return true;
+	}, Piggyback.MODE_BEFORE);
+
 	Piggyback.add('bookmarkedItem', BookmarkingUI, '_showBookmarkedNotification', function() {
+		if(bookmarkedItem._abHere2Handling) {
+			bookmarkedItem._abHere2ShowNotification = true;
+			return;
+		}
+
 		// the chrome should already be opened for this (it's a click on the button), so we don't need to delay or pause this notification,
 		// we only need to make sure the chrome doesn't hide until the animation is finished
 		if(typeof(slimChrome) != 'undefined'
@@ -222,7 +268,7 @@ Modules.LOADMODULE = function() {
 		// We also need to make sure that clicking the bookmarkedItem sky light opens the panel anchored to it as well.
 		if(bookmarkedItem._anchor) {
 			let anchor = bookmarkedItem._anchor;
-			bookmarkedItem._anchor = false;
+			bookmarkedItem._anchor = null;
 
 			if(anchor != aAnchorElement) {
 				this._doShowEditBookmarkPanel(aItemId, anchor, aPosition);
@@ -303,6 +349,7 @@ Modules.UNLOADMODULE = function() {
 	Timers.cancel('_doShowEditBookmarkPanel');
 	Timers.cancel('bookmarkedItemWillSetMiniChrome');
 
+	Piggyback.revert('bookmarkedItem', PlacesCommandHook, 'bookmarkCurrentPage');
 	Piggyback.revert('bookmarkedItem', BookmarkingUI, '_showBookmarkedNotification');
 	Piggyback.revert('bookmarkedItem', StarUI, '_doShowEditBookmarkPanel');
 
