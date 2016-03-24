@@ -1,4 +1,4 @@
-// VERSION 1.2.13
+// VERSION 1.2.14
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -273,6 +273,13 @@ this.AwesomerBar = {
 					case "command": {
 						let uri;
 						let input = gBrowser.userTypedValue;
+
+						// userTypedValue is null in case we came from the adaptable search bar, pasting its value to the location bar,
+						// in which case we want to re-use the search term.
+						if(!input && self.gSearchBar && gSearchBar.value && gSearchBar.value == gURLBar.value) {
+							input = gURLBar.value;
+						}
+
 						if(!input) {
 							// When the user hasn't made any input, open the search engine's homepage
 							uri = this.engine.searchForm;
