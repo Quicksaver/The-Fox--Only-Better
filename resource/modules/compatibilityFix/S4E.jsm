@@ -1,4 +1,4 @@
-// VERSION 2.0.1
+// VERSION 2.0.2
 
 this.S4E = {
 	state: false,
@@ -49,7 +49,7 @@ this.S4E = {
 };
 
 Modules.LOADMODULE = function() {
-	Prefs.setDefaults({ ['progress.urlbar']: 1 }, 'status4evar', '');
+	Prefs.setDefaults({ ['progress.urlbar']: 1 }, 'caligon.s4e');
 
 	Styles.load('S4E', 'S4E');
 
