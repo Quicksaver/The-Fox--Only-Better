@@ -1,9 +1,10 @@
-// VERSION 2.0.28
+// VERSION 2.0.29
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
+this.__defineGetter__('VerticalTabs', function() { return window.VerticalTabs; });
 this.__defineGetter__('MenuBar', function() { return $('toolbar-menubar'); });
 this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesToolbarHelper; });
 this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
@@ -459,19 +460,23 @@ this.slimChrome = {
 		// Compatibility with TreeStyleTab
 		if(TabsToolbar && !TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden') {
 			// This is also needed when the tabs are on the left, the width of the findbar doesn't follow with the rest of the window for some reason
-			if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left' || TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
+			let position = TabsToolbar.getAttribute('treestyletab-tabbar-position');
+			if(position == 'left' || position == 'right') {
 				let TabsSplitter = $ª($('content'), 'treestyletab-splitter', 'class');
-				this.moveStyle.width -= TabsToolbar.clientWidth;
-				this.moveStyle.width -= TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
-				if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'left') {
-					this.moveStyle.left += TabsToolbar.clientWidth;
-					this.moveStyle.left += TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
-				}
-				if(TabsToolbar.getAttribute('treestyletab-tabbar-position') == 'right') {
-					this.moveStyle.right += TabsToolbar.clientWidth;
-					this.moveStyle.right += TabsSplitter.clientWidth +(TabsSplitter.clientLeft *2);
-				}
+				let tabsWidth = TabsToolbar.clientWidth + TabsSplitter.clientWidth + (TabsSplitter.clientLeft *2);
+				this.moveStyle.width -= tabsWidth;
+				this.moveStyle[position] += tabsWidth;
 			}
+		}
+
+		// Compatibility with Test Pilot's Tab Center
+		if(VerticalTabs) {
+			// It's better to hardcode these values than to figure out the hover state of the tabs at any (every) point in time.
+			// These values are taken directly from Tab Center's CSS sheets.
+			let tabsWidth = trueAttribute(document.documentElement, 'tabspinned') ? 260 : 45;
+			this.moveStyle.width -= tabsWidth;
+			// this box is always placed on the left
+			this.moveStyle.left += tabsWidth;
 		}
 
 		this.moveStyle.fullWidth = this.moveStyle.width +this.MIN_RIGHT +this.MIN_LEFT;

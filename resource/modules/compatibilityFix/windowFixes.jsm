@@ -1,4 +1,4 @@
-// VERSION 1.0.24
+// VERSION 1.0.25
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
@@ -52,6 +52,7 @@ Modules.LOADMODULE = function() {
 	});
 
 	Modules.load('compatibilityFix/UIEnhancer');
+	Modules.load('compatibilityFix/TabCenter');
 };
 
 Modules.UNLOADMODULE = function() {
@@ -72,4 +73,5 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/AALB');
 	Modules.unload('compatibilityFix/SearchSite');
 	Modules.unload('compatibilityFix/UIEnhancer');
+	Modules.unload('compatibilityFix/TabCenter');
 };
