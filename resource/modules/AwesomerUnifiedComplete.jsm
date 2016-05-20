@@ -1,4 +1,4 @@
-// VERSION 1.2.14
+// VERSION 1.2.15
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -88,7 +88,8 @@ this.AwesomerUnifiedComplete = {
 		let iA = args.indexOf('awesomerunifiedcomplete');
 		if(iA > -1) {
 			args.splice(iA, 1);
-			if(Prefs.unifiedcomplete) {
+			// unifiedcomplete pref was removed in FF49, see bug 1223728
+			if(Services.vc.compare(Services.appinfo.version, "49.0a1") >= 0 || Prefs.unifiedcomplete) {
 				let iU = args.indexOf('unifiedcomplete');
 				if(iU == -1) {
 					args.push('unifiedcomplete');
@@ -327,7 +328,27 @@ this.AwesomerBar = {
 									AwesomerBar.onPopupShowing();
 								},
 								onError: function(errorCode) {
-									Cu.reportError("Error adding search engine: " + errorCode);
+									if(errorCode != Ci.nsISearchInstallCallback.ERROR_DUPLICATE_ENGINE) {
+										// Download error is shown by the search service
+										return;
+									}
+
+									// I don't particularly agree with this behavior, but it's what the original code does,
+									// and I don't want to create inconsistencies. So...
+									// See bug 1222107.
+									let kSearchBundleURI = "chrome://global/locale/search/search.properties";
+									let searchBundle = Services.strings.createBundle(kSearchBundleURI);
+									let brandBundle = $("bundle_brand");
+									let brandName = brandBundle.getString("brandShortName");
+									let title = searchBundle.GetStringFromName("error_invalid_engine_title");
+									let text = searchBundle.formatStringFromName(
+										"error_duplicate_engine_msg", [ brandName, target.getAttribute("uri") ], 2
+									);
+									Services.prompt.QueryInterface(Ci.nsIPromptFactory);
+									let prompt = Services.prompt.getPrompt(gBrowser.contentWindow, Ci.nsIPrompt);
+									prompt.QueryInterface(Ci.nsIWritablePropertyBag2);
+									prompt.setPropertyAsBool("allowTabModal", true);
+									prompt.alert(title, text);
 								}
 							};
 							Services.search.addEngine(this.getAttribute("uri"), null, this.getAttribute("image"), false, callback);

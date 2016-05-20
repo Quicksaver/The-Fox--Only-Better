@@ -1,4 +1,4 @@
-// VERSION 1.0.4
+// VERSION 1.0.5
 
 this.UnifiedComplete = {
 	sandbox: null,
@@ -10,8 +10,15 @@ this.UnifiedComplete = {
 
 	// We only register and load our component if it's needed for any of our custom behavior. Otherwise the native autocomplete component is used.
 	useOverride: function() {
-		// No point if user doesn't want it in the first place. Normally this should always be true though.
-		return Prefs.awesomerURLBar && Prefs.unifiedcomplete;
+		// unifiedcomplete pref was removed in FF49, see bug 1223728
+		if(Services.vc.compare(Services.appinfo.version, "49.0a1") < 0) {
+			// No point if user doesn't want it in the first place. Normally this should always be true though.
+			if(!Prefs.unifiedcomplete) {
+				return false;
+			}
+		}
+
+		return Prefs.awesomeURLBar;
 	},
 
 	observe: function(aSubject, aTopic, aData) {
@@ -78,18 +85,23 @@ this.UnifiedComplete = {
 };
 
 Modules.LOADMODULE = function() {
-	Prefs.setDefaults({ unifiedcomplete: true }, 'urlbar', 'browser');
+	// unifiedcomplete pref was removed in FF49, see bug 1223728
+	if(Services.vc.compare(Services.appinfo.version, "49.0a1") < 0) {
+		Prefs.setDefaults({ unifiedcomplete: true }, 'urlbar', 'browser');
+		Prefs.listen('unifiedcomplete', UnifiedComplete);
+	}
 
-	Prefs.listen('unifiedcomplete', UnifiedComplete);
 	Prefs.listen('awesomerURLBar', UnifiedComplete);
 
-	if(UnifiedComplete.useOverride) {
+	if(UnifiedComplete.useOverride()) {
 		UnifiedComplete.load();
 	}
 };
 
 Modules.UNLOADMODULE = function() {
-	Prefs.unlisten('unifiedcomplete', UnifiedComplete);
+	if(Services.vc.compare(Services.appinfo.version, "49.0a1") < 0) {
+		Prefs.unlisten('unifiedcomplete', UnifiedComplete);
+	}
 	Prefs.unlisten('awesomerURLBar', UnifiedComplete);
 
 	UnifiedComplete.unload();

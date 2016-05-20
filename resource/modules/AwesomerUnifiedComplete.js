@@ -6,7 +6,7 @@
  * http://mxr.mozilla.org/mozilla-central/source/toolkit/components/places/UnifiedComplete.js
  * modified only where relevant to implement some of the add-on's features. */
 
-// VERSION 1.1.3
+// VERSION 1.1.4
 
 "use strict";
 
@@ -258,6 +258,7 @@ XPCOMUtils.defineLazyModuleGetter(this, "Task", "resource://gre/modules/Task.jsm
 XPCOMUtils.defineLazyModuleGetter(this, "PlacesSearchAutocompleteProvider", "resource://gre/modules/PlacesSearchAutocompleteProvider.jsm");
 XPCOMUtils.defineLazyModuleGetter(this, "PlacesRemoteTabsAutocompleteProvider", "resource://gre/modules/PlacesRemoteTabsAutocompleteProvider.jsm");
 var gFx47 = (Services.vc.compare(Services.appinfo.version, "47.0a1") >= 0);
+var gFx49 = (Services.vc.compare(Services.appinfo.version, "49.0a1") >= 0);
 
 XPCOMUtils.defineLazyServiceGetter(this, "textURIService", "@mozilla.org/intl/texttosuburi;1", "nsITextToSubURI");
 
@@ -950,8 +951,10 @@ Search.prototype = {
 		yield this._sleep(Prefs.delay);
 		if(!this.pending) { return; }
 
-		yield this._matchSearchSuggestions();
-		if(!this.pending) { return; }
+		if(!gFx49 || this._enableActions) {
+			yield this._matchSearchSuggestions();
+			if(!this.pending) { return; }
+		}
 
 		for(let [query, params] of queries) {
 			yield conn.executeCached(query, params, this._onResultRow.bind(this));
@@ -1993,6 +1996,8 @@ UnifiedComplete.prototype = {
 		TelemetryStopwatch.cancel(TELEMETRY_6_FIRST_RESULTS, this);
 		// Clear state now to avoid race conditions, see below.
 		let search = this._currentSearch;
+		if(!search) { return; }
+
 		this._lastLowResultsSearchSuggestion = search._lastLowResultsSearchSuggestion;
 		delete this._currentSearch;
 
