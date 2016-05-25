@@ -1,9 +1,33 @@
 {
-	"current":"1.4.4",
+	"current":"1.4.5",
 	"knownissues": [
-		["(Firefox 48) The suggestion items styles and colors aren't working properly because of the ongoing redesign."]
+		["(Firefox 48) The suggestion items styles and colors aren't working properly because of the ongoing suggestions panel redesign."]
 	],
 	"releases": {
+		"1.4.5":{
+			"date":"May 25, 2016",
+			"notes":[
+				["new","Right-clicking a suggestion in the location bar's suggestions panel pastes its value immediately into the location bar"],
+				["new","de locale"],
+				["removed","Compatibility with Firefox 44 and below, compatibility with Firefox 45 will be maintained for the duration of the ESR 45 life cycle"],
+				["bugfix","(Firefox 48) preferences tab wouldn't work"],
+				["bugfix","(non-e10s) some missing functionality right after updating the add-on until the browser was restarted"],
+				["bugfix","After navigating away from the preferences tab, navigating back (through the back button) wouldn't work"],
+				["bugfix","Slim Chrome could still be enabled by mistake while in fullscreen in some specific cases"],
+				["bugfix","When entering full screen, the toolbars could still be partially shown until moving the mouse over and out of them again (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/134>issue #134</a>)"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tab-tree/>Tab Tree</a>, show the toolbars when moving the mouse to the window titlebar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/160>issue #160</a>)"],
+				["bugfix","Selecting a search suggestion with the keyboard and then clicking a search engine button would lead to a malformed url (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/163>issue #163</a>)"],
+				["bugfix","Bookmark page sky light wouldn't change colors according to if the page was bookmarked or not when the star button wasn't placed anywhere in the window"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/add-bookmark-here-2/>Add Bookmark Here 2</a>, the Bookmark Page sky light should obey the same behavior options defined for the star button"],
+				["bugfix","(Firefox 47) show the page bookmarked panel immediately when bookmarking a page through the sky light, just like it would if clicking the star button"],
+				["bugfix","It would fail to run a web search by clicking a search engine in the location bar, when the search word came directly from the adaptable search bar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/167>issue #167</a>)"],
+				["bugfix","(Firefox 47) could fail to detect customize mode during startup"],
+				["bugfix","Small memory leak when disabling the add-on (thanks to the8472)"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/status-4-evar/>Status-4-Evar</a>, Slim Chrome wouldn't respect the position of the loading indicator in the location bar"],
+				["bugfix","Compatibility with <a=https://testpilot.firefox.com/>Test Pilot</a>'s Tab Center, toolbars should be easier to access by moving the cursor to the top and they shouldn't extend over the tabs area (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/173>issue #173</a>)"],
+				["","Other minor updates"]
+			]
+		},
 		"1.4.4":{
 			"date":"February 27, 2016",
 			"notes":[
