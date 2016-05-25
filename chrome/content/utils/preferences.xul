@@ -8,7 +8,7 @@
 <!DOCTYPE prefs [
   <!ENTITY % defaults SYSTEM "chrome://thefoxonlybetter/locale/defaults.dtd" >
   %defaults;
-  <!ENTITY % preferences SYSTEM "chrome://thefoxonlybetter/locale/utils/preferences.dtd" >
+  <!ENTITY % preferences SYSTEM "chrome://thefoxonlybetter/locale/utils-preferences.dtd" >
   %preferences;
 ]>
 <page	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"

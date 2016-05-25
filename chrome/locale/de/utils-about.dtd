@@ -1,0 +1,26 @@
+<!ENTITY about.paneTitle "Über">
+<!ENTITY about.version "Version {v}">
+<!ENTITY about.uptodate "aktuell, Glückwunsch!">
+<!ENTITY about.needsupdate "Aktualisierung verfügbar!">
+<!ENTITY about.description "Sehen Sie sich die „Versionshinweise“ und „Bekannte Fehler“ für diese Version unten an. Wenn Sie irgendwelche Probleme finden oder Vorschläge für zukünftige Versionen haben, sagen Sie mir Bescheid.">
+<!ENTITY about.descriptionB "Diese Erweiterung ist kostenlos, aber das Beheben von Fehlern, Hinzufügen neuer Funktionen und das Sicherstellen, dass alles noch mit neuen Firefox-Versionen funktioniert, ist viel Arbeit und kann häufig schwierig sein. Wenn dir die Erweiterung gefällt, bitte unterstütze die weitere Entwicklung. Wie der Link sagt: „Du kannst helfen“!">
+<!ENTITY about.descriptionC "Sehen Sie sich auch die neueste Folge meiner Internetserie über das Leben mit Firefox, der für Sie alle, die unterstützendsten Nutzer, die sich ein Entwickler wünschen kann, gemacht wurde, an! Gehen Sie einfach auf das springende Symbol in der unteren Ecke dieser Seite. Lieben Sie es. Hassen Sie es. Teilen Sie es.">
+<!ENTITY about.allVersions "Hinweise aller vorherigen Versionen miteinbeziehen">
+<!ENTITY about.notifyOnUpdates "Diesen Tab bei der nächsten Aktualisierung anzeigen">
+<!ENTITY about.development "Entwicklungsstatus">
+<!ENTITY about.helpdevelopment "SIE KÖNNEN HELFEN">
+<!ENTITY about.information "Weitere Informationen">
+<!ENTITY about.home "Add-on-Homepage">
+<!ENTITY about.fullchangelog "Alle Änderungen">
+<!ENTITY about.problems "Haben Sie Probleme?">
+<!ENTITY about.tech "Erstellen Sie einen Fehlerbericht auf der Hilfeseite mit einer Beschreibung Ihres Problems">
+<!ENTITY about.email "Alternativ können Sie mir auch eine E-Mail schreiben (englisch)">
+<!ENTITY about.author "Mehr vom Autor">
+<!ENTITY about.trymore "Probieren Sie eine meiner anderen Erweiterungen für ein noch besseres Firefox-Erlebnis aus!">
+<!ENTITY about.profile "Finden Sie sie in meinem Profil">
+<!ENTITY about.share "Teilen!">
+<!ENTITY about.friends "Seien Sie nicht der Einzige mit einem guten Browser. Lassen Sie Ihre Freunde daran teilhaben!">
+<!ENTITY about.hidePromo "X">
+<!ENTITY about.hideThisPromo "wieder anzeigen, wenn eine neue Folge verfügbar ist">
+<!ENTITY about.hideAllPromos "keine Promos wie diese anzeigen">
+<!ENTITY about.clicktowatch "auf YouTube ansehen">

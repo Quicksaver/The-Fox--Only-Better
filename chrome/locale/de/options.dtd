@@ -1,0 +1,107 @@
+<!ENTITY pane.slimChrome.label "Schlanke Leiste">
+<!ENTITY pane.skyLights.label "Himmelslichter">
+<!ENTITY pane.awesomeBar.label "Intelligente Adressleiste">
+<!ENTITY cat.general.label "Allgemein">
+<!ENTITY opt.slimChrome.label "Schlanke Leiste aktivieren">
+<!ENTITY opt.slimChrome.tooltip "Optimiert die Oberfläche und vergrößert die Anzeigefläche für Webseiten, indem die oberen Symbolleisten ausgeblendet werden, wenn Sie nicht benötigt werden.">
+<!ENTITY opt.includeNavBar.label "Navigationsleiste ebenfalls ausblenden">
+<!ENTITY opt.includeNavBar.tooltip "Blendet die Navigationsleiste mit den anderen Symbolleisten aus. Wenn diese Option deaktiviert ist, wird die Navigationsleiste wie gewohnt immer sichtbar oben angezeigt.">
+<!ENTITY cat.skyLightsPlacements.label "Lichter auswählen und anordnen">
+<!ENTITY cat.skyLightsPlacements.tooltip "Ziehen Sie die Himmelslichter hier in die gewünschte Reihenfolge. Um einzelne Himmelslichter komplett zu deaktivieren, entfernen Sie hier einfach die Häkchen.">
+<!ENTITY opt.skyLights.requirements.description "Um Himmelslichter verwenden zu können, muss die schlanke Leiste und die dortige Funktion „Navigationsleiste ebenfalls ausblenden“ aktiviert sein.">
+<!ENTITY opt.skyLights.label "Himmelslichter aktivieren">
+<!ENTITY opt.skyLights.tooltip.a "Himmelslichter geben Ihnen mithilfe einer unaufdringlichen visuellen Hilfe in der oberen Leiste Informationen über die aktuell besuchte Website.">
+<!ENTITY opt.skyLights.tooltip.b "Sie helfen Ihnen dabei, zu wissen, wo Sie sich befinden und was Sie hier sicher tun können!">
+<!ENTITY opt.skyLightsHide.label "Himmelslichter bei sichtbarer Symbolleiste ausblenden">
+<!ENTITY opt.skyLightsHide.tooltip "Die Himmelslichter werden ausgeblendet, wenn die Symbolleisten oder die Minileiste sichtbar sind, da alle Informationen dort bereits einthalten sein sollten.">
+<!ENTITY cat.mini.label "Minileiste anzeigen, wenn…">
+<!ENTITY opt.miniOnAllInput.label "ein Eingabefeld ausgewählt wird">
+<!ENTITY opt.miniOnAllInput.tooltip "Wählen Sie diese Option aus, wenn die Minileiste immer sichtbar sein soll, wenn Sie etwas in ein beliebiges Eingabefeld schreiben, nicht nur bei Passwortfeldern.">
+<!ENTITY opt.miniOnChangeLocation.label "Sie auf eine andere Seite navigieren">
+<!ENTITY opt.miniOnChangeLocation.tooltip "Dringend empfohlen! Die Minileiste wird immer dann angezeigt, wenn der aktuelle Tab die Website wechselt (anderer Anbieter) oder Sie einen Hintergrundtab auswählen, der in der Zwischenzeit die Website gewechselt hat.">
+<!ENTITY opt.miniOnTabSelect.label "ein anderer Tab ausgewählt wird">
+<!ENTITY opt.miniOnTabSelect.tooltip "Zeigt beim Wechseln des Tabs die Minileiste an, damit Sie wissen, wo Sie sich mit diesem Tab gerade befinden.">
+<!ENTITY opt.miniOnPinnedTabs.label "Minileiste bei angehefteten Tabs anzeigen">
+<!ENTITY opt.miniOnPinnedTabs.tooltip "Die oben genannten Regeln auch auf angeheftete Tabs anwenden">
+<!ENTITY opt.useMouse.label "Zeigt die Leiste an, wenn sich die Maus nach oben bewegt">
+<!ENTITY opt.useMouse.tooltip.a "Die Symbolleisten reagieren dadurch auf Mausbewegungen. Sie sind sichtbar, wenn sich die Maus über Ihnen befindet und ansonsten ausgeblendet.">
+<!ENTITY opt.useMouse.tooltip.b "Wenn diese Option deaktiviert ist, können Sie nur auf diese zugreifen, indem Sie F6 drücken, um die Adressleiste zu fokussieren, oder wenn ein zu einer Symbolleiste gehörendes Feld geöffnet wird.">
+<!ENTITY opt.delayIn.label "Empfindlichkeit beim Ankommen">
+<!ENTITY opt.delayIn.tooltip "Legt die Verzögerung fest, mit der die Leiste eingeblendet wird, nachdem die Maus zum oberen Browserrand bewegt wurde.">
+<!ENTITY opt.delayOut.label "Empfindlichkeit beim Verlassen">
+<!ENTITY opt.delayOut.tooltip "Legt die Verzögerung fest, mit der die Leiste ausgeblendet wird, nachdem die Maus sich nicht mehr oben befindet.">
+<!ENTITY opt.delayLow.label "Niedrig">
+<!ENTITY opt.delayHigh.label "Hoch">
+<!ENTITY cat.appearance.label "Stil">
+<!ENTITY opt.style.australis.label "Australis">
+<!ENTITY opt.style.australis.tooltip "Das Aussehen und Gefühl des normalen Firefox-Themes.">
+<!ENTITY opt.style.round.label "Geräumig">
+<!ENTITY opt.style.round.tooltip "Zeit die Symbolleisten in einem geräumigen Behälter mit einem großen runden Erscheinungsbild an. Passt insgesamt gut zum normalen Firefox-Theme.">
+<!ENTITY opt.style.compact.label "Kompakt">
+<!ENTITY opt.style.compact.tooltip "Ein minimalistischer Stil, der die maximale Anzahl von Schaltflächen und Textfeldern auf so wenig Fläche wie möglich unterbringt, um das Websitefeld nicht mit Browserelementen zu überfrachten.">
+<!ENTITY opt.style.full.label "Volle Breite">
+<!ENTITY opt.style.full.tooltip "Die Symbolleiste breitet sich über den gesamten verfügbaren Platz aus, als wären Sie noch an die Oberseite angeheftet. Es gibt also keine Randbegrenzungen.">
+<!ENTITY cat.animation.label "Animation">
+<!ENTITY opt.animation.none.label "Keine Animation">
+<!ENTITY opt.animation.none.tooltip "Die Symbolleisten sind ohne Effekte direkt sichtbar.">
+<!ENTITY opt.animation.fadein.label "Einblenden">
+<!ENTITY opt.animation.fadein.tooltip "Eine Animation, die die Symboleiste einblendet.">
+<!ENTITY opt.animation.slidedown.label "Herunterschieben">
+<!ENTITY opt.animation.slidedown.tooltip "Eine Animation, bei der die Symbolleisten aus der oberen Leiste geschoben wird.">
+<!ENTITY opt.animation.rollout.label "Ausrollen">
+<!ENTITY opt.animation.rollout.tooltip "Die Symbolleiste wird von oben ausgerollt.">
+<!ENTITY opt.animation.hinge.label "GiTs Scharniereffekt">
+<!ENTITY opt.animation.hinge.tooltip "Ein von Geek in Training erstellter Scharniereffekt. Wenn Ihnen der Effekt gefällt, sollten Sie sich bei ihm bedanken!">
+<!ENTITY cat.slimChromeKeyset.label "Tastenkombination zum Aktivieren und Deaktivieren">
+<!ENTITY cat.awesomeBar.enable.label "Intelligente Adressleiste anpassen">
+<!ENTITY cat.awesomeBar.enable.tooltip "Die Adressleiste kann nützlicher sein, als Ihnen vielleicht bewusst ist! Hier können Sie die Vorschläge und das Verhalten der Internetsuche anpassen.">
+<!ENTITY cat.awesomeBar.suggest.label "Vorschläge beim Verwenden der Adressleiste:">
+<!ENTITY cat.awesomeBar.suggest.tooltip "Wenn Sie etwas in die Adressleiste eingeben, wird ein Feld mit zu den eingegebenen Begriffen passenden Links angezeigt.">
+<!ENTITY opt.maxSuggest.label "Vorschläge insgesamt">
+<!ENTITY opt.limitSuggest.label "maximal">
+<!ENTITY opt.suggestHistory.label "Chronik">
+<!ENTITY opt.suggestHistory.tooltip "Schlägt Seiten aus Ihrer Surfchronik vor.">
+<!ENTITY opt.suggestBookmark.label "Lesezeichen">
+<!ENTITY opt.suggestBookmark.tooltip "Schlägt Seiten aus Ihren Lesezeichen vor.">
+<!ENTITY opt.suggestOpenpage.label "Tabs öffnen">
+<!ENTITY opt.suggestOpenpage.tooltip "Durchsucht die aktuell geöffneten Tabs um zu prüfen, ob ein passender dabei ist.">
+<!ENTITY opt.suggestSearches.label "Suchvorschläge">
+<!ENTITY opt.suggestSearches.tooltip "Schlägt Suchvorschläge von Ihrer Standardsuchmachine vor.">
+<!ENTITY opt.suggestSearchesInPB.label "Suchvorschläge auch in privaten Fenstern anzeigen.">
+<!ENTITY opt.suggestSearchesInPB.tooltip "Standardmäßig sind Suchvorschläge in privaten Fenstern deaktiviert, da sie versendet werden, wenn Ihre Standardsuchmaschine angefragt wird.">
+<!ENTITY cat.rows.label "Vorschlagsfeld">
+<!ENTITY opt.awesomerStyle.label "Vorschlagsdesign">
+<!ENTITY opt.awesomerStyle.rich.label "Großzügig">
+<!ENTITY opt.awesomerStyle.rich.tooltip "Der Standard von Firefox. Zeigt alle Informationen in einem gut lesbaren Format dar.">
+<!ENTITY opt.awesomerStyle.slim.label "Schlank">
+<!ENTITY opt.awesomerStyle.slim.tooltip "Komprimiert die Einträge, damit weniger Platz verbraucht wird. Lange Titel oder Adressen werden gegebenenfalls abgeschnitten, damit der Platz ausreicht.">
+<!ENTITY opt.awesomerStyle.frog.label "Froggy">
+<!ENTITY opt.awesomerStyle.frog.tooltip "Komprimiert die Einträge weiter, indem nur noch der Seitentitel angezeigt wird. Bewegen Sie die Maus über einen Eintrag, um die Adresse einzublenden.">
+<!ENTITY opt.maxRows.tooltip.a "Legen Sie die maximale Höhe des Vorschlagsfeldes über die Maximalanzahl der angezeigten Vorschläge fest. Alle weiteren Vorschläge sind durch Scrollen in der Liste erreichbar.">
+<!ENTITY opt.maxRows.tooltip.b "Jedes oben verfügbare Design zeigt hier andere Werte an, da Sie verschiedene Eintragsgrößen haben.">
+<!ENTITY opt.maxSearchRows.label "Beim Suchen sichtbare Einträge">
+<!ENTITY opt.maxSearchRows.tooltip "Die Anzahl der beim Eingeben in die Adressleiste sichtbaren Einträge.">
+<!ENTITY opt.maxDropMarkerRows.label "Sichtbare Chronik-Einträge">
+<!ENTITY opt.maxDropMarkerRows.tooltip "Die Anzahl der Einträge, die sichtbar sind, wenn Sie auf den Pfeil nach unten in der Adressleiste klicken.">
+<!ENTITY opt.awesomerColor.label "Farbschema">
+<!ENTITY opt.default.label "Standard">
+<!ENTITY opt.bubblegum.label "Kaugummi">
+<!ENTITY opt.grass.label "Gras">
+<!ENTITY opt.lavender.label "Lavendel">
+<!ENTITY opt.noir.label "Schwarz">
+<!ENTITY opt.ruby.label "Rubin">
+<!ENTITY opt.sea.label "See">
+<!ENTITY opt.sky.label "Himmel">
+<!ENTITY opt.taupe.label "Taupe">
+<!ENTITY cat.searchbar.label "Suchleiste">
+<!ENTITY opt.searchEnginesInURLBar.label "Suchmaschinen in der Adressleiste anzeigen">
+<!ENTITY opt.searchEnginesInURLBar.tooltip "Dadurch werden Ihre Suchmaschinen im Vorschlagsfeld der Adressleiste angezeigt, damit Sie alle Suchmaschinen jederzeit verwenden können.">
+<!ENTITY opt.gotoSearch.label "Suchmaschinen verwalten">
+<!ENTITY opt.gotoSearch.tooltip "Legen Sie Ihre Standardsuchmaschine fest, wählen Sie Ein-Klick-Suchmaschinen aus und definieren Sie Schlüsselwörter für Suchmaschinen, um  diese in der Adressleiste verwenden zu können.">
+<!ENTITY opt.adaptSearchBar.label "Anpassungsfähige Suchleiste">
+<!ENTITY opt.adaptSearchBar.tooltip "Hält die Suchleiste mit Ihren Internetsuchen synchron. Die Suchleiste enthält den eingebenen Suchbegriff, wenn Sie die Ergebnisseite einer Suchmaschine besuchen.">
+<!ENTITY opt.adaptSearchBar.description.a "Eine Liste mit kompatiblen Suchmaschinen finden Sie auf der Homepage dieses Add-ons. Es sollte derzeit mit den meisten gängien Suchmaschinen funktionieren.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.label "Suchleiste nur anzeigen, wenn sie nicht leer ist">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.a "Die Suchleiste ist nur auf Suchergebnisseiten sichtbar, damit Sie wissen, wonach Sie hier gesucht haben.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.b "Wenn Sie darauf Klicken, wird der Fokus stattdessen in die Adressleiste gesetzt, die Sie auf die gleiche Weise wie die Suchleiste verwenden können. Außerdem wird anstelle der Suchvorschläge das Feld unter der Adressleiste angezeigt.">
+<!ENTITY opt.showOnlyNonEmptySearchBar.tooltip.c "Dies funktioniert nur, wenn sie sich an Ihrer Standardposition neben der Adressleiste befindet.">

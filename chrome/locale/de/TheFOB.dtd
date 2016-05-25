@@ -1,0 +1,5 @@
+<!ENTITY theFOB.toggleSlimChrome.label "Schlanke Leiste">
+<!ENTITY theFOB.toggleSlimChrome.accesskey "L">
+<!ENTITY theFOB.options.label "Einstellungen für Beyond Australis">
+<!ENTITY theFOB.options.accesskey "B">
+<!ENTITY theFOB.searchSettings.tooltip "Sucheinstellungen ändern">
