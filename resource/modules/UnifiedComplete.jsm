@@ -1,4 +1,4 @@
-// VERSION 1.0.5
+// VERSION 1.0.6
 
 this.UnifiedComplete = {
 	sandbox: null,
@@ -18,7 +18,7 @@ this.UnifiedComplete = {
 			}
 		}
 
-		return Prefs.awesomeURLBar;
+		return Prefs.awesomerURLBar;
 	},
 
 	observe: function(aSubject, aTopic, aData) {
