@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.4.11
+// VERSION 1.4.12
 
 objName = 'theFoxOnlyBetter';
 objPathString = 'thefoxonlybetter';
@@ -52,7 +52,7 @@ prefList = {
 	maxSuggestSearches: 5,
 
 	awesomerStyle: "frog",
-	awesomerColor: "default",
+	awesomerColor: "sky",
 	richMaxSearchRows: 6,
 	richMaxDropMarkerRows: 14,
 	slimMaxSearchRows: 10,

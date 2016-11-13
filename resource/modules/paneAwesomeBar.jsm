@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.1.0
+// VERSION 1.1.1
 
 this.gotoSearch = function() {
 	let gWindow = window
@@ -74,11 +74,41 @@ this.awesomerStyleDependencies = {
 	}
 };
 
+this.searchEnginesInURLBarDependencies = {
+	observe: function() {
+		this.apply();
+	},
+
+	apply: function() {
+		let collapsed = oneOffSearches.enabled;
+
+		$('paneAwesomeBar-searchEngines-checkbox').collapsed = collapsed;
+		$('paneAwesomeBar-gotoSearch').collapsed = collapsed;
+
+		if(collapsed) {
+			$('paneAwesomeBar-adaptSearchBar-checkbox').classList.remove('topIndent');
+		} else {
+			$('paneAwesomeBar-adaptSearchBar-checkbox').classList.add('topIndent');
+		}
+	},
+
+	init: function() {
+		oneOffSearches.listen(this);
+		this.apply();
+	},
+
+	uninit: function() {
+		oneOffSearches.unlisten(this);
+	}
+}
+
 Modules.LOADMODULE = function() {
 	suggestSearches.apply();
 	awesomerStyleDependencies.init();
+	searchEnginesInURLBarDependencies.init();
 };
 
 Modules.UNLOADMODULE = function() {
 	awesomerStyleDependencies.uninit();
+	searchEnginesInURLBarDependencies.uninit();
 };

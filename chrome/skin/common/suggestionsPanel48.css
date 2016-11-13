@@ -1,0 +1,168 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+@namespace html url("http://www.w3.org/1999/xhtml");
+
+/* Popup styles. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem[selected="true"] {
+	position: relative;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem :-moz-any(.ac-type-icon, .ac-site-icon, .ac-title, .ac-tags),
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem[selected="true"] :-moz-any(.ac-type-icon, .ac-site-icon, .ac-title, .ac-tags) {
+	margin-top: -1.25em;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem :-moz-any(.ac-url, .ac-action),
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem[selected="true"] :-moz-any(.ac-url, .ac-action) {
+	position: absolute;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem * {
+	font: menu;
+	font-family: "Segoe ui", sans-serif;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] html|span.ac-emphasize-text-title,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] html|span.ac-emphasize-text-tag,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] html|span.ac-emphasize-text-url {
+	font-weight: 600;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem :-moz-any(.ac-url, .ac-action) {
+	font-size: 95.5%;
+	transition: opacity .21s linear 0.02s, transform .21s ease-out 0.02s;
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:not([selected="true"]) :-moz-any(.ac-url, .ac-action) {
+	visibility: collapse;
+	opacity: 0;
+	transform: translateX(-.65em);
+}
+
+#PopupAutoCompleteRichResult:not([awesomerStyle="slim"]) .autocomplete-richlistitem .ac-separator {
+	visibility: collapse;
+}
+
+#PopupAutoCompleteRichResult:not([awesomerStyle="slim"]) .autocomplete-richlistitem:not([positioned]) :-moz-any(.ac-url, .ac-action) {
+	visibility: collapse;
+}
+
+#PopupAutoCompleteRichResult:not([awesomerStyle="slim"]) .ac-action[actiontype=searchengine]:not([selected]),
+#PopupAutoCompleteRichResult:not([awesomerStyle="slim"]) .ac-separator[actiontype=searchengine]:not([selected]) {
+	display: -moz-box;
+}
+
+/* Color schemes implementation. */
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .autocomplete-richlistitem[selected="true"] {
+	background-color: var(--awesomer-color-bg);
+	box-shadow: inset var(--awesomer-color-shadow) 0 0 0 1px;
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-title[selected=true] {
+	color: hsl(0,0%,0%);
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-tags-text[selected] > html|span.ac-tag {
+	color: hsl(0,0%,100%);
+	background-color: var(--awesomer-color-extra);
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-separator[selected],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-url[selected=true],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-action[selected=true] {
+	color: var(--awesomer-color-extra);
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-type-icon[selected][current],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-site-icon[type=searchengine][selected] {
+	filter: sepia(75%) var(--awesomer-color-filter);
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-type-icon[type=bookmark][selected][current] {
+	list-style-image: url("chrome://browser/skin/urlbar-star.svg#star");
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-type-icon[type=keyword][selected],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-site-icon[type=searchengine][selected],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .autocomplete-treebody::-moz-tree-image(keyword, treecolAutoCompleteImage, selected) {
+	list-style-image: url(chrome://global/skin/icons/autocomplete-search.svg#search-icon);
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-type-icon[type=switchtab][selected],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-type-icon[type=remotetab][selected] {
+	list-style-image: url("chrome://browser/skin/urlbar-tab.svg#tab");
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-site-icon[selected] {
+	list-style-image: url("chrome://mozapps/skin/places/defaultFavicon.png");
+}
+
+@media (min-resolution: 1.1dppx) {
+	#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-site-icon[selected] {
+		list-style-image: url("chrome://mozapps/skin/places/defaultFavicon@2x.png");
+	}
+}
+
+/* Various color schemes. */
+
+#PopupAutoCompleteRichResult[awesomerColor="bubblegum"] {
+	--awesomer-color-bg: hsla(320,100%,50%,.18);
+	--awesomer-color-shadow: hsla(320,100%,91%,.5);
+	--awesomer-color-extra: hsla(320,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(280deg) saturate(100%) brightness(44%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="grass"] {
+	--awesomer-color-bg: hsla(95,100%,50%,.18);
+	--awesomer-color-shadow: hsla(95,100%,91%,.5);
+	--awesomer-color-extra: hsla(95,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(55deg) saturate(100%) brightness(44%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="lavender"] {
+	--awesomer-color-bg: hsla(256,100%,50%,.18);
+	--awesomer-color-shadow: hsla(256,100%,91%,.5);
+	--awesomer-color-extra: hsla(256,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(216deg) saturate(100%) brightness(44%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="noir"] {
+	--awesomer-color-bg: hsla(0,0%,15%,.18);
+	--awesomer-color-shadow: hsla(0,0%,81%,.5);
+	--awesomer-color-extra: hsla(0,0%,20%,1);
+	--awesomer-color-filter: hue-rotate(320deg) saturate(0%) brightness(20%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="ruby"] {
+	--awesomer-color-bg: hsla(0,100%,50%,.18);
+	--awesomer-color-shadow: hsla(0,100%,91%,.5);
+	--awesomer-color-extra: hsla(0,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(320deg) saturate(100%) brightness(44%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="sea"] {
+	--awesomer-color-bg: hsla(190,100%,50%,.18);
+	--awesomer-color-shadow: hsla(190,100%,91%,.5);
+	--awesomer-color-extra: hsla(190,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(150deg) saturate(100%) brightness(44%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="sky"] {
+	--awesomer-color-bg: hsla(210,100%,50%,.18);
+	--awesomer-color-shadow: hsla(210,100%,91%,.5);
+	--awesomer-color-extra: hsla(210,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(170deg) saturate(100%) brightness(44%);
+}
+
+#PopupAutoCompleteRichResult[awesomerColor="taupe"] {
+	--awesomer-color-bg: hsla(43,100%,50%,.18);
+	--awesomer-color-shadow: hsla(43,100%,91%,.5);
+	--awesomer-color-extra: hsla(43,15%,44%,1);
+	--awesomer-color-filter: hue-rotate(3deg) saturate(100%) brightness(44%);
+}

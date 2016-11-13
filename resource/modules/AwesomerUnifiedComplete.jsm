@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.2.15
+// VERSION 1.3.0
 
 this.AwesomerUnifiedComplete = {
 	get useOverride () { return UnifiedComplete.enabled; },
@@ -60,10 +60,16 @@ this.AwesomerUnifiedComplete = {
 			Listeners.add(gNavBar, 'SlimChromeMovedNavBar', this);
 		}
 
+		let gFx52 = Services.vc.compare(Services.appinfo.version, "52.0a1") >= 0;
+
 		// Make sure any opened pages already registered with _unifiedComplete are removed from the original instance (no point in memory hogging).
 		for(let browser of gBrowser.browsers) {
 			if(browser.registeredOpenURI) {
-				gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI);
+				if(!gFx52) {
+					gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI);
+				} else {
+					gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI, browser.getAttribute("usercontextid") || 0);
+				}
 			}
 		}
 
@@ -77,7 +83,11 @@ this.AwesomerUnifiedComplete = {
 		// Re-register already opened pages.
 		for(let browser of gBrowser.browsers) {
 			if(browser.registeredOpenURI) {
-				gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
+				if(!gFx52) {
+					gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
+				} else {
+					gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI, browser.getAttribute("usercontextid") || 0);
+				}
 			}
 		}
 
@@ -113,9 +123,15 @@ this.AwesomerUnifiedComplete = {
 			gURLBar.mSearchNames = null;
 		}
 
+		let gFx52 = Services.vc.compare(Services.appinfo.version, "52.0a1") >= 0;
+
 		for(let browser of gBrowser.browsers) {
 			if(browser.registeredOpenURI) {
-				gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI);
+				if(!gFx52) {
+					gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI);
+				} else {
+					gBrowser._unifiedComplete.unregisterOpenPage(browser.registeredOpenURI, browser.getAttribute("usercontextid") || 0);
+				}
 			}
 		}
 
@@ -127,7 +143,11 @@ this.AwesomerUnifiedComplete = {
 
 		for(let browser of gBrowser.browsers) {
 			if(browser.registeredOpenURI) {
-				gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
+				if(!gFx52) {
+					gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI);
+				} else {
+					gBrowser._unifiedComplete.registerOpenPage(browser.registeredOpenURI, browser.getAttribute("usercontextid") || 0);
+				}
 			}
 		}
 
@@ -227,6 +247,7 @@ this.AwesomerBar = {
 			case "nsPref:changed":
 				switch(aSubject) {
 					case "searchEnginesInURLBar":
+					case "oneOffSearches":
 						this.toggle();
 						break;
 				}
@@ -499,7 +520,7 @@ this.AwesomerBar = {
 	},
 
 	toggle: function(unload) {
-		if(!unload && Prefs.searchEnginesInURLBar) {
+		if(!unload && !oneOffSearches.enabled && Prefs.searchEnginesInURLBar) {
 			Overlays.overlayWindow(window, 'awesomeBar', this);
 		} else {
 			Overlays.removeOverlayWindow(window, 'awesomeBar');
@@ -540,10 +561,29 @@ this.AwesomerBar = {
 };
 
 this.suggestionsPanel = {
+	get gFx48 () {
+		delete this.gFx48;
+		this.gFx48 = Services.vc.compare(Services.appinfo.version, "48.0a1") >= 0;
+		return this.gFx48;
+	},
+
 	get popup () { return $('PopupAutoCompleteRichResult'); },
+
+	_titleStart: 0,
+	get titleStart() {
+		return this._titleStart;
+	},
+	set titleStart(v) {
+		if(this._titleStart != v) {
+			this._titleStart = v;
+			this.setupTitleStart();
+		}
+		return this._titleStart;
+	},
 
 	handleEvent: function(e) {
 		switch(e.type) {
+			// Not needed with FF48
 			case 'popupshowing':
 				// When using the slim style, we need to set a specific width on one of the nodes of each item,
 				// it's unfortunate that we can't just use percentages directly in the main stylesheet (simply doesn't work).
@@ -586,7 +626,9 @@ this.suggestionsPanel = {
 	observe: function(aSubject, aTopic, aData) {
 		switch(aSubject) {
 			case "awesomerStyle":
-				this.toggleListeners();
+				if(!this.gFx48) {
+					this.toggleListeners();
+				}
 				this.setStyle();
 				// no break, we also need to update the max rows when the style changes
 
@@ -654,8 +696,123 @@ this.suggestionsPanel = {
 		this.setMaxRows();
 	},
 
+	// Doing it dynamically instead of overriding the binding (which I hate), we have to make sure labels aren't cropped unnecessarily.
+	setupRichlistItems: function() {
+		let popup = this.popup;
+		let popupOpen = popup.popupOpen;
+
+		let items = popup.richlistbox.childNodes;
+		for(let item of items) {
+			let piggybacked = Piggyback.add('awesomerStyle', item, '_handleOverflow', function() {
+				let itemRect = this.getBoundingClientRect();
+				let titleRect = this._titleText.getBoundingClientRect();
+				let tagsRect = this._tagsText.getBoundingClientRect();
+				let separatorRect = this._separator.getBoundingClientRect();
+				let urlRect = this._urlText.getBoundingClientRect();
+				let actionRect = this._actionText.getBoundingClientRect();
+				let separatorURLActionWidth = separatorRect.width + Math.max(urlRect.width, actionRect.width);
+
+				// Total width for the title and URL/action is the width of the item minus the start of the title text minus a little optional extra padding.
+				// This extra padding amount is basically arbitrary but keeps the text from getting too close to the popup's edge.
+				let dir = this.getAttribute("dir");
+				let titleStart = dir == "rtl" ? itemRect.right - titleRect.right : titleRect.left - itemRect.left;
+
+				// Keep this updated in case of any changes (themes?).
+				suggestionsPanel.titleStart = titleStart;
+
+				let popup = this.parentNode.parentNode;
+				let itemWidth = itemRect.width - titleStart - popup.overflowPadding;
+
+				if(this._tags.hasAttribute("empty")) {
+					// The tags box is not displayed in this case.
+					tagsRect.width = 0;
+				}
+				let titleTagsWidth = titleRect.width + tagsRect.width;
+
+				switch(Prefs.awesomerStyle) {
+					case "slim":
+						if(titleTagsWidth + separatorURLActionWidth > itemWidth) {
+							// Title + tags + URL/action overflows the item width.
+
+							// The percentage of the item width allocated to the title and tags.
+							let titleTagsPct = 0.66;
+
+							let titleTagsAvailable = itemWidth - separatorURLActionWidth;
+							let titleTagsMaxWidth = Math.max(titleTagsAvailable, itemWidth * titleTagsPct);
+							if(titleTagsWidth > titleTagsMaxWidth) {
+								// Title + tags overflows the max title + tags width.
+
+								// The percentage of the title + tags width allocated to the title.
+								let titlePct = 0.33;
+
+								let titleAvailable = titleTagsMaxWidth - tagsRect.width;
+								let titleMaxWidth = Math.max(titleAvailable, titleTagsMaxWidth * titlePct);
+								let tagsAvailable = titleTagsMaxWidth - titleRect.width;
+								let tagsMaxWidth = Math.max(tagsAvailable, titleTagsMaxWidth * (1 - titlePct));
+								this._titleText.style.maxWidth = titleMaxWidth + "px";
+								this._tagsText.style.maxWidth = tagsMaxWidth + "px";
+							}
+							let urlActionMaxWidth = Math.max(itemWidth - titleTagsWidth, itemWidth * (1 - titleTagsPct));
+							urlActionMaxWidth -= separatorRect.width;
+							this._urlText.style.maxWidth = urlActionMaxWidth + "px";
+							this._actionText.style.maxWidth = urlActionMaxWidth + "px";
+						}
+						break;
+
+					default:
+						if(titleTagsWidth > itemWidth) {
+							// Title + tags overflows the max title + tags width.
+
+							// The percentage of the title + tags width allocated to the title.
+							let titlePct = 0.33;
+
+							let titleAvailable = itemWidth - tagsRect.width;
+							let titleMaxWidth = Math.max(titleAvailable, itemWidth * titlePct);
+							let tagsAvailable = itemWidth - titleRect.width;
+							let tagsMaxWidth = Math.max(tagsAvailable, itemWidth * (1 - titlePct));
+							this._titleText.style.maxWidth = titleMaxWidth + "px";
+							this._tagsText.style.maxWidth = tagsMaxWidth + "px";
+						}
+
+						if(separatorURLActionWidth > itemWidth) {
+							this._urlText.style.maxWidth = itemWidth + "px";
+							this._actionText.style.maxWidth = itemWidth + "px";
+						}
+						break;
+				}
+
+				// Url/action bits won't be visible in Rich and Frog styles until this runs, to prevent them jumping around the first time the panel is opened.
+				setAttribute(this, 'positioned', 'true');
+			});
+
+			if(piggybacked && popupOpen) {
+				item.handleOverUnderflow();
+			}
+		}
+	},
+
+	// The position of the url/action text in the entries depends on where their titles are positioned as well.
+	// (Calculating from hard-coded CSS values doesn't seem very reliable, in addition there is some dynamic margin being applied to align page icons with identity box sometimes.)
+	setupTitleStart: function() {
+		let sscode = '\
+			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
+			@-moz-document url("'+document.baseURI+'") {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem:-moz-locale-dir(ltr) :-moz-any(.ac-url, .ac-action),\n\
+				window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:-moz-locale-dir(ltr)[selected="true"] :-moz-any(.ac-url, .ac-action) {\n\
+					left: '+this.titleStart+'px;\n\
+				}\n\
+				window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem:-moz-locale-dir(rtl) :-moz-any(.ac-url, .ac-action),\n\
+				window['+objName+'_UUID="'+_UUID+'"] #PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem:-moz-locale-dir(rtl)[selected="true"] :-moz-any(.ac-url, .ac-action) {\n\
+					right: '+this.titleStart+'px;\n\
+				}\n\
+			}';
+		Styles.load('titleStart_'+_UUID, sscode, true);
+	},
+
 	init: function() {
-		Overlays.overlayWindow(window, 'suggestionsPanel');
+		Overlays.overlayWindow(window, (this.gFx48) ? 'suggestionsPanel48' : 'suggestionsPanel');
+
+		let gFx48 = this.gFx48;
 
 		// The rows don't have the same height in every style, the original method doesn't know how to handle that.
 		Piggyback.add('awesomerStyle', this.popup, 'adjustHeight', function() {
@@ -668,6 +825,19 @@ this.suggestionsPanel = {
 			// Default the height to 0 if we have no rows to show
 			let height = 0;
 			if(numRows) {
+				if(!gFx48 || this._rlbPadding == undefined) {
+					let style = window.getComputedStyle(this.richlistbox);
+
+					let transition = style.transitionProperty;
+					this._rlbAnimated = transition && transition != "none";
+
+					if(gFx48) {
+						let paddingTop = parseInt(style.paddingTop) || 0;
+						let paddingBottom = parseInt(style.paddingBottom) || 0;
+						this._rlbPadding = paddingTop + paddingBottom;
+					}
+				}
+
 				switch(Prefs.awesomerStyle) {
 					case "frog":
 						if(!this._rowHeight) {
@@ -701,9 +871,6 @@ this.suggestionsPanel = {
 								height = heights.normal * (numRows +1);
 								this.richlistbox.style.maxHeight = (heights.normal * (this.maxRows +1)) + "px";
 							}
-
-							let transition = getComputedStyle(this.richlistbox).transitionProperty;
-							this._rlbAnimated = transition && transition != "none";
 						}
 
 						if(this._rowHeight) {
@@ -711,7 +878,7 @@ this.suggestionsPanel = {
 							height = this._rowHeight.selected + (this._rowHeight.normal * (numRows -1));
 
 							// Set a fixed max-height to avoid flicker when growing the panel.
-							this.richlistbox.style.maxHeight = (this._rowHeight.selected + (this._rowHeight.normal * (this.maxRows -1))) + "px";
+							this.richlistbox.style.maxHeight = (this._rowHeight.selected + (this._rowHeight.normal * (this.maxRows -1)) + (gFx48 ? this._rlbPadding : 0)) + "px";
 						}
 						break;
 
@@ -719,21 +886,22 @@ this.suggestionsPanel = {
 						if(!this._rowHeight) {
 							let firstRowRect = rows[0].getBoundingClientRect();
 							this._rowHeight = firstRowRect.height;
-
-							let transition = getComputedStyle(this.richlistbox).transitionProperty;
-							this._rlbAnimated = transition && transition != "none";
 						}
 
 						// Calculate the height to have the first row to last row shown
 						height = this._rowHeight * numRows;
 
 						// Set a fixed max-height to avoid flicker when growing the panel.
-						this.richlistbox.style.maxHeight = (this._rowHeight * this.maxRows) + "px";
+						this.richlistbox.style.maxHeight = ((this._rowHeight * this.maxRows) + (gFx48 ? this._rlbPadding : 0)) + "px";
 						break;
+				}
+
+				if(gFx48) {
+					height += this._rlbPadding;
 				}
 			}
 
-			let animate = this._rlbAnimated && this.getAttribute("dontanimate") != "true";
+			let animate = this._rlbAnimated && !trueAttribute(this, "dontanimate");
 			let currentHeight = this.richlistbox.getBoundingClientRect().height;
 			let setHeight = () => {
 				if(animate) {
@@ -753,6 +921,11 @@ this.suggestionsPanel = {
 					this._collapseUnusedItems();
 					setHeight();
 				}, this.mInput.shrinkDelay);
+			}
+
+			// By now, all the entries should already be visible. So make sure they aren't cropped to the edge if using a style other than slim.
+			if(gFx48) {
+				suggestionsPanel.setupRichlistItems();
 			}
 		});
 
@@ -776,11 +949,15 @@ this.suggestionsPanel = {
 		this.setColor();
 		this.setupURLBar();
 
-		this.toggleListeners();
+		if(!this.gFx48) {
+			this.toggleListeners();
+		}
 	},
 
 	uninit: function() {
-		Overlays.removeOverlayWindow(window, 'suggestionsPanel');
+		Overlays.removeOverlayWindow(window, (this.gFx48) ? 'suggestionsPanel48' : 'suggestionsPanel');
+
+		Styles.unload('titleStart_'+_UUID);
 
 		Listeners.remove(window, 'LoadedSlimChrome', this);
 		Listeners.remove(window, 'UnloadedSlimChrome', this);
@@ -812,7 +989,15 @@ this.suggestionsPanel = {
 		}
 		delete gURLBar._backupMaxRows;
 
-		this.unsetListeners();
+		if(!this.gFx48) {
+			this.unsetListeners();
+		} else {
+			let items = this.popup.richlistbox.childNodes;
+			for(let item of items) {
+				Piggyback.revert('awesomerStyle', item, '_handleOverflow');
+				removeAttribute(item, 'positioned');
+			}
+		}
 	}
 };
 
@@ -823,6 +1008,7 @@ Modules.LOADMODULE = function() {
 	}
 
 	Prefs.listen('searchEnginesInURLBar', AwesomerBar);
+	oneOffSearches.listen(AwesomerBar);
 	AwesomerBar.toggle();
 
 	suggestionsPanel.init();
@@ -832,6 +1018,7 @@ Modules.UNLOADMODULE = function() {
 	suggestionsPanel.uninit();
 
 	Prefs.unlisten('searchEnginesInURLBar', AwesomerBar);
+	oneOffSearches.unlisten(AwesomerBar);
 	AwesomerBar.toggle(true);
 
 	UnifiedComplete.unregister(AwesomerUnifiedComplete);

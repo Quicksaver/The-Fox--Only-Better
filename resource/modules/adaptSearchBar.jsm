@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.1.5
+// VERSION 1.1.6
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -11,7 +11,7 @@ this.adaptSearchBar = {
 	placement: null,
 
 	get nonEmptyMode () {
-		return this.initialized && Prefs.awesomerURLBar && Prefs.searchEnginesInURLBar && Prefs.showOnlyNonEmptySearchBar && this.placement == CustomizableUI.AREA_NAVBAR;
+		return this.initialized && Prefs.awesomerURLBar && (Prefs.searchEnginesInURLBar || oneOffSearches.enabled) && Prefs.showOnlyNonEmptySearchBar && this.placement == CustomizableUI.AREA_NAVBAR;
 	},
 
 	receiveMessage: function(m) {
@@ -104,6 +104,8 @@ this.adaptSearchBar = {
 		this.initialized = true;
 		this.getSearchPlacement();
 
+		Overlays.overlayWindow(window, "adaptSearchBar");
+
 		Listeners.add(gBrowser.tabContainer, 'TabSelect', adaptSearchBar);
 
 		Messenger.listenWindow(window, 'AdaptSearchBar:Value', adaptSearchBar);
@@ -128,6 +130,8 @@ this.adaptSearchBar = {
 		Messenger.unloadFromWindow(window, 'adaptSearchBar');
 
 		Listeners.remove(gBrowser.tabContainer, 'TabSelect', adaptSearchBar);
+
+		Overlays.removeOverlayWindow(window, "adaptSearchBar");
 
 		for(let browser of gBrowser.browsers) {
 			delete browser._adaptSearchValue;

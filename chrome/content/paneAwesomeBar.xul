@@ -305,7 +305,8 @@
 
 		<groupbox align="start" id="paneAwesomeBar-searchbar" collapsed="true" data-category="paneAwesomeBar">
 			<caption label="&cat.searchbar.label;"/>
-			<checkbox label="&opt.searchEnginesInURLBar.label;"
+			<checkbox id="paneAwesomeBar-searchEngines-checkbox"
+				label="&opt.searchEnginesInURLBar.label;"
 				helpbox="paneAwesomeBar-searchEngines-helptext"
 				jump="searchEnginesInURLBar"
 				dependson="pref-awesomerURLBar"
@@ -321,8 +322,8 @@
 				<description style="font-weight:bold; margin-top:1em;">&opt.gotoSearch.label;</description>
 				<description>&opt.gotoSearch.tooltip;</description>
 			</vbox>
-			<checkbox label="&opt.adaptSearchBar.label;"
-				class="topIndent"
+			<checkbox id="paneAwesomeBar-adaptSearchBar-checkbox"
+				label="&opt.adaptSearchBar.label;"
 				helpbox="paneAwesomeBar-adaptSearchBar-helptext"
 				jump="adaptSearchBar"
 				delayPreference="pref-adaptSearchBar"/>

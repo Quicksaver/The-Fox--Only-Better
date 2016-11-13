@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.0.5
+// VERSION 1.0.6
 
 Modules.LOADMODULE = function() {
 	AddonManager.getAddonByID('{64161300-e22b-11db-8314-0800200c9a66}', function(addon) {
@@ -22,6 +22,7 @@ Modules.LOADMODULE = function() {
 	});
 
 	Modules.load('compatibilityFix/ASI');
+	Modules.load('compatibilityFix/oneOffSearches');
 };
 
 Modules.UNLOADMODULE = function() {
@@ -30,4 +31,5 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/CTR');
 	Modules.unload('compatibilityFix/ASI');
 	Modules.unload('compatibilityFix/Forecastfox');
+	Modules.unload('compatibilityFix/oneOffSearches');
 };

@@ -1,0 +1,29 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* Styles of the urlbar panel. */
+
+#PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem,
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem[selected="true"] {
+	height: calc(30px + 1.25em);
+}
+
+#PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem :-moz-any(.ac-url, .ac-action),
+#PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem[selected="true"] :-moz-any(.ac-url, .ac-action) {
+	top: 1.9em;
+}
+
+/* Color schemes implementation. */
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-title[selected=true] {
+	color: hsl(0,0%,0%) !important;
+}
+
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-separator[selected],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-url[selected=true],
+#PopupAutoCompleteRichResult:not([awesomerColor="default"]) .ac-action[selected=true] {
+	color: var(--awesomer-color-extra) !important;
+}
