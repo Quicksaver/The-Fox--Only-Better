@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.29
+// VERSION 2.0.30
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -126,10 +126,14 @@ this.slimChrome = {
 				this.setHover(false);
 				break;
 
-			case 'focus':
+			case 'focus': {
+				// We may not always want to show the toolbars when focusing something on the toolbox,
+				// for instance, there's no need to show the bookmarks bar if the cursor is in the location bar and it's not being hidden by Slim Chrome.
+				if(!Prefs.includeNavBar && isAncestor(e.target, gNavBar) && e.target.nodeName == "textbox") { break; }
+
 				// in a few cases we shouldn't trigger chrome to appear immediately, the small delay will be sufficient for other handlers to cancel
 				// the showing if, for instance, we're in the mini bar and click one of the buttons
-				var now =
+				let now =
 					e.originalTarget == gURLBar.inputField // always trigger the full chrome when focusing the location bar itself
 					|| trueAttribute(this.container, 'hover') // it's already shown so go ahead and keep it shown
 					|| !trueAttribute(this.container, 'mini'); // if the mini bar is hidden already, we can't be using anything in it
@@ -154,7 +158,7 @@ this.slimChrome = {
 					}, 100);
 				}
 				break;
-
+			}
 			case 'mouseover':
 				// don't show chrome when hovering popups in the menu bar as it's unnecessary and will only look weird
 				if(this.isMenuBarPopup(e)) { return; }
@@ -632,7 +636,7 @@ this.slimChrome = {
 					// safeguard against hiding the toolbars while the cursor is in the location bar,
 					// apparently this can happen sometimes, although it's very hard to reproduce, I haven't figured out the exact steps yet;
 					// see https://github.com/Quicksaver/The-Fox--Only-Better/issues/108
-					if(document.activeElement == gURLBar.inputField) {
+					if(document.activeElement == gURLBar.inputField && isAncestor(gURLBar, this.container)) {
 						if(this.container.hovers == 0) {
 							this.container.hovers++;
 							this.hoverTrue();
