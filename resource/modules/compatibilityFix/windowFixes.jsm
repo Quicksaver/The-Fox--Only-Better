@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.0.25
+// VERSION 1.0.26
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
@@ -10,10 +10,6 @@ Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/BrowserSearch');
 	Modules.load('compatibilityFix/identityBox');
 	Modules.load('compatibilityFix/popupNotifications');
-
-	AddonManager.getAddonByID('TabsTree@traxium', function(addon) {
-		Modules.loadIf('compatibilityFix/TabTree', (addon && addon.isActive));
-	});
 
 	AddonManager.getAddonByID('treestyletab@piro.sakura.ne.jp', function(addon) {
 		Modules.loadIf('compatibilityFix/TreeStyleTab', (addon && addon.isActive));
@@ -65,7 +61,6 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/BrowserSearch');
 	Modules.unload('compatibilityFix/identityBox');
 	Modules.unload('compatibilityFix/popupNotifications');
-	Modules.unload('compatibilityFix/TabTree');
 	Modules.unload('compatibilityFix/TreeStyleTab');
 	Modules.unload('compatibilityFix/RSSTicker');
 	Modules.unload('compatibilityFix/TabGroupsManager');

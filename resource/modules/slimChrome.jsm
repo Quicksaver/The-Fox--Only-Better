@@ -2,13 +2,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.30
+// VERSION 2.0.31
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
 this.__defineGetter__('customToolbars', function() { return $('customToolbars'); });
 this.__defineGetter__('TabsToolbar', function() { return $('TabsToolbar'); });
 this.__defineGetter__('VerticalTabs', function() { return window.VerticalTabs; });
+this.__defineGetter__('TabsInTitlebar', function() { return window.TabsInTitlebar; });
 this.__defineGetter__('MenuBar', function() { return $('toolbar-menubar'); });
 this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesToolbarHelper; });
 this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
@@ -37,10 +38,6 @@ this.slimChrome = {
 	MIN_LEFT: 22,
 	MIN_RIGHT: 22,
 	MIN_WIDTH: 550,
-
-	// how much (px) should the active area of the slimmer "extend" on windows with chromehidden~=menubar
-	// also affects the main window when Tree Style Tabs is enabled
-	EXTEND_CHROMEHIDDEN: 21,
 
 	get slimmer () { return $(objName+'-slimChrome-slimmer'); },
 	get container () { return $(objName+'-slimChrome-container'); },
@@ -315,15 +312,19 @@ this.slimChrome = {
 				let toolbarMenu = $('toolbar-context-menu');
 				if((toolbarMenu.state == 'showing' || toolbarMenu.state == 'open') && isAncestor(toolbarMenu.triggerNode, $('tabbrowser-tabs'))) { break; }
 
-				if(!document.documentElement.getAttribute('chromehidden').includes('menubar') && dispatch(this.container, { type: 'SlimChromeNormalActiveArea' })) {
-					// we also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count
+				if(TabsInTitlebar.enabled) {
+					// We also only need to show if the mouse is hovering the toolbox, leaving the window doesn't count.
 					if(e.screenY < gNavToolbox.boxObject.screenY
 					|| e.screenY > gNavToolbox.boxObject.screenY +gNavToolbox.boxObject.height
 					|| e.screenX < gNavToolbox.boxObject.screenX
 					|| e.screenX > gNavToolbox.boxObject.screenX +gNavToolbox.boxObject.width) { break; }
-				} else {
-					// in popup windows, we "extend the hover area" by pretending the slimmer is taller than it actually is
-					if(e.screenY < this.slimmer.boxObject.screenY -this.EXTEND_CHROMEHIDDEN
+				}
+				else {
+					// When not drawing tabs in the titlebar, we "extend the hover area" by pretending the slimmer is taller than it actually is.
+					// Find out how tall the titlebar of the window actually is, by the displacement of the slimmer to the window itself.
+					let displaced = this.slimmer.boxObject.screenY - window.screenY;
+
+					if(e.screenY < this.slimmer.boxObject.screenY -displaced
 					|| e.screenY > this.slimmer.boxObject.screenY
 					|| e.screenX < this.slimmer.boxObject.screenX
 					|| e.screenX > this.slimmer.boxObject.screenX +this.slimmer.boxObject.width) { break; }

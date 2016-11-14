@@ -2,20 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.0.0
+// VERSION 1.0.1
 
 this.TabCenter = {
 	id: 'tabcentertest1@mozilla.com',
-
-	handleEvent: function(e) {
-		switch(e.type) {
-			case 'SlimChromeNormalActiveArea':
-				// With Tab Center enabled, the tabs are placed on the side, so we should make it easier to show the chrome at the top.
-				e.preventDefault();
-				e.stopPropagation();
-				break;
-		}
-	},
 
 	observe: function(aSubject, aTopic, aData) {
 		if(Prefs.slimChrome) {
@@ -65,7 +55,6 @@ this.TabCenter = {
 			}';
 		Styles.load('tabCenter_'+_UUID, sscode, true);
 
-		Listeners.add(window, 'SlimChromeNormalActiveArea', this);
 		Watchers.addAttributeWatcher(document.documentElement, 'tabspinned', this, false, false);
 
 		if(self.slimChrome) {
@@ -75,7 +64,6 @@ this.TabCenter = {
 
 	disable: function() {
 		Styles.unload('tabCenter_'+_UUID);
-		Listeners.remove(window, 'SlimChromeNormalActiveArea', this);
 		Watchers.removeAttributeWatcher(document.documentElement, 'tabspinned', this, false, false);
 
 		if(!UNLOADED && Prefs.slimChrome && self.slimChrome) {
