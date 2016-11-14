@@ -172,92 +172,39 @@ window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onl
 
 #navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
 	border-radius: 0 !important;
-	padding: 2px 3px !important;
-
+	padding: var(--toolbarbutton-vertical-inner-padding) calc(var(--toolbarbutton-vertical-inner-padding) - 1px) !important;
 	/* needed because FF stylesheets set this width specifically as well */
-	width: 24px !important;
-}
-
-/* damn all these box-shadows to the deepest circles of hell!! */
-#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-	box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25);
-}
-#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):hover:active > .toolbarbutton-icon,
-#navigator-toolbox[slimStyle="compact"] #back-button[open="true"] > .toolbarbutton-icon {
-	box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25), 0 0.8px 0 0 hsla(210,80%,20%,.1) inset !important;
-}
-@media	(-moz-os-version: windows-xp),
-	(-moz-os-version: windows-vista),
-	(-moz-os-version: windows-win7) {
-		#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-			box-shadow:	0 0.8px 0 hsla(0,0%,100%,.3) inset,
-					0 0 0 0.8px hsla(0,0%,100%,.3) inset,
-					0 0 0 0.8px hsla(210,54%,20%,.25),
-					0 0.8px 0 hsla(210,54%,20%,.35) !important;
-		}
-		#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):not([open="true"]):not(:active):hover > .toolbarbutton-icon {
-			box-shadow:	0 0.8px 0 hsla(0,0%,100%,.3) inset,
-					0 0 0 0.8px hsla(0,0%,100%,.3) inset,
-					0 0 0 0.8px hsla(210,54%,20%,.3),
-					0 0.8px 0 hsla(210,54%,20%,.4),
-					0 0 4px hsla(210,54%,20%,.2) !important;
-		}
-		#navigator-toolbox[slimStyle="compact"] #back-button:not([disabled="true"]):hover:active > .toolbarbutton-icon,
-		#navigator-toolbox[slimStyle="compact"] #back-button[open="true"] > .toolbarbutton-icon {
-			box-shadow:	0 0.8px 0.8px hsla(210,54%,20%,.1) inset,
-					0 0 0.8px hsla(210,54%,20%,.2) inset,
-					0 0 0 0.8px hsla(210,54%,20%,.4),
-					0 0.8px 0 hsla(210,54%,20%,.2) !important;
-		}
-		#main-window:not([customizing]) #navigator-toolbox[slimStyle="compact"] #back-button[disabled] > .toolbarbutton-icon {
-			box-shadow: 0 0 0 0.8px hsla(210,54%,20%,.55), 0 0.8px 0 hsla(210,54%,20%,.65) !important;
-		}
-}
-
-@media (-moz-os-version: windows-win8) {
-	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-		box-shadow: 0 0.8px 0 0 hsla(210,4%,10%,.25), 0 0 0 0.8px hsla(210,4%,10%,.25);
-	}
-}
-
-@media	(-moz-os-version: windows-xp),
-	(-moz-os-version: windows-vista),
-	(-moz-os-version: windows-win7) {
-
-	#navigator-toolbox[slimStyle="compact"] #back-button,
-	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon {
-		border-radius: 2px 0 0 2px !important;
-	}
-}
-
-#navigator-toolbox[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
-	background-color: transparent !important;
+	/* actual value should be 24px, this is a trick to avoid out of place boundaries when using OS zoom (because borders aren't "zoomed") */
+	max-width: 23.5px !important;
 }
 
 #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
-	padding-left: 3px !important;
-
+	padding-left: var(--toolbarbutton-vertical-inner-padding) !important;
+	padding-right: calc(var(--toolbarbutton-vertical-inner-padding) - 1px) !important;
 	/* needed because FF stylesheets set this width specifically as well */
-	width: 25px !important;
-	height: 22px;
+	/* actual value should be 24px, this is a trick to avoid out of place boundaries when using OS zoom (because borders aren't "zoomed") */
+	max-width: 23.5px !important;
 }
 
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
-	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
-	-moz-margin-start: 0;
+@media (-moz-os-version: windows-win10) {
+	#navigator-toolbox[slimStyle="compact"] #back-button > .toolbarbutton-icon,
+	#navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
+		max-width: 26px !important;
+	}
 }
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
-	margin-left: -27px;
-}
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
-	/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
-	margin-left: -27.01px;
-}
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper > #forward-button:not(:hover) > .toolbarbutton-icon {
-	box-shadow: none;
-	border-top-color: rgba(23, 51, 78, 0.25);
-	border-bottom-color: rgba(23, 51, 78, 0.4);
-	border-right-color: rgba(23, 51, 78, 0.25);
+
+@media (-moz-os-version: windows-xp),
+	(-moz-os-version: windows-vista),
+	(-moz-os-version: windows-win7),
+	(-moz-os-version: windows-win8) {
+
+	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper > #forward-button[disabled] + #urlbar > #identity-box {
+		-moz-padding-start: 14px;
+	}
+
+	window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper:not(:hover) > #forward-button[disabled] + #urlbar > #identity-box {
+		-moz-padding-start: 14.01px;
+	}
 }
 
 /* appropriating this bit of code to also style the mini bar and the nav-bar in popup windows */

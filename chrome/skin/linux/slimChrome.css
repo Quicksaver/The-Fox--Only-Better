@@ -92,24 +92,11 @@ window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onl
 	border-radius: 2px 0 0 2px;
 	padding: 2px 3px;
 }
-#navigator-toolbox[slimStyle="compact"] #back-button:not(:hover) > .toolbarbutton-icon {
-	background-color: transparent;
-}
 
 #navigator-toolbox[slimStyle="compact"] #urlbar-wrapper #forward-button .toolbarbutton-icon {
-	padding-left: 3px;
-}
-
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
-	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
-	-moz-margin-start: 0;
-}
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper > #forward-button[disabled] {
-	margin-left: -28px;
-}
-window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper:not(:hover) > #forward-button[disabled] {
-	/* when not hovered anymore, trigger a new transition to hide the forward button immediately */
-	margin-left: -28.01px;
+	padding-left: 4px;
+	padding-right: 2px;
+	max-width: var(--forwardbutton-width);
 }
 
 /* appropriating this bit of code to also style the mini bar and the nav-bar in popup windows */

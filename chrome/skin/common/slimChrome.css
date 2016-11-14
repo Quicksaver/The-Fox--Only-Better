@@ -95,6 +95,11 @@ window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #t
 	padding-right: 3px;
 }
 
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #back-button + #urlbar-wrapper {
+	clip-path: url("chrome://browser/content/browser.xul#theFoxOnlyBetter-slimChrome-clipPath-urlbar-wrapper");
+	-moz-margin-start: -1px;
+}
+
 /* Australis style */
 
 #theFoxOnlyBetter-slimChrome-toolbars-before,
