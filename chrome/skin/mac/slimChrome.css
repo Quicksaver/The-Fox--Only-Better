@@ -5,13 +5,21 @@
 @namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
 @namespace svg url(http://www.w3.org/2000/svg);
 
-#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
+#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme),
+#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
 	-moz-appearance: none;
 	background: url(chrome://browser/skin/Toolbar-background-noise.png) hsl(0,0%,83%);
 }
+
 @media (-moz-mac-yosemite-theme) {
-	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme) {
+	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:not(#nav-bar):not(:-moz-lwtheme),
+	#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
 		background-image: none;
+	}
+
+	#theFoxOnlyBetter-slimChrome-toolbars > toolbar:-moz-window-inactive:not(#nav-bar):not(:-moz-lwtheme),
+	#theFoxOnlyBetter-slimChrome-container > *:-moz-window-inactive:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
+		background-color: hsl(0,0%,95%);
 	}
 }
 
@@ -24,13 +32,18 @@
 	height: 4px;
 }
 
-/* extra selectors to add specificity */
+/* extra selectors are for specificity */
 #navigator-toolbox > toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#TabsToolbar):not(#nav-bar):not(:-moz-lwtheme) {
 	background-image: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
 }
+
 @media (-moz-mac-yosemite-theme) {
 	#navigator-toolbox > toolbar#theFoxOnlyBetter-slimChrome-slimmer:not(#TabsToolbar):not(#nav-bar):not(:-moz-lwtheme) {
-		background-image: linear-gradient(hsl(0,0%,93%), hsl(0,0%,83%));
+		background-image: linear-gradient(hsl(0,0%,93%), hsl(0,0%,90%));
+	}
+
+	#navigator-toolbox > toolbar:-moz-window-inactive#theFoxOnlyBetter-slimChrome-slimmer:not(#TabsToolbar):not(#nav-bar):not(:-moz-lwtheme) {
+		background-image: linear-gradient(hsl(0,0%,97%), hsl(0,0%,97%));
 	}
 }
 
@@ -75,12 +88,18 @@
 	border-top: none !important;
 }
 
-#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
-	background: hsl(0,0%,83%) url(chrome://browser/skin/Toolbar-background-noise.png);
-}
-
 #navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
 	background-image: url(chrome://browser/skin/Toolbar-background-noise.png), linear-gradient(hsl(0,0%,91%) 0px, hsl(0,0%,83%) 36px, hsl(0,0%,83%));
+}
+
+@media (-moz-mac-yosemite-theme) {
+	#navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+		background-image: linear-gradient(hsl(0,0%,91%) 0px, hsl(0,0%,83%) 36px, hsl(0,0%,83%));
+	}
+
+	#navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):-moz-window-inactive {
+		background-image: linear-gradient(hsl(0,0%,97%) 0px, hsl(0,0%,95%) 36px, hsl(0,0%,95%));
+	}
 }
 
 /* all the selector stuff is for specificity... */
