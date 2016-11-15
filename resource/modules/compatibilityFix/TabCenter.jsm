@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.1.0
+// VERSION 1.1.1
 
 this.TabCenter = {
 	id: 'tabcentertest1@mozilla.com',
@@ -56,12 +56,13 @@ this.TabCenter = {
 	},
 
 	enable: function() {
+		// The Sky Lights shouldn't be visible above the veritcal tabs strip.
 		// Don't use an external sheet for this, it's just better to load this code per-window as necessary.
 		let sscode = '\
 			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
 			@-moz-document url("'+document.baseURI+'") {\n\
-				window['+objName+'_UUID="'+_UUID+'"] #verticaltabs-box {\n\
-					transition: box-shadow 150ms ease-out 300ms, width 150ms ease-out 300ms, z-index 0s ease-out 400ms;\n\
+				window['+objName+'_UUID="'+_UUID+'"]:not([tabspinned="true"]) #verticaltabs-box {\n\
+					transition: box-shadow 150ms, width 150ms, z-index 0s ease-out 400ms;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #verticaltabs-box:hover {\n\
 					z-index: 410;\n\
