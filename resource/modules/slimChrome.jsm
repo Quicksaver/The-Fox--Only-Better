@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.31
+// VERSION 2.0.32
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -480,9 +480,25 @@ this.slimChrome = {
 
 		// Compatibility with Test Pilot's Tab Center
 		if(VerticalTabs) {
-			// It's better to hardcode these values than to figure out the hover state of the tabs at any (every) point in time.
-			// These values are taken directly from Tab Center's CSS sheets.
-			let tabsWidth = trueAttribute(document.documentElement, 'tabspinned') ? 260 : 45;
+			let tabsWidth = 0;
+			if(!trueAttribute(document.documentElement, 'tabspinned')) {
+				// This is taken directly from Tab Center's CSS sheets.
+				tabsWidth = 45;
+			}
+			else {
+				// This is taken directly from Tab Center's CSS sheets.
+				tabsWidth = 260;
+				try {
+					// Value dynamically set by Tab Center when resizing the tabs.
+					let style = getComputedStyle(document.documentElement);
+					tabsWidth = style.getPropertyValue('--pinned-width');
+				}
+				catch(ex) {
+					// This shouldn't actually fail, but just in case it does, don't halt execution.
+					Cu.reportError(ex);
+				}
+			}
+
 			this.moveStyle.width -= tabsWidth;
 			// this box is always placed on the left
 			this.moveStyle.left += tabsWidth;
