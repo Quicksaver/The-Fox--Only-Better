@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.1.1
+// VERSION 1.1.2
 
 this.TabCenter = {
 	id: 'tabcentertest1@mozilla.com',
@@ -71,6 +71,7 @@ this.TabCenter = {
 		Styles.load('tabCenter_'+_UUID, sscode, true);
 
 		Watchers.addAttributeWatcher(document.documentElement, 'tabspinned', this, false, false);
+		Watchers.addAttributeWatcher(document.documentElement, 'tabspinnedwidth', this, false, false);
 
 		if(self.slimChrome) {
 			slimChrome.delayMove();
@@ -80,6 +81,7 @@ this.TabCenter = {
 	disable: function() {
 		Styles.unload('tabCenter_'+_UUID);
 		Watchers.removeAttributeWatcher(document.documentElement, 'tabspinned', this, false, false);
+		Watchers.removeAttributeWatcher(document.documentElement, 'tabspinnedwidth', this, false, false);
 
 		if(!UNLOADED && Prefs.slimChrome && self.slimChrome) {
 			slimChrome.delayMove();

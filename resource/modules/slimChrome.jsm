@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.32
+// VERSION 2.0.33
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -480,25 +480,11 @@ this.slimChrome = {
 
 		// Compatibility with Test Pilot's Tab Center
 		if(VerticalTabs) {
-			let tabsWidth = 0;
-			if(!trueAttribute(document.documentElement, 'tabspinned')) {
-				// This is taken directly from Tab Center's CSS sheets.
-				tabsWidth = 45;
+			let tabsWidth = trueAttribute(document.documentElement, 'tabspinned') ? VerticalTabs.pinnedWidth : 45;
+			let maxTabsWidth = document.width /2;
+			if(tabsWidth > maxTabsWidth) {
+				tabsWidth = maxTabsWidth;
 			}
-			else {
-				// This is taken directly from Tab Center's CSS sheets.
-				tabsWidth = 260;
-				try {
-					// Value dynamically set by Tab Center when resizing the tabs.
-					let style = getComputedStyle(document.documentElement);
-					tabsWidth = style.getPropertyValue('--pinned-width');
-				}
-				catch(ex) {
-					// This shouldn't actually fail, but just in case it does, don't halt execution.
-					Cu.reportError(ex);
-				}
-			}
-
 			this.moveStyle.width -= tabsWidth;
 			// this box is always placed on the left
 			this.moveStyle.left += tabsWidth;
