@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.0.1
+// VERSION 1.1.0
 
 this.TabCenter = {
 	id: 'tabcentertest1@mozilla.com',
@@ -26,7 +26,21 @@ this.TabCenter = {
 	},
 
 	onDisabled: function(addon) {
-		if(addon.id == this.id) { this.disable(); }
+		if(addon.id == this.id) {
+			this.disable();
+
+			// Make sure Slim Chrome is re-enabled (if necessary) after having been disabled to allow Tab Center to unload properly.
+			toggleSlimChrome();
+		}
+	},
+
+	onDisabling: function(addon) {
+		if(addon.id == this.id) {
+			// Tab Center has trouble deinitializing because it can't find the nav-bar in the toolbox.
+			// So we disable Slim Chrome to put it back, then re-enable it later once Tab Center is fully unloaded.
+			// (This can probably be safely removed once Tab Center is updated.)
+			Modules.unload('slimChrome');
+		}
 	},
 
 	listen: function() {
