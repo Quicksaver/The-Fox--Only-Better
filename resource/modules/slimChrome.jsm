@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.34
+// VERSION 2.0.35
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -468,15 +468,22 @@ this.slimChrome = {
 		this.moveStyle.right += document.documentElement.clientWidth -bounds.right;
 
 		// Compatibility with TreeStyleTab
-		if(TabsToolbar && !TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden') {
-			// This is also needed when the tabs are on the left, the width of the findbar doesn't follow with the rest of the window for some reason
-			let position = TabsToolbar.getAttribute('treestyletab-tabbar-position');
-			if(position == 'left' || position == 'right') {
-				let TabsSplitter = $ª($('content'), 'treestyletab-splitter', 'class');
-				let tabsWidth = TabsToolbar.clientWidth + TabsSplitter.clientWidth + (TabsSplitter.clientLeft *2);
-				this.moveStyle.width -= tabsWidth;
-				this.moveStyle[position] += tabsWidth;
+		let position = TabsToolbar && TabsToolbar.getAttribute('treestyletab-tabbar-position');
+		if(position == 'left' || position == 'right') {
+			let tabsWidth = 0;
+			if(!TabsToolbar.hasAttribute('treestyletab-tabbar-autohide-state') || TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') == 'shrunken') {
+				tabsWidth += gBrowser.treeStyleTab.splitter.boxObject.width;
+			} else {
+				tabsWidth += gBrowser.treeStyleTab._autoHide.toggler.boxObject.width;
 			}
+			if(!TabsToolbar.collapsed && TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'hidden' && gBrowser.treeStyleTab.splitter.getAttribute('state') != 'collapsed') {
+				tabsWidth += TabsToolbar.clientWidth;
+				if(TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') != 'shrunken') {
+					tabsWidth += gBrowser.treeStyleTab._autoHide.resizer.boxObject.width;
+				}
+			}
+			this.moveStyle.width -= tabsWidth;
+			this.moveStyle[position] += tabsWidth;
 		}
 
 		this.moveStyle.fullWidth = this.moveStyle.width +this.MIN_RIGHT +this.MIN_LEFT;
