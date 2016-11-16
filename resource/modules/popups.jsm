@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 3.0.9
+// VERSION 3.0.10
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -192,7 +192,9 @@ this.popups = {
 				// before a popup is opened. So the toolbar would temporarily start to hide because it is only stuck open *after*
 				// the popup is finished opening. This would cause some visual glitches in the popups, like them flashing, showing only the borders,
 				// or jumping to the top-left edge of the window.
-				slimChrome.initialShow(500);
+				if(trueAttribute(slimChrome.container, 'hover')) {
+					slimChrome.initialShow(500);
+				}
 				break;
 
 			case 'willSetMiniChrome':
