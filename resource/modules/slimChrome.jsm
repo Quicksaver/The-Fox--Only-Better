@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.36
+// VERSION 2.0.37
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -109,6 +109,10 @@ this.slimChrome = {
 
 			case 'slimAnimation':
 				this.animation();
+				break;
+
+			case 'slimOnlyOverContent':
+				this.delayMove();
 				break;
 		}
 	},
@@ -468,7 +472,7 @@ this.slimChrome = {
 		this.moveStyle.right += document.documentElement.clientWidth -bounds.right;
 
 		// Compatibility with TreeStyleTab
-		let position = TabsToolbar && TabsToolbar.getAttribute('treestyletab-tabbar-position');
+		let position = !useWholeWidth && TabsToolbar && TabsToolbar.getAttribute('treestyletab-tabbar-position');
 		if(position == 'left' || position == 'right') {
 			let tabsWidth = 0;
 			if(!TabsToolbar.hasAttribute('treestyletab-tabbar-autohide-state') || TabsToolbar.getAttribute('treestyletab-tabbar-autohide-state') == 'shrunken') {
@@ -491,7 +495,7 @@ this.slimChrome = {
 		this.moveStyle.fullRight = this.moveStyle.right -this.MIN_RIGHT;
 
 		// the full width style shouldn't cover the borders that appear for non-maximized windows in Windows 8 and below
-		if(!Prefs.slimOnlyOverContent) {
+		if(useWholeWidth) {
 			let leftBorder = LTR ? $('browser-border-start') : $('browser-border-end');
 			let rightBorder = LTR ? $('browser-border-end') : $('browser-border-start');
 			this.moveStyle.fullWidth -= leftBorder.clientWidth +rightBorder.clientWidth;
@@ -1158,6 +1162,7 @@ this.slimChrome = {
 
 		dispatch(this.container, { type: 'LoadedSlimChrome', cancelable: false });
 
+		Prefs.listen('slimOnlyOverContent', this);
 		this.move();
 	},
 
@@ -1204,6 +1209,7 @@ this.slimChrome = {
 
 		Prefs.unlisten('useMouse', this);
 		Prefs.unlisten('slimAnimation', this);
+		Prefs.unlisten('slimOnlyOverContent', this);
 
 		this.initialLoading = true;
 

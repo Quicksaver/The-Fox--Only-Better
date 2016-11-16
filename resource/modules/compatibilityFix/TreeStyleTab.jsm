@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.2
+// VERSION 2.0.3
 
 this.treeStyleTab = {
 	handleEvent: function(e) {
@@ -23,7 +23,7 @@ this.treeStyleTab = {
 				break;
 
 			case 'SlimChromeUseWholeWidth': {
-				let position = TabsToolbar && TabsToolbar.getAttribute('treestyletab-tabbar-position');
+				let position = Prefs.slimOnlyOverContent && TabsToolbar && TabsToolbar.getAttribute('treestyletab-tabbar-position');
 				if(position == 'left' || position == 'right') {
 					e.preventDefault();
 					e.stopPropagation();
