@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.4.8
+// VERSION 1.4.9
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -302,7 +302,7 @@ Modules.LOADMODULE = function() {
 				// (because of the keypresses in content? or maybe it's the rest of the StarUI handlers themselves doing it? haven't investigated this)
 				// at this point we're sure the panel will open, so we set this here to make sure focusPasswords() doesn't hide the mini bar
 				if(self.popups) {
-					popups.blocked = true;
+					popups.holdMini = true;
 				}
 
 				// the mini bar is not shown yet, so show it now

@@ -6,13 +6,15 @@
 @-moz-document url("chrome://browser/content/browser.xul") {
 
 	/* Only show the link part in the mini bar when hovering a link and using the Link Location Bar add-on */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) #identity-box,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="textbox-input-box"] {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) #identity-box,
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) [anonid="textbox-input-box"],
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) > #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar)[showInMiniBar="true"],
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) #nav-bar-customization-target > :not(#urlbar-container)[showInMiniBar="true"] {
 		visibility: collapse;
 	}
 
 	/* make sure it doesn't distort the bar too much, and that the link spans the whole bar as well */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="over-link-box"] {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) [anonid="over-link-box"] {
 		padding-top: 2px !important;
 		padding-bottom: 2px !important;
 	}
@@ -24,13 +26,13 @@
 	}
 
 	/* the mini bar should extend to show as much of the link as possible */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]),
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) #urlbar {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]),
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) #urlbar {
 		width: auto !important;
 	}
 
 	/* prevent the link from collapsing before the mini bar is fully hidden */
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) .urlbar-over-link-box:not([overlinkstate="showing"]) {
+	#theFoxOnlyBetter-slimChrome-container[onlyURLBar][altState]:not([hover]) .urlbar-over-link-box:not([overlinkstate="showing"]) {
 		opacity: 1 !important;
 		visibility: visible !important;
 	}

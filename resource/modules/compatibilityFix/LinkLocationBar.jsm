@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.4
+// VERSION 2.1.0
 
 this.__defineGetter__('LinkLocationBar', function() { return window.LinkLocationBar; });
 this.__defineGetter__('gURLBar', function() { return window.gURLBar; });
@@ -17,11 +17,10 @@ this.LLB = {
 
 			case 'UnloadingSlimChrome':
 				Listeners.remove(slimChrome.container, 'mouseover', this, true);
-				removeAttribute(slimChrome.container, 'overlinkstate');
 				break;
 
 			case 'mouseover':
-				if(!trueAttribute(slimChrome.container, 'overlinkstate')
+				if(!trueAttribute(slimChrome.container, 'altState')
 				|| !trueAttribute(slimChrome.container, 'onlyURLBar')
 				|| trueAttribute(slimChrome.container, 'hover')) {
 					return;
@@ -49,21 +48,18 @@ this.LLB = {
 	attrWatcher: function() {
 		if(!Prefs.includeNavBar) { return; }
 		if(!self.slimChrome) { return; }
-		if(self.popups && popups.blocked) { return; }
+		if(self.popups && popups.holdMini) { return; }
 
 		// show the link hover state immediately
 		if(gURLBar.getAttribute('overlinkstate') == 'showing') {
 			Timers.cancel('LBBlistener');
-			setAttribute(slimChrome.container, 'overlinkstate', 'true');
-			slimChrome.setMini(true);
-		// see if a password field is focused, if yes remove the attr immediately so the url is shown
+			slimChrome.setMini(true, true);
+		// see if a password field is focused, if yes show the url immediately
 		} else if(slimChrome.focusPasswords()) {
-			removeAttribute(slimChrome.container, 'overlinkstate');
 			slimChrome.miniSideSwitch(false);
-		// if not remove the overlinkstate attr only after the mini bar is hidden
+		// if not let it hide normally
 		} else {
 			Timers.init('LBBlistener', function() {
-				removeAttribute(slimChrome.container, 'overlinkstate');
 				slimChrome.miniSideSwitch(false);
 			}, 400);
 		}
@@ -73,7 +69,7 @@ this.LLB = {
 	reapply: function() {
 		LinkLocationBar.applyPrefs();
 
-		try{ Listeners.add(slimChrome.container, 'mouseover', this, true); }
+		try { Listeners.add(slimChrome.container, 'mouseover', this, true); }
 		catch(ex) {}
 	},
 
@@ -81,10 +77,10 @@ this.LLB = {
 		let sscode = '\
 			@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\n\
 			@-moz-document url("'+document.baseURI+'") {\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][altState]:not([hover]) {\n\
 					max-width: ' + Math.floor(slimChrome.lastStyle.width /2) + 'px;\n\
 				}\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][overlinkstate]:not([hover]) [anonid="over-link-box"] {\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][altState]:not([hover]) [anonid="over-link-box"] {\n\
 					max-width: ' + (Math.floor(slimChrome.lastStyle.width /2) -16) + 'px !important;\n\
 				}\n\
 			}';
@@ -131,11 +127,10 @@ Modules.UNLOADMODULE = function() {
 	Listeners.remove(window, 'UnloadingSlimChrome', LLB);
 	Listeners.remove(window, 'UnloadedSlimChrome', LLB);
 	Listeners.remove(window, 'MovedSlimChrome', LLB);
+	Listeners.remove(self.slimChrome && slimChrome.container, 'mouseover', this, true);
 	Prefs.unlisten('includeNavBar', LLB);
 
 	Styles.unload('LLBresize_'+_UUID);
-
-	LLB.reapply();
 
 	if(UNLOADED) {
 		Styles.unload('LinkLocationBar');

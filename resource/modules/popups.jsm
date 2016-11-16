@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 3.0.10
+// VERSION 3.0.11
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -37,7 +37,7 @@ this.popups = {
 	// set of popup ids that are ok to be shown with only the mini bar
 	mini: new Set(),
 
-	blocked: false,
+	holdMini: false,
 	hovered: null,
 	held: new Set(),
 	release: new Map(),
@@ -143,8 +143,8 @@ this.popups = {
 						// otherwise it would look weird and the panels would always end up a bit off from their supposed anchor;
 						// this still causes the panel to sort of jump a bit most times, the only alternative is to try to open the panel only after the
 						// mini bar has actually been shown
+						this.holdMini = true;
 						slimChrome.quickShowMini();
-						this.blocked = true;
 					}
 					else {
 						if(!trueAttribute(slimChrome.container, 'fullWidth')) {
@@ -160,6 +160,7 @@ this.popups = {
 						if(ee.originalTarget != e.originalTarget) { return; }
 
 						Listeners.remove(target, 'popuphidden', selfRemover);
+
 						if(this.hovered == target) {
 							// it's unlikely that a mouseout will occur once the popup is hidden,
 							// so make sure to undo whatever mouseover event hovered the popup
@@ -172,9 +173,9 @@ this.popups = {
 						target.collapsed = false;
 
 						if(typeof(slimChrome) != 'undefined') {
-							if(this.blocked) {
+							if(this.holdMini) {
+								this.holdMini = false;
 								slimChrome.hideMiniInABit();
-								this.blocked = false;
 							}
 							slimChrome.setHover(false);
 						}
@@ -197,9 +198,12 @@ this.popups = {
 				}
 				break;
 
-			case 'willSetMiniChrome':
+			case 'WillSetMiniChrome':
 				// e.detail is if setting or unsetting mini state
-				if(e.detail) { this.blocked = false; }
+				if(this.holdMini && !e.detail) {
+					e.preventDefault();
+					e.stopPropagation();
+				}
 				break;
 
 			case 'FinishedSlimChromeWidth':
@@ -244,7 +248,7 @@ this.popups = {
 		// if a menu or a panel is opened from the toolbox, keep it shown
 		Listeners.add(window, 'popupshowing', this);
 		Listeners.add(window, 'popupshown', this);
-		Listeners.add(slimChrome.container, 'willSetMiniChrome', this);
+		Listeners.add(slimChrome.container, 'WillSetMiniChrome', this, true);
 		Listeners.add(slimChrome.container, 'FinishedSlimChromeWidth', this);
 		Listeners.add(slimChrome.container, 'click', this);
 
@@ -258,7 +262,7 @@ this.popups = {
 
 		Listeners.remove(window, 'popupshowing', this);
 		Listeners.remove(window, 'popupshown', this);
-		Listeners.remove(slimChrome.container, 'willSetMiniChrome', this);
+		Listeners.remove(slimChrome.container, 'WillSetMiniChrome', this, true);
 		Listeners.remove(slimChrome.container, 'FinishedSlimChromeWidth', this);
 		Listeners.remove(slimChrome.container, 'click', this);
 	}

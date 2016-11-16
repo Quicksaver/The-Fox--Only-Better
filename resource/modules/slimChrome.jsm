@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.35
+// VERSION 2.0.36
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -699,18 +699,19 @@ this.slimChrome = {
 		}, 500);
 	},
 
-	setMini: function(mini) {
+	setMini: function(show, altState) {
 		if(!Prefs.includeNavBar) { return; }
 
-		dispatch(this.container, { type: 'willSetMiniChrome', cancelable: false, detail: mini });
+		if(!dispatch(this.container, { type: 'WillSetMiniChrome', cancelable: false, detail: show })) { return; };
 
-		if(mini) {
+		if(show) {
 			Timers.cancel('onlyURLBar');
 			Timers.cancel('setMini');
 			this.in();
 			setAttribute(this.container, 'mini', 'true');
 			setAttribute(this.container, 'onlyURLBar', 'true');
 			setAttribute(gNavToolbox, 'slimChromeVisible', 'true');
+			toggleAttribute(this.container, 'altState', altState);
 		} else {
 			// aSync so the toolbox focus handler knows what it's doing
 			Timers.init('setMini', () => {
@@ -728,6 +729,7 @@ this.slimChrome = {
 				// let chrome hide completely before showing the rest of the UI
 				Timers.init('onlyURLBar', () => {
 					removeAttribute(this.container, 'onlyURLBar');
+					removeAttribute(this.container, 'altState');
 					toggleAttribute(gNavToolbox, 'slimChromeVisible', trueAttribute(this.container, 'hover'));
 				}, this.slimAnimation == 'hinge' ? 500 : 300);
 			}, 50);
@@ -956,6 +958,7 @@ this.slimChrome = {
 		}
 		else if((unload || !Prefs.includeNavBar) && isAncestor(gNavBar, this.container)) {
 			removeAttribute(gNavToolbox, 'slimChromeNavBar');
+			removeAttribute(this.container, 'altState');
 
 			this.deinitOverflowable(gNavBar);
 
@@ -1012,7 +1015,7 @@ this.slimChrome = {
 		setAttribute(gNavToolbox, 'slimAnimation', this.slimAnimation);
 	},
 
-	quickShowMini: function() {
+	quickShowMini: function(altState) {
 		// disable the animation temporarily, so that the mini bar appears immediately
 		if(!trueAttribute(this.container, 'mini')) {
 			setAttribute(gNavToolbox, 'slimAnimation', 'none');
@@ -1021,7 +1024,7 @@ this.slimChrome = {
 			}, 0);
 		}
 
-		this.setMini(true);
+		this.setMini(true, altState);
 	},
 
 	// make sure the currently focused element stays focused after initializing
