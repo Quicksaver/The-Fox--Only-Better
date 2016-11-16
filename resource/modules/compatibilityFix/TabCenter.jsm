@@ -2,10 +2,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.1.2
+// VERSION 1.1.3
 
 this.TabCenter = {
 	id: 'tabcentertest1@mozilla.com',
+
+	handleEvent: function(e) {
+		// e.type == 'SlimChromeUseWholeWidth'
+		// Older versions of Tab Center don't have this attribute, so it's always "on".
+		if(!document.documentElement.hasAttribute('toggledon') || document.documentElement.getAttribute('toggledon') == 'true') {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	},
 
 	observe: function(aSubject, aTopic, aData) {
 		if(Prefs.slimChrome) {
@@ -73,6 +82,8 @@ this.TabCenter = {
 		Watchers.addAttributeWatcher(document.documentElement, 'tabspinned', this, false, false);
 		Watchers.addAttributeWatcher(document.documentElement, 'tabspinnedwidth', this, false, false);
 
+		Listeners.add(window, 'SlimChromeUseWholeWidth', this, true);
+
 		if(self.slimChrome) {
 			slimChrome.delayMove();
 		}
@@ -82,6 +93,7 @@ this.TabCenter = {
 		Styles.unload('tabCenter_'+_UUID);
 		Watchers.removeAttributeWatcher(document.documentElement, 'tabspinned', this, false, false);
 		Watchers.removeAttributeWatcher(document.documentElement, 'tabspinnedwidth', this, false, false);
+		Listeners.remove(window, 'SlimChromeUseWholeWidth', this, true);
 
 		if(!UNLOADED && Prefs.slimChrome && self.slimChrome) {
 			slimChrome.delayMove();

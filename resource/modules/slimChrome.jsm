@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.33
+// VERSION 2.0.34
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -459,7 +459,8 @@ this.slimChrome = {
 		};
 
 		// by default Slim Chrome will occupy the whole window width, including the sidebars
-		let clientView = !Prefs.slimOnlyOverContent ? $('browser') : $('content');
+		let useWholeWidth = !Prefs.slimOnlyOverContent && dispatch(this.container, { type: 'SlimChromeUseWholeWidth' });
+		let clientView = useWholeWidth ? $('browser') : $('content');
 
 		let bounds = clientView.getBoundingClientRect();
 		this.moveStyle.width += bounds.width;
@@ -476,18 +477,6 @@ this.slimChrome = {
 				this.moveStyle.width -= tabsWidth;
 				this.moveStyle[position] += tabsWidth;
 			}
-		}
-
-		// Compatibility with Test Pilot's Tab Center
-		if(VerticalTabs) {
-			let tabsWidth = trueAttribute(document.documentElement, 'tabspinned') ? VerticalTabs.pinnedWidth : 45;
-			let maxTabsWidth = document.width /2;
-			if(tabsWidth > maxTabsWidth) {
-				tabsWidth = maxTabsWidth;
-			}
-			this.moveStyle.width -= tabsWidth;
-			// this box is always placed on the left
-			this.moveStyle.left += tabsWidth;
 		}
 
 		this.moveStyle.fullWidth = this.moveStyle.width +this.MIN_RIGHT +this.MIN_LEFT;
