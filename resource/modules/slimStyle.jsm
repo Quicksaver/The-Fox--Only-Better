@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.13
+// VERSION 2.0.14
 
 this.__defineGetter__('DevEdition', function() { return window.DevEdition; });
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
@@ -86,13 +86,6 @@ this.slimStyle = {
 	AUSTRALIS_BORDER_COORD_Y4: 0.985,
 	AUSTRALIS_BORDER_COORD_X5: 1,
 	AUSTRALIS_BORDER_COORD_Y5: 1,
-
-	// some gradients for use with personas
-	bgGradientWINNT: 'rgba(255,255,255,.35) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
-	bgGradientLINUX: 'rgba(255,255,255,.25) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)',
-	bgFlatWINNT: 'rgba(255,255,255,.4), rgba(255,255,255,.4)',
-	bgFlatLINUX: 'rgba(255,255,255,.4), rgba(255,255,255,.4)',
-	bgFlatDARWIN: 'rgba(253,253,253,0.45), rgba(253,253,253,0.45)',
 
 	handleEvent: function(e) {
 		switch(e.type) {
@@ -337,32 +330,35 @@ this.slimStyle = {
 			return;
 		}
 
-		var containerStyle = getComputedStyle(slimChrome.container);
-		var marginTop = parseInt(containerStyle.marginTop);
-		var offsetY = -slimChrome.container.boxObject.y;
+		let containerStyle = getComputedStyle(slimChrome.container);
+		let marginTop = parseInt(containerStyle.marginTop);
+		let offsetY = -slimChrome.container.boxObject.y;
 		if(marginTop < 2) {
 			offsetY += parseInt(containerStyle.marginTop);
 		}
 
-		var borderStart = (containerStyle.direction == 'ltr') ? parseInt(containerStyle.borderLeftWidth) : parseInt(containerStyle.borderRightWidth);
+		let borderStart = (containerStyle.direction == 'ltr') ? parseInt(containerStyle.borderLeftWidth) : parseInt(containerStyle.borderRightWidth);
+		let offsetX = slimChrome.lastStyle.right + borderStart;
+		let fullOffsetX = slimChrome.lastStyle.fullRight + borderStart;
+		let australisOffsetX = offsetX + this.AUSTRALIS_BORDER_WIDTH + this.AUSTRALIS_BORDER_MARGIN_ADJUST_TOOLBARS;
+		let australisOffsetXLeft = slimChrome.lastStyle.right + slimChrome.lastStyle.width - this.AUSTRALIS_BORDER_WIDTH;
+		let australisOffsetXRight = slimChrome.lastStyle.right;
 
-		// +1/-1 compensates for borders misplacement in CSS
-		if(LTR) {
-			var offsetX = -slimChrome.lastStyle.left +document.documentElement.clientWidth -borderStart;
-			var fullOffsetX = -slimChrome.lastStyle.fullLeft +document.documentElement.clientWidth -borderStart;
-			var australisOffsetX = offsetX -this.AUSTRALIS_BORDER_WIDTH -this.AUSTRALIS_BORDER_MARGIN_ADJUST_TOOLBARS;
-			var australisOffsetXLeft = offsetX +1;
-			var australisOffsetXRight = slimChrome.lastStyle.right +this.AUSTRALIS_BORDER_WIDTH +borderStart -1;
+		let bgImage = this.lwtheme.bgImage;
+		let bgGradient;
+		let bgFlat;
+		if(WINNT) {
+			bgGradient = 'rgba(255,255,255,.35) 0px, rgba(255,255,255,0) 36px, rgba(255,255,255,0)';
+			bgFlat = 'rgba(255,255,255,.4), rgba(255,255,255,.4)';
+		} else if(DARWIN) {
+			bgGradient = 'rgba(253,253,253,0.45), rgba(253,253,253,0.45)';
+			bgFlat = 'rgba(253,253,253,0.45), rgba(253,253,253,0.45)';
+			bgImage += ', url("chrome://browser/skin/Toolbar-background-noise.png")'
 		} else {
-			var offsetX = -slimChrome.lastStyle.right -borderStart;
-			var fullOffsetX = -slimChrome.lastStyle.fullRight -borderStart;
-			var australisOffsetX = offsetX -this.AUSTRALIS_BORDER_WIDTH -this.AUSTRALIS_BORDER_MARGIN_ADJUST_TOOLBARS;
-			var australisOffsetXRight = offsetX +1;
-			var australisOffsetXLeft = -document.documentElement.clientWidth +slimChrome.lastStyle.left +this.AUSTRALIS_BORDER_WIDTH +borderStart -1;
+			bgGradient = 'rgba(255,255,255,.4), rgba(255,255,255,.4)';
+			bgFlat = 'rgba(255,255,255,.4), rgba(255,255,255,.4)';
 		}
 
-		let bgGradient = (WINNT) ? this.bgGradientWINNT : (DARWIN) ? this.bgFlatDARWIN : this.bgGradientLINUX;
-		let bgFlat = (WINNT) ? this.bgFlatWINNT : (DARWIN) ? this.bgFlatDARWIN : this.bgFlatLINUX;
 		/* Compatibility with CTR's "Navigation Toolbar: Remove Background Color": with lwthemes it should show the image, not the gradient */
 		if(CTR && Prefs.nonavbarbg && CTR.fxdefaulttheme) {
 			bgGradient = 'transparent, transparent';
@@ -381,38 +377,43 @@ this.slimStyle = {
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
-					background-image: linear-gradient('+((DARWIN) ? bgFlat : 'transparent, transparent')+'), ' + this.lwtheme.bgImage + ' !important;\n\
+					background-image: linear-gradient('+((DARWIN) ? bgFlat : 'transparent, transparent')+'), ' + bgImage + ' !important;\n\
 				}\n\
-				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
-					background-image: linear-gradient('+bgFlat+'), ' + this.lwtheme.bgImage + ' !important;\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+					background-image: linear-gradient('+bgFlat+'), ' + bgImage + ' !important;\n\
 				}\n\
 				@media	(-moz-os-version: windows-xp),\n\
 					(-moz-os-version: windows-vista),\n\
 					(-moz-os-version: windows-win7) {\n\
+					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimChromeNavBar]) #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
+					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimChromeNavBar]) #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
+					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox:not([slimChromeNavBar]) #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
+						background-image: linear-gradient(transparent, transparent), ' + bgImage + ' !important;\n\
+					}\n\
 					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
 					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-before,\n\
 					window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimChromeNavBar] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars-after {\n\
-						background-image: linear-gradient('+bgGradient+'), ' + this.lwtheme.bgImage + ' !important;\n\
+						background-image: linear-gradient('+bgGradient+'), ' + bgImage + ' !important;\n\
 					}\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars {\n\
-					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+offsetX+'px top '+offsetY+'px !important;\n\
+					background-position: 0% 0%, calc(100% + '+offsetX+'px) '+offsetY+'px !important;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="full"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n\
-					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+fullOffsetX+'px top '+offsetY+'px !important;\n\
+					background-position: 0% 0%, calc(100% + '+fullOffsetX+'px) '+offsetY+'px !important;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #navigator-toolbox[slimStyle="australis"] #'+objName+'-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #'+objName+'-slimChrome-toolbars {\n\
-					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetX+'px top '+offsetY+'px !important;\n\
+					background-position: 0% 0%, calc(100% + '+australisOffsetX+'px) '+offsetY+'px !important;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before:-moz-locale-dir(ltr),\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after:-moz-locale-dir(rtl) {\n\
-					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetXLeft+'px top '+offsetY+'px !important;\n\
+					background-position: 0% 0%, calc(100% + '+australisOffsetXLeft+'px) '+offsetY+'px !important;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after:-moz-locale-dir(ltr),\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before:-moz-locale-dir(rtl) {\n\
-					background-position: 0% 0%, '+((RTL) ? 'right' : 'left')+' '+australisOffsetXRight+'px top '+offsetY+'px !important;\n\
+					background-position: 0% 0%, calc(100% + '+australisOffsetXRight+'px) '+offsetY+'px !important;\n\
 				}\n\
 			}';
 

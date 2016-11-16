@@ -41,12 +41,12 @@
 	padding-bottom: 1px;
 }
 
-#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+#theFoxOnlyBetter-slimChrome-container > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom):not(:-moz-lwtheme) {
 	background-color: -moz-dialog;
 }
 
-#navigator-toolbox[slimChromeNavBar] #theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
-	background-image: linear-gradient(rgba(255,255,255,.4), rgba(255,255,255,.4));
+#theFoxOnlyBetter-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > *:not(#theFoxOnlyBetter-slimChrome-toolbars-bottom) {
+	background-image: linear-gradient(hsla(0,0%,100%,.15), hsla(0,0%,100%,.15));
 }
 
 #theFoxOnlyBetter-slimChrome-container #nav-bar {
