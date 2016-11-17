@@ -130,30 +130,42 @@
 
 /* mini chrome, the hover style always overrides all of this */
 
-window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
-	-moz-border-start: 1px solid ThreeDShadow;
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #urlbar {
 	margin-left: 3px;
+	-moz-border-start: 1px solid;
+	-moz-border-start-color: var(--urlbar-border-color);
 }
 
-/* these are so the identity box doesn't jump around when going back/forward in the tab history */
-window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
-	-moz-margin-start: 0;
-}
-window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box {
-	padding-left: 3px;
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:hover {
+	-moz-border-start-color: var(--urlbar-border-color-hover);
 }
 
-@media	(-moz-os-version: windows-vista),
-	(-moz-os-version: windows-win7) {
+@media (-moz-windows-default-theme) {
+	@media (-moz-os-version: windows-vista),
+		(-moz-os-version: windows-win7),
+		(-moz-os-version: windows-win8) {
 
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
-		border-top-left-radius: 2px;
-		border-bottom-left-radius: 2px;
+		window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #urlbar {
+			-moz-border-start-color: hsla(210,54%,20%,.25);
+		}
+
+		window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:hover {
+			-moz-border-start-color: hsla(210,54%,20%,.35);
+		}
 	}
-	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
-		border-top-right-radius: 2px;
-		border-bottom-right-radius: 2px;
+
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+		border-radius: 1px;
 	}
+}
+
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target {
+	-moz-padding-end: 1px;
+}
+
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target .toolbarbutton-1[showInMiniBar] .toolbarbutton-icon {
+	min-height: 24px;
+	min-width: 32px;
 }
 
 /* tab drop indicator would be cutoff, see bug 886281 and 936076 */
@@ -307,22 +319,7 @@ svg|*#theFoxOnlyBetter-slimChrome-svg-after-path:-moz-lwtheme {
 }
 
 /* hide the bookmarks button dropmarker when it's in the mini bar */
-#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
-	-moz-border-end: 1px solid transparent;
-}
-#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button:hover > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
-#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button[open] > .toolbarbutton-icon {
-	border-color: hsla(210,4%,10%,.1);
-}
-@media	(-moz-os-version: windows-xp),
-	(-moz-os-version: windows-vista),
-	(-moz-os-version: windows-win7) {
-
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
-		border-radius: 2px;
-	}
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button:hover > .toolbarbutton-menubutton-button > .toolbarbutton-icon,
-	#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #bookmarks-menu-button > .toolbarbutton-menubutton-button[open] > .toolbarbutton-icon {
-		border-color: hsla(210,54%,20%,.15) hsla(210,54%,20%,.2) hsla(210,54%,20%,.25);
-	}
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #bookmarks-menu-button.toolbarbutton-1 > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
+	-moz-border-end-style: solid;
+	border-radius: 1px;
 }

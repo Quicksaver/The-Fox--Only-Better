@@ -126,26 +126,25 @@
 /* mini chrome, the hover style always overrides all of this */
 
 #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
-	-moz-border-start: 1px solid #9d9d9d;
-	margin-left: 4px;
+	margin-left: 3px;
+	border-radius: 3px;
 }
 
-window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(ltr) {
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	-moz-border-start: 1px solid hsla(0,0%,0%,.35);
 }
-window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-locale-dir(rtl) {
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+
+@media (-moz-mac-yosemite-theme) {
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+		-moz-border-start-color: #fff;
+	}
+	window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar:-moz-window-inactive {
+		-moz-border-start-color: rgba(0,0,0,0.1);
+	}
 }
 
 #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar-customization-target {
 	padding: 1px 0;
-}
-
-/* these are so the identity box doesn't jump around when going back/forward in the tab history */
-window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-wrapper > #forward-button[disabled] + #urlbar > #notification-popup-box[hidden] + #identity-box > #page-proxy-favicon {
-	-moz-margin-start: -6px;
 }
 
 /* compact style */

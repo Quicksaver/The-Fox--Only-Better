@@ -65,6 +65,10 @@
 	clip-path: none;
 }
 
+window:not([chromehidden~="toolbar"]) #theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #urlbar-container > #urlbar-wrapper > #urlbar {
+	--backbutton-urlbar-overlap: 0px;
+}
+
 /* round style */
 
 window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="round"] #theFoxOnlyBetter-slimChrome-container:-moz-any(:not([mini]),[mini][hover]) {
