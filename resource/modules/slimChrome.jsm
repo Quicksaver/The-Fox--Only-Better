@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.38
+// VERSION 2.0.39
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -15,6 +15,7 @@ this.__defineGetter__('PlacesToolbarHelper', function() { return window.PlacesTo
 this.__defineGetter__('PlacesToolbar', function() { return PlacesToolbarHelper._viewElt; });
 this.__defineGetter__('tabDropIndicator', function() { return $('tabbrowser-tabs')._tabDropIndicator; });
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
+this.__defineGetter__('ToolbarIconColor', function() { return window.ToolbarIconColor; });
 
 this.ensureNotAllDisabled = function() {
 	// skyLights may not have initialized DnDprefs yet (or at all), so we need to make sure we get the identityBox light enabled status here,
@@ -903,6 +904,8 @@ this.slimChrome = {
 
 	childObserver: null,
 	childHandler: function(mutations) {
+		let toolbarMoved = false;
+
 		for(let m of mutations) {
 			if(m.addedNodes) {
 				for(let n of m.addedNodes) {
@@ -912,6 +915,7 @@ this.slimChrome = {
 					var prevSibling = n.previousSibling;
 					while(prevSibling) {
 						if(prevSibling == customToolbars) {
+							toolbarMoved = true;
 							this.toolbars.appendChild(n);
 							if(gNavToolbox.externalToolbars.indexOf(n) == -1) {
 								gNavToolbox.externalToolbars.push(n);
@@ -922,6 +926,10 @@ this.slimChrome = {
 					}
 				}
 			}
+		}
+
+		if(toolbarMoved) {
+			ToolbarIconColor.inferFromText();
 		}
 	},
 
@@ -986,6 +994,9 @@ this.slimChrome = {
 
 		// no point in continuing if nothing changed
 		else { return; }
+
+		// Update its brighttext attribute.
+		ToolbarIconColor.inferFromText();
 
 		// make sure the urlbar keeps its value
 		window.URLBarSetURI();
@@ -1091,13 +1102,13 @@ this.slimChrome = {
 		this.includeNavBar();
 
 		// also append all other custom toolbars
-		var toolbar = customToolbars;
+		let toolbar = customToolbars;
 		while(toolbar.nextSibling) {
 			toolbar = toolbar.nextSibling;
 			if(slimChromeExceptions.has(toolbar.id)) { continue; }
 			if(toolbar.nodeName != 'toolbar') { continue; }
 
-			var toMove = toolbar;
+			let toMove = toolbar;
 			toolbar = toolbar.previousSibling;
 			this.toolbars.appendChild(toMove);
 
@@ -1110,6 +1121,38 @@ this.slimChrome = {
 
 		// re-initialized the Places Toolbar
 		PlacesToolbarHelper.init();
+
+		// Apply brighttext properly to our toolbars, by default it only checks direct children of navigaton-toolbox.
+		Piggyback.add('slimChrome', ToolbarIconColor, 'inferFromText', () => {
+			if(!ToolbarIconColor._initialized) { return; }
+
+			let parseRGB = function(aColorString) {
+				let rgb = aColorString.match(/^rgba?\((\d+), (\d+), (\d+)/);
+				rgb.shift();
+				return rgb.map(x => parseInt(x));
+			};
+
+			// The getComputedStyle calls and setting the brighttext are separated in
+			// two loops to avoid flushing layout and making it dirty repeatedly.
+
+			let luminances = new Map;
+			for(let toolbar of this.toolbars.childNodes) {
+				if(toolbar.nodeName != 'toolbar' || toolbar.collapsed || (DARWIN && toolbar.getAttribute('type') == 'menubar')) { continue; }
+
+				let [ r, g, b ] = parseRGB(getComputedStyle(toolbar).color);
+				let luminance = 0.2125 * r + 0.7154 * g + 0.0721 * b;
+				luminances.set(toolbar, luminance); console.log({ toolbar, luminance, r, g, b });
+			}
+
+			for(let [toolbar, luminance] of luminances) {
+				if(luminance <= 110) {
+					toolbar.removeAttribute("brighttext");
+				} else {
+					toolbar.setAttribute("brighttext", "true");
+				}
+			}
+		}, Piggyback.MODE_AFTER);
+		ToolbarIconColor.inferFromText();
 
 		// should the toolbars react to mouse events
 		Prefs.listen('useMouse', this);
@@ -1259,6 +1302,9 @@ this.slimChrome = {
 		}
 
 		PlacesToolbarHelper.init();
+
+		Piggyback.revert('slimChrome', ToolbarIconColor, 'inferFromText');
+		ToolbarIconColor.inferFromText();
 
 		if(focused && !isAncestor(document.commandDispatcher.focusedElement, focused)) {
 			focused.focus();
