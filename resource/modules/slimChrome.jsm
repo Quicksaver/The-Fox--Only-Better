@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.39
+// VERSION 2.0.40
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -1141,7 +1141,7 @@ this.slimChrome = {
 
 				let [ r, g, b ] = parseRGB(getComputedStyle(toolbar).color);
 				let luminance = 0.2125 * r + 0.7154 * g + 0.0721 * b;
-				luminances.set(toolbar, luminance); console.log({ toolbar, luminance, r, g, b });
+				luminances.set(toolbar, luminance);
 			}
 
 			for(let [toolbar, luminance] of luminances) {
