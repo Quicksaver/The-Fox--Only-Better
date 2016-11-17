@@ -242,11 +242,11 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 
 /* australis style */
 
-#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) {
 	border-color: transparent;
 }
 
-#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom {
 	border-bottom: 1px solid ThreeDShadow;
 }
 
@@ -254,7 +254,7 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 	@media	(-moz-os-version: windows-vista),
 		(-moz-os-version: windows-win7) {
 
-		#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
+		window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
 			border-bottom-color: #aabccf;
 		}
 	}
@@ -262,13 +262,13 @@ window[chromehidden~="toolbar"] #nav-bar .toolbarbutton-1 > .toolbarbutton-menub
 	@media	(-moz-os-version: windows-win8),
 		(-moz-os-version: windows-win10) {
 
-		#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
+		window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:not(:-moz-lwtheme) {
 			border-color: #c2c2c2;
 		}
 	}
 }
 
-#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:-moz-lwtheme {
+window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-container:-moz-any([hover],:not([onlyURLBar])) #theFoxOnlyBetter-slimChrome-toolbars-bottom:-moz-lwtheme {
 	border-color: rgba(0,0,0,.3);
 }
 
