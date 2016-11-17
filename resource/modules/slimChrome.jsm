@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.37
+// VERSION 2.0.38
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -952,6 +952,14 @@ this.slimChrome = {
 	},
 
 	includeNavBar: function(unload) {
+		// Without this, the container still exists in windows with most of the chrome hidden, but will likely
+		// have no toolbars at all to show, so it looks like a ghost container with only its borders.
+		if(Prefs.includeNavBar) {
+			this.container.classList.remove('chromeclass-toolbar-additional');
+		} else {
+			this.container.classList.add('chromeclass-toolbar-additional');
+		}
+
 		if(!unload && Prefs.includeNavBar && !isAncestor(gNavBar, this.container)) {
 			this.toolbars.insertBefore(gNavBar, this.toolbars.firstChild);
 
@@ -962,6 +970,8 @@ this.slimChrome = {
 		}
 		else if((unload || !Prefs.includeNavBar) && isAncestor(gNavBar, this.container)) {
 			removeAttribute(gNavToolbox, 'slimChromeNavBar');
+			removeAttribute(this.container, 'onlyURLBar');
+			removeAttribute(this.container, 'mini');
 			removeAttribute(this.container, 'altState');
 
 			this.deinitOverflowable(gNavBar);
