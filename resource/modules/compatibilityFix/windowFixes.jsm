@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.0.26
+// VERSION 1.0.27
 
 Modules.LOADMODULE = function() {
 	Modules.load('compatibilityFix/downloadsIndicator');
@@ -25,10 +25,6 @@ Modules.LOADMODULE = function() {
 
 	AddonManager.getAddonByID("status4evar@caligonstudios.com", function(addon) {
 		Modules.loadIf('compatibilityFix/S4E', (addon && addon.isActive));
-	});
-
-	AddonManager.getAddonByID("linklocationbar@gnt.de", function(addon) {
-		Modules.loadIf('compatibilityFix/LinkLocationBar', (addon && addon.isActive));
 	});
 
 	AddonManager.getAddonByID("{F5DDF39C-9293-4d5e-9AA8-E04E6DD5E9B4}", function(addon) {
@@ -65,7 +61,6 @@ Modules.UNLOADMODULE = function() {
 	Modules.unload('compatibilityFix/RSSTicker');
 	Modules.unload('compatibilityFix/TabGroupsManager');
 	Modules.unload('compatibilityFix/S4E');
-	Modules.unload('compatibilityFix/LinkLocationBar');
 	Modules.unload('compatibilityFix/hackBar');
 	Modules.unload('compatibilityFix/AniWeather');
 	Modules.unload('compatibilityFix/diigoTb');
