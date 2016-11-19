@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.1.0
+// VERSION 2.1.1
 
 this.S4E = {
 	activeProgress: false,
@@ -37,9 +37,14 @@ this.S4E = {
 				break;
 
 			case 'WillSetMiniChrome':
-				if(this.activeProgress && !e.detail) {
+				if(this.activeProgress && !e.detail.show) {
 					e.preventDefault();
 					e.stopPropagation();
+				}
+				if(!e.detail.altState) {
+					// Don't let the current location overflow out of the mini bar.
+					gURLBar._overLinkBox.maxWidth = "0px";
+					gURLBar._overLinkBox.minWidth = "";
 				}
 				break;
 
@@ -153,6 +158,7 @@ this.S4E = {
 			@-moz-document url("'+document.baseURI+'") {\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][altState]:not([hover]) {\n\
 					max-width: ' + Math.floor(slimChrome.lastStyle.width /2) + 'px;\n\
+					min-width: ' + Math.floor(slimChrome.lastStyle.width /2) + 'px;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container[onlyURLBar][altState]:not([hover]) [anonid="over-link-box"] {\n\
 					max-width: ' + (Math.floor(slimChrome.lastStyle.width /2) -16) + 'px !important;\n\

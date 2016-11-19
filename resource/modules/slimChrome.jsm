@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.40
+// VERSION 2.0.41
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -707,7 +707,7 @@ this.slimChrome = {
 	setMini: function(show, altState) {
 		if(!Prefs.includeNavBar) { return; }
 
-		if(!dispatch(this.container, { type: 'WillSetMiniChrome', cancelable: false, detail: show })) { return; };
+		if(!dispatch(this.container, { type: 'WillSetMiniChrome', cancelable: false, detail: { show, altState } })) { return; };
 
 		if(show) {
 			Timers.cancel('onlyURLBar');

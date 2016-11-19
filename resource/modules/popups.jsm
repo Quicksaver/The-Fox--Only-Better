@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 3.0.11
+// VERSION 3.0.12
 
 // this module catches the popup event and tells which nodes (triggers) the slimChrome script should check for
 
@@ -200,7 +200,7 @@ this.popups = {
 
 			case 'WillSetMiniChrome':
 				// e.detail is if setting or unsetting mini state
-				if(this.holdMini && !e.detail) {
+				if(this.holdMini && !e.detail.show) {
 					e.preventDefault();
 					e.stopPropagation();
 				}
