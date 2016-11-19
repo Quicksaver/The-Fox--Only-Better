@@ -13,5 +13,5 @@
 
 #PopupAutoCompleteRichResult[awesomerStyle="rich"] .autocomplete-richlistitem :-moz-any(.ac-url, .ac-action),
 #PopupAutoCompleteRichResult[awesomerStyle="frog"] .autocomplete-richlistitem[selected="true"] :-moz-any(.ac-url, .ac-action) {
-	top: 1.9em;
+	margin-top: 1px;
 }
