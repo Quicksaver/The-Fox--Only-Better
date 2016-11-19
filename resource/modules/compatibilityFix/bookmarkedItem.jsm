@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.4.9
+// VERSION 1.4.10
 
 this.__defineGetter__('BookmarkingUI', function() { return window.BookmarkingUI; });
 this.__defineGetter__('StarUI', function() { return window.StarUI; });
@@ -350,9 +350,6 @@ Modules.LOADMODULE = function() {
 };
 
 Modules.UNLOADMODULE = function() {
-	Timers.cancel('_doShowEditBookmarkPanel');
-	Timers.cancel('bookmarkedItemWillSetMiniChrome');
-
 	Piggyback.revert('bookmarkedItem', PlacesCommandHook, 'bookmarkCurrentPage');
 	Piggyback.revert('bookmarkedItem', BookmarkingUI, '_showBookmarkedNotification');
 	Piggyback.revert('bookmarkedItem', StarUI, '_doShowEditBookmarkPanel');
