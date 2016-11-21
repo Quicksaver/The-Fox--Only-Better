@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.1.6
+// VERSION 1.1.7
 
 this.__defineGetter__('gSearchBar', function() { return $('searchbar'); });
 
@@ -121,6 +121,8 @@ this.adaptSearchBar = {
 		if(!this.initialized) { return; }
 		this.initialized = false;
 
+		Timers.cancel('updateSearchBar');
+
 		Prefs.unlisten('showOnlyNonEmptySearchBar', this);
 		Prefs.unlisten('searchEnginesInURLBar', this);
 		Prefs.unlisten('awesomerURLBar', this);
@@ -141,9 +143,17 @@ this.adaptSearchBar = {
 	updateSearchBar: function() {
 		let searchbar = gSearchBar;
 
-		// this shouldn't happen, but just in case
+		// This shouldn't happen, but just in case.
 		if(!searchbar) {
 			this.deinit();
+			return;
+		}
+
+		// _textbox can be undefined if the binding hasn't taken place yet, can happen with certain combinations of add-ons (it's a strange thing...).
+		if(!searchbar._textbox) {
+			Timers.init('updateSearchBar', () => {
+				this.updateSearchBar();
+			}, 50);
 			return;
 		}
 
