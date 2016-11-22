@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.41
+// VERSION 2.0.42
 
 this.__defineGetter__('browserPanel', function() { return $('browser-panel'); });
 this.__defineGetter__('contentArea', function() { return $('browser'); });
@@ -1117,6 +1117,12 @@ this.slimChrome = {
 			if(gNavToolbox.externalToolbars.indexOf(toMove) == -1) {
 				gNavToolbox.externalToolbars.push(toMove);
 			}
+
+			// Toolbars hidden by Slim Chrome should be visible in SLim Chrome (if it's active).
+			toMove._fullscreentoolbar = trueAttribute(toMove, 'fullscreentoolbar');
+			if(!toMove._fullscreentoolbar) {
+				setAttribute(toMove, 'fullscreentoolbar', 'true');
+			}
 		}
 
 		// re-initialized the Places Toolbar
@@ -1286,18 +1292,25 @@ this.slimChrome = {
 		this.includeNavBar(true);
 
 		while(this.toolbars.firstChild) {
-			var e = gNavToolbox.externalToolbars.indexOf(this.toolbars.firstChild);
+			let toolbar = this.toolbars.firstChild;
+
+			let e = gNavToolbox.externalToolbars.indexOf(toolbar);
 			if(e != -1) {
 				gNavToolbox.externalToolbars.splice(e, 1);
 			}
 
-			this.deinitOverflowable(this.toolbars.firstChild);
+			if(!toolbar._fullscreentoolbar) {
+				removeAttribute(toolbar, 'fullscreentoolbar');
+			}
+			delete toolbar._fullscreentoolbar;
+
+			this.deinitOverflowable(toolbar);
 
 			// don't trigger a re-register of this toolbar node with CUI when it's not needed
 			if(window.closed || window.willClose) {
-				Overlays.safeMoveToolbar(this.toolbars.firstChild, gNavToolbox);
+				Overlays.safeMoveToolbar(toolbar, gNavToolbox);
 			} else {
-				gNavToolbox.appendChild(this.toolbars.firstChild);
+				gNavToolbox.appendChild(toolbar);
 			}
 		}
 
