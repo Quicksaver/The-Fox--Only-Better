@@ -13,7 +13,7 @@
 	/* this was hard to figure out, don't change this or the lights won't appear in the correct place */
 	display: flex;
 
-	-moz-padding-start: 65px;
+	-moz-padding-start: 65px !important;
 	z-index: 405;
 
 	/* god damn stupid crappy hell! the top chrome is near impossible to modify properly... now I have to use a stupid toolbar node instead of a simple box... */
