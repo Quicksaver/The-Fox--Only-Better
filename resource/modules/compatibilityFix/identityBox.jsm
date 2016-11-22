@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.1.6
+// VERSION 2.1.7
 
 this.__defineGetter__('gIdentityHandler', function() { return window.gIdentityHandler; });
 this.__defineGetter__('gIdentityBox', function() { return $('identity-box'); });
@@ -61,11 +61,11 @@ this.identityBox = {
 		// change the anchor of the identity box popup to the sky light, in case it was triggered from there and not from the actual identity box
 		Piggyback.add('identityBox', gIdentityHandler, 'handleIdentityButtonEvent', function(event) {
 			let light = skyLights.get('identityBox');
-			let anchor = (isAncestor(event.target, light)) ? light : $('identity-icons');
+			let anchor = (isAncestor(event.target, light)) ? light : $('identity-icon');
 
-			if(anchor != this._identityIcons) {
-				delete this._identityIcons;
-				this._identityIcons = anchor;
+			if(anchor != this._identityIcon) {
+				delete this._identityIcon;
+				this._identityIcon = anchor;
 			}
 
 			return true;
@@ -84,8 +84,8 @@ this.identityBox = {
 		Piggyback.revert('identityBox', gIdentityHandler, 'refreshIdentityBlock');
 		Piggyback.revert('identityBox', gIdentityHandler, 'handleIdentityButtonEvent');
 
-		delete gIdentityHandler._identityIcons;
-		gIdentityHandler._identityIcons = $('identity-icons');
+		delete gIdentityHandler._identityIcon;
+		gIdentityHandler._identityIcon = $('identity-icon');
 
 		Listeners.remove(gIdentityPopup, 'popupshowing', this);
 		Listeners.remove(gIdentityPopup, 'popuphiding', this);
