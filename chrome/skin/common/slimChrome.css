@@ -56,6 +56,14 @@
 	visibility: collapse;
 }
 
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
+	padding: 0 1px;
+}
+
+#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #urlbar-container {
+	padding: 2px 0;
+}
+
 #theFoxOnlyBetter-slimChrome-container[mini] #urlbar-container > #urlbar-wrapper > #urlbar {
 	transition: none;
 }
@@ -162,13 +170,6 @@ window[chromehidden~="toolbar"] #navigator-toolbox:not([slimStyle="full"]) #theF
 window[chromehidden~="toolbar"] #theFoxOnlyBetter-slimChrome-container:not([onlyURLBar]) #urlbar-container {
 	padding-top: 2px;
 	padding-bottom: 2px;
-}
-
-#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar {
-	padding: 0 1px;
-}
-#theFoxOnlyBetter-slimChrome-container[onlyURLBar]:not([hover]) #nav-bar #urlbar-container {
-	padding: 1px 0;
 }
 
 #navigator-toolbox:not([slimStyle="australis"]) #theFoxOnlyBetter-slimChrome-toolbars-before,
