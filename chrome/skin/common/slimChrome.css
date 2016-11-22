@@ -138,10 +138,6 @@ window:not([chromehidden~="toolbar"]) #navigator-toolbox[slimStyle="compact"] #b
 	z-index: 4;
 }
 
-#navigator-toolbox[slimStyle="australis"] #theFoxOnlyBetter-slimChrome-toolbars > :not(#nav-bar) {
-	margin: 0 -3px;
-}
-
 #theFoxOnlyBetter-slimChrome-toolbars:-moz-lwtheme,
 #theFoxOnlyBetter-slimChrome-toolbars-before:-moz-lwtheme,
 #theFoxOnlyBetter-slimChrome-toolbars-after:-moz-lwtheme {
