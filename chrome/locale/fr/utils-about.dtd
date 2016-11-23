@@ -7,6 +7,7 @@
 <!ENTITY about.descriptionC "Vous pouvez aussi regarder le dernier épisode de ma série web sur la vie avec un Firefox, fait pour vous tous, les utilisateurs les plus sympas dont pisse rêver un développeur ! Il suffit de pointer sur l'icône qui gigote dans le coin au bas de cette page. vous pouvez aimer, détester, partager…">
 <!ENTITY about.allVersions "Montrer les notes de toutes les versions précédentes">
 <!ENTITY about.notifyOnUpdates "Montre moi cet onglet à la prochaine mise-à-jour">
+<!ENTITY about.silentUpdates "Don't notify me on the next update">
 <!ENTITY about.development "État du développement">
 <!ENTITY about.helpdevelopment "VOUS POUVEZ AIDER">
 <!ENTITY about.information "Plus d'information">

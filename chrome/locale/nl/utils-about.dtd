@@ -2,11 +2,12 @@
 <!ENTITY about.version "Versie {v}">
 <!ENTITY about.uptodate "actueel, gefeliciteerd!">
 <!ENTITY about.needsupdate "update beschikbaar!">
-<!ENTITY about.description "Lees hieronder de “Versieopmerkingen” en “Bekende problemen” voor deze versie. Ik hoor graag van gevonden problemen of suggesties voor toekomstige versies.">
-<!ENTITY about.descriptionB "De add-on is gratis, maar het oplossen van problemen, toevoegen van nieuwe functies en ervoor zorgen dat alles bij elke nieuwe versie van Firefox werkt is arbeidsintensief en kan soms lastig zijn. Als u plezier beleeft aan de add-on, steun dan verdere ontwikkeling. Zoals de koppeling als zegt, ‘U kunt helpen’!">
+<!ENTITY about.description "Lees hieronder de ‘Versieopmerkingen’ en ‘Bekende problemen’ voor deze versie. Ik hoor graag van gevonden problemen of suggesties voor toekomstige versies.">
+<!ENTITY about.descriptionB "De add-on is gratis, maar het oplossen van problemen, toevoegen van nieuwe functies en ervoor zorgen dat alles bij elke nieuwe versie van Firefox werkt is arbeidsintensief en kan soms lastig zijn. Als u plezier beleeft aan de add-on, steun dan verdere ontwikkeling. Zoals de koppeling al zegt, ‘U kunt helpen’!">
 <!ENTITY about.descriptionC "Bekijk ook de laatste aflevering in mijn webserie over leven met een Firefox, gemaakt voor jullie allemaal, de beste supporters die een ontwikkelaar zich kan wensen! Wijs gewoon het stuiterende pictogram onder in de hoek van deze pagina aan. Hou er van. Deel het.">
 <!ENTITY about.allVersions "Opmerkingen van alle eerdere versies weergeven">
 <!ENTITY about.notifyOnUpdates "Dit tabblad bij de volgende update weergeven">
+<!ENTITY about.silentUpdates "Mij geen bericht geven bij de volgende update">
 <!ENTITY about.development "Ontwikkelstatus">
 <!ENTITY about.helpdevelopment "U KUNT HELPEN">
 <!ENTITY about.information "Meer informatie">

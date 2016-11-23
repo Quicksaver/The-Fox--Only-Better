@@ -7,6 +7,7 @@
 <!ENTITY about.descriptionC "Also watch the latest episode in my web series about life with a Firefox, made for all of you, the most supportive users a developer could ask for! Just point at the bouncing icon at the bottom corner of this page. Love it. Hate it. Share it.">
 <!ENTITY about.allVersions "Показать заметки о всех предыдущих версиях">
 <!ENTITY about.notifyOnUpdates "Показать эту вкладку при следующем обновлении">
+<!ENTITY about.silentUpdates "Don't notify me on the next update">
 <!ENTITY about.development "Статус разработки">
 <!ENTITY about.helpdevelopment "ВЫ МОЖЕТЕ ПОМОЧЬ">
 <!ENTITY about.information "Больше информации">
