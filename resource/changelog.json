@@ -1,9 +1,38 @@
 {
-	"current":"1.4.6",
-	"knownissues": [
-		["(Firefox 48) The suggestion items styles and colors aren't working properly because of the ongoing suggestions panel redesign."]
-	],
+	"current":"1.4.7",
 	"releases": {
+		"1.4.7":{
+			"date":"November 23, 2016",
+			"notes":[
+				["changed","When the add-on is automatically updated, it now shows a less intrusive notification toaster message linking to the release notes; as before, this can still be disabled in the About page in the add-on's preferences"],
+				["changed","(Firefox 51) if enabling the native one-off searches in the location bar, enabled by default in Nightly, the add-on just gets out of its way by not using its same feature \"Show search engines in location bar\""],
+				["updated","nl locale"],
+				["removed","Compatibility code for the Link Location Bar add-on, it seems to have been discontinued/deleted"],
+				["bugfix","In small windows, the add-on's preferences page could overflow and lose its scrollbars, where some content would be inaccessible"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tab-mix-plus/>Tab Mix Plus</a>; setting a shortcut to one reserved (but unused) by Tab Mix Plus's session related features at startup wouldn't work"],
+				["bugfix","Small compatibility fixes for Firefox 51"],
+				["bugfix","In a few cases (multi-window + e10s + sometimes) the add-on could fail to fully initialize"],
+				["bugfix","Many compatibility fixes for the latest and future versions of Firefox"],
+				["bugfix","Awesome bar results styles and color schemes were not working (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/188>issue #188</a>)"],
+				["bugfix","Focusing the location bar shouldn't keep the toolbars visible if the navigation bar is always visible (not in the hidden toolbars) (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/179>issue #179</a>)"],
+				["bugfix","With the compact style, the back button would look very out of place (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/182>issue #182</a>)"],
+				["bugfix","Tweak and fix many toolbar colors and appearance"],
+				["bugfix","When the browser's titlebar is visible (e.g. with add-ons like Tree Style Tab, or always in Linux), try to more easily show the toolbars when moving the mouse over the titlebar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/186>issue #186</a>)"],
+				["bugfix","Compatibility with <a=https://testpilot.firefox.com/experiments/tab-center>Tab Center</a>, with Slim Chrome enabled, Tab Center couldn't be disabled/updated properly and would require a browser restart for things to get back to normal (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/196>issue #196</a>)"],
+				["bugfix","Compatibility with Tab Center, the size of the toolbars wouldn't adapt properly to the size of the tabs on the side (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/195>issue #195</a>)"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tree-style-tab/>Tree Style Tab</a>, better adapt the toolbars to the width of the tabs on the side (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/195>issue #195</a>)"],
+				["bugfix","Fix context menu appearing in the corner of the window when right-clicking the star button in the mini bar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/199>issue #199</a>)"],
+				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/status-4-evar/>Status-4-Evar</a>, show mini bar when showing hovered links in the location bar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/210>issue #210</a>)"],
+				["bugfix","Don't show toolbars outline in windows where they are hidden (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/213>issue #213</a>)"],
+				["bugfix","Switch between light and dark text and icon colors in the toolbars properly, according to used themes"],
+				["bugfix","The adaptable search bar could not work right after startup with certain combinations of add-ons"],
+				["bugfix","(Firefox 51) the Sky Lights would be too close to the edge of the window"],
+				["bugfix","Clicking the Site Identity Sky Light would open the mini bar to show the panel, instead of anchoring it to the light itself"],
+				["bugfix","All toolbars hidden by Slim Chrome should be visible in fullscreen (if Slim Chrome is enabled, and not Firefox's native hide toolbars feature)"],
+				["General","Added MPL license headers to source files"],
+				["","Other minor fixes"]
+			]
+		},
 		"1.4.6":{
 			"date":"May 31, 2016",
 			"notes":[
