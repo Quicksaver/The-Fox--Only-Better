@@ -9,21 +9,21 @@
 				["updated","nl locale"],
 				["removed","Compatibility code for the Link Location Bar add-on, it seems to have been discontinued/deleted"],
 				["bugfix","In small windows, the add-on's preferences page could overflow and lose its scrollbars, where some content would be inaccessible"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tab-mix-plus/>Tab Mix Plus</a>; setting a shortcut to one reserved (but unused) by Tab Mix Plus's session related features at startup wouldn't work"],
+				["bugfix","Compatibility with <e=tab-mix-plus>Tab Mix Plus</e>; setting a shortcut to one reserved (but unused) by Tab Mix Plus's session related features at startup wouldn't work"],
 				["bugfix","Small compatibility fixes for Firefox 51"],
 				["bugfix","In a few cases (multi-window + e10s + sometimes) the add-on could fail to fully initialize"],
 				["bugfix","Many compatibility fixes for the latest and future versions of Firefox"],
-				["bugfix","Awesome bar results styles and color schemes were not working (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/188>issue #188</a>)"],
-				["bugfix","Focusing the location bar shouldn't keep the toolbars visible if the navigation bar is always visible (not in the hidden toolbars) (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/179>issue #179</a>)"],
-				["bugfix","With the compact style, the back button would look very out of place (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/182>issue #182</a>)"],
+				["bugfix","Awesome bar results styles and color schemes were not working (<i=188>)"],
+				["bugfix","Focusing the location bar shouldn't keep the toolbars visible if the navigation bar is always visible (not in the hidden toolbars) (<i=179>)"],
+				["bugfix","With the compact style, the back button would look very out of place (<i=182>)"],
 				["bugfix","Tweak and fix many toolbar colors and appearance"],
-				["bugfix","When the browser's titlebar is visible (e.g. with add-ons like Tree Style Tab, or always in Linux), try to more easily show the toolbars when moving the mouse over the titlebar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/186>issue #186</a>)"],
-				["bugfix","Compatibility with <a=https://testpilot.firefox.com/experiments/tab-center>Tab Center</a>, with Slim Chrome enabled, Tab Center couldn't be disabled/updated properly and would require a browser restart for things to get back to normal (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/196>issue #196</a>)"],
-				["bugfix","Compatibility with Tab Center, the size of the toolbars wouldn't adapt properly to the size of the tabs on the side (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/195>issue #195</a>)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tree-style-tab/>Tree Style Tab</a>, better adapt the toolbars to the width of the tabs on the side (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/195>issue #195</a>)"],
-				["bugfix","Fix context menu appearing in the corner of the window when right-clicking the star button in the mini bar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/199>issue #199</a>)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/status-4-evar/>Status-4-Evar</a>, show mini bar when showing hovered links in the location bar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/210>issue #210</a>)"],
-				["bugfix","Don't show toolbars outline in windows where they are hidden (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/213>issue #213</a>)"],
+				["bugfix","When the browser's titlebar is visible (e.g. with add-ons like Tree Style Tab, or always in Linux), try to more easily show the toolbars when moving the mouse over the titlebar (<i=186>)"],
+				["bugfix","Compatibility with <a=https://testpilot.firefox.com/experiments/tab-center>Tab Center</a>, with Slim Chrome enabled, Tab Center couldn't be disabled/updated properly and would require a browser restart for things to get back to normal (<i=196>)"],
+				["bugfix","Compatibility with Tab Center, the size of the toolbars wouldn't adapt properly to the size of the tabs on the side (<i=195>)"],
+				["bugfix","Compatibility with <e=tree-style-tab>Tree Style Tab</e>, better adapt the toolbars to the width of the tabs on the side (<i=195>)"],
+				["bugfix","Fix context menu appearing in the corner of the window when right-clicking the star button in the mini bar (<i=199>)"],
+				["bugfix","Compatibility with <e=status-4-evar>Status-4-Evar</e>, show mini bar when showing hovered links in the location bar (<i=210>)"],
+				["bugfix","Don't show toolbars outline in windows where they are hidden (<i=213>)"],
 				["bugfix","Switch between light and dark text and icon colors in the toolbars properly, according to used themes"],
 				["bugfix","The adaptable search bar could not work right after startup with certain combinations of add-ons"],
 				["bugfix","(Firefox 51) the Sky Lights would be too close to the edge of the window"],
@@ -36,7 +36,7 @@
 		"1.4.6":{
 			"date":"May 31, 2016",
 			"notes":[
-				["bugfix","Mistake in the previous update prevented most of the \"Awesome Bar\" features from working properly (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/176>issue #176</a>)"]
+				["bugfix","Mistake in the previous update prevented most of the \"Awesome Bar\" features from working properly (<i=176>)"]
 			]
 		},
 		"1.4.5":{
@@ -49,17 +49,17 @@
 				["bugfix","(non-e10s) some missing functionality right after updating the add-on until the browser was restarted"],
 				["bugfix","After navigating away from the preferences tab, navigating back (through the back button) wouldn't work"],
 				["bugfix","Slim Chrome could still be enabled by mistake while in fullscreen in some specific cases"],
-				["bugfix","When entering full screen, the toolbars could still be partially shown until moving the mouse over and out of them again (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/134>issue #134</a>)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tab-tree/>Tab Tree</a>, show the toolbars when moving the mouse to the window titlebar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/160>issue #160</a>)"],
-				["bugfix","Selecting a search suggestion with the keyboard and then clicking a search engine button would lead to a malformed url (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/163>issue #163</a>)"],
+				["bugfix","When entering full screen, the toolbars could still be partially shown until moving the mouse over and out of them again (<i=134>)"],
+				["bugfix","Compatibility with <e=tab-tree>Tab Tree</e>, show the toolbars when moving the mouse to the window titlebar (<i=160>)"],
+				["bugfix","Selecting a search suggestion with the keyboard and then clicking a search engine button would lead to a malformed url (<i=163>)"],
 				["bugfix","Bookmark page sky light wouldn't change colors according to if the page was bookmarked or not when the star button wasn't placed anywhere in the window"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/add-bookmark-here-2/>Add Bookmark Here 2</a>, the Bookmark Page sky light should obey the same behavior options defined for the star button"],
+				["bugfix","Compatibility with <e=add-bookmark-here-2>Add Bookmark Here 2</e>, the Bookmark Page sky light should obey the same behavior options defined for the star button"],
 				["bugfix","(Firefox 47) show the page bookmarked panel immediately when bookmarking a page through the sky light, just like it would if clicking the star button"],
-				["bugfix","It would fail to run a web search by clicking a search engine in the location bar, when the search word came directly from the adaptable search bar (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/167>issue #167</a>)"],
+				["bugfix","It would fail to run a web search by clicking a search engine in the location bar, when the search word came directly from the adaptable search bar (<i=167>)"],
 				["bugfix","(Firefox 47) could fail to detect customize mode during startup"],
 				["bugfix","Small memory leak when disabling the add-on (thanks to the8472)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/status-4-evar/>Status-4-Evar</a>, Slim Chrome wouldn't respect the position of the loading indicator in the location bar"],
-				["bugfix","Compatibility with <a=https://testpilot.firefox.com/>Test Pilot</a>'s Tab Center, toolbars should be easier to access by moving the cursor to the top and they shouldn't extend over the tabs area (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/173>issue #173</a>)"],
+				["bugfix","Compatibility with <e=status-4-evar>Status-4-Evar</e>, Slim Chrome wouldn't respect the position of the loading indicator in the location bar"],
+				["bugfix","Compatibility with <a=https://testpilot.firefox.com/>Test Pilot</a>'s Tab Center, toolbars should be easier to access by moving the cursor to the top and they shouldn't extend over the tabs area (<i=173>)"],
 				["","Other minor updates"]
 			]
 		},
@@ -68,12 +68,12 @@
 			"notes":[
 				["new","Support Baido search results pages in the adaptable search bar"],
 				["updated","fr, nl, zh-CN and zh-TW locales"],
-				["removed","Compatibility with <a=https://addons.mozilla.org/firefox/addon/omnibar/>Omnibar</a> as it is no longer being developed and has become largely unnecessary (it should still mostly work if you want it though); if there is something in Omnibar that you like that this add-on doesn't have yet just let me know"],
-				["bugfix","Ctrl+K should focus the location bar when only showing the adaptable search bar when it's not empty (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/151>issue #151</a>)"],
+				["removed","Compatibility with <e=omnibar>Omnibar</e> as it is no longer being developed and has become largely unnecessary (it should still mostly work if you want it though); if there is something in Omnibar that you like that this add-on doesn't have yet just let me know"],
+				["bugfix","Ctrl+K should focus the location bar when only showing the adaptable search bar when it's not empty (<i=151>)"],
 				["bugfix","While typing in the search bar, its value shouldn't adapt to the query used in a results page (adaptable search bar)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org«/firefox/addon/search-site/>Search Site</a>, show its icon in the location bar so it can be used there when the search bar is set to only appear when not empty (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/152>issue #152</a>)"],
-				["bugfix","On some themes and system the search settings button in the location bar's panel wouldn't have an icon (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/149>issue #149</a>)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/ft-deepdark/>FT DeepDark</a>, made some visual tweaks to the search engines in the location bar"],
+				["bugfix","Compatibility with <e=search-site>Search Site</e>, show its icon in the location bar so it can be used there when the search bar is set to only appear when not empty (<i=152>)"],
+				["bugfix","On some themes and system the search settings button in the location bar's panel wouldn't have an icon (<i=149>)"],
+				["bugfix","Compatibility with <e=ft-deepdark>FT DeepDark</e>, made some visual tweaks to the search engines in the location bar"],
 				["bugfix","(OSX and Linux) the add-on's preferences would be exported into a file without the \".json\" extension that the add-on couldn't immediately recognize afterwards"],
 				["general","Added a small section to this page to promote my new web series \"A dude and his Firefox\"; it will be completely out of your way unless you point at the icon at the bottom corner, and you can dismiss it completely by clicking its close button."]
 			]
@@ -81,7 +81,7 @@
 		"1.4.3":{
 			"date":"February 8, 2016",
 			"notes":[
-				["bugfix","Suggestion items styles and color themes wouldn't work when \"Show search engines in the location bar\" was disabled (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/148>issue #148</a>)"],
+				["bugfix","Suggestion items styles and color themes wouldn't work when \"Show search engines in the location bar\" was disabled (<i=148>)"],
 				["bugfix","Suggestion items color themes selector shouldn't be accessible if not enhancing the awesome bar"]
 			]
 		},
@@ -96,7 +96,7 @@
 		"1.4.1":{
 			"date":"February 6, 2016",
 			"notes":[
-				["bugfix","Slim Chrome's sensitivity sliders would reset to the maximum sensitivity when re-opening the preferences tab (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/143>issue #143</a>)"]
+				["bugfix","Slim Chrome's sensitivity sliders would reset to the maximum sensitivity when re-opening the preferences tab (<i=143>)"]
 			]
 		},
 		"1.4":{
@@ -109,7 +109,7 @@
 				["new","Option to show search suggestions in the awesome bar results in private windows"],
 				["new","Show search engines in the awesome bar"],
 				["new","Ability to only show the search bar in results pages, letting you focus on the location bar for the actual searches"],
-				["new","Ported some styles and color themes from <a=https://addons.mozilla.org/firefox/addon/omnibar/>Omnibar</a> and <a=https://addons.mozilla.org/firefox/addon/omnibar-plus/>Omnibar Plus</a>, since those add-ons aren't necessary anymore with the rest of the new features"],
+				["new","Ported some styles and color themes from <e=omnibar>Omnibar</e> and <e=omnibar-plus>Omnibar Plus</e>, since those add-ons aren't necessary anymore with the rest of the new features"],
 				["new","Support Facebook, IMDb and YouTube search results pages in the adaptable search bar"],
 				["updated","Simplified share icons in about page"],
 				["updated","Ensure UTF-8 character encoding throughout the code"],
@@ -118,7 +118,7 @@
 				["removed","Compatibility with Firefox 43 and below"],
 				["bugfix","Sometimes toggling the ctrl/alt/shift boxes in a keyboard shortcut wouldn't correctly reflect if the selected key was actually available"],
 				["bugfix","Default file name when exporting preferences would have the wrong month"],
-				["bugfix","Sky Lights shouldn't be visible in HTML5 fullscreen (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/136>issue #136</a>)"],
+				["bugfix","Sky Lights shouldn't be visible in HTML5 fullscreen (<i=136>)"],
 				["bugfix","(Firefox 46) the add-on would not fully disable correctly"],
 				["bugfix","The adaptable search bar's words would persist when surfing away from a results page"],
 				["","Other minor fixes and improvements"]
@@ -128,7 +128,7 @@
 			"date":"November 18, 2015",
 			"notes":[
 				["updated","ru locale"],
-				["changed","The Bookmark button will appear in the mini bar only if the Bookmark Item Sky Light is enabled; they should complement each other (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/132>issue #132</a>)"],
+				["changed","The Bookmark button will appear in the mini bar only if the Bookmark Item Sky Light is enabled; they should complement each other (<i=132>)"],
 				["bugfix","When only hiding the bookmarks toolbar, if using a lightweight theme (persona), the toolbars background would have an extra white gradient making it hard to read"],
 				["bugfix","Panels or popups opened from buttons in the hidden toolbars could show some weirdness, like showing only the borders, flashing on screen or even jumping all over the window"]
 			]
@@ -139,7 +139,7 @@
 				["updated","(Firefox 44) show insecure state in the Site Identity sky light when on a page with insecure login forms"],
 				["removed","Compatibility with Firefox 41"],
 				["bugfix","(Firefox 43+) appearance fixes for Slim Chrome"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/all-about-location-bar/>All About Location Bar</a>: breadcrumbs wouldn't appear"],
+				["bugfix","Compatibility with <e=all-about-location-bar>All About Location Bar</e>: breadcrumbs wouldn't appear"],
 				["bugfix","Toggling \"Also hide the navigation bar\" would make it forget the current location until navigating away to another page"],
 				["bugfix","The tab drop indicator would be invisible with Windows Aero enabled"],
 				["bugfix","Hinge animation would make toolbars invisible"],
@@ -149,14 +149,14 @@
 		"1.3.2":{
 			"date":"October 12, 2015",
 			"notes":[
-				["changed","Improved locking of certain disallowed combinations of preferences in the add-on's options (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/123>issue #123</a>)"],
+				["changed","Improved locking of certain disallowed combinations of preferences in the add-on's options (<i=123>)"],
 				["updated","Minor improvements to multiline string concatenation code, as suggested by AMO reviewer"],
 				["updated","Share icons in the add-on's About pane"],
-				["bugfix","Some dynamic menupopups, such as the one opened by <a=https://addons.mozilla.org/firefox/addon/noscript/>NoScript</a>'s button, could cause the toolbars to get stuck open"],
-				["bugfix","Bookmarks star icon would have a \"true\" tooltip when it was disabled (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/124>issue #124</a>)"],
+				["bugfix","Some dynamic menupopups, such as the one opened by <e=noscript>NoScript</e>'s button, could cause the toolbars to get stuck open"],
+				["bugfix","Bookmarks star icon would have a \"true\" tooltip when it was disabled (<i=124>)"],
 				["bugfix","Bookmark Page sky light should be disabled on pages where the star icon is disabled as well"],
 				["bugfix","(Firefox 44) the add-on would fail to start in the latest Nightly builds"],
-				["bugfix","Improved integration with the Developer Edition theme (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/125>issue #125</a>)"],
+				["bugfix","Improved integration with the Developer Edition theme (<i=125>)"],
 				["bugfix","(Firefox 43) the Site Identity sky light would not show the correct state on any site"],
 				["","Other minor fixes and improvements"]
 			]
@@ -168,7 +168,7 @@
 				["removed","Compatibility with Firefox 40"],
 				["updated","Improvements when enabling/disabling the add-on"],
 				["updated","es locale"],
-				["bugfix","The Adaptable Search Bar sometimes wouldn't pick up on changes Google makes to the contents of its search box (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/116>issue #116</a>)"],
+				["bugfix","The Adaptable Search Bar sometimes wouldn't pick up on changes Google makes to the contents of its search box (<i=116>)"],
 				["bugfix","The Sky Lights icons in the preferences could be distorted with large localized labels"]
 			]
 		},
@@ -178,7 +178,7 @@
 				["new","Name and icon \"Beyond Australis\", previously \"The Fox, Only Better\""],
 				["new","Sky Lights pane in the add-on preferences"],
 				["new","Ability to reorder and disable individual Sky Lights"],
-				["new","\"Bookmark Page\" Sky Light (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/57>issue #57</a>)"],
+				["new","\"Bookmark Page\" Sky Light (<i=57>)"],
 				["new","Adaptable Search Bar experimental feature; keeps your Search Bar in sync with your web searches!"],
 				["changed","The bookarked star icon remains visible in the mini bar if the button is placed in the navigation bar"],
 				["changed","The \"Show this tab on the next update\" checkbox will be highlighted the first time the About pane is shown on an update, to better mark where future notifications can be easily disabled"],
@@ -186,7 +186,7 @@
 				["removed","Compatibility with Firefox 39 and below"],
 				["bugfix","Sensitivity sliders in the preferences weren't working at all"],
 				["bugfix","Sky Lights would not be immediately visible after exiting customize mode, you'd have to show and hide the toolbars at least once to see them again"],
-				["bugfix","A few appearance fixes for the latest versions of Firefox, particularly for Windows 10 (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/114>issue #114</a>)"],
+				["bugfix","A few appearance fixes for the latest versions of Firefox, particularly for Windows 10 (<i=114>)"],
 				["bugfix","Compatibility with latest Nightly build (Firefox 43)"],
 				["bugfix","Several behavioral improvements when opening panels anchored to the mini bar"],
 				["bugfix","The helptext panel in the add-on's preferences would sometimes cover the options on small screens or if the sidebar was open"],
@@ -204,12 +204,12 @@
 			"date":"August 9, 2015",
 			"notes":[
 				["changed","\"Show mini bar when focusing any type of input box\" shows only a temporary mini bar, which will hide after a couple of seconds, hopefully making it less obtrusive. Note that password fields still keep the mini bar shown for as long as they're focused!"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/omnisidebar/>OmniSidebar</a> and <a=https://addons.mozilla.org/firefox/addon/puzzle-toolbars/>Puzzle Toolbars</a>: the Bookmark This Page button would stop working if one of the add-ons was disabled/updated; this fix requires a browser restart"],
+				["bugfix","Compatibility with <e=omnisidebar>OmniSidebar</e> and <e=puzzle-toolbars>Puzzle Toolbars</e>: the Bookmark This Page button would stop working if one of the add-ons was disabled/updated; this fix requires a browser restart"],
 				["bugfix","(Firefox 41+) Slim Chrome would be disabled after exiting fullscreen mode"],
 				["bugfix","(Firefox 42+) new modes and changes to the identity box prevented its Sky Light from appearing at the right place or showing the correct state"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/omnisidebar/>OmniSidebar</a>: entering customize mode with Slim Chrome enabled could remove the OmniSidebar button from the browser"],
+				["bugfix","Compatibility with <e=omnisidebar>OmniSidebar</e>: entering customize mode with Slim Chrome enabled could remove the OmniSidebar button from the browser"],
 				["bugfix","(Firefox 40+) appearance glitches with the Back/Forward buttons when using the Compact style"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/classicthemerestorer/>Classic Theme Restorer</a>'s \"Navigation toolbar: remove background image\" option (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/110>issue #110</a>)"]
+				["bugfix","Compatibility with <e=classicthemerestorer>Classic Theme Restorer</e>'s \"Navigation toolbar: remove background image\" option (<i=110>)"]
 			]
 		},
 		"1.2.1":{
@@ -222,7 +222,7 @@
 				["bugfix","Force LTR layout for the preferences tab options, at least until any RTL locales are included"],
 				["bugfix","Minor startup improvements"],
 				["bugfix","The preferences, in particular the sensitivity sliders, were very sluggish to use, all should be much smoother now"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/simplify-awesome-bar/>Simplify Awesome Bar</a>: location bar would sometimes hide while the cursor was still in it (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/108>issue #108</a>)"]
+				["bugfix","Compatibility with <e=simplify-awesome-bar>Simplify Awesome Bar</e>: location bar would sometimes hide while the cursor was still in it (<i=108>)"]
 			]
 		},
 		"1.2":{
@@ -231,20 +231,20 @@
 				["new","Brand new preferences tab with a new \"About\" pane (previously the \"Release Notes\" tab)"],
 				["new","es locale"],
 				["changed","The active development process for the add-on is undergoing a few changes, check out the information and links at the top of this pane for more details"],
-				["changed","When the mini bar is enabled for changing locations, it shouldn't appear when switching to a tab that belongs to the same host as the previous tab (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/101>issue #101</a>)"],
-				["changed","Mouse sensitivity \"Low\" value has been increased from 1sec to 2.5sec; this should accommodate for most cases (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/103>issue #103</a>)"],
+				["changed","When the mini bar is enabled for changing locations, it shouldn't appear when switching to a tab that belongs to the same host as the previous tab (<i=101>)"],
+				["changed","Mouse sensitivity \"Low\" value has been increased from 1sec to 2.5sec; this should accommodate for most cases (<i=103>)"],
 				["removed","Compatibility with Firefox 37 and below"],
 				["bugfix","The location bar could sometimes not show its tooltip text when it has a long (cropped) url"],
 				["bugfix","Slim Chrome was not disabled when in Customize mode"],
 				["bugfix","Toolbars would get stuck open after clicking the translation notification icon"],
-				["bugfix","The toolbars shouldn't stay visible when opening a tab context menu (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/103>issue #103</a>)"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/diigo-web-highlighter-and-stic/>Diigo Toolbar</a>: its toolbar was constantly overflowed and seemingly emtpy with Slim Chrome enabled"],
+				["bugfix","The toolbars shouldn't stay visible when opening a tab context menu (<i=103>)"],
+				["bugfix","Compatibility with <e=diigo-web-highlighter-and-stic>Diigo Toolbar</e>: its toolbar was constantly overflowed and seemingly emtpy with Slim Chrome enabled"],
 				["bugfix","Clicking anywhere in the mini bar would make the full toolbars appear, only the actual location bar should trigger this"],
 				["bugfix","Mini bar should show Popup Blocking Settings, Add/Remove to Reading List, and Reader View icons"],
 				["bugfix","The location bar was inaccessible in most popup windows"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/status-4-evar/>Status-4-Evar</a>: focusing and unfocusing the location bar could sometimes make it forget its progress bar style"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/forecastfox-fix-version/>Forecastfox (fix version)</a>: its toolbar could cause some visual issues in Slim Chrome's container (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/95>issue #95</a>)"],
-				["bugfix","Lightweight themes in Slim Chrome could sometimes be misaligned with the rest of the browser (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/106>issue #106</a>)"]
+				["bugfix","Compatibility with <e=status-4-evar>Status-4-Evar</e>: focusing and unfocusing the location bar could sometimes make it forget its progress bar style"],
+				["bugfix","Compatibility with <e=forecastfox-fix-version>Forecastfox (fix version)</e>: its toolbar could cause some visual issues in Slim Chrome's container (<i=95>)"],
+				["bugfix","Lightweight themes in Slim Chrome could sometimes be misaligned with the rest of the browser (<i=106>)"]
 			]
 		},
 		"1.1.13":{
@@ -256,10 +256,10 @@
 		"1.1.12":{
 			"date":"May 9, 2015",
 			"notes":[
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/firegestures/>FireGestures</a>, if the menu panel was opened through a gesture, it would flash and jump to the top corner of the window"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/link-location-bar/>Link Location Bar</a>, its color preferences would often not be applied"],
-				["bugfix","Selecting a password field and switching away to another tab would leave the mini bar constantly visible in the new tab (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/98>issue #98</a>)"],
-				["bugfix","No border below the tabs toolbar on OS X 10 (Yosemite) (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/97>issue #97</a>)"],
+				["bugfix","Compatibility with <e=firegestures>FireGestures</e>, if the menu panel was opened through a gesture, it would flash and jump to the top corner of the window"],
+				["bugfix","Compatibility with <e=link-location-bar>Link Location Bar</e>, its color preferences would often not be applied"],
+				["bugfix","Selecting a password field and switching away to another tab would leave the mini bar constantly visible in the new tab (<i=98>)"],
+				["bugfix","No border below the tabs toolbar on OS X 10 (Yosemite) (<i=97>)"],
 				["updated","Reorganized code and did some cleanup"],
 				["updated","zh-CN and zh-TW locales"]
 			]
@@ -275,7 +275,7 @@
 			"notes":[
 				["changed","Release Notes tab URI defaults to about:thefoxonlybetter instead of chrome://..., which is now fully functional in multiprocess firefox (e10s)"],
 				["bugfix","The Release Notes link in the preferences dialog would sometimes fail to work"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tree-style-tab/>Tree Style Tab</a>'s autohide tabs toolbar feature, toolbars would not be properly sized"]
+				["bugfix","Compatibility with <e=tree-style-tab>Tree Style Tab</e>'s autohide tabs toolbar feature, toolbars would not be properly sized"]
 			]
 		},
 		"1.1.9":{
@@ -283,10 +283,10 @@
 			"notes":[
 				["new","Option to show the mini bar on every tab select. This may have caused the other preferences relative to the mini bar to reset, so you may have to reconfigure them; I'm sorry for the inconvenience on this one, it shouldn't happen again."],
 				["updated","pt-PT and zh-TW locales"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/australis-small-icons/>Australis Small Icons</a>, wouldn't take effect with Slim Chrome enabled"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/classicthemerestorer/>Classic Theme Restorer</a>'s movable back/forward button, appearance issues in the mini bar"],
+				["bugfix","Compatibility with <e=australis-small-icons>Australis Small Icons</e>, wouldn't take effect with Slim Chrome enabled"],
+				["bugfix","Compatibility with <e=classicthemerestorer>Classic Theme Restorer</e>'s movable back/forward button, appearance issues in the mini bar"],
 				["bugfix","Sometimes opening or closing the sidebar would leave the top toolbars positioned incorrectly in the window"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/tree-style-tab/>Tree Style Tab</a>, made it easier to show the toolbars when moving the mouse to the window title"]
+				["bugfix","Compatibility with <e=tree-style-tab>Tree Style Tab</e>, made it easier to show the toolbars when moving the mouse to the window title"]
 			]
 		},
 		"1.1.8":{
@@ -300,13 +300,13 @@
 			"date":"December 13, 2014",
 			"notes":[
 				["new","ru and zh-TW locales"],
-				["changed","The mini bar will only appear when switching to a background tab that has changed location (webhost) since it was last visible; this was the intended behavior from the start (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/80>issue #80</a>)"],
+				["changed","The mini bar will only appear when switching to a background tab that has changed location (webhost) since it was last visible; this was the intended behavior from the start (<i=80>)"],
 				["removed","Compatibility with Firefox 33 and below"],
 				["bugfix","Prevent some visual glitches during startup"],
 				["bugfix","Improved compatibility with my other add-ons, if you use any of them make sure they are also updated and restart your browser afterwards!"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/link-location-bar/>Link Location Bar</a>, when previewing links in the mini bar and the mouse moves over it, the mini bar will jump to the other side of the window so that any links under it can still be accessed (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/77>issue #77</a>)"],
-				["bugfix","A few issues with the bookmarks toolbar introduced in the last version (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/83>issue #83</a>)"],
-				["bugfix","Integrate better with Firefox Developer Edition's theme (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/82>issue #82</a>)"],
+				["bugfix","Compatibility with <e=link-location-bar>Link Location Bar</e>, when previewing links in the mini bar and the mouse moves over it, the mini bar will jump to the other side of the window so that any links under it can still be accessed (<i=77>)"],
+				["bugfix","A few issues with the bookmarks toolbar introduced in the last version (<i=83>)"],
+				["bugfix","Integrate better with Firefox Developer Edition's theme (<i=82>)"],
 				["bugfix","Add-on would forget the keyboard shortcut when opening the preferences dialog"],
 				["","Other minor improvements"]
 			]
@@ -331,16 +331,16 @@
 				["new","Support < (less than) and > (greater than) characters in the keyboard shortcut"],
 				["new","Added version information to the top of the window DOM tree, for better compatibility with themes"],
 				["new","Show the release notes tab when the add-on updates"],
-				["changed","When using <a=https://addons.mozilla.org/firefox/addon/ft-deepdark/>FT DeepDark</a>, the default style is \"Compact\" and the default animation is \"Slide Down\""],
+				["changed","When using <e=ft-deepdark>FT DeepDark</e>, the default style is \"Compact\" and the default animation is \"Slide Down\""],
 				["removed","Compatibility with Firefox 31"],
 				["bugfix","Enhanced compatibility for the FT DeepDark theme"],
 				["bugfix","Toolbars wouldn't be properly styled when previewing themes (personas)"],
 				["bugfix","Add-on was not deinitializing properly (because of this <b>you may need to restart your browser</b> if you're updating from a previous version, for the update to fully take effect)"],
 				["bugfix","The mini bar could get stuck open on certain websites (e.g. 4chan.org) that physically remove the input fields from the DOM"],
 				["bugfix","Right-clicking the toolbar placeholder strip when Slim Chrome is enabled should open the toolbar context menu"],
-				["bugfix","Toolbars would be hidden behind media elements, such as flash videos, java applets, adobe reader, tabs opened through the FireIE add-on, maybe others... (<a=https://github.com/Quicksaver/The-Fox--Only-Better/issues/53>issue #53</a>)"],
+				["bugfix","Toolbars would be hidden behind media elements, such as flash videos, java applets, adobe reader, tabs opened through the FireIE add-on, maybe others... (<i=53>)"],
 				["bugfix","Possible fix for add-on requiring a browser restart to fully update sometimes"],
-				["bugfix","Compatibility with <a=https://addons.mozilla.org/firefox/addon/aniweather/>AniWeather</a>, weather animation popups would be hidden behind the toolbars"],
+				["bugfix","Compatibility with <e=aniweather>AniWeather</e>, weather animation popups would be hidden behind the toolbars"],
 				["bugfix","Compatibility with Puzzle Toolbars (formerly The Puzzle Piece) add-on"],
 				["bugfix","Style and animation preview wouldn't work if options were opened from the add-on manager"],
 				["bugfix","The add-on would fail to completely deinitialize on some tabs when entering customize mode"],
