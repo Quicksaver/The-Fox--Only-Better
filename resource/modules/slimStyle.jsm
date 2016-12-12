@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 2.0.14
+// VERSION 2.0.15
 
 this.__defineGetter__('DevEdition', function() { return window.DevEdition; });
 this.__defineGetter__('CTR', function() { return window.classicthemerestorerjs && window.classicthemerestorerjs.ctr; });
@@ -373,10 +373,6 @@ this.slimStyle = {
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
 					background-color: ' + this.lwtheme.bgColor + ' !important;\n\
 					color: ' + this.lwtheme.color + ' !important;\n\
-				}\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-before,\n\
-				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-toolbars-after {\n\
 					background-image: linear-gradient('+((DARWIN) ? bgFlat : 'transparent, transparent')+'), ' + bgImage + ' !important;\n\
 				}\n\
 				window['+objName+'_UUID="'+_UUID+'"] #'+objName+'-slimChrome-container:not([RSSTicker]):not([topPuzzleBar]) > #'+objName+'-slimChrome-toolbars,\n\
