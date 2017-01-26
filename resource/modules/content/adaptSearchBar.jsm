@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// VERSION 1.0.6
+// VERSION 1.0.7
 
 this.adaptSearchBar = {
 	_inputField: null,
@@ -90,6 +90,12 @@ this.adaptSearchBar = {
 			hosts: [ /^(([a-z0-9\.-])*\.)?baidu.com$/ ],
 			paths: [ /^\/(s|ns|f|q|v|m)\?/, /^\/(f\/)?search(\?|\/)/ ],
 			inputIds: [ 'kw', 'wd1', 'ww', 'bdvSearchInput' ]
+		} ],
+		[ 'searX', {
+			// The site seems to work using POST, the url seems to always remain static across searches.
+			hosts: [ /^(([a-z0-9\.-])*\.)?searx.me$/ ],
+			paths: [ /^(.*)?/ ],
+			inputIds: [ 'q' ]
 		} ]
 	]),
 
