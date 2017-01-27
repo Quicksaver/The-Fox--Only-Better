@@ -1,6 +1,15 @@
 {
-	"current":"1.4.7",
+	"current":"1.4.8",
 	"releases": {
+		"1.4.8":{
+			"date":"January 27, 2017",
+			"notes":[
+				["","<b>This is the last update!</b> The add-on will stop working by next November with Firefox 57. <a=http://fasezero.com/lastnotice.html>Click here</a> for more info."],
+				["new","Support searx.me results pages in adaptable search bar"],
+				["updated","de locale"],
+				["","Other minor fixes"]
+			]
+		},
 		"1.4.7":{
 			"date":"November 23, 2016",
 			"notes":[
