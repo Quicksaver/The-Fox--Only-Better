@@ -7,7 +7,7 @@
 <!ENTITY about.descriptionC "Sehen Sie sich auch die neueste Folge meiner Internetserie über das Leben mit Firefox, der für Sie alle, die unterstützendsten Nutzer, die sich ein Entwickler wünschen kann, gemacht wurde, an! Gehen Sie einfach auf das springende Symbol in der unteren Ecke dieser Seite. Lieben Sie es. Hassen Sie es. Teilen Sie es.">
 <!ENTITY about.allVersions "Hinweise aller vorherigen Versionen miteinbeziehen">
 <!ENTITY about.notifyOnUpdates "Diesen Tab bei der nächsten Aktualisierung anzeigen">
-<!ENTITY about.silentUpdates "Don't notify me on the next update">
+<!ENTITY about.silentUpdates "Bei der nächsten Aktualisierung nicht informieren">
 <!ENTITY about.development "Entwicklungsstatus">
 <!ENTITY about.helpdevelopment "SIE KÖNNEN HELFEN">
 <!ENTITY about.information "Weitere Informationen">
